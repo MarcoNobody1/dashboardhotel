@@ -24,10 +24,39 @@ export const App = () => {
               </PrivateRoute>
             }
           />
-          <Route path="/bookings" element={<Bookings />} />
-          <Route path="/rooms" element={<Rooms />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/users" element={<Users />} />
+          <Route
+            path="/bookings"
+            element={
+              <PrivateRoute loggedIn={loggedIn}>
+                <Bookings />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/rooms"
+            element={
+              <PrivateRoute loggedIn={loggedIn}>
+                <Rooms />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <PrivateRoute loggedIn={loggedIn}>
+                {" "}
+                <Contact />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <PrivateRoute loggedIn={loggedIn}>
+                <Users />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>
