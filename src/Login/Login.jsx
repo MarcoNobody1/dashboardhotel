@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/LogoHotelHub.png";
 import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const LogWrapper = styled.div`
   background-color: lightcyan;
@@ -50,6 +51,7 @@ const Button = styled.button`
   background-color: #135846;
   font-weight: 600;
   border-radius: 15px;
+  border: 1px solid #135846;
   text-transform: uppercase;
   color: #ffffff;
   margin-bottom: 15px;
@@ -68,43 +70,59 @@ const Logo = styled.img`
 
 const Advertice = styled.p`
   font-size: 0.7rem;
+  display: inline-block;
 `;
 
+
 export const Login = (props) => {
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const nav = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (name === "admin" && password === "1234") {
+    if (email === "marcocamaradiaz@gmail.com" && password === "Marco") {
       props.setLoggedIn(true);
       nav("/");
       localStorage.setItem("log", JSON.stringify(true));
     } else {
-      alert("Name or Email not valid");
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        html: "<em>Please check hint before logging.</em>",
+      });
+
+      Toast.fire({
+        icon: "error",
+        title: "Wrong Email or Password.",
+      });
     }
   };
 
-  const handleName = (event) => {
-    setName(event.target.value);
+  const handleEmail = (event) => {
+    setEmail(event.target.value);
   };
 
   const handlePassword = (event) => {
     setPassword(event.target.value);
   };
 
+
   return (
     <>
       <LogWrapper>
         <LogForm onSubmit={handleSubmit}>
           <Logo src={logo} />
-          <Label htmlFor="name">Name:</Label>
+          <Label htmlFor="email">Email:</Label>
           <Input
-            onChange={handleName}
-            id="name"
-            placeholder="Type your username"
+            onChange={handleEmail}
+            id="email"
+            type="email"
+            placeholder="Type your e-mail"
           />
           <Label htmlFor="password">Password:</Label>
           <Input
@@ -114,7 +132,13 @@ export const Login = (props) => {
             placeholder="Type your password"
           />
           <Button type="submit">Log In</Button>
-          <Advertice>name: admin | | password: 1234</Advertice>
+          <Advertice>
+            <strong>Hint:</strong>
+          </Advertice>
+          <br />
+          <Advertice> Email: marcocamaradiaz@gmail.com </Advertice>
+          <br />
+          <Advertice>Password: Marco</Advertice>
         </LogForm>
       </LogWrapper>
     </>
