@@ -1,9 +1,10 @@
 import React from "react";
+import { PageWrapper } from "../GeneralComponents";
 
 export const Rooms = () => {
   return (
     <>
-      <div>Rooms</div>
+      <PageWrapper>Rooms</PageWrapper>
     </>
   );
 };

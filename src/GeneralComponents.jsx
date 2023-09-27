@@ -11,3 +11,10 @@ export const DefaultIcon = styled.div.attrs((props) => ({
     transform: scale(1.05);
   }
 `;
+
+export const PageWrapper = styled.div`
+  background-color: #f8f8f8;
+  width: 100%;
+  height: 100vh;
+
+`;

@@ -1,5 +1,6 @@
 import React from "react";
+import { PageWrapper } from "../GeneralComponents";
 
 export const Bookings = () => {
-  return <div>Bookings</div>;
+  return <PageWrapper>Bookings</PageWrapper>;
 };

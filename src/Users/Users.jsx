@@ -1,7 +1,8 @@
 import React from 'react'
+import { PageWrapper } from '../GeneralComponents'
 
 export const Users = () => {
   return (
-    <div>Users</div>
+    <PageWrapper>Users</PageWrapper>
   )
 }
