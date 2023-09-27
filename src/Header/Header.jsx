@@ -6,7 +6,7 @@ import { FiLogOut } from "react-icons/fi";
 import { DefaultIcon } from "../GeneralComponents";
 import { useNavigate } from "react-router";
 
-const OuterWrap = styled.div`
+const OuterWrap = styled.nav`
   background-color: #fff;
   height: 120px;
   display: flex;

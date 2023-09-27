@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const LogWrapper = styled.div`
   background-color: lightcyan;
-  height: 100vh;
+  height: 930px;
   display: flex;
   justify-content: center;
   align-items: center;

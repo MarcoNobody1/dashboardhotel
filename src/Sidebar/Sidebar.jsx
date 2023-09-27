@@ -12,8 +12,8 @@ import { TbMessage2 } from "react-icons/tb";
 import { UserCard } from "./UserCard";
 import { NavLink } from "react-router-dom";
 
-const NavWrap = styled.nav`
-  width: 18vw;
+const NavWrap = styled.aside`
+  width: 345px;
   background-color: #fff;
   padding: 42px 0px;
   min-width: 300px;
@@ -23,16 +23,15 @@ const NavWrap = styled.nav`
 
 const Logo = styled.img`
   padding-left: 10px;
-  width: 90%;
+  width: 300px;
   height: auto;
-  margin-bottom: 62px;
+  margin-bottom: 20px;
 `;
 
 const OptionWrapper = styled(NavLink)`
-  width: 100%;
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   padding: 20px 0;
   cursor: pointer;
   color: #799283;
@@ -83,7 +82,7 @@ const Footer = styled.div`
   text-align: center;
   width: max-content;
   display: inline-block;
-  margin: 0 auto 60px;
+  margin: 0 auto 20px;
 `;
 
 const FooterName = styled.p`

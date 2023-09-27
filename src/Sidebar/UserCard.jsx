@@ -9,7 +9,7 @@ const OuterWrap = styled.div`
   text-align: center;
   width: 100%;
   position: relative;
-  margin-bottom: 62px;
+  margin-bottom: 40px;
 `;
 
 const ImageWrap = styled.div`
