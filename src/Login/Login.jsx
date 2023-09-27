@@ -85,7 +85,7 @@ export const Login = (props) => {
     if (email === "marcocamaradiaz@gmail.com" && password === "Marco") {
       props.setLoggedIn(true);
       nav("/");
-      localStorage.setItem("log", JSON.stringify(true));
+      localStorage.setItem("log", true);
     } else {
       const Toast = Swal.mixin({
         toast: true,

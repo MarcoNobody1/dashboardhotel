@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./Login/Login";
 import { Dashboard } from "./Dashboard/Dashboard";
@@ -26,6 +26,13 @@ const InnerContainer = styled.div`
 
 export const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("log");
+    if (isLoggedIn) {
+      setLoggedIn(true);
+    }
+  }, []);
 
   return (
     <>
