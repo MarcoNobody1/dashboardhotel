@@ -1,22 +1,6 @@
 export const bookingsData = [
   {
     guest: {
-      nombre: "Alice",
-      apellidos: "Johnson",
-      id_reserva: "54321",
-    },
-    order_date: "2023-09-26",
-    check_in: "2023-10-10",
-    check_out: "2023-10-15",
-    special_request: "Early check-in required",
-    room: {
-      room_type: "Standard Room",
-      room_number: "101",
-    },
-    status: "Check In",
-  },
-  {
-    guest: {
       nombre: "Bob",
       apellidos: "Smith",
       id_reserva: "98765",
