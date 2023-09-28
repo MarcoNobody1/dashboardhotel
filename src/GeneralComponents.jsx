@@ -3,6 +3,8 @@ import { contactMessages } from "./data/contactjson";
 import { BsFillBookmarkCheckFill, BsArrowsFullscreen } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { BsTrash3 } from "react-icons/bs";
 
 export const DefaultIcon = styled.div.attrs((props) => ({
   $color: props.$color || "#135846",
@@ -104,125 +106,121 @@ export const Notification = (props) => {
   );
 };
 
-
 const CrossIcon = styled(RxCross2)`
-color: #799283;
-position: absolute;
-font-size: 24px;
-right: 30px;
-top: 30px;
-&:hover {
-  cursor: pointer;
-  transform: scale(1.08);
-}
+  color: #799283;
+  position: absolute;
+  font-size: 24px;
+  right: 30px;
+  top: 30px;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.08);
+  }
 `;
 
 const ModalBackground = styled.div`
-position: absolute;
-width: 100%;
-height: 100%;
-top: 0;
-left: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-background-color: rgba(0, 0, 0, 0.5);
-z-index: 99;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
 `;
 
-
 const CommentsWrapper = styled.div`
-background-color: #fff;
-display: flex;
-gap: 40px;
+  background-color: #fff;
+  display: flex;
+  gap: 40px;
 `;
 
 const CommentContainer = styled.div`
-background: #ffffff 0% 0% no-repeat padding-box;
-border: 1px solid #ebebeb;
-border-radius: 20px;
-padding: 30px;
-position: relative;
-transition: all 250ms ease-in-out;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #ebebeb;
+  border-radius: 20px;
+  padding: 30px;
+  position: relative;
+  transition: all 250ms ease-in-out;
 
-&:hover {
-  box-shadow: 0px 16px 30px #00000014;
-}
+  &:hover {
+    box-shadow: 0px 16px 30px #00000014;
+  }
 `;
 
 const FullName = styled.h5`
-text-align: left;
-font: normal normal 600 16px/25px Poppins;
-letter-spacing: 0px;
-color: #262626;
+  text-align: left;
+  font: normal normal 600 16px/25px Poppins;
+  letter-spacing: 0px;
+  color: #262626;
 `;
 
 const IconWrapper = styled.div`
-display: flex;
-gap: 10px;
-position: absolute;
-top: 10px;
-right: 10px;
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 `;
 
 const ReadIcon = styled(BsFillBookmarkCheckFill)`
-color: #e23428;
+  color: #e23428;
 `;
 
 const FullscreenIcon = styled(BsArrowsFullscreen)`
-color: #135846;
-transition: all 250ms ease-in;
+  color: #135846;
+  transition: all 250ms ease-in;
 
-&:hover {
-  cursor: pointer;
-  transform: scale(1.08);
-}
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.08);
+  }
 `;
 
 const EmailAddress = styled.p`
-text-align: left;
-font: normal normal normal 14px/21px Poppins;
-letter-spacing: 0px;
-color: #799283;
+  text-align: left;
+  font: normal normal normal 14px/21px Poppins;
+  letter-spacing: 0px;
+  color: #799283;
 `;
 
 const PhoneNumber = styled(EmailAddress)`
-font: normal normal normal 10px/21px Poppins;
-margin-bottom: 10px;
+  font: normal normal normal 10px/21px Poppins;
+  margin-bottom: 10px;
 `;
 
 const Subject = styled(FullName)`
-font: normal normal 600 14px/25px Poppins;
-text-align: right;
-margin-bottom: 10px;
+  font: normal normal 600 14px/25px Poppins;
+  text-align: right;
+  margin-bottom: 10px;
 `;
 
 const MessageContent = styled.p`
-text-align: left;
-font: normal normal 300 12px/18px Poppins;
-letter-spacing: 0px;
-color: #6e6e6e;
-overflow: hidden;
-white-space: nowrap;
-max-width: 300px;
-max-height: 70px;
-display: inline-block;
-text-overflow: ellipsis;
+  text-align: left;
+  font: normal normal 300 12px/18px Poppins;
+  letter-spacing: 0px;
+  color: #6e6e6e;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 300px;
+  max-height: 70px;
+  display: inline-block;
+  text-overflow: ellipsis;
 `;
 
 const ModalContent = styled(MessageContent)`
-max-width: 450px;
-max-height: none;
-white-space: normal;
+  max-width: 450px;
+  max-height: none;
+  white-space: normal;
 `;
 
 const ModalContainer = styled(CommentContainer)`
-max-width: 500px;
-position: relative;
-z-index: 100;
+  max-width: 500px;
+  position: relative;
+  z-index: 100;
 `;
-
-
 
 export const Comments = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -279,45 +277,189 @@ export const Comments = () => {
   );
 };
 
+const TableTitleWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  text-transform: capitalize;
+  border-bottom: 1px solid grey;
+`;
 
-
-  const TableTitleWrapper = styled.div`
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    text-transform: capitalize; 
-  `;
-
-  const BookingTitle = styled.p`
-    font: normal normal 600 16px/25px Poppins;
-    letter-spacing: 0px;
-    color: #393939;
-  `;
+const BookingTitle = styled.p`
+  font: normal normal 600 16px/25px Poppins;
+  letter-spacing: 0px;
+  color: #393939;
+  min-width: 130px;
+`;
 
 export const TableTitles = (props) => {
   const bookingKeys = Object.keys(props.data[0]);
 
-
   return (
     <>
       <TableTitleWrapper>
-      {bookingKeys.map((title, index) => (
-<BookingTitle key={index}>{title.replace("_", " ")}</BookingTitle>
+        {bookingKeys.map((title, index) => (
+          <BookingTitle key={index}>{title.replace("_", " ")}</BookingTitle>
         ))}
       </TableTitleWrapper>
     </>
   );
 };
 
+const ContentWrapper = styled(TableTitleWrapper)`
+  text-transform: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-bottom: 0;
+`;
+
+const RowWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: center;
+  transition: all 250ms ease-out;
+  align-items: center;
+  position: relative;
+  padding: 10px 0;
+
+  &:hover {
+    box-shadow: 0px 4px 30px #0000001a;
+    transform: scale(1.015);
+  }
+`;
+
+const InfoWrap = styled.div`
+  width: 130px;
+  text-align: left;
+`;
+
+const MainInfoWrap = styled(InfoWrap)`
+  display: flex;
+  gap: 3px;
+  flex-direction: column;
+  text-align: left;
+`;
+
+const FullNameGuest = styled.p`
+  font: normal normal 500 16px/25px Poppins;
+  letter-spacing: 0px;
+  color: #393939;
+`;
+
+const BookingId = styled(Link)`
+  font: normal normal normal 14px/21px Poppins;
+  letter-spacing: 0px;
+  color: #799283;
+`;
+
+const OrderDate = styled(FullNameGuest)``;
+
+const CheckIn = styled(FullNameGuest)`
+  font: normal normal 500 16px/25px Poppins;
+`;
+
+const CheckOut = styled(CheckIn)``;
+
+const SpecialRequestButton = styled.button`
+  background: #eef9f2;
+  border-radius: 12px;
+  font: normal normal 500 16px/25px Poppins;
+  letter-spacing: 0px;
+  color: #135846;
+  padding: 13px 10px;
+  transition: all 150ms ease-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+    background: #5ad07a;
+    color: #eef9f2;
+  }
+`;
+
+const RoomType = styled(CheckIn)`
+font: normal normal 400 16px/25px Poppins;
+text-align: left;
+`;
+
+const StatusDiv = styled.div`
+  font: normal normal 500 14px/25px Poppins;
+  border-radius: 12px;
+  letter-spacing: 0px;
+  padding: 13px 26px;
+`;
+
+const TrashIcon = styled(BsTrash3)`
+  font-size: 20px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 
 
+export const TableContent = (props) => {
+  const bookings = props.data;
 
-export const TableContent = () =>{
-
-  return(
+  return (
     <>
-    
+      <ContentWrapper>
+      {bookings
+        .filter((booking) => {
+          if (props.filter === 'All Bookings') {
+            return true;
+          } else if (props.filter === 'Checking In') {
+            return booking.status === 'Check In';
+          } else if (props.filter === 'Checking Out') {
+            return booking.status === 'Check Out';
+          } else if (props.filter === 'In Progress') {
+            return booking.status === 'In Progress';
+          }
+        }).map((booking) => (
+          <RowWrapper key={booking.guest.id_reserva}>
+            <MainInfoWrap>
+              <FullNameGuest>
+                {booking.guest.nombre} {booking.guest.apellidos}
+              </FullNameGuest>
+              <BookingId to={`/bookings/${booking.guest.id_reserva}`}>
+                {booking.guest.id_reserva}
+              </BookingId>
+            </MainInfoWrap>
+          <InfoWrap><OrderDate>{booking.order_date}</OrderDate></InfoWrap>
+          <InfoWrap> <CheckIn>{booking.check_in}</CheckIn></InfoWrap>
+          <InfoWrap> <CheckOut>{booking.check_out}</CheckOut></InfoWrap>
+          <InfoWrap> <SpecialRequestButton>View Notes</SpecialRequestButton></InfoWrap>
+          <InfoWrap> <RoomType>
+              {booking.room.room_type} - {booking.room.room_number}
+            </RoomType></InfoWrap>
+            <InfoWrap> <StatusDiv
+              style={{
+                backgroundColor:
+                  booking.status === "Check In"
+                    ? "#e8ffee"
+                    : booking.status === "Check Out"
+                    ? "#FFEDEC"
+                    : "#FEFFC2",
+                color:
+                  booking.status === "Check In"
+                    ? "#5ad07a"
+                    : booking.status === "Check Out"
+                    ? "#E23428"
+                    : "#E2B308",
+              }}
+            >
+              {booking.status}
+            </StatusDiv></InfoWrap>
+            <TrashIcon />
+          </RowWrapper>
+        ))}
+      </ContentWrapper>
     </>
-    )
-}
+  );
+};
