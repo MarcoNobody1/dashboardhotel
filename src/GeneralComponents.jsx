@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { contactMessages } from "./data/contactjson";
+import { bookingsData } from "./data/bookingsjson";
 import { BsFillBookmarkCheckFill, BsArrowsFullscreen } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { useState } from "react";
@@ -222,23 +223,23 @@ export const Comments = () => {
     `;
 
     const ModalBackground = styled.div`
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.50);
-    z-index: 99;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 99;
     `;
 
     return (
       <ModalBackground>
-        <ModalContainer >
+        <ModalContainer>
           <FullName>{selectedComment.name}</FullName>
-          <CrossIcon onClick={onClose}/>
+          <CrossIcon onClick={onClose} />
           <EmailAddress>{selectedComment.email}</EmailAddress>
           <PhoneNumber>{selectedComment.phone}</PhoneNumber>
           <Subject>{selectedComment.email_subject}</Subject>
@@ -275,3 +276,31 @@ export const Comments = () => {
     </>
   );
 };
+
+export const TableTitles = () => {
+  const bookingKeys = Object.keys(bookingsData[0]);
+
+  const TableTitleWrapper = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    text-transform: capitalize; 
+  `;
+
+  const BookingTitle = styled.p`
+    font: normal normal 600 16px/25px Poppins;
+    letter-spacing: 0px;
+    color: #393939;
+  `;
+
+  return (
+    <>
+      <TableTitleWrapper>
+      {bookingKeys.map((title, index) => (
+<BookingTitle key={index}>{title.replace("_", " ")}</BookingTitle>
+        ))}
+      </TableTitleWrapper>
+    </>
+  );
+};
+
