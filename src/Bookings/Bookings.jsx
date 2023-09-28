@@ -2,6 +2,7 @@ import React from "react";
 import { PageWrapper, TableTitles } from "../GeneralComponents";
 import styled from "styled-components";
 import searchIcon from "../assets/iconSearchBar.png";
+import { bookingsData } from "../data/bookingsjson";
 
 const OuterContainer = styled.div`
   display: flex;
@@ -108,7 +109,7 @@ export const Bookings = () => {
           </SelectorFilter>
         </FilterContainer>
         <TableContainer>
-          <TableTitles/>
+          <TableTitles data={bookingsData} />
 
         </TableContainer>
       </OuterContainer>
