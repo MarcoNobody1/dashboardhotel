@@ -9,6 +9,7 @@ import { Contact } from "./Contact/Contact";
 import { Users } from "./Users/Users";
 import { Header } from "./Header/Header";
 import Sidebar from "./Sidebar/Sidebar";
+import BookingDetails from "./Bookings/BookingDetails";
 
 export const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -40,6 +41,14 @@ export const App = () => {
             element={
               <PrivateRoute loggedIn={loggedIn}>
                 <Bookings />
+              </PrivateRoute>
+            }
+          />
+           <Route
+            path="/bookings/:id"
+            element={
+              <PrivateRoute loggedIn={loggedIn}>
+                <BookingDetails />
               </PrivateRoute>
             }
           />
