@@ -20,7 +20,7 @@ const FilterContainer = styled.div`
 const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #FFF;
+  background-color: #fff;
   padding: 21px;
 `;
 
@@ -30,7 +30,7 @@ const ButtonsContainer = styled(FilterContainer)`
   padding-bottom: 0;
   width: auto;
   margin-right: 250px;
-  border-bottom: 1px solid #D4D4D4;
+  border-bottom: 1px solid #d4d4d4;
 `;
 
 const ButtonFilter = styled.button`
@@ -81,12 +81,9 @@ const OptionSelect = styled.option`
   font: normal normal 400 16px/25px Poppins;
 `;
 
-
-
-
-
 export const Bookings = () => {
 
+  
   const [filter, setFilter] = useState("All Bookings");
 
   return (
@@ -94,10 +91,18 @@ export const Bookings = () => {
       <OuterContainer>
         <FilterContainer>
           <ButtonsContainer>
-            <ButtonFilter onClick={() => setFilter("All Bookings")}>All Bookings</ButtonFilter>
-            <ButtonFilter onClick={() => setFilter("Checking In")}>Checking In</ButtonFilter>
-            <ButtonFilter onClick={() => setFilter("Checking Out")}>Checking Out</ButtonFilter>
-            <ButtonFilter onClick={() => setFilter("In Progress")}>In progress</ButtonFilter>
+            <ButtonFilter onClick={() => setFilter("All Bookings")}>
+              All Bookings
+            </ButtonFilter>
+            <ButtonFilter onClick={() => setFilter("Checking In")}>
+              Checking In
+            </ButtonFilter>
+            <ButtonFilter onClick={() => setFilter("Checking Out")}>
+              Checking Out
+            </ButtonFilter>
+            <ButtonFilter onClick={() => setFilter("In Progress")}>
+              In progress
+            </ButtonFilter>
           </ButtonsContainer>
           <SearchInput
             placeholder="Search booking by client name..."
@@ -112,7 +117,7 @@ export const Bookings = () => {
         </FilterContainer>
         <TableContainer>
           <TableTitles data={bookingsData} />
-          <TableContent data={bookingsData} filter={filter}/>
+          <TableContent data={bookingsData} filter={filter} />
         </TableContainer>
       </OuterContainer>
     </PageWrapper>

@@ -380,8 +380,8 @@ const SpecialRequestButton = styled.button`
 `;
 
 const RoomType = styled(CheckIn)`
-font: normal normal 400 16px/25px Poppins;
-text-align: left;
+  font: normal normal 400 16px/25px Poppins;
+  text-align: left;
 `;
 
 const StatusDiv = styled.div`
@@ -402,26 +402,29 @@ const TrashIcon = styled(BsTrash3)`
   }
 `;
 
-
-
 export const TableContent = (props) => {
+  
   const bookings = props.data;
+
+  const filtered = bookings.filter((booking) => {
+    switch (props.filter) {
+      case "All Bookings":
+        return true;
+      case "Checking In":
+        return booking.status === "Check In";
+      case "Checking Out":
+        return booking.status === "Check Out";
+      case "In Progress":
+        return booking.status === "In Progress";
+      default:
+        return false;
+    }
+  });
 
   return (
     <>
       <ContentWrapper>
-      {bookings
-        .filter((booking) => {
-          if (props.filter === 'All Bookings') {
-            return true;
-          } else if (props.filter === 'Checking In') {
-            return booking.status === 'Check In';
-          } else if (props.filter === 'Checking Out') {
-            return booking.status === 'Check Out';
-          } else if (props.filter === 'In Progress') {
-            return booking.status === 'In Progress';
-          }
-        }).map((booking) => (
+        {filtered.map((booking) => (
           <RowWrapper key={booking.guest.id_reserva}>
             <MainInfoWrap>
               <FullNameGuest>
@@ -431,31 +434,48 @@ export const TableContent = (props) => {
                 {booking.guest.id_reserva}
               </BookingId>
             </MainInfoWrap>
-          <InfoWrap><OrderDate>{booking.order_date}</OrderDate></InfoWrap>
-          <InfoWrap> <CheckIn>{booking.check_in}</CheckIn></InfoWrap>
-          <InfoWrap> <CheckOut>{booking.check_out}</CheckOut></InfoWrap>
-          <InfoWrap> <SpecialRequestButton>View Notes</SpecialRequestButton></InfoWrap>
-          <InfoWrap> <RoomType>
-              {booking.room.room_type} - {booking.room.room_number}
-            </RoomType></InfoWrap>
-            <InfoWrap> <StatusDiv
-              style={{
-                backgroundColor:
-                  booking.status === "Check In"
-                    ? "#e8ffee"
-                    : booking.status === "Check Out"
-                    ? "#FFEDEC"
-                    : "#FEFFC2",
-                color:
-                  booking.status === "Check In"
-                    ? "#5ad07a"
-                    : booking.status === "Check Out"
-                    ? "#E23428"
-                    : "#E2B308",
-              }}
-            >
-              {booking.status}
-            </StatusDiv></InfoWrap>
+            <InfoWrap>
+              <OrderDate>{booking.order_date}</OrderDate>
+            </InfoWrap>
+            <InfoWrap>
+              {" "}
+              <CheckIn>{booking.check_in}</CheckIn>
+            </InfoWrap>
+            <InfoWrap>
+              {" "}
+              <CheckOut>{booking.check_out}</CheckOut>
+            </InfoWrap>
+            <InfoWrap>
+              {" "}
+              <SpecialRequestButton>View Notes</SpecialRequestButton>
+            </InfoWrap>
+            <InfoWrap>
+              {" "}
+              <RoomType>
+                {booking.room.room_type} - {booking.room.room_number}
+              </RoomType>
+            </InfoWrap>
+            <InfoWrap>
+              {" "}
+              <StatusDiv
+                style={{
+                  backgroundColor:
+                    booking.status === "Check In"
+                      ? "#e8ffee"
+                      : booking.status === "Check Out"
+                      ? "#FFEDEC"
+                      : "#FEFFC2",
+                  color:
+                    booking.status === "Check In"
+                      ? "#5ad07a"
+                      : booking.status === "Check Out"
+                      ? "#E23428"
+                      : "#E2B308",
+                }}
+              >
+                {booking.status}
+              </StatusDiv>
+            </InfoWrap>
             <TrashIcon />
           </RowWrapper>
         ))}
