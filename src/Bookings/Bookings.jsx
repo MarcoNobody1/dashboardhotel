@@ -1,5 +1,5 @@
-import React from "react";
-import { PageWrapper, TableTitles } from "../GeneralComponents";
+import React, { useState } from "react";
+import { PageWrapper, TableContent, TableTitles } from "../GeneralComponents";
 import styled from "styled-components";
 import searchIcon from "../assets/iconSearchBar.png";
 import { bookingsData } from "../data/bookingsjson";
@@ -22,7 +22,6 @@ const TableContainer = styled.div`
   flex-direction: column;
   background-color: #FFF;
   padding: 21px;
-  border-bottom: 1px solid #D4D4D4;
 `;
 
 const ButtonsContainer = styled(FilterContainer)`
@@ -87,15 +86,18 @@ const OptionSelect = styled.option`
 
 
 export const Bookings = () => {
+
+  const [filter, setFilter] = useState("All Bookings");
+
   return (
     <PageWrapper>
       <OuterContainer>
         <FilterContainer>
           <ButtonsContainer>
-            <ButtonFilter>All Bookings</ButtonFilter>
-            <ButtonFilter>Checking In</ButtonFilter>
-            <ButtonFilter>Checking Out</ButtonFilter>
-            <ButtonFilter>In progress</ButtonFilter>
+            <ButtonFilter onClick={() => setFilter("All Bookings")}>All Bookings</ButtonFilter>
+            <ButtonFilter onClick={() => setFilter("Checking In")}>Checking In</ButtonFilter>
+            <ButtonFilter onClick={() => setFilter("Checking Out")}>Checking Out</ButtonFilter>
+            <ButtonFilter onClick={() => setFilter("In Progress")}>In progress</ButtonFilter>
           </ButtonsContainer>
           <SearchInput
             placeholder="Search booking by client name..."
@@ -110,7 +112,7 @@ export const Bookings = () => {
         </FilterContainer>
         <TableContainer>
           <TableTitles data={bookingsData} />
-
+          <TableContent data={bookingsData} filter={filter}/>
         </TableContainer>
       </OuterContainer>
     </PageWrapper>
