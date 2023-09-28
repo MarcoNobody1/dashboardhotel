@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { contactMessages } from "./data/contactjson";
-import { bookingsData } from "./data/bookingsjson";
 import { BsFillBookmarkCheckFill, BsArrowsFullscreen } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { useState } from "react";
@@ -105,6 +104,126 @@ export const Notification = (props) => {
   );
 };
 
+
+const CrossIcon = styled(RxCross2)`
+color: #799283;
+position: absolute;
+font-size: 24px;
+right: 30px;
+top: 30px;
+&:hover {
+  cursor: pointer;
+  transform: scale(1.08);
+}
+`;
+
+const ModalBackground = styled.div`
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: rgba(0, 0, 0, 0.5);
+z-index: 99;
+`;
+
+
+const CommentsWrapper = styled.div`
+background-color: #fff;
+display: flex;
+gap: 40px;
+`;
+
+const CommentContainer = styled.div`
+background: #ffffff 0% 0% no-repeat padding-box;
+border: 1px solid #ebebeb;
+border-radius: 20px;
+padding: 30px;
+position: relative;
+transition: all 250ms ease-in-out;
+
+&:hover {
+  box-shadow: 0px 16px 30px #00000014;
+}
+`;
+
+const FullName = styled.h5`
+text-align: left;
+font: normal normal 600 16px/25px Poppins;
+letter-spacing: 0px;
+color: #262626;
+`;
+
+const IconWrapper = styled.div`
+display: flex;
+gap: 10px;
+position: absolute;
+top: 10px;
+right: 10px;
+`;
+
+const ReadIcon = styled(BsFillBookmarkCheckFill)`
+color: #e23428;
+`;
+
+const FullscreenIcon = styled(BsArrowsFullscreen)`
+color: #135846;
+transition: all 250ms ease-in;
+
+&:hover {
+  cursor: pointer;
+  transform: scale(1.08);
+}
+`;
+
+const EmailAddress = styled.p`
+text-align: left;
+font: normal normal normal 14px/21px Poppins;
+letter-spacing: 0px;
+color: #799283;
+`;
+
+const PhoneNumber = styled(EmailAddress)`
+font: normal normal normal 10px/21px Poppins;
+margin-bottom: 10px;
+`;
+
+const Subject = styled(FullName)`
+font: normal normal 600 14px/25px Poppins;
+text-align: right;
+margin-bottom: 10px;
+`;
+
+const MessageContent = styled.p`
+text-align: left;
+font: normal normal 300 12px/18px Poppins;
+letter-spacing: 0px;
+color: #6e6e6e;
+overflow: hidden;
+white-space: nowrap;
+max-width: 300px;
+max-height: 70px;
+display: inline-block;
+text-overflow: ellipsis;
+`;
+
+const ModalContent = styled(MessageContent)`
+max-width: 450px;
+max-height: none;
+white-space: normal;
+`;
+
+const ModalContainer = styled(CommentContainer)`
+max-width: 500px;
+position: relative;
+z-index: 100;
+`;
+
+
+
 export const Comments = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCommentId, setSelectedCommentId] = useState(null);
@@ -113,127 +232,10 @@ export const Comments = () => {
     setSelectedCommentId(commentId);
     setIsModalOpen(true);
   };
-
-  const CommentsWrapper = styled.div`
-    background-color: #fff;
-    display: flex;
-    gap: 40px;
-  `;
-
-  const CommentContainer = styled.div`
-    background: #ffffff 0% 0% no-repeat padding-box;
-    border: 1px solid #ebebeb;
-    border-radius: 20px;
-    padding: 30px;
-    position: relative;
-    transition: all 250ms ease-in-out;
-
-    &:hover {
-      box-shadow: 0px 16px 30px #00000014;
-    }
-  `;
-
-  const FullName = styled.h5`
-    text-align: left;
-    font: normal normal 600 16px/25px Poppins;
-    letter-spacing: 0px;
-    color: #262626;
-  `;
-
-  const IconWrapper = styled.div`
-    display: flex;
-    gap: 10px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  `;
-
-  const ReadIcon = styled(BsFillBookmarkCheckFill)`
-    color: #e23428;
-  `;
-
-  const FullscreenIcon = styled(BsArrowsFullscreen)`
-    color: #135846;
-    transition: all 250ms ease-in;
-
-    &:hover {
-      cursor: pointer;
-      transform: scale(1.08);
-    }
-  `;
-
-  const EmailAddress = styled.p`
-    text-align: left;
-    font: normal normal normal 14px/21px Poppins;
-    letter-spacing: 0px;
-    color: #799283;
-  `;
-
-  const PhoneNumber = styled(EmailAddress)`
-    font: normal normal normal 10px/21px Poppins;
-    margin-bottom: 10px;
-  `;
-
-  const Subject = styled(FullName)`
-    font: normal normal 600 14px/25px Poppins;
-    text-align: right;
-    margin-bottom: 10px;
-  `;
-
-  const MessageContent = styled.p`
-    text-align: left;
-    font: normal normal 300 12px/18px Poppins;
-    letter-spacing: 0px;
-    color: #6e6e6e;
-    overflow: hidden;
-    white-space: nowrap;
-    max-width: 300px;
-    max-height: 70px;
-    display: inline-block;
-    text-overflow: ellipsis;
-  `;
-
   const Modal = ({ commentId, onClose }) => {
     const selectedComment = contactMessages.find(
       (message) => message.id === commentId
     );
-
-    const ModalContent = styled(MessageContent)`
-      max-width: 450px;
-      max-height: none;
-      white-space: normal;
-    `;
-
-    const ModalContainer = styled(CommentContainer)`
-      max-width: 500px;
-      position: relative;
-      z-index: 100;
-    `;
-
-    const CrossIcon = styled(RxCross2)`
-      color: #799283;
-      position: absolute;
-      font-size: 24px;
-      right: 30px;
-      top: 30px;
-      &:hover {
-        cursor: pointer;
-        transform: scale(1.08);
-      }
-    `;
-
-    const ModalBackground = styled.div`
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 99;
-    `;
 
     return (
       <ModalBackground>
@@ -277,13 +279,12 @@ export const Comments = () => {
   );
 };
 
-export const TableTitles = () => {
-  const bookingKeys = Object.keys(bookingsData[0]);
+
 
   const TableTitleWrapper = styled.div`
     display: flex;
     width: 100%;
-    justify-content: space-evenly;
+    justify-content: space-around;
     text-transform: capitalize; 
   `;
 
@@ -292,6 +293,10 @@ export const TableTitles = () => {
     letter-spacing: 0px;
     color: #393939;
   `;
+
+export const TableTitles = (props) => {
+  const bookingKeys = Object.keys(props.data[0]);
+
 
   return (
     <>
@@ -304,3 +309,15 @@ export const TableTitles = () => {
   );
 };
 
+
+
+
+
+export const TableContent = () =>{
+
+  return(
+    <>
+    
+    </>
+    )
+}
