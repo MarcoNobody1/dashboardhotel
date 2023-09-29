@@ -402,8 +402,44 @@ const TrashIcon = styled(BsTrash3)`
   }
 `;
 
+const FloatCross = styled(CrossIcon)`
+  top: 10px;
+  right: 10px;
+`;
+
+const NoteContainer = styled(ModalContainer)`
+min-height: 100px;
+display: flex;
+justify-content: center;
+align-items: center;
+`;
+
+const NoteBackground = styled(ModalBackground)`
+background-color: rgba(0, 0, 0, 0.2);
+`;
+
 export const TableContent = (props) => {
   const bookings = props.data;
+
+  const [isNoteOpen, setIsNoteOpen] = useState(false);
+  const [selectedNoteId, setSelectedNoteId] = useState(null);
+
+  const handleOpenNote = (commentId) => {
+    setSelectedNoteId(commentId);
+    setIsNoteOpen(true);
+  };
+  const Modal = ({ commentId, onCloseNote }) => {
+    const selectedNote = bookings.find(
+      (booking) => booking.guest.id_reserva === commentId
+    );
+    return (
+      <NoteBackground>
+        <NoteContainer>
+        <FloatCross onClick={onCloseNote} />
+        {selectedNote.special_request}</NoteContainer>
+      </NoteBackground>
+    );
+  };
 
   const filtered = bookings.filter((booking) => {
     switch (props.filter) {
@@ -469,25 +505,25 @@ export const TableContent = (props) => {
               <OrderDate>{booking.order_date}</OrderDate>
             </InfoWrap>
             <InfoWrap>
-              {" "}
               <CheckIn>{booking.check_in}</CheckIn>
             </InfoWrap>
             <InfoWrap>
-              {" "}
               <CheckOut>{booking.check_out}</CheckOut>
             </InfoWrap>
             <InfoWrap>
-              {" "}
-              <SpecialRequestButton>View Notes</SpecialRequestButton>
+              <SpecialRequestButton
+                onClick={() => handleOpenNote(booking.guest.id_reserva)}
+              >
+                {" "}
+                View Notes{" "}
+              </SpecialRequestButton>
             </InfoWrap>
             <InfoWrap>
-              {" "}
               <RoomType>
                 {booking.room.room_type} - {booking.room.room_number}
               </RoomType>
             </InfoWrap>
             <InfoWrap>
-              {" "}
               <StatusDiv
                 style={{
                   backgroundColor:
@@ -511,6 +547,12 @@ export const TableContent = (props) => {
           </RowWrapper>
         ))}
       </ContentWrapper>
+      {isNoteOpen && (
+        <Modal
+          commentId={selectedNoteId}
+          onCloseNote={() => setIsNoteOpen(false)}
+        />
+      )}
     </>
   );
 };
