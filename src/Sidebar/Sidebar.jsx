@@ -117,15 +117,15 @@ export const Sidebar = () => {
           <RoomsIcon />
           <OptionTitle>Rooms</OptionTitle>
         </OptionWrapper>
-        <OptionWrapper to="/bookings">
+        <OptionWrapper to="/bookings" title="bookings">
           <BookingsIcon />
           <OptionTitle>Bookings</OptionTitle>
         </OptionWrapper>
-        <OptionWrapper to="/contact">
+        <OptionWrapper to="/contact" title="contact">
           <ContactIcon />
           <OptionTitle>Contact</OptionTitle>
         </OptionWrapper>
-        <OptionWrapper to="/users">
+        <OptionWrapper to="/users" title="users">
           <UsersIcon />
           <OptionTitle>Users</OptionTitle>
         </OptionWrapper>
