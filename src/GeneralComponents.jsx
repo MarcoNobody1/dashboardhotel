@@ -403,7 +403,6 @@ const TrashIcon = styled(BsTrash3)`
 `;
 
 export const TableContent = (props) => {
-  
   const bookings = props.data;
 
   const filtered = bookings.filter((booking) => {
@@ -420,6 +419,38 @@ export const TableContent = (props) => {
         return false;
     }
   });
+
+  if (props.selected === "Orderdate") {
+    filtered.sort((a, b) => {
+      const dateA = new Date(a.order_date);
+      const dateB = new Date(b.order_date);
+      return dateB - dateA;
+    });
+  } else if (props.selected === "Checkin") {
+    filtered.sort((a, b) => {
+      const dateA = new Date(a.check_in);
+      const dateB = new Date(b.check_in);
+      return dateB - dateA;
+    });
+  } else if (props.selected === "Checkout") {
+    filtered.sort((a, b) => {
+      const dateA = new Date(a.check_out);
+      const dateB = new Date(b.check_out);
+      return dateB - dateA;
+    });
+  } else if (props.selected === "Guest") {
+    filtered.sort((a, b) => {
+      const nombreA = a.guest.nombre.toUpperCase();
+      const nombreB = b.guest.nombre.toUpperCase();
+      if (nombreA < nombreB) {
+        return -1;
+      }
+      if (nombreA > nombreB) {
+        return 1;
+      }
+      return 0;
+    });
+  }
 
   return (
     <>
