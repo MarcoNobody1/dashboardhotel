@@ -14,6 +14,7 @@ const BookingWrapper = styled.div`
   box-shadow: 0px 4px 4px #00000005;
   border-radius:20px;
   position: relative;
+  display: flex;
 `;
 
 const ButtonReturn = styled(NavLink)`
@@ -24,7 +25,15 @@ font-size: 24px;
 `;
 
 const DetailsWrapper = styled.div`
+flex: 1;
+border: 1px solid black;
+border-radius:20px;
+`;
 
+const ImageWrapper = styled.div`
+flex: 1;
+border: 1px solid black;
+border-radius:20px;
 `;
 
 export const BookingDetails = () => {
@@ -37,6 +46,8 @@ export const BookingDetails = () => {
           <ButtonReturn to="/bookings">
             <IoArrowBackOutline />
           </ButtonReturn>
+          <DetailsWrapper></DetailsWrapper>
+          <ImageWrapper></ImageWrapper>
         </BookingWrapper>
       </PageWrapper>
     </>
