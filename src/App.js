@@ -13,6 +13,7 @@ import BookingDetails from "./Bookings/BookingDetails";
 
 export const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [title, setTitle] = useState("Dashboard")
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("log");
@@ -24,8 +25,8 @@ export const App = () => {
   return (
     <>
       <BrowserRouter>
-        {loggedIn && <Sidebar />}
-        {loggedIn && <Header titleText="Dashboard" setLoggedIn={setLoggedIn} />}
+        {loggedIn && <Sidebar setTitle={setTitle}/>}
+        {loggedIn && <Header titleText={title} setLoggedIn={setLoggedIn} />}
         <Routes>
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
           <Route

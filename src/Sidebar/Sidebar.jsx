@@ -104,28 +104,28 @@ const FooterFinal = styled(FooterRights)`
   text-align: center;
 `;
 
-export const Sidebar = () => {
+export const Sidebar = (props) => {
   return (
     <>
       <NavWrap>
         <Logo src={logo} />
-        <OptionWrapper to="/" title="dashboard">
+        <OptionWrapper to="/" title="dashboard" onClick={() => {props.setTitle("rooms")}}>
           <DashboardIcon />
           <OptionTitle>Dashboard</OptionTitle>
         </OptionWrapper>
-        <OptionWrapper to="/rooms" title="rooms">
+        <OptionWrapper to="/rooms" title="rooms" onClick={() => {props.setTitle("rooms")}}>
           <RoomsIcon />
           <OptionTitle>Rooms</OptionTitle>
         </OptionWrapper>
-        <OptionWrapper to="/bookings" title="bookings">
+        <OptionWrapper to="/bookings" title="bookings" onClick={() => {props.setTitle("bookings")}}>
           <BookingsIcon />
           <OptionTitle>Bookings</OptionTitle>
         </OptionWrapper>
-        <OptionWrapper to="/contact" title="contact">
+        <OptionWrapper to="/contact" title="contact" onClick={() => {props.setTitle("contact")}}>
           <ContactIcon />
           <OptionTitle>Contact</OptionTitle>
         </OptionWrapper>
-        <OptionWrapper to="/users" title="users">
+        <OptionWrapper to="/users" title="users" onClick={() => {props.setTitle("users")}}>
           <UsersIcon />
           <OptionTitle>Users</OptionTitle>
         </OptionWrapper>
