@@ -83,8 +83,10 @@ const OptionSelect = styled.option`
 
 export const Bookings = () => {
 
-  
+
   const [filter, setFilter] = useState("All Bookings");
+
+  const [selected, setSelected] = useState('Orderdate');
 
   return (
     <PageWrapper>
@@ -108,7 +110,7 @@ export const Bookings = () => {
             placeholder="Search booking by client name..."
             type="text"
           />
-          <SelectorFilter defaultValue="Orderdate">
+          <SelectorFilter defaultValue="Orderdate" onChange={(event) => setSelected(event.target.value)}>
             <OptionSelect value="Guest">Guest</OptionSelect>
             <OptionSelect value="Orderdate">Order Date</OptionSelect>
             <OptionSelect value="Checkin">Check in</OptionSelect>
@@ -117,9 +119,10 @@ export const Bookings = () => {
         </FilterContainer>
         <TableContainer>
           <TableTitles data={bookingsData} />
-          <TableContent data={bookingsData} filter={filter} />
+          <TableContent data={bookingsData} filter={filter} selected={selected}/>
         </TableContainer>
       </OuterContainer>
     </PageWrapper>
   );
 };
+
