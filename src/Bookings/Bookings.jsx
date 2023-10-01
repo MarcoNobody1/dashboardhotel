@@ -88,6 +88,53 @@ export const Bookings = () => {
 
   const [selected, setSelected] = useState('Orderdate');
 
+  const filtered = bookingsData.filter((booking) => {
+    switch (filter) {
+      case "All Bookings":
+        return true;
+      case "Checking In":
+        return booking.status === "Check In";
+      case "Checking Out":
+        return booking.status === "Check Out";
+      case "In Progress":
+        return booking.status === "In Progress";
+      default:
+        return false;
+    }
+  });
+
+  if (selected === "Orderdate") {
+    filtered.sort((a, b) => {
+      const dateA = new Date(a.order_date);
+      const dateB = new Date(b.order_date);
+      return dateB - dateA;
+    });
+  } else if (selected === "Checkin") {
+    filtered.sort((a, b) => {
+      const dateA = new Date(a.check_in);
+      const dateB = new Date(b.check_in);
+      return dateB - dateA;
+    });
+  } else if (selected === "Checkout") {
+    filtered.sort((a, b) => {
+      const dateA = new Date(a.check_out);
+      const dateB = new Date(b.check_out);
+      return dateB - dateA;
+    });
+  } else if (selected === "Guest") {
+    filtered.sort((a, b) => {
+      const nombreA = a.guest.nombre.toUpperCase();
+      const nombreB = b.guest.nombre.toUpperCase();
+      if (nombreA < nombreB) {
+        return -1;
+      }
+      if (nombreA > nombreB) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
   return (
     <PageWrapper>
       <OuterContainer>
@@ -119,7 +166,7 @@ export const Bookings = () => {
         </FilterContainer>
         <TableContainer>
           <TableTitles data={bookingsData} />
-          <TableContent data={bookingsData} filter={filter} selected={selected}/>
+          <TableContent data={filtered}/>
         </TableContainer>
       </OuterContainer>
     </PageWrapper>
