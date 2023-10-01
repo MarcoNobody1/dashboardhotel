@@ -28,7 +28,7 @@ export const App = () => {
         {loggedIn && <Sidebar setTitle={setTitle}/>}
         {loggedIn && <Header titleText={title} setLoggedIn={setLoggedIn} />}
         <Routes>
-          <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
+          <Route path="/login" element={<Login setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>} />
           <Route
             path="/"
             element={

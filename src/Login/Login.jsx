@@ -73,12 +73,11 @@ const Advertice = styled.p`
   display: inline-block;
 `;
 
-
 export const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const nav = useNavigate();
-
+  props.loggedIn && nav("/");
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -110,7 +109,6 @@ export const Login = (props) => {
   const handlePassword = (event) => {
     setPassword(event.target.value);
   };
-
 
   return (
     <>
