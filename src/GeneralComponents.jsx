@@ -3,7 +3,7 @@ import { contactMessages } from "./data/contactjson";
 import { BsFillBookmarkCheckFill, BsArrowsFullscreen } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsTrash3 } from "react-icons/bs";
 
 export const DefaultIcon = styled.div.attrs((props) => ({
@@ -27,75 +27,76 @@ export const PageWrapper = styled.main`
 `;
 
 const ImageWrapper = styled.div`
-padding: 20px;
-display: flex;
-align-items: center;
-background-color: #ffedec;
-border-radius: 8px;
-transition: all 250ms ease-out;
-margin-right: 22px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  background-color: #ffedec;
+  border-radius: 8px;
+  transition: all 250ms ease-out;
+  margin-right: 22px;
 `;
 
 const NotificationIcon = styled(DefaultIcon)`
-color: #e23428;
+  color: #e23428;
 `;
 
 const NotificationOuter = styled.div`
-width: 340px;
-background: #ffffff;
-box-shadow: 0px 4px 4px #00000005;
-border-radius: 12px;
-padding: 30px;
-display: inline-block;
-margin-right: 20px;
-transition: all 250ms ease-out;
-cursor: pointer;
+  width: 340px;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px #00000005;
+  border-radius: 12px;
+  padding: 30px;
+  display: inline-block;
+  margin-right: 20px;
+  transition: all 250ms ease-out;
+  cursor: pointer;
 
-&:hover {
-  transform: scale(1.05);
-}
+  &:hover {
+    transform: scale(1.05);
+  }
 
-&:hover ${ImageWrapper} {
-  background-color: #e23428;
-}
+  &:hover ${ImageWrapper} {
+    background-color: #e23428;
+  }
 
-&:hover ${NotificationIcon} {
-  color: #fff;
-}
+  &:hover ${NotificationIcon} {
+    color: #fff;
+  }
 `;
 
 const ContentWrap = styled.div`
-display: inline-block;
+  display: inline-block;
 `;
 
-
-
 const NotificationNumber = styled.h5`
-text-align: left;
-font: normal normal 600 30px/46px Poppins;
-letter-spacing: 0px;
-color: #393939;
+  text-align: left;
+  font: normal normal 600 30px/46px Poppins;
+  letter-spacing: 0px;
+  color: #393939;
 `;
 
 const NotificationType = styled.p`
-text-align: left;
-font: normal normal 300 14px/21px Poppins;
-letter-spacing: 0px;
-color: #787878;
+  text-align: left;
+  font: normal normal 300 14px/21px Poppins;
+  letter-spacing: 0px;
+  color: #787878;
 `;
 
 const NotificationWrapper = styled.div`
-display: flex;
+  display: flex;
 `;
 
-
 export const Notification = (props) => {
-
   const Icon = () => <NotificationIcon as={props.icon} />;
+  const nav = useNavigate();
 
   return (
     <>
-      <NotificationOuter>
+      <NotificationOuter
+        onClick={() => {
+          nav("/bookings");
+        }}
+      >
         <NotificationWrapper>
           <ImageWrapper>
             <Icon />
@@ -297,12 +298,12 @@ const BookingTitle = styled.p`
 `;
 
 export const TableTitles = (props) => {
-  const bookingKeys = Object.keys(props.data[0]);
+  const keys = Object.keys(props.data[0]);
 
   return (
     <>
       <TableTitleWrapper>
-        {bookingKeys.map((title, index) => (
+        {keys.map((title, index) => (
           <BookingTitle key={index}>{title.replace("_", " ")}</BookingTitle>
         ))}
       </TableTitleWrapper>
@@ -398,7 +399,7 @@ const StatusDiv = styled.div`
 const TrashIcon = styled(BsTrash3)`
   font-size: 20px;
   position: absolute;
-  top: 5px;
+  top: 27.5px;
   right: 5px;
 
   &:hover {
@@ -412,14 +413,14 @@ const FloatCross = styled(CrossIcon)`
 `;
 
 const NoteContainer = styled(ModalContainer)`
-min-height: 100px;
-display: flex;
-justify-content: center;
-align-items: center;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const NoteBackground = styled(ModalBackground)`
-background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 export const TableContent = (props) => {
@@ -439,8 +440,9 @@ export const TableContent = (props) => {
     return (
       <NoteBackground>
         <NoteContainer>
-        <FloatCross onClick={onCloseNote} />
-        {selectedNote.special_request}</NoteContainer>
+          <FloatCross onClick={onCloseNote} />
+          {selectedNote.special_request}
+        </NoteContainer>
       </NoteBackground>
     );
   };
@@ -471,8 +473,7 @@ export const TableContent = (props) => {
               <SpecialRequestButton
                 onClick={() => handleOpenNote(booking.guest.id_reserva)}
               >
-                {" "}
-                View Notes{" "}
+                View Notes
               </SpecialRequestButton>
             </InfoWrap>
             <InfoWrap>
