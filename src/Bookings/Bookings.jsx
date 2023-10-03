@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PageWrapper, TableContent, TableTitles } from "../GeneralComponents";
 import styled from "styled-components";
 import searchIcon from "../assets/iconSearchBar.png";
 import { bookingsData } from "../data/bookingsjson";
+import { info, statusinfo } from "../features/Bookings/bookingSlice";
+import { useSelector } from "react-redux";
 
 const OuterContainer = styled.div`
   display: flex;
@@ -80,9 +82,24 @@ const OptionSelect = styled.option`
 `;
 
 export const Bookings = () => {
-  const [filter, setFilter] = useState("All Bookings");
+  const infoBookings = useSelector(info);
+  const statusInfo = useSelector(statusinfo);
 
+  const [currenBookings, setCurrentBookings] = useState([]);
+  const [currentStatus, setCurrentStatus] = useState("");
+  const [filter, setFilter] = useState("All Bookings");
   const [selected, setSelected] = useState("Orderdate");
+
+  useEffect(() => {
+    if (statusInfo === "rejected") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "pending") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "fulfilled") {
+      setCurrentStatus(statusInfo);
+      setCurrentBookings(infoBookings);
+    }
+  }, [infoBookings,statusInfo]);
 
   const columns = [
     { header: "Full Name", accessor: "guest.nombre" },
@@ -94,7 +111,7 @@ export const Bookings = () => {
     { header: "Status", accessor: "status" },
   ];
 
-  const filtered = bookingsData.filter((booking) => {
+  const filtered = currenBookings.filter((booking) => {
     switch (filter) {
       case "All Bookings":
         return true;
@@ -142,45 +159,76 @@ export const Bookings = () => {
   }
 
   return (
-    <PageWrapper>
-      <OuterContainer>
-        <FilterContainer>
-          <ButtonsContainer>
-            <ButtonFilter
-              style={{color: filter === "All Bookings" &&  "#135846", borderBottom: filter === "All Bookings" &&  "2px solid #135846"}}
-              onClick={() => setFilter("All Bookings")}
-            >
-              All Bookings
-            </ButtonFilter>
-            <ButtonFilter style={{color: filter === "Checking In" &&  "#135846", borderBottom: filter === "Checking In" &&  "2px solid #135846"}} onClick={() => setFilter("Checking In")}>
-              Checking In
-            </ButtonFilter>
-            <ButtonFilter style={{color: filter === "Checking Out" &&  "#135846", borderBottom: filter === "Checking Out" &&  "2px solid #135846"}} onClick={() => setFilter("Checking Out")}>
-              Checking Out
-            </ButtonFilter>
-            <ButtonFilter style={{color: filter === "In Progress" &&  "#135846", borderBottom: filter === "In Progress" &&  "2px solid #135846"}} onClick={() => setFilter("In Progress")}>
-              In progress
-            </ButtonFilter>
-          </ButtonsContainer>
-          <SearchInput
-            placeholder="Search booking by client name..."
-            type="text"
-          />
-          <SelectorFilter
-            defaultValue="Orderdate"
-            onChange={(event) => setSelected(event.target.value)}
-          >
-            <OptionSelect value="Guest">Guest</OptionSelect>
-            <OptionSelect value="Orderdate">Order Date</OptionSelect>
-            <OptionSelect value="Checkin">Check in</OptionSelect>
-            <OptionSelect value="Checkout">Check out</OptionSelect>
-          </SelectorFilter>
-        </FilterContainer>
-        <TableContainer>
-          <TableTitles data={bookingsData} />
-          <TableContent data={filtered} columns={columns} />
-        </TableContainer>
-      </OuterContainer>
-    </PageWrapper>
+    <>
+      {currentStatus === "fulfilled" ? (
+          <PageWrapper>
+            <OuterContainer>
+              <FilterContainer>
+                <ButtonsContainer>
+                  <ButtonFilter
+                    style={{
+                      color: filter === "All Bookings" && "#135846",
+                      borderBottom: filter === "All Bookings" && "2px solid #135846",
+                    }}
+                    onClick={() => setFilter("All Bookings")}
+                  >
+                    All Bookings
+                  </ButtonFilter>
+                  <ButtonFilter
+                    style={{
+                      color: filter === "Checking In" && "#135846",
+                      borderBottom: filter === "Checking In" && "2px solid #135846",
+                    }}
+                    onClick={() => setFilter("Checking In")}
+                  >
+                    Checking In
+                  </ButtonFilter>
+                  <ButtonFilter
+                    style={{
+                      color: filter === "Checking Out" && "#135846",
+                      borderBottom: filter === "Checking Out" && "2px solid #135846",
+                    }}
+                    onClick={() => setFilter("Checking Out")}
+                  >
+                    Checking Out
+                  </ButtonFilter>
+                  <ButtonFilter
+                    style={{
+                      color: filter === "In Progress" && "#135846",
+                      borderBottom: filter === "In Progress" && "2px solid #135846",
+                    }}
+                    onClick={() => setFilter("In Progress")}
+                  >
+                    In progress
+                  </ButtonFilter>
+                </ButtonsContainer>
+                <SearchInput
+                  placeholder="Search booking by client name..."
+                  type="text"
+                />
+                <SelectorFilter
+                  defaultValue="Orderdate"
+                  onChange={(event) => setSelected(event.target.value)}
+                >
+                  <OptionSelect value="Guest">Guest</OptionSelect>
+                  <OptionSelect value="Orderdate">Order Date</OptionSelect>
+                  <OptionSelect value="Checkin">Check in</OptionSelect>
+                  <OptionSelect value="Checkout">Check out</OptionSelect>
+                </SelectorFilter>
+              </FilterContainer>
+              <TableContainer>
+                <TableTitles data={bookingsData} />
+                <TableContent data={filtered} columns={columns} />
+              </TableContainer>
+            </OuterContainer>
+          </PageWrapper>
+      ) : currentStatus === "rejected" ? (
+        alert("not good")
+      ) : (
+        <div>
+          <h1>Loading...</h1>
+        </div>
+      )}
+    </>
   );
 };
