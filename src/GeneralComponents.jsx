@@ -523,10 +523,10 @@ const RoomTitle = styled(BookingTitle)`
   min-width: 130px;
 
   &:nth-child(1) {
-    min-width: 312px;
+    min-width: 300px;
   }
   &:nth-child(3) {
-    min-width: 320px;
+    min-width: 480px;
   }
 `;
 
@@ -555,7 +555,7 @@ const RoomPhotoWrap = styled.div`
   display: flex;
   gap: 15px;
   flex-direction: row;
-  min-width: 312px;
+  min-width: 300px;
 `;
 
 const PhotoSpecs = styled.div`
@@ -568,7 +568,7 @@ const PhotoId = styled.p`
   font: normal normal 400 14px/21px Poppins;
   letter-spacing: 0px;
   color: #799283;
-  &::before{
+  &::before {
     font-size: 12px;
     content: "#";
   }
@@ -579,7 +579,7 @@ const PhotoRoomSpec = styled.p`
   letter-spacing: 0px;
   color: #393939;
   text-align: left;
-  &::before{
+  &::before {
     font-size: 12px;
     content: "Nº ";
   }
@@ -602,13 +602,15 @@ export const RoomTableContent = (props) => {
             <InfoWrap>
               <OrderDate>{room.room_type}</OrderDate>
             </InfoWrap>
-            <InfoWrap style={{minWidth:"320px"}}>
+            <InfoWrap style={{ minWidth: "480px" }}>
               <CheckIn>{room.amenities.join(", ")}</CheckIn>
             </InfoWrap>
             <InfoWrap
               style={{
                 color: room.offer_price.isOffer && "#b2b2b2",
                 textDecoration: room.offer_price.isOffer && "line-through",
+                fontWeight: 600,
+                fontSize: "18px",
               }}
             >
               ${room.price}
