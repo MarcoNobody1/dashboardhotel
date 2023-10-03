@@ -10,17 +10,20 @@ import { Users } from "./Users/Users";
 import { Header } from "./Header/Header";
 import Sidebar from "./Sidebar/Sidebar";
 import BookingDetails from "./Bookings/BookingDetails";
+import { useDispatch } from "react-redux";
+import { getData } from "./features/Bookings/bookingThunks";
 
 export const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [title, setTitle] = useState("Dashboard")
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("log");
     if (isLoggedIn) {
       setLoggedIn(true);
     }
-  }, []);
+      dispatch(getData());
+  }, [dispatch]);
 
   return (
     <>
