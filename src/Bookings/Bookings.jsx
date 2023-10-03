@@ -28,7 +28,6 @@ const ButtonsContainer = styled(FilterContainer)`
   gap: 10px;
   padding: 5px;
   padding-bottom: 0;
-  width: auto;
   margin-right: 250px;
   border-bottom: 1px solid #d4d4d4;
 `;
@@ -45,7 +44,6 @@ const ButtonFilter = styled.button`
   border-bottom: 2px solid transparent;
 
   &:hover {
-    font-weight: 500;
     color: #135846;
     cursor: pointer;
     border-bottom: 2px solid #135846;
@@ -82,11 +80,19 @@ const OptionSelect = styled.option`
 `;
 
 export const Bookings = () => {
-
-
   const [filter, setFilter] = useState("All Bookings");
 
-  const [selected, setSelected] = useState('Orderdate');
+  const [selected, setSelected] = useState("Orderdate");
+
+  const columns = [
+    { header: "Full Name", accessor: "guest.nombre" },
+    { header: "Order Date", accessor: "order_date" },
+    { header: "Check-In Date", accessor: "check_in" },
+    { header: "Check-Out Date", accessor: "check_out" },
+    { header: "Special Request", accessor: "special_request" },
+    { header: "Room Type", accessor: "room" },
+    { header: "Status", accessor: "status" },
+  ];
 
   const filtered = bookingsData.filter((booking) => {
     switch (filter) {
@@ -140,16 +146,19 @@ export const Bookings = () => {
       <OuterContainer>
         <FilterContainer>
           <ButtonsContainer>
-            <ButtonFilter onClick={() => setFilter("All Bookings")}>
+            <ButtonFilter
+              style={{color: filter === "All Bookings" &&  "#135846", borderBottom: filter === "All Bookings" &&  "2px solid #135846"}}
+              onClick={() => setFilter("All Bookings")}
+            >
               All Bookings
             </ButtonFilter>
-            <ButtonFilter onClick={() => setFilter("Checking In")}>
+            <ButtonFilter style={{color: filter === "Checking In" &&  "#135846", borderBottom: filter === "Checking In" &&  "2px solid #135846"}} onClick={() => setFilter("Checking In")}>
               Checking In
             </ButtonFilter>
-            <ButtonFilter onClick={() => setFilter("Checking Out")}>
+            <ButtonFilter style={{color: filter === "Checking Out" &&  "#135846", borderBottom: filter === "Checking Out" &&  "2px solid #135846"}} onClick={() => setFilter("Checking Out")}>
               Checking Out
             </ButtonFilter>
-            <ButtonFilter onClick={() => setFilter("In Progress")}>
+            <ButtonFilter style={{color: filter === "In Progress" &&  "#135846", borderBottom: filter === "In Progress" &&  "2px solid #135846"}} onClick={() => setFilter("In Progress")}>
               In progress
             </ButtonFilter>
           </ButtonsContainer>
@@ -157,7 +166,10 @@ export const Bookings = () => {
             placeholder="Search booking by client name..."
             type="text"
           />
-          <SelectorFilter defaultValue="Orderdate" onChange={(event) => setSelected(event.target.value)}>
+          <SelectorFilter
+            defaultValue="Orderdate"
+            onChange={(event) => setSelected(event.target.value)}
+          >
             <OptionSelect value="Guest">Guest</OptionSelect>
             <OptionSelect value="Orderdate">Order Date</OptionSelect>
             <OptionSelect value="Checkin">Check in</OptionSelect>
@@ -166,10 +178,9 @@ export const Bookings = () => {
         </FilterContainer>
         <TableContainer>
           <TableTitles data={bookingsData} />
-          <TableContent data={filtered}/>
+          <TableContent data={filtered} columns={columns} />
         </TableContainer>
       </OuterContainer>
     </PageWrapper>
   );
 };
-
