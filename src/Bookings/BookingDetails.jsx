@@ -300,6 +300,12 @@ export const BookingDetails = () => {
                     : selectedBooking.status === "Check Out"
                     ? "#E23428"
                     : "#E2B308",
+                    border:
+                  selectedBooking.status === "Check In"
+                    ? "3px solid #5ad07a"
+                    : selectedBooking.status === "Check Out"
+                    ? "3px solid #E23428"
+                    : "3px solid #E2B308",
               }}
             >
               {selectedBooking.status}
