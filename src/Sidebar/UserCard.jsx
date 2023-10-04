@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import profileImg from "../assets/ProfilePic.jpg";
+import { AuthContext } from "../Login/Auth";
 
 const OuterWrap = styled.div`
   display: flex;
@@ -72,6 +73,7 @@ const EditButton = styled.button`
 `;
 
 export const UserCard = () => {
+  const {auth} = useContext(AuthContext);
   return (
     <>
       <OuterWrap>
@@ -79,8 +81,8 @@ export const UserCard = () => {
           <ProfilePic src={profileImg} />
         </ImageWrap>
         <ContentWrap>
-          <FullName>Marco Cámara</FullName>
-          <EmailText>marcocamaradiaz@gmail.com</EmailText>
+          <FullName>{auth.username}</FullName>
+          <EmailText>{auth.email}</EmailText>
           <EditButton>Edit</EditButton>
         </ContentWrap>
       </OuterWrap>
