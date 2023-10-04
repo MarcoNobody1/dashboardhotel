@@ -4,7 +4,8 @@ import styled from "styled-components";
 import searchIcon from "../assets/iconSearchBar.png";
 import { bookingsData } from "../data/bookingsjson";
 import { info, statusinfo } from "../features/Bookings/bookingSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getData } from "../features/Bookings/bookingThunks";
 
 const OuterContainer = styled.div`
   display: flex;
@@ -82,6 +83,12 @@ const OptionSelect = styled.option`
 `;
 
 export const Bookings = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getData());
+  }, [dispatch]);
+  
   const infoBookings = useSelector(info);
   const statusInfo = useSelector(statusinfo);
 
