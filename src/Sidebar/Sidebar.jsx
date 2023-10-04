@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import logo from "../assets/LogoHotelHub.png";
 import { DefaultIcon } from "../GeneralComponents";
@@ -11,6 +11,7 @@ import {
 import { TbMessage2 } from "react-icons/tb";
 import { UserCard } from "./UserCard";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../Login/Auth";
 
 const NavWrap = styled.aside`
   width: 345px;
@@ -104,28 +105,35 @@ const FooterFinal = styled(FooterRights)`
   text-align: center;
 `;
 
-export const Sidebar = (props) => {
+export const Sidebar = () => {
+  const { auth } = useContext(AuthContext);
+
+
+if(!auth.authenticated){
+  return null;
+}
+
   return (
     <>
       <NavWrap>
         <Logo src={logo} />
-        <OptionWrapper to="/" title="dashboard" onClick={() => {props.setTitle("Dashboard")}}>
+        <OptionWrapper to="/" title="dashboard" >
           <DashboardIcon />
           <OptionTitle>Dashboard</OptionTitle>
         </OptionWrapper>
-        <OptionWrapper to="/rooms" title="rooms" onClick={() => {props.setTitle("Rooms")}}>
+        <OptionWrapper to="/rooms" title="rooms">
           <RoomsIcon />
           <OptionTitle>Rooms</OptionTitle>
         </OptionWrapper>
-        <OptionWrapper to="/bookings" title="bookings" onClick={() => {props.setTitle("Bookings")}}>
+        <OptionWrapper to="/bookings" title="bookings">
           <BookingsIcon />
           <OptionTitle>Bookings</OptionTitle>
         </OptionWrapper>
-        <OptionWrapper to="/contact" title="contact" onClick={() => {props.setTitle("Contact")}}>
+        <OptionWrapper to="/contact" title="contact">
           <ContactIcon />
           <OptionTitle>Contact</OptionTitle>
         </OptionWrapper>
-        <OptionWrapper to="/users" title="users" onClick={() => {props.setTitle("Users")}}>
+        <OptionWrapper to="/users" title="users">
           <UsersIcon />
           <OptionTitle>Users</OptionTitle>
         </OptionWrapper>
