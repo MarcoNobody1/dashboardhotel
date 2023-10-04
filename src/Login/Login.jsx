@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import logo from "../assets/LogoHotelHub.png";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import { AuthContext } from "./Auth";
 
 const LogWrapper = styled.div`
   background-color: lightcyan;
@@ -73,18 +74,29 @@ const Advertice = styled.p`
   display: inline-block;
 `;
 
-export const Login = (props) => {
+export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const nav = useNavigate();
-  props.loggedIn && nav("/");
+  const { auth, authDispatch } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (auth && auth.authenticated) {
+      nav("/");
+      
+    }
+  }, [auth, nav]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (email === "marcocamaradiaz@gmail.com" && password === "Marco") {
-      props.setLoggedIn(true);
+      authDispatch({
+        type: "login",
+        payload: { username: password, email: email },
+      });
+      
       nav("/");
-      localStorage.setItem("log", true);
     } else {
       const Toast = Swal.mixin({
         toast: true,
