@@ -1,15 +1,17 @@
+import { useContext } from "react";
 import { Navigate } from "react-router";
+import { AuthContext } from "./Auth";
 
-const log = JSON.parse(localStorage.getItem('log'));
+export const PrivateRoute = ({children }) => {
+const { auth } = useContext(AuthContext);
 
-export const PrivateRoute = ({ loggedIn, children }) => {
-  if (loggedIn || log) {
-    return (children);
-  } else {
+  if (!auth.authenticated) {
     return (
       <>
         <Navigate to="/login" />
       </>
     );
   }
+
+  return children
 };
