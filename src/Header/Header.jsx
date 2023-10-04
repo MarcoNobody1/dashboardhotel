@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { PiArrowsLeftRightBold } from "react-icons/pi";
 import { BsMailbox2, BsBellFill } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import { DefaultIcon } from "../GeneralComponents";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { AuthContext } from "../Login/Auth";
 
 const OuterWrap = styled.nav`
   background-color: #fff;
@@ -34,12 +35,37 @@ const Title = styled.h1`
   flex: 8;
 `;
 
-export const Header = (props) => {
+export const Header = () => {
   const navigate = useNavigate();
+  const { auth, authDispatch } = useContext(AuthContext);
+  const [title, setTitle] = useState("Dashboard");
+  const location = useLocation();
+
+  useEffect(()=>{
+    switch (location.pathname) {
+      case "/contact":
+        setTitle("Contact");
+        break;
+      case "/bookings":
+        setTitle("Bookings");
+        break;
+      case "/users":
+        setTitle("Users");
+        break;
+      case "/rooms":
+        setTitle("Rooms");
+        break;
+      default:
+        setTitle("Dashboard");
+    }
+  },[location.pathname])
+
+  if (!auth.authenticated) {
+    return null;
+  }
 
   const handleLogOut = () => {
-    localStorage.removeItem("log");
-    props.setLoggedIn(false);
+    authDispatch({ type: "logout" });
     navigate("/login");
   };
 
@@ -49,7 +75,7 @@ export const Header = (props) => {
         <IconWrap>
           <MenuIcon />
         </IconWrap>
-        <Title>{props.titleText}</Title>
+        <Title>{title}</Title>
         <IconWrap>
           <MessageIcon />
         </IconWrap>
