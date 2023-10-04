@@ -20,19 +20,27 @@ export const App = () => {
           <Header />
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route
+              path="/*"
+              element={
+                <PrivateRoute>
+                  <Routes>
+                    <Route index element={<Dashboard />} />
+                    <Route path="/bookings" element={<Bookings />} />
+                    <Route path="/bookings/:id" element={<BookingDetails />} />
+                    <Route path="/rooms" element={<Rooms />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/users" element={<Users />} />
+                  </Routes>
+                </PrivateRoute>
+              }
+            />
           </Routes>
-          <PrivateRoute>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/bookings" element={<Bookings />} />
-              <Route path="/bookings/:id" element={<BookingDetails />} />
-              <Route path="/rooms" element={<Rooms />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/users" element={<Users />} />
-            </Routes>
-          </PrivateRoute>
         </AuthContainer>
       </BrowserRouter>
     </>
   );
 };
+
+
+
