@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteData, get1Data } from "./features/Bookings/bookingThunks";
 import { deleteStatus } from "./features/Bookings/bookingSlice";
 import { LineWave } from "react-loader-spinner";
+import { deleteRoomsData, get1RoomData } from "./features/Rooms/roomThunks";
+import { roomdeleteStatus } from "./features/Rooms/roomSlice";
 
 export const DefaultIcon = styled.div.attrs((props) => ({
   $color: props.$color || "#135846",
@@ -604,6 +606,9 @@ const RoomTitle = styled(BookingTitle)`
   &:nth-child(3) {
     min-width: 480px;
   }
+  &:nth-child(6) {
+    min-width: 200px;
+  }
 `;
 
 export const RoomTableTitles = (props) => {
@@ -640,7 +645,7 @@ const PhotoSpecs = styled.div`
   justify-content: center;
 `;
 
-const PhotoId = styled.p`
+const PhotoId = styled(Link)`
   font: normal normal 400 14px/21px Poppins;
   letter-spacing: 0px;
   color: #799283;
@@ -663,6 +668,29 @@ const PhotoRoomSpec = styled.p`
 
 export const RoomTableContent = (props) => {
   const rooms = props.data;
+  const dispatch = useDispatch();
+  const statusInfo = useSelector(roomdeleteStatus);
+  const [currentStatus, setCurrentStatus] = useState("");
+
+
+  useEffect(() => {
+    if (statusInfo === "rejected") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "pending") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "fulfilled") {
+      setCurrentStatus(statusInfo);
+    }
+  }, [statusInfo]);
+
+  const handleDelete = (id) => {
+    dispatch(deleteRoomsData(id));
+  }
+
+  const handleGetDetails = (id) => {
+    dispatch(get1RoomData(id));
+  };
+
   return (
     <>
       <ContentWrapper>
@@ -671,7 +699,7 @@ export const RoomTableContent = (props) => {
             <RoomPhotoWrap>
               <ImageRoom src={room.room_name.room_photo} />
               <PhotoSpecs>
-                <PhotoId>{room.room_name.id}</PhotoId>
+                <PhotoId to={`/rooms/${room.room_name.id}`}  onClick={() => handleGetDetails(room.room_name.id)} >{room.room_name.id}</PhotoId>
                 <PhotoRoomSpec>{room.room_name.room_number}</PhotoRoomSpec>
               </PhotoSpecs>
             </RoomPhotoWrap>
@@ -696,17 +724,40 @@ export const RoomTableContent = (props) => {
                 "$" +
                   (room.price - (room.price * room.offer_price.discount) / 100)}
             </InfoWrap>
-            <InfoWrap>
+            <InfoWrap style={{ minWidth: "200px" }} >
               <StatusDiv
                 style={{
                   backgroundColor:
                     room.status === "available" ? "#e8ffee" : "#FFEDEC",
                   color: room.status === "available" ? "#5ad07a" : "#E23428",
+                  maxWidth:"130px"
                 }}
               >
                 {room.status}
               </StatusDiv>
             </InfoWrap>
+            {currentStatus === "fulfilled" ? (
+              <TrashIcon
+              onClick={() => handleDelete(room.room_name.id)}
+            />
+            ) : currentStatus === "rejected" ? (
+              alert("not good")
+            ) : (
+              <Floater>
+                <LineWave
+                  height="80"
+                  width="80"
+                  color=""
+                  ariaLabel="line-wave"
+                  wrapperStyle=""
+                  wrapperClass=""
+                  visible={true}
+                  firstLineColor="#113C30"
+                  middleLineColor="#517A6F"
+                  lastLineColor="#E3342C"
+                />
+              </Floater>
+            )}
           </RowWrapper>
         ))}
       </ContentWrapper>
