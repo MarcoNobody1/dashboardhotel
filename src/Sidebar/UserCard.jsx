@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import profileImg from "../assets/ProfilePic.jpg";
 import { AuthContext } from "../Login/Auth";
 import {
   CrossIcon,
@@ -8,7 +7,6 @@ import {
   ModalContainer,
   ModalContent,
 } from "../GeneralComponents";
-import { Input } from "../Login/Login";
 
 const OuterWrap = styled.div`
   display: flex;
@@ -38,6 +36,7 @@ const ContentWrap = styled.div`
   margin-top: -35px;
   position: relative;
   z-index: 1;
+  min-width: 257px;
 `;
 
 const ProfilePic = styled.img`
@@ -86,30 +85,116 @@ const ProfileLabel = styled.label`
   margin-right: 15px;
 `;
 
-export const UserCard = () => {
-  const { auth } = useContext(AuthContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const FormChange = styled.form`
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
+const InputChange = styled.input`
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 300px;
+  text-align: left;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 2px solid black;
+  transition: all 0.3s ease-out;
+`;
+
+const NewProfilePhoto = styled.img`
+  max-width: 80px;
+  max-height: 80px;
+  position: absolute;
+  right: 5%;
+  bottom: 60%;
+`;
+
+export const UserCard = () => {
+  const { auth, authDispatch } = useContext(AuthContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const Modal = ({ onClose }) => {
+    const [newUser, setNewUser] = useState("");
+    const [newEmail, setNewEmail] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
+
+    const handleUserChange = (event) => {
+      console.log(typeof event.target.value.length);
+      setNewUser(event.target.value);
+    };
+
+    const handleEmailChange = (event) => {
+      setNewEmail(event.target.value);
+    };
+
+    const handleNewPhoto = (event) => {
+      const file = event.target.files[0];
+      if (file && file.type.startsWith("image/")) {
+        const imageUrl = URL.createObjectURL(file);
+
+        setImageUrl(imageUrl);
+      } else {
+        alert("Por favor, selecciona un archivo de imagen válido.");
+      }
+    };
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      authDispatch({
+        type: "update",
+        payload: { username: newUser, email: newEmail, photo: imageUrl },
+      });
+      setIsModalOpen(false);
+    };
+
     return (
-      <ModalBackground>
-        <ModalContainer style={{ maxWidth: "700px", minWidth: "600px"}}>
-          <CrossIcon onClick={onClose} />
-          <ProfileLabel>Username: </ProfileLabel>
-          <Input
-            style={{ maxWidth: "300px", display: "inline-block" }}
-            placeholder="Type your username"
-          />
-          <br />
-          <ProfileLabel>Email: </ProfileLabel>
-          <Input
-            style={{ maxWidth: "300px", display: "inline-block" }}
-            placeholder="Type your personal e-mail"
-          />
-          <ModalContent>Hello World!</ModalContent>
-          <EditButton>Change it!</EditButton>
-        </ModalContainer>
-      </ModalBackground>
+      <>
+        <ModalBackground>
+          <ModalContainer style={{ maxWidth: "700px", minWidth: "600px" }}>
+            <CrossIcon onClick={onClose} />
+            <FormChange onSubmit={handleSubmit}>
+              <ProfileLabel htmlFor="photo">Profile Photo: </ProfileLabel>
+              <InputChange
+                type="file"
+                accept="image/*"
+                id="photo"
+                name="photo"
+                onChange={handleNewPhoto}
+              />
+              <ProfileLabel htmlFor="usernamenew">Username: </ProfileLabel>
+              <InputChange
+                autoComplete="off"
+                id="usernamenew"
+                name="username"
+                onChange={handleUserChange}
+                placeholder="Type your username"
+              />
+              <br />
+              {imageUrl && <NewProfilePhoto src={imageUrl} alt="Preview" />}
+              <ProfileLabel htmlFor="emailnew">Email: </ProfileLabel>
+              <InputChange
+                id="emailnew"
+                name="email"
+                autoComplete="off"
+                onChange={handleEmailChange}
+                placeholder="Type your personal e-mail"
+              />
+              <ModalContent>
+                Last Username: <strong>{auth.username}</strong>
+              </ModalContent>
+              <ModalContent>
+                Last Email: <strong>{auth.email}</strong>
+              </ModalContent>
+              <br />
+              <EditButton type="submit">Change it!</EditButton>
+            </FormChange>
+          </ModalContainer>
+        </ModalBackground>
+      </>
     );
   };
 
@@ -117,7 +202,7 @@ export const UserCard = () => {
     <>
       <OuterWrap>
         <ImageWrap>
-          <ProfilePic src={profileImg} />
+          <ProfilePic src={auth.photo} />
         </ImageWrap>
         <ContentWrap>
           <FullName>{auth.username}</FullName>
