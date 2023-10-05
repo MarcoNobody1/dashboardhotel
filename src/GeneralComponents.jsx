@@ -2,10 +2,14 @@ import styled from "styled-components";
 import { contactMessages } from "./data/contactjson";
 import { BsFillBookmarkCheckFill, BsArrowsFullscreen } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsTrash3 } from "react-icons/bs";
 import { ToggleContext } from "./Sidebar/ToggleSidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteData, get1Data } from "./features/Bookings/bookingThunks";
+import { deleteStatus } from "./features/Bookings/bookingSlice";
+import { LineWave } from "react-loader-spinner";
 
 export const DefaultIcon = styled.div.attrs((props) => ({
   $color: props.$color || "#135846",
@@ -396,6 +400,7 @@ const SpecialRequestButton = styled.button`
   color: #135846;
   padding: 13px 10px;
   transition: all 150ms ease-out;
+  border: none;
 
   &:hover {
     cursor: pointer;
@@ -446,15 +451,40 @@ const NoteBackground = styled(ModalBackground)`
   background-color: rgba(0, 0, 0, 0.2);
 `;
 
+const Floater = styled.div`
+position: absolute;
+right: 55%;
+`;
+
 export const TableContent = (props) => {
   const bookings = props.data;
-
+  const dispatch = useDispatch();
+  const statusInfo = useSelector(deleteStatus);
   const [isNoteOpen, setIsNoteOpen] = useState(false);
   const [selectedNoteId, setSelectedNoteId] = useState(null);
+  const [currentStatus, setCurrentStatus] = useState("");
+
+  useEffect(() => {
+    if (statusInfo === "rejected") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "pending") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "fulfilled") {
+      setCurrentStatus(statusInfo);
+    }
+  }, [statusInfo]);
+
+  const handleDelete = (id) => {
+    dispatch(deleteData(id));
+  };
 
   const handleOpenNote = (commentId) => {
     setSelectedNoteId(commentId);
     setIsNoteOpen(true);
+  };
+
+  const handleGetDetails = (id) => {
+    dispatch(get1Data(id));
   };
   const Modal = ({ commentId, onCloseNote }) => {
     const selectedNote = bookings.find(
@@ -479,7 +509,10 @@ export const TableContent = (props) => {
               <FullNameGuest>
                 {booking.guest.nombre} {booking.guest.apellidos}
               </FullNameGuest>
-              <BookingId to={`/bookings/${booking.guest.id_reserva}`}>
+              <BookingId
+                onClick={() => handleGetDetails(booking.guest.id_reserva)}
+                to={`/bookings/${booking.guest.id_reserva}`}
+              >
                 {booking.guest.id_reserva}
               </BookingId>
             </MainInfoWrap>
@@ -524,7 +557,28 @@ export const TableContent = (props) => {
                 {booking.status}
               </StatusDiv>
             </InfoWrap>
-            <TrashIcon />
+            {currentStatus === "fulfilled" ? (
+              <TrashIcon
+                onClick={() => handleDelete(booking.guest.id_reserva)}
+              />
+            ) : currentStatus === "rejected" ? (
+              alert("not good")
+            ) : (
+              <Floater>
+                <LineWave
+                  height="80"
+                  width="80"
+                  color=""
+                  ariaLabel="line-wave"
+                  wrapperStyle=""
+                  wrapperClass=""
+                  visible={true}
+                  firstLineColor="#113C30"
+                  middleLineColor="#517A6F"
+                  lastLineColor="#E3342C"
+                />
+              </Floater>
+            )}
           </RowWrapper>
         ))}
       </ContentWrapper>
