@@ -11,6 +11,7 @@ import Sidebar from "./Sidebar/Sidebar";
 import BookingDetails from "./Bookings/BookingDetails";
 import { AuthContainer } from "./Login/Auth";
 import { ToggleContainer } from "./Sidebar/ToggleSidebar";
+import RoomDetails from "./Rooms/RoomDetails";
 
 export const App = () => {
   return (
@@ -30,6 +31,7 @@ export const App = () => {
                     <Route path="/bookings" element={<Bookings />} />
                     <Route path="/bookings/:id" element={<BookingDetails />} />
                     <Route path="/rooms" element={<Rooms />} />
+                    <Route path="/rooms/:id" element={<RoomDetails />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/users" element={<Users />} />
                   </Routes>
