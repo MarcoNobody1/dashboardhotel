@@ -6,6 +6,7 @@ import { bookingsData } from "../data/bookingsjson";
 import { info, statusinfo } from "../features/Bookings/bookingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../features/Bookings/bookingThunks";
+import { Hourglass } from "react-loader-spinner";
 
 const OuterContainer = styled.div`
   display: flex;
@@ -78,6 +79,12 @@ const SelectorFilter = styled.select`
   letter-spacing: 0px;
 `;
 
+const Floater = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 40%;
+`;
+
 const OptionSelect = styled.option`
   font: normal normal 400 16px/25px Poppins;
 `;
@@ -88,7 +95,7 @@ export const Bookings = () => {
   useEffect(() => {
     dispatch(getData());
   }, [dispatch]);
-  
+
   const infoBookings = useSelector(info);
   const statusInfo = useSelector(statusinfo);
 
@@ -106,17 +113,7 @@ export const Bookings = () => {
       setCurrentStatus(statusInfo);
       setCurrentBookings(infoBookings);
     }
-  }, [infoBookings,statusInfo]);
-
-  const columns = [
-    { header: "Full Name", accessor: "guest.nombre" },
-    { header: "Order Date", accessor: "order_date" },
-    { header: "Check-In Date", accessor: "check_in" },
-    { header: "Check-Out Date", accessor: "check_out" },
-    { header: "Special Request", accessor: "special_request" },
-    { header: "Room Type", accessor: "room" },
-    { header: "Status", accessor: "status" },
-  ];
+  }, [infoBookings, statusInfo]);
 
   const filtered = currenBookings.filter((booking) => {
     switch (filter) {
@@ -167,75 +164,87 @@ export const Bookings = () => {
 
   return (
     <>
-      {currentStatus === "fulfilled" ? (
-          <PageWrapper>
-            <OuterContainer>
-              <FilterContainer>
-                <ButtonsContainer>
-                  <ButtonFilter
-                    style={{
-                      color: filter === "All Bookings" && "#135846",
-                      borderBottom: filter === "All Bookings" && "2px solid #135846",
-                    }}
-                    onClick={() => setFilter("All Bookings")}
-                  >
-                    All Bookings
-                  </ButtonFilter>
-                  <ButtonFilter
-                    style={{
-                      color: filter === "Checking In" && "#135846",
-                      borderBottom: filter === "Checking In" && "2px solid #135846",
-                    }}
-                    onClick={() => setFilter("Checking In")}
-                  >
-                    Checking In
-                  </ButtonFilter>
-                  <ButtonFilter
-                    style={{
-                      color: filter === "Checking Out" && "#135846",
-                      borderBottom: filter === "Checking Out" && "2px solid #135846",
-                    }}
-                    onClick={() => setFilter("Checking Out")}
-                  >
-                    Checking Out
-                  </ButtonFilter>
-                  <ButtonFilter
-                    style={{
-                      color: filter === "In Progress" && "#135846",
-                      borderBottom: filter === "In Progress" && "2px solid #135846",
-                    }}
-                    onClick={() => setFilter("In Progress")}
-                  >
-                    In progress
-                  </ButtonFilter>
-                </ButtonsContainer>
-                <SearchInput
-                  placeholder="Search booking by client name..."
-                  type="text"
-                />
-                <SelectorFilter
-                  defaultValue="Orderdate"
-                  onChange={(event) => setSelected(event.target.value)}
-                >
-                  <OptionSelect value="Guest">Guest</OptionSelect>
-                  <OptionSelect value="Orderdate">Order Date</OptionSelect>
-                  <OptionSelect value="Checkin">Check in</OptionSelect>
-                  <OptionSelect value="Checkout">Check out</OptionSelect>
-                </SelectorFilter>
-              </FilterContainer>
+      <PageWrapper>
+        <OuterContainer>
+          <FilterContainer>
+            <ButtonsContainer>
+              <ButtonFilter
+                style={{
+                  color: filter === "All Bookings" && "#135846",
+                  borderBottom:
+                    filter === "All Bookings" && "2px solid #135846",
+                }}
+                onClick={() => setFilter("All Bookings")}
+              >
+                All Bookings
+              </ButtonFilter>
+              <ButtonFilter
+                style={{
+                  color: filter === "Checking In" && "#135846",
+                  borderBottom: filter === "Checking In" && "2px solid #135846",
+                }}
+                onClick={() => setFilter("Checking In")}
+              >
+                Checking In
+              </ButtonFilter>
+              <ButtonFilter
+                style={{
+                  color: filter === "Checking Out" && "#135846",
+                  borderBottom:
+                    filter === "Checking Out" && "2px solid #135846",
+                }}
+                onClick={() => setFilter("Checking Out")}
+              >
+                Checking Out
+              </ButtonFilter>
+              <ButtonFilter
+                style={{
+                  color: filter === "In Progress" && "#135846",
+                  borderBottom: filter === "In Progress" && "2px solid #135846",
+                }}
+                onClick={() => setFilter("In Progress")}
+              >
+                In progress
+              </ButtonFilter>
+            </ButtonsContainer>
+            <SearchInput
+              placeholder="Search booking by client name..."
+              type="text"
+            />
+            <SelectorFilter
+              defaultValue="Orderdate"
+              onChange={(event) => setSelected(event.target.value)}
+            >
+              <OptionSelect value="Guest">Guest</OptionSelect>
+              <OptionSelect value="Orderdate">Order Date</OptionSelect>
+              <OptionSelect value="Checkin">Check in</OptionSelect>
+              <OptionSelect value="Checkout">Check out</OptionSelect>
+            </SelectorFilter>
+          </FilterContainer>
+          {currentStatus === "fulfilled" ? (
+            <>
               <TableContainer>
                 <TableTitles data={bookingsData} />
-                <TableContent data={filtered} columns={columns} />
+                <TableContent data={filtered} />
               </TableContainer>
-            </OuterContainer>
-          </PageWrapper>
-      ) : currentStatus === "rejected" ? (
-        alert("not good")
-      ) : (
-        <div>
-          <h1>Loading...</h1>
-        </div>
-      )}
+            </>
+          ) : currentStatus === "rejected" ? (
+            alert("not good")
+          ) : (
+            <Floater>
+              <Hourglass
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="hourglass-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                colors={["#135846", "#e23428"]}
+              />
+            </Floater>
+          )}
+        </OuterContainer>
+      </PageWrapper>
     </>
   );
 };
