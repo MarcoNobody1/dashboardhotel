@@ -1,11 +1,14 @@
-import React from "react";
-import { useParams } from "react-router";
-import { bookingsData } from "../data/bookingsjson";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { PageWrapper } from "../GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
 import room from "../assets/hotelRoom.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { detailData, statusinfo } from "../features/Bookings/bookingSlice";
+import { Hourglass } from "react-loader-spinner";
+import { Floater } from "./Bookings";
+import { get1Data, getData } from "../features/Bookings/bookingThunks";
 
 const formatDate = (inputDate) => {
   const months = [
@@ -226,99 +229,133 @@ const Image = styled.img`
 `;
 
 export const BookingDetails = () => {
+  const selectedBooking = useSelector(detailData);
+  const statusInfo = useSelector(statusinfo);
+  const [currentStatus, setCurrentStatus] = useState("");
+  const [currenBooking, setCurrentBooking] = useState([]);
   const { id } = useParams();
-  const selectedBooking = bookingsData.find(
-    (booking) => booking.guest.id_reserva === id
-  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getData());
+    dispatch(get1Data(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (statusInfo === "rejected") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "pending") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "fulfilled") {
+      setCurrentStatus(statusInfo);
+      setCurrentBooking(selectedBooking);
+    }
+  }, [selectedBooking, statusInfo]);
 
   return (
     <>
-      <PageWrapper>
-        <BookingWrapper>
-          <ButtonReturn to="/bookings">
-            <IoArrowBackOutline />
-          </ButtonReturn>
-          <DetailsWrapper>
-            <GuestName>
-              {selectedBooking.guest.nombre} {selectedBooking.guest.apellidos}
-            </GuestName>
-            <BookingId>ID {selectedBooking.guest.id_reserva}</BookingId>
-            <InfoContainer>
+      {currentStatus === "fulfilled" ? (
+        <PageWrapper>
+          <BookingWrapper>
+            <ButtonReturn to="/bookings">
+              <IoArrowBackOutline />
+            </ButtonReturn>
+            <DetailsWrapper>
+              <GuestName>
+                {currenBooking.guest.nombre} {currenBooking.guest.apellidos}
+              </GuestName>
+              <BookingId>ID {currenBooking.guest.id_reserva}</BookingId>
+              <InfoContainer>
+                <InfoWrap>
+                  <InfoTitle>Check In</InfoTitle>
+                  <InfoContentUpperRow>
+                    {formatDate(currenBooking.check_in)}
+                  </InfoContentUpperRow>
+                </InfoWrap>
+                <InfoWrap>
+                  <InfoTitle>Check Out</InfoTitle>
+                  <InfoContentUpperRow>
+                    {formatDate(currenBooking.check_out)}
+                  </InfoContentUpperRow>
+                </InfoWrap>
+                <Gap />
+                <InfoWrap>
+                  <InfoTitle>Room Info</InfoTitle>
+                  <InfoContentBelowRow>
+                    {currenBooking.room.room_type} -{" "}
+                    {currenBooking.room.room_number}
+                  </InfoContentBelowRow>
+                </InfoWrap>
+                <InfoWrap>
+                  <InfoTitle>Price</InfoTitle>
+                  <InfoContentBelowRow>
+                    {currenBooking.room.price}
+                  </InfoContentBelowRow>
+                  <PriceSpan>/night</PriceSpan>
+                </InfoWrap>
+              </InfoContainer>
+              <RequestWrapper>"{currenBooking.special_request}"</RequestWrapper>
               <InfoWrap>
-                <InfoTitle>Check In</InfoTitle>
-                <InfoContentUpperRow>
-                  {formatDate(selectedBooking.check_in)}
-                </InfoContentUpperRow>
+                <InfoTitle>Amenities</InfoTitle>
+                <AmenitiesContainer>
+                  {currenBooking.room.amenities.map((amenity, index) => (
+                    <AmenityWrapper key={index}>
+                      <AmenityContent>{amenity}</AmenityContent>
+                    </AmenityWrapper>
+                  ))}
+                </AmenitiesContainer>
               </InfoWrap>
-              <InfoWrap>
-                <InfoTitle>Check Out</InfoTitle>
-                <InfoContentUpperRow>
-                  {formatDate(selectedBooking.check_out)}
-                </InfoContentUpperRow>
-              </InfoWrap>
-              <Gap />
-              <InfoWrap>
-                <InfoTitle>Room Info</InfoTitle>
-                <InfoContentBelowRow>
-                  {selectedBooking.room.room_type} -{" "}
-                  {selectedBooking.room.room_number}
-                </InfoContentBelowRow>
-              </InfoWrap>
-              <InfoWrap>
-                <InfoTitle>Price</InfoTitle>
-                <InfoContentBelowRow>
-                  {selectedBooking.room.price}
-                </InfoContentBelowRow>
-                <PriceSpan>/night</PriceSpan>
-              </InfoWrap>
-            </InfoContainer>
-            <RequestWrapper>"{selectedBooking.special_request}"</RequestWrapper>
-            <InfoWrap>
-              <InfoTitle>Amenities</InfoTitle>
-              <AmenitiesContainer>
-                {selectedBooking.room.amenities.map((amenity, index) => (
-                  <AmenityWrapper key={index}>
-                    <AmenityContent>{amenity}</AmenityContent>
-                  </AmenityWrapper>
-                ))}
-              </AmenitiesContainer>
-            </InfoWrap>
-          </DetailsWrapper>
-          <ImageWrapper>
-            <Image src={room} />
-            <StatusWrapper
-              style={{
-                backgroundColor:
-                  selectedBooking.status === "Check In"
-                    ? "#e8ffee"
-                    : selectedBooking.status === "Check Out"
-                    ? "#FFEDEC"
-                    : "#FEFFC2",
-                color:
-                  selectedBooking.status === "Check In"
-                    ? "#5ad07a"
-                    : selectedBooking.status === "Check Out"
-                    ? "#E23428"
-                    : "#E2B308",
-                    border:
-                  selectedBooking.status === "Check In"
-                    ? "3px solid #5ad07a"
-                    : selectedBooking.status === "Check Out"
-                    ? "3px solid #E23428"
-                    : "3px solid #E2B308",
-              }}
-            >
-              {selectedBooking.status}
-            </StatusWrapper>
-            <ImageRoomInfo>
-              <ImageRoomTitle>{selectedBooking.room.room_type}</ImageRoomTitle>
-              <ImageRoomDescription>
-                {selectedBooking.room.room_description}
-              </ImageRoomDescription>
-            </ImageRoomInfo>
-          </ImageWrapper>
-        </BookingWrapper>
-      </PageWrapper>
+            </DetailsWrapper>
+            <ImageWrapper>
+              <Image src={room} />
+              <StatusWrapper
+                style={{
+                  backgroundColor:
+                    currenBooking.status === "Check In"
+                      ? "#e8ffee"
+                      : currenBooking.status === "Check Out"
+                      ? "#FFEDEC"
+                      : "#FEFFC2",
+                  color:
+                    currenBooking.status === "Check In"
+                      ? "#5ad07a"
+                      : currenBooking.status === "Check Out"
+                      ? "#E23428"
+                      : "#E2B308",
+                  border:
+                    currenBooking.status === "Check In"
+                      ? "3px solid #5ad07a"
+                      : currenBooking.status === "Check Out"
+                      ? "3px solid #E23428"
+                      : "3px solid #E2B308",
+                }}
+              >
+                {currenBooking.status}
+              </StatusWrapper>
+              <ImageRoomInfo>
+                <ImageRoomTitle>{currenBooking.room.room_type}</ImageRoomTitle>
+                <ImageRoomDescription>
+                  {currenBooking.room.room_description}
+                </ImageRoomDescription>
+              </ImageRoomInfo>
+            </ImageWrapper>
+          </BookingWrapper>
+        </PageWrapper>
+      ) : currentStatus === "rejected" ? (
+        alert("not good")
+      ) : (
+        <Floater>
+          <Hourglass
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="hourglass-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            colors={["#135846", "#e23428"]}
+          />
+        </Floater>
+      )}
     </>
   );
 };
