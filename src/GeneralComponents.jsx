@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { contactMessages } from "./data/contactjson";
 import { BsFillBookmarkCheckFill, BsArrowsFullscreen } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsTrash3 } from "react-icons/bs";
+import { ToggleContext } from "./Sidebar/ToggleSidebar";
 
 export const DefaultIcon = styled.div.attrs((props) => ({
   $color: props.$color || "#135846",
@@ -18,13 +19,32 @@ export const DefaultIcon = styled.div.attrs((props) => ({
   }
 `;
 
-export const PageWrapper = styled.main`
+const PageWrap = styled.main`
   background-color: #f8f8f8;
   height: 810px;
   padding: 50px;
   margin-left: 345px;
   min-width: 1474px;
 `;
+
+export const PageWrapper = ({ children }) => {
+  const { toggle } = useContext(ToggleContext);
+  return (
+    <>
+      <PageWrap
+        style={{
+          marginLeft: toggle.toggle && "0",
+          margin: toggle.toggle && "0 auto",
+          display: toggle.toggle && "flex",
+          flexDirection: toggle.toggle && "column",
+          alignItems: toggle.toggle && "center",
+        }}
+      >
+        {children}
+      </PageWrap>
+    </>
+  );
+};
 
 const ImageWrapper = styled.div`
   padding: 20px;
@@ -73,6 +93,7 @@ const NotificationNumber = styled.h5`
   font: normal normal 600 30px/46px Poppins;
   letter-spacing: 0px;
   color: #393939;
+  user-select: none;
 `;
 
 const NotificationType = styled.p`
@@ -80,6 +101,7 @@ const NotificationType = styled.p`
   font: normal normal 300 14px/21px Poppins;
   letter-spacing: 0px;
   color: #787878;
+  user-select: none;
 `;
 
 const NotificationWrapper = styled.div`
@@ -111,7 +133,7 @@ export const Notification = (props) => {
   );
 };
 
-const CrossIcon = styled(RxCross2)`
+export const CrossIcon = styled(RxCross2)`
   color: #799283;
   position: absolute;
   font-size: 24px;
@@ -123,7 +145,7 @@ const CrossIcon = styled(RxCross2)`
   }
 `;
 
-const ModalBackground = styled.div`
+export const ModalBackground = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -215,13 +237,13 @@ const MessageContent = styled.p`
   text-overflow: ellipsis;
 `;
 
-const ModalContent = styled(MessageContent)`
+export const ModalContent = styled(MessageContent)`
   max-width: 450px;
   max-height: none;
   white-space: normal;
 `;
 
-const ModalContainer = styled(CommentContainer)`
+export const ModalContainer = styled(CommentContainer)`
   max-width: 500px;
   position: relative;
   z-index: 100;
