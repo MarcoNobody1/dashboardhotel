@@ -21,7 +21,7 @@ const LogForm = styled.form`
   background-color: #f8f8f8;
 `;
 
-const Input = styled.input.attrs((props) => ({
+export const Input = styled.input.attrs((props) => ({
   $type: props.type || "text",
 }))`
   display: block;
@@ -133,6 +133,7 @@ export const Login = () => {
             id="email"
             type="email"
             placeholder="Type your e-mail"
+            autoComplete="on"
           />
           <Label htmlFor="password">Password:</Label>
           <Input
@@ -140,6 +141,7 @@ export const Login = () => {
             id="password"
             type="password"
             placeholder="Type your password"
+            autoComplete="on"
           />
           <Button type="submit">Log In</Button>
           <Advertice>
