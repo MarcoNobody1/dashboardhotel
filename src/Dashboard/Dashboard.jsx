@@ -1,9 +1,11 @@
 import React from "react";
-import { Comments, Notification, PageWrapper } from "../GeneralComponents";
+import { PageWrapper } from "../GeneralComponents";
 import { LiaBedSolid } from "react-icons/lia";
 import { LuCalendarCheck2 } from "react-icons/lu";
 import { BsBoxArrowInRight, BsBoxArrowRight } from "react-icons/bs";
 import styled from "styled-components";
+import { Notification } from "../Components/NotificationPreview";
+import { Comments } from "../Components/CommentsPreview";
 
 const NotifContainer = styled.div`
   display: flex;
@@ -12,7 +14,7 @@ const NotifContainer = styled.div`
 
 `;
 
-const CommentsContainer = styled(NotifContainer)`
+export const CommentsContainer = styled(NotifContainer)`
   background-color: #fff;
   margin-bottom: 0;
   flex-direction: column;
@@ -23,7 +25,7 @@ const CommentsContainer = styled(NotifContainer)`
   overflow: hidden;
 `;
 
-const CommentsTitle = styled.p`
+export const CommentsTitle = styled.p`
   text-align: left;
   font: normal normal 500 20px/30px Poppins;
   letter-spacing: 0px;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PageWrapper, TableContent, TableTitles } from "../GeneralComponents";
+import { PageWrapper } from "../GeneralComponents";
 import styled from "styled-components";
 import searchIcon from "../assets/iconSearchBar.png";
 import { bookingsData } from "../data/bookingsjson";
@@ -7,6 +7,8 @@ import { info, statusinfo } from "../features/Bookings/bookingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../features/Bookings/bookingThunks";
 import { Hourglass } from "react-loader-spinner";
+import { TableContent } from "../Components/BookingsTable/BookingsTable";
+import { TableTitles } from "../Components/BookingsTable/BookingsTableTitles";
 
 const OuterContainer = styled.div`
   display: flex;
