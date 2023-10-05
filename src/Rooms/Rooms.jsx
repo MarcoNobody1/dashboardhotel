@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
+  CrossIcon,
+  ModalBackground,
+  ModalContainer,
+  ModalContent,
   PageWrapper,
-  RoomTableContent,
-  RoomTableTitles,
 } from "../GeneralComponents";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +12,8 @@ import { getRoomsData } from "../features/Rooms/roomThunks";
 import { roomsInfo, roomstatusinfo } from "../features/Rooms/roomSlice";
 import { Floater } from "../Bookings/Bookings";
 import { Hourglass } from "react-loader-spinner";
+import { RoomTableTitles } from "../Components/RoomsTable/RoomsTableTitles";
+import { RoomTableContent } from "../Components/RoomsTable/RoomsTable";
 
 const OuterContainer = styled.div`
   display: flex;
@@ -81,6 +85,13 @@ const AddRoomButton = styled.button`
   color: #ffffff;
   border-radius: 12px;
   padding: 13px 55px;
+  border: none;
+  transition: all 250ms ease-out;
+  
+  &:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+  }
 `;
 
 export const Rooms = () => {
@@ -92,7 +103,7 @@ export const Rooms = () => {
 
   const infoRooms = useSelector(roomsInfo);
   const statusInfo = useSelector(roomstatusinfo);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currenRooms, setCurrentRooms] = useState([]);
   const [currentStatus, setCurrentStatus] = useState("");
   const [filter, setFilter] = useState("All Rooms");
@@ -152,6 +163,20 @@ export const Rooms = () => {
     });
   }
 
+  const Modal = ({ onClose }) => {
+    return (
+      <ModalBackground>
+        <ModalContainer>
+
+          <CrossIcon onClick={onClose} />
+
+          <ModalContent>Hello World!</ModalContent>
+        </ModalContainer>
+      </ModalBackground>
+    );
+  };
+
+
   return (
     <PageWrapper>
       <OuterContainer>
@@ -185,7 +210,12 @@ export const Rooms = () => {
               Booked
             </ButtonFilter>
           </ButtonsContainer>
-          <AddRoomButton>+ New Room</AddRoomButton>
+          <AddRoomButton onClick={() => setIsModalOpen(true)} >+ New Room</AddRoomButton>
+          {isModalOpen && (
+        <Modal
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
           <SelectorFilter
             defaultValue="Roomnumber"
             onChange={(event) => setSelected(event.target.value)}
