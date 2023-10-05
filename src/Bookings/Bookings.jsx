@@ -79,7 +79,7 @@ const SelectorFilter = styled.select`
   letter-spacing: 0px;
 `;
 
-const Floater = styled.div`
+export const Floater = styled.div`
   position: absolute;
   top: 50%;
   right: 40%;
@@ -162,6 +162,21 @@ export const Bookings = () => {
     });
   }
 
+  const handleSearch = (input) => {
+    const searchTerm = input.toLowerCase();
+    if (searchTerm === "") {
+      setCurrentBookings(infoBookings);
+    } else {
+      const filteredData = infoBookings.filter((booking) => {
+        const fullName =
+          `${booking.guest.nombre} ${booking.guest.apellidos}`.toLowerCase();
+        return fullName.includes(searchTerm);
+      });
+      
+      setCurrentBookings(filteredData);
+    }
+  };
+
   return (
     <>
       <PageWrapper>
@@ -208,6 +223,7 @@ export const Bookings = () => {
               </ButtonFilter>
             </ButtonsContainer>
             <SearchInput
+              onChange={(event) => handleSearch(event.target.value)}
               placeholder="Search booking by client name..."
               type="text"
             />
