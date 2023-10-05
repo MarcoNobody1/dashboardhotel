@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getData } from "./bookingThunks";
+import { getData, deleteData, get1Data } from "./bookingThunks";
 
 
 const initialState = {
     error: "null",
     initialFetch: [],
+    bookingDetail:[],
     status: "idle",
+    deleteStatus: 'fulfilled',
   };
   
   export const bookingSlice = createSlice({
@@ -26,8 +28,32 @@ const initialState = {
           state.status = "rejected";
           state.error = action.error.message;
         })
+        .addCase(deleteData.fulfilled, (state, action) => {
+          state.deleteStatus = "fulfilled";
+          state.initialFetch = state.initialFetch.filter((booking) => {return booking.guest.id_reserva !== action.payload});
+        })
+        .addCase(deleteData.pending, (state, action) => {
+          state.deleteStatus = "pending";
+        })
+        .addCase(deleteData.rejected, (state, action) => {
+          state.deleteStatus = "rejected";
+          state.error = action.error.message;
+        })
+        .addCase(get1Data.fulfilled, (state, action) => {
+          state.status = "fulfilled";
+          state.bookingDetail = state.initialFetch.filter((booking) => {return booking.guest.id_reserva === action.payload});
+        })
+        .addCase(get1Data.pending, (state, action) => {
+          state.status = "pending";
+        })
+        .addCase(get1Data.rejected, (state, action) => {
+          state.status = "rejected";
+          state.error = action.error.message;
+        })
     },
   });
 
   export const info = (state) => state.bookings.initialFetch;
   export const statusinfo = (state) => state.bookings.status;
+  export const detailData = (state) => state.bookings.bookingDetail[0];
+  export const deleteStatus = (state) => state.bookings.deleteStatus;
