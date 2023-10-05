@@ -1,7 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import profileImg from "../assets/ProfilePic.jpg";
 import { AuthContext } from "../Login/Auth";
+import {
+  CrossIcon,
+  ModalBackground,
+  ModalContainer,
+  ModalContent,
+} from "../GeneralComponents";
+import { Input } from "../Login/Login";
 
 const OuterWrap = styled.div`
   display: flex;
@@ -72,8 +79,40 @@ const EditButton = styled.button`
   }
 `;
 
+const ProfileLabel = styled.label`
+  display: inline-block;
+  font: normal normal 400 16px/27px Poppins;
+  letter-spacing: 0px;
+  margin-right: 15px;
+`;
+
 export const UserCard = () => {
-  const {auth} = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const Modal = ({ onClose }) => {
+    return (
+      <ModalBackground>
+        <ModalContainer style={{ maxWidth: "700px", minWidth: "600px"}}>
+          <CrossIcon onClick={onClose} />
+          <ProfileLabel>Username: </ProfileLabel>
+          <Input
+            style={{ maxWidth: "300px", display: "inline-block" }}
+            placeholder="Type your username"
+          />
+          <br />
+          <ProfileLabel>Email: </ProfileLabel>
+          <Input
+            style={{ maxWidth: "300px", display: "inline-block" }}
+            placeholder="Type your personal e-mail"
+          />
+          <ModalContent>Hello World!</ModalContent>
+          <EditButton>Change it!</EditButton>
+        </ModalContainer>
+      </ModalBackground>
+    );
+  };
+
   return (
     <>
       <OuterWrap>
@@ -83,9 +122,10 @@ export const UserCard = () => {
         <ContentWrap>
           <FullName>{auth.username}</FullName>
           <EmailText>{auth.email}</EmailText>
-          <EditButton>Edit</EditButton>
+          <EditButton onClick={() => setIsModalOpen(true)}>Edit</EditButton>
         </ContentWrap>
       </OuterWrap>
+      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 };
