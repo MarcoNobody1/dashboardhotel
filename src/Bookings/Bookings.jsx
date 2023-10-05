@@ -167,7 +167,7 @@ export const Bookings = () => {
     if (searchTerm === "") {
       setCurrentBookings(infoBookings);
     } else {
-      const filteredData = infoBookings.filter((booking) => {
+      const filteredData = filtered.filter((booking) => {
         const fullName =
           `${booking.guest.nombre} ${booking.guest.apellidos}`.toLowerCase();
         return fullName.includes(searchTerm);
