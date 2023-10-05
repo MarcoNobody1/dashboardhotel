@@ -8,7 +8,7 @@ const initialState = () => {
   if (localStorage.getItem(auth_key)) {
     return JSON.parse(localStorage.getItem(auth_key));
   } else {
-    return { authenticated: false, username: null, email: null };
+    return { authenticated: false, username: null, email: null, photo: "https://robohash.org/smartass" };
   }
 };
 const reducer = (state, action) => {
@@ -18,16 +18,17 @@ const reducer = (state, action) => {
         authenticated: true,
         username: action.payload.username,
         email: action.payload.email,
+        photo: "https://robohash.org/smartass",
       };
     case "logout":
-      return { authenticated: false, username: null, email: null };
+      return { authenticated: false, username: null, email: null, photo: null };
 
     case "update":
       return {
         authenticated: true,
         username: action.payload.username,
         email: action.payload.email,
-        image: action.payload.image,
+        photo: action.payload.photo,
       };
     default:
       return state;
