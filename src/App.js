@@ -10,12 +10,13 @@ import { Header } from "./Header/Header";
 import Sidebar from "./Sidebar/Sidebar";
 import BookingDetails from "./Bookings/BookingDetails";
 import { AuthContainer } from "./Login/Auth";
+import { ToggleContainer } from "./Sidebar/ToggleSidebar";
 
 export const App = () => {
   return (
-    <>
-      <BrowserRouter>
-        <AuthContainer>
+    <BrowserRouter>
+      <AuthContainer>
+        <ToggleContainer>
           <Sidebar />
           <Header />
           <Routes>
@@ -36,11 +37,8 @@ export const App = () => {
               }
             />
           </Routes>
-        </AuthContainer>
-      </BrowserRouter>
-    </>
+        </ToggleContainer>
+      </AuthContainer>
+    </BrowserRouter>
   );
 };
-
-
-
