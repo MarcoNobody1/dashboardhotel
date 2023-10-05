@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   PageWrapper,
   RoomTableContent,
   RoomTableTitles,
 } from "../GeneralComponents";
 import styled from "styled-components";
-import { RoomsData } from "../data/roomsjson";
+import { useDispatch, useSelector } from "react-redux";
+import { getRoomsData } from "../features/Rooms/roomThunks";
+import { roomsInfo, roomstatusinfo } from "../features/Rooms/roomSlice";
+import { Floater } from "../Bookings/Bookings";
+import { Hourglass } from "react-loader-spinner";
 
 const OuterContainer = styled.div`
   display: flex;
@@ -80,11 +84,33 @@ const AddRoomButton = styled.button`
 `;
 
 export const Rooms = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getRoomsData());
+  }, [dispatch]);
+
+  const infoRooms = useSelector(roomsInfo);
+  const statusInfo = useSelector(roomstatusinfo);
+
+  const [currenRooms, setCurrentRooms] = useState([]);
+  const [currentStatus, setCurrentStatus] = useState("");
   const [filter, setFilter] = useState("All Rooms");
+
+  useEffect(() => {
+    if (statusInfo === "rejected") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "pending") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "fulfilled") {
+      setCurrentStatus(statusInfo);
+      setCurrentRooms(infoRooms);
+    }
+  }, [infoRooms, statusInfo]);
 
   const [selected, setSelected] = useState("Roomnumber");
 
-  const filtered = RoomsData.filter((room) => {
+  const filtered = currenRooms.filter((room) => {
     switch (filter) {
       case "All Rooms":
         return true;
@@ -104,7 +130,7 @@ export const Rooms = () => {
       return discountedPrice;
     }
     return room.price;
-  }
+  };
 
   if (selected === "Roomnumber") {
     filtered.sort((a, b) => {
@@ -121,8 +147,8 @@ export const Rooms = () => {
   } else if (selected === "Pricemaxmin") {
     filtered.sort((a, b) => {
       const priceA = calculateRealPrice(a);
-    const priceB = calculateRealPrice(b);
-    return priceB - priceA;
+      const priceB = calculateRealPrice(b);
+      return priceB - priceA;
     });
   }
 
@@ -131,13 +157,31 @@ export const Rooms = () => {
       <OuterContainer>
         <FilterContainer>
           <ButtonsContainer>
-            <ButtonFilter style={{color: filter === "All Rooms" &&  "#135846", borderBottom: filter === "All Rooms" &&  "2px solid #135846"}} onClick={() => setFilter("All Rooms")}>
+            <ButtonFilter
+              style={{
+                color: filter === "All Rooms" && "#135846",
+                borderBottom: filter === "All Rooms" && "2px solid #135846",
+              }}
+              onClick={() => setFilter("All Rooms")}
+            >
               All Rooms
             </ButtonFilter>
-            <ButtonFilter style={{color: filter === "Available" &&  "#135846", borderBottom: filter === "Available" &&  "2px solid #135846"}} onClick={() => setFilter("Available")}>
+            <ButtonFilter
+              style={{
+                color: filter === "Available" && "#135846",
+                borderBottom: filter === "Available" && "2px solid #135846",
+              }}
+              onClick={() => setFilter("Available")}
+            >
               Available
             </ButtonFilter>
-            <ButtonFilter style={{color: filter === "Booked" &&  "#135846", borderBottom: filter === "Booked" &&  "2px solid #135846"}} onClick={() => setFilter("Booked")}>
+            <ButtonFilter
+              style={{
+                color: filter === "Booked" && "#135846",
+                borderBottom: filter === "Booked" && "2px solid #135846",
+              }}
+              onClick={() => setFilter("Booked")}
+            >
               Booked
             </ButtonFilter>
           </ButtonsContainer>
@@ -155,10 +199,28 @@ export const Rooms = () => {
             </OptionSelect>
           </SelectorFilter>
         </FilterContainer>
-        <TableContainer>
-          <RoomTableTitles data={filtered} />
-          <RoomTableContent data={filtered} />
-        </TableContainer>
+        {currentStatus === "fulfilled" ? (
+          <>
+            <TableContainer>
+              <RoomTableTitles data={filtered} />
+              <RoomTableContent data={filtered} />
+            </TableContainer>
+          </>
+        ) : currentStatus === "rejected" ? (
+          alert("not good")
+        ) : (
+          <Floater>
+            <Hourglass
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="hourglass-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              colors={["#135846", "#e23428"]}
+            />
+          </Floater>
+        )}
       </OuterContainer>
     </PageWrapper>
   );
