@@ -12,14 +12,15 @@ import { TbMessage2 } from "react-icons/tb";
 import { UserCard } from "./UserCard";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../Login/Auth";
+import { ToggleContext } from "./ToggleSidebar";
 
 const NavWrap = styled.aside`
-  width: 345px;
+  min-width: 345px;
   background-color: #fff;
   padding: 42px 0px;
-  min-width: 300px;
   text-align: center;
   float: left;
+  transition: all 250ms ease-out;
 `;
 
 const Logo = styled.img`
@@ -107,17 +108,23 @@ const FooterFinal = styled(FooterRights)`
 
 export const Sidebar = () => {
   const { auth } = useContext(AuthContext);
+  const { toggle } = useContext(ToggleContext);
 
-
-if(!auth.authenticated){
-  return null;
-}
+  if (!auth.authenticated) {
+    return null;
+  }
 
   return (
     <>
-      <NavWrap>
+      <NavWrap
+        style={{
+          left: toggle.toggle ? "-345px" : "0",
+          position: toggle.toggle ? "relative" : "initial",
+          display: toggle.toggle ? "none" : 'initial',
+        }}
+      >
         <Logo src={logo} />
-        <OptionWrapper to="/" title="dashboard" >
+        <OptionWrapper to="/" title="dashboard">
           <DashboardIcon />
           <OptionTitle>Dashboard</OptionTitle>
         </OptionWrapper>
