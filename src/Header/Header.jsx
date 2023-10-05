@@ -6,6 +6,7 @@ import { FiLogOut } from "react-icons/fi";
 import { DefaultIcon } from "../GeneralComponents";
 import { useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Login/Auth";
+import { ToggleContext } from "../Sidebar/ToggleSidebar";
 
 const OuterWrap = styled.nav`
   background-color: #fff;
@@ -38,6 +39,7 @@ const Title = styled.h1`
 export const Header = () => {
   const navigate = useNavigate();
   const { auth, authDispatch } = useContext(AuthContext);
+  const { toggleDispatch } = useContext(ToggleContext);
   const [title, setTitle] = useState("Dashboard");
   const location = useLocation();
 
@@ -69,10 +71,14 @@ export const Header = () => {
     navigate("/login");
   };
 
+  const handleToggle = () => {
+    toggleDispatch({type: 'toggle'});
+  }
+
   return (
     <>
       <OuterWrap>
-        <IconWrap>
+        <IconWrap onClick={handleToggle} >
           <MenuIcon />
         </IconWrap>
         <Title>{title}</Title>
