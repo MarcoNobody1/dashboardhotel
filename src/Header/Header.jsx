@@ -60,7 +60,9 @@ export const Header = () => {
         default:
       if (location.pathname.startsWith("/bookings/")) {
         setTitle("Booking Details");
-      } else {
+      } else if (location.pathname.startsWith("/rooms/")){
+        setTitle("Room Type");
+      }else {
         setTitle("Dashboard");
       }
     }
