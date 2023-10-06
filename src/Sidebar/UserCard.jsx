@@ -123,7 +123,6 @@ export const UserCard = () => {
     const [imageUrl, setImageUrl] = useState("");
 
     const handleUserChange = (event) => {
-      console.log(typeof event.target.value.length);
       setNewUser(event.target.value);
     };
 
