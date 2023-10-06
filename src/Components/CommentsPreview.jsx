@@ -1,9 +1,26 @@
-import { useState } from "react";
-import { contactMessages } from "../data/contactjson";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsArrowsFullscreen, BsFillBookmarkCheckFill } from "react-icons/bs";
-import { CommentContainer, CrossIcon, MessageContent, ModalBackground, ModalContainer, ModalContent } from "../GeneralComponents";
-
+import {
+  CommentContainer,
+  CrossIcon,
+  MessageContent,
+  ModalBackground,
+  ModalContainer,
+  ModalContent,
+} from "../GeneralComponents";
+import { Floater } from "../Bookings/Bookings";
+import { Hourglass } from "react-loader-spinner";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  contactdetailData,
+  contactsInfo,
+  contactstatusinfo,
+} from "../features/Contact/contactSlice";
+import {
+  get1ContactData,
+  getContactsData,
+} from "../features/Contact/contatctThunks";
 
 const CommentsWrapper = styled.div`
   background-color: #fff;
@@ -40,8 +57,6 @@ const FullName = styled.h5`
   color: #262626;
 `;
 
-
-
 const EmailAddress = styled.p`
   text-align: left;
   font: normal normal normal 14px/21px Poppins;
@@ -61,56 +76,127 @@ const Subject = styled(FullName)`
 `;
 
 export const Comments = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedCommentId, setSelectedCommentId] = useState(null);
-  
-    const handleOpenModal = (commentId) => {
-      setSelectedCommentId(commentId);
-      setIsModalOpen(true);
-    };
-    const Modal = ({ commentId, onClose }) => {
-      const selectedComment = contactMessages.find(
-        (message) => message.id === commentId
-      );
-  
-      return (
-        <ModalBackground>
-          <ModalContainer>
-            <FullName>{selectedComment.name}</FullName>
-            <CrossIcon onClick={onClose} />
-            <EmailAddress>{selectedComment.email}</EmailAddress>
-            <PhoneNumber>{selectedComment.phone}</PhoneNumber>
-            <Subject>{selectedComment.email_subject}</Subject>
-            <ModalContent>{selectedComment.email_description}</ModalContent>
-          </ModalContainer>
-        </ModalBackground>
-      );
-    };
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCommentId, setSelectedCommentId] = useState(null);
+  const infoContacts = useSelector(contactsInfo);
+  const statusInfo = useSelector(contactstatusinfo);
+  const [currenContacts, setCurrentContacts] = useState([]);
+  const [currentStatus, setCurrentStatus] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getContactsData());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (statusInfo === "rejected") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "pending") {
+      setCurrentStatus(statusInfo);
+    } else if (statusInfo === "fulfilled") {
+      setCurrentStatus(statusInfo);
+      setCurrentContacts(infoContacts);
+    }
+  }, [infoContacts, statusInfo]);
+
+  const handleOpenModal = (commentId) => {
+    setSelectedCommentId(commentId);
+    dispatch(get1ContactData(commentId));
+    setIsModalOpen(true);
+  };
+  const Modal = ({ commentId, onClose }) => {
+    const selectedContact = useSelector(contactdetailData);
+    const [currentContact, setCurrentContact] = useState([]);
+
+    useEffect(() => {
+      if (statusInfo === "rejected") {
+        setCurrentStatus(statusInfo);
+      } else if (statusInfo === "pending") {
+        setCurrentStatus(statusInfo);
+      } else if (statusInfo === "fulfilled") {
+        setCurrentStatus(statusInfo);
+        setCurrentContact(selectedContact);
+      }
+    }, [selectedContact]);
+
     return (
       <>
-        <CommentsWrapper>
-          {contactMessages.map((message) => (
-            <CommentContainer key={message.id}>
-              <FullName>{message.name}</FullName>
-              <IconWrapper>
-                <ReadIcon />
-                <FullscreenIcon onClick={() => handleOpenModal(message.id)} />
-              </IconWrapper>
-              <EmailAddress>{message.email}</EmailAddress>
-              <PhoneNumber>{message.phone}</PhoneNumber>
-              <Subject>{message.email_subject}</Subject>
-              <MessageContent>{message.email_description}</MessageContent>
-            </CommentContainer>
-          ))}
-        </CommentsWrapper>
-  
-        {isModalOpen && (
-          <Modal
-            commentId={selectedCommentId}
-            onClose={() => setIsModalOpen(false)}
-          />
+        {currentStatus === "fulfilled" ? (
+          <>
+            <ModalBackground>
+              <ModalContainer>
+                <FullName>{currentContact.customer.name}</FullName>
+                <CrossIcon onClick={onClose} />
+                <EmailAddress>{currentContact.customer.email}</EmailAddress>
+                <PhoneNumber>{currentContact.customer.phone}</PhoneNumber>
+                <Subject>{currentContact.subject}</Subject>
+                <ModalContent>{currentContact.comment}</ModalContent>
+              </ModalContainer>
+            </ModalBackground>
+          </>
+        ) : currentStatus === "rejected" ? (
+          alert("not good")
+        ) : (
+          <Floater>
+            <Hourglass
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="hourglass-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              colors={["#135846", "#e23428"]}
+            />
+          </Floater>
         )}
       </>
     );
   };
+
+  return (
+    <>
+      {currentStatus === "fulfilled" ? (
+        <>
+          <CommentsWrapper>
+            {currenContacts.map((message) => (
+              <CommentContainer key={message.date.id}>
+                <FullName>{message.customer.name}</FullName>
+                <IconWrapper>
+                  <ReadIcon />
+                  <FullscreenIcon
+                    onClick={() => handleOpenModal(message.date.id)}
+                  />
+                </IconWrapper>
+                <EmailAddress>{message.customer.email}</EmailAddress>
+                <PhoneNumber>{message.customer.phone}</PhoneNumber>
+                <Subject>{message.subject}</Subject>
+                <MessageContent>{message.comment}</MessageContent>
+              </CommentContainer>
+            ))}
+          </CommentsWrapper>
+
+          {isModalOpen && (
+            <Modal
+              commentId={selectedCommentId}
+              onClose={() => setIsModalOpen(false)}
+            />
+          )}
+        </>
+      ) : currentStatus === "rejected" ? (
+        alert("not good")
+      ) : (
+        <Floater>
+          <Hourglass
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="hourglass-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            colors={["#135846", "#e23428"]}
+          />
+        </Floater>
+      )}
+    </>
+  );
+};
