@@ -144,7 +144,7 @@ const Image = styled.img`
 `;
 
 export const RoomDetails = () => {
-  const selectedBooking = useSelector(roomdetailData);
+  const selectedRoom = useSelector(roomdetailData);
   const roomstatusInfo = useSelector(roomstatusinfo);
   const [currentStatus, setCurrentStatus] = useState("");
   const [currentRoom, setCurrentRoom] = useState([]);
@@ -163,9 +163,9 @@ export const RoomDetails = () => {
       setCurrentStatus(roomstatusInfo);
     } else if (roomstatusInfo === "fulfilled") {
       setCurrentStatus(roomstatusInfo);
-      setCurrentRoom(selectedBooking);
+      setCurrentRoom(selectedRoom);
     }
-  }, [selectedBooking, roomstatusInfo]);
+  }, [selectedRoom, roomstatusInfo]);
 
   return (
     <>
