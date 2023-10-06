@@ -39,6 +39,6 @@ export const contactMessages = [
     },
     "subject": "Important Announcement",
     "comment": "We have an important announcement regarding the upcoming event.",
-    "archived": false
+    "archived": true
   }
 ];
