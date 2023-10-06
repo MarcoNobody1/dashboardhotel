@@ -7,6 +7,7 @@ const initialState = {
     initialFetch: [],
     contactDetail:[],
     status: "idle",
+    detailStatus:'idle',
     deleteStatus: 'fulfilled',
   };
   
@@ -40,14 +41,14 @@ const initialState = {
           state.error = action.error.message;
         })
         .addCase(get1ContactData.fulfilled, (state, action) => {
-          state.status = "fulfilled";
+          state.detailStatus = "fulfilled";
           state.contactDetail = state.initialFetch.filter((contact) => {return contact.date.id === action.payload});
         })
         .addCase(get1ContactData.pending, (state, action) => {
-          state.status = "pending";
+          state.detailStatus = "pending";
         })
         .addCase(get1ContactData.rejected, (state, action) => {
-          state.status = "rejected";
+          state.detailStatus = "rejected";
           state.error = action.error.message;
         })
     },
@@ -57,3 +58,4 @@ const initialState = {
   export const contactstatusinfo = (state) => state.contacts.status;
   export const contactdetailData = (state) => state.contacts.contactDetail[0];
   export const contactdeleteStatus = (state) => state.contacts.deleteStatus;
+  export const detailStatus = (state) => state.contacts.detailStatus;
