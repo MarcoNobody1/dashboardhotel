@@ -16,6 +16,7 @@ import {
   contactdetailData,
   contactsInfo,
   contactstatusinfo,
+  detailStatus,
 } from "../features/Contact/contactSlice";
 import {
   get1ContactData,
@@ -75,19 +76,24 @@ const Subject = styled(FullName)`
   margin-bottom: 10px;
 `;
 
+
+
 export const Comments = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCommentId, setSelectedCommentId] = useState(null);
   const infoContacts = useSelector(contactsInfo);
   const statusInfo = useSelector(contactstatusinfo);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currenContacts, setCurrentContacts] = useState([]);
   const [currentStatus, setCurrentStatus] = useState("");
+  const [currentId, setCurrentId] = useState("");
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getContactsData());
   }, [dispatch]);
 
+  
   useEffect(() => {
     if (statusInfo === "rejected") {
       setCurrentStatus(statusInfo);
@@ -99,25 +105,31 @@ export const Comments = () => {
     }
   }, [infoContacts, statusInfo]);
 
-  const handleOpenModal = (commentId) => {
-    setSelectedCommentId(commentId);
-    dispatch(get1ContactData(commentId));
+
+  const handleOpenModal = (id) => {
     setIsModalOpen(true);
+    setCurrentId(id);
   };
-  const Modal = ({ commentId, onClose }) => {
+  
+  const Modal = ({ idContact, onClose }) => {
     const selectedContact = useSelector(contactdetailData);
+    const detailContactStatus = useSelector(detailStatus);
     const [currentContact, setCurrentContact] = useState([]);
+    
+    useEffect(() => {
+      dispatch(get1ContactData(idContact));
+    }, [idContact]);
 
     useEffect(() => {
-      if (statusInfo === "rejected") {
-        setCurrentStatus(statusInfo);
-      } else if (statusInfo === "pending") {
-        setCurrentStatus(statusInfo);
-      } else if (statusInfo === "fulfilled") {
-        setCurrentStatus(statusInfo);
+      if (detailContactStatus === "rejected") {
+        setCurrentStatus(detailContactStatus);
+      } else if (detailContactStatus === "pending") {
+        setCurrentStatus(detailContactStatus);
+      } else if (detailContactStatus === "fulfilled") {
+        setCurrentStatus(detailContactStatus);
         setCurrentContact(selectedContact);
       }
-    }, [selectedContact]);
+    }, [selectedContact, detailContactStatus]);
 
     return (
       <>
@@ -125,7 +137,7 @@ export const Comments = () => {
           <>
             <ModalBackground>
               <ModalContainer>
-                <FullName>{currentContact.customer.name}</FullName>
+                <FullName>{currentContact.customer.name}</FullName> */
                 <CrossIcon onClick={onClose} />
                 <EmailAddress>{currentContact.customer.email}</EmailAddress>
                 <PhoneNumber>{currentContact.customer.phone}</PhoneNumber>
@@ -158,28 +170,25 @@ export const Comments = () => {
       {currentStatus === "fulfilled" ? (
         <>
           <CommentsWrapper>
-            {currenContacts.map((message) => (
-              <CommentContainer key={message.date.id}>
-                <FullName>{message.customer.name}</FullName>
+            {currenContacts.map((contact) => (
+              <CommentContainer key={contact.date.id}>
+                <FullName>{contact.customer.name}</FullName>
                 <IconWrapper>
                   <ReadIcon />
                   <FullscreenIcon
-                    onClick={() => handleOpenModal(message.date.id)}
+                    onClick={() => handleOpenModal(contact.date.id)}
                   />
                 </IconWrapper>
-                <EmailAddress>{message.customer.email}</EmailAddress>
-                <PhoneNumber>{message.customer.phone}</PhoneNumber>
-                <Subject>{message.subject}</Subject>
-                <MessageContent>{message.comment}</MessageContent>
+                <EmailAddress>{contact.customer.email}</EmailAddress>
+                <PhoneNumber>{contact.customer.phone}</PhoneNumber>
+                <Subject>{contact.subject}</Subject>
+                <MessageContent>{contact.comment}</MessageContent>
               </CommentContainer>
             ))}
           </CommentsWrapper>
 
           {isModalOpen && (
-            <Modal
-              commentId={selectedCommentId}
-              onClose={() => setIsModalOpen(false)}
-            />
+            <Modal idContact={currentId} onClose={() => setIsModalOpen(false)} />
           )}
         </>
       ) : currentStatus === "rejected" ? (
