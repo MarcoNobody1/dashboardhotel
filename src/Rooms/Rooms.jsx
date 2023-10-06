@@ -15,26 +15,26 @@ import { Hourglass } from "react-loader-spinner";
 import { RoomTableTitles } from "../Components/RoomsTable/RoomsTableTitles";
 import { RoomTableContent } from "../Components/RoomsTable/RoomsTable";
 
-const OuterContainer = styled.div`
+export const OuterContainer = styled.div`
   display: flex;
   width: 1474px;
   flex-direction: column;
   gap: 50px;
 `;
 
-const FilterContainer = styled.div`
+export const FilterContainer = styled.div`
   display: flex;
   gap: 55px;
 `;
 
-const TableContainer = styled.div`
+export const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
   padding: 21px;
 `;
 
-const ButtonsContainer = styled(FilterContainer)`
+export const ButtonsContainer = styled(FilterContainer)`
   gap: 30px;
   padding: 5px;
   padding-bottom: 0;
@@ -42,7 +42,7 @@ const ButtonsContainer = styled(FilterContainer)`
   border-bottom: 1px solid #d4d4d4;
 `;
 
-const ButtonFilter = styled.button`
+export const ButtonFilter = styled.button`
   text-align: center;
   font: normal normal medium 16px/25px Poppins;
   letter-spacing: 0px;
@@ -60,7 +60,7 @@ const ButtonFilter = styled.button`
   }
 `;
 
-const SelectorFilter = styled.select`
+export const SelectorFilter = styled.select`
   min-width: 200px;
   max-height: 60px;
   background-color: #fff;
@@ -73,7 +73,7 @@ const SelectorFilter = styled.select`
   cursor: pointer;
 `;
 
-const OptionSelect = styled.option`
+export const OptionSelect = styled.option`
   font: normal normal 400 16px/25px Poppins;
 `;
 
