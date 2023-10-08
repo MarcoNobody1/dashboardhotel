@@ -17,7 +17,6 @@ import { RoomTableContent } from "../Components/RoomsTable/RoomsTable";
 
 export const OuterContainer = styled.div`
   display: flex;
-  width: 1474px;
   flex-direction: column;
   gap: 50px;
 `;

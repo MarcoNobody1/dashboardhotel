@@ -19,7 +19,6 @@ const NavWrap = styled.aside`
   background-color: #fff;
   padding: 42px 0px;
   text-align: center;
-  float: left;
   transition: all 250ms ease-out;
 `;
 
@@ -118,9 +117,7 @@ export const Sidebar = () => {
     <>
       <NavWrap
         style={{
-          left: toggle.toggle ? "-345px" : "0",
-          position: toggle.toggle ? "relative" : "initial",
-          display: toggle.toggle ? "none" : 'initial',
+          marginLeft: toggle.toggle ? "-345px" : "0",
         }}
       >
         <Logo src={logo} />

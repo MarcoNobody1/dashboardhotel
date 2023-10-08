@@ -10,7 +10,7 @@ import { Hourglass } from "react-loader-spinner";
 import { Floater } from "./Bookings";
 import { get1Data, getData } from "../features/Bookings/bookingThunks";
 
-const formatDate = (inputDate) => {
+export const formatDate = (inputDate) => {
   const months = [
     "January",
     "February",

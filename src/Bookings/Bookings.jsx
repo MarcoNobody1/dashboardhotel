@@ -12,7 +12,6 @@ import { TableTitles } from "../Components/BookingsTable/BookingsTableTitles";
 
 const OuterContainer = styled.div`
   display: flex;
-  width: 1474px;
   flex-direction: column;
   gap: 50px;
 `;

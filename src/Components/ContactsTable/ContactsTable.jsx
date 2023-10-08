@@ -1,3 +1,4 @@
+import { formatDate } from "../../Bookings/BookingDetails";
 import {
   ContentWrapper,
   InfoWrap,
@@ -19,6 +20,7 @@ const StatusButton = styled.button`
   padding: 13px 13px;
   text-align: center;
   text-transform: capitalize;
+  border: none;
   transition: all 150ms ease-out;
   &:hover {
     cursor: pointer;
@@ -35,7 +37,7 @@ export const ContactTableContent = (props) => {
         {contacts.map((contact) => (
           <RowWrapper key={contact.date.id}>
             <InfoWrap>
-              <OrderDate>{contact.date.send_date}</OrderDate>
+              <OrderDate>{formatDate(contact.date.send_date)}</OrderDate>
             </InfoWrap>
             <InfoWrap style={{ minWidth: "300px" }}>
               <InfoLine>{contact.customer.name}</InfoLine>

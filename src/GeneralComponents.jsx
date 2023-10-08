@@ -4,6 +4,15 @@ import { useContext } from "react";
 import { BsTrash3 } from "react-icons/bs";
 import { ToggleContext } from "./Sidebar/ToggleSidebar";
 
+export const Layout = styled.div`
+  display: flex;
+`;
+
+export const InnerLayout = styled(Layout)`
+  flex-direction: column;
+  width: 100%;
+  transition: all 250ms ease-out;
+`;
 
 export const DefaultIcon = styled.div.attrs((props) => ({
   $color: props.$color || "#135846",
@@ -21,7 +30,6 @@ const PageWrap = styled.main`
   background-color: #f8f8f8;
   height: 810px;
   padding: 50px;
-  margin-left: 345px;
   min-width: 1474px;
 `;
 
@@ -31,11 +39,8 @@ export const PageWrapper = ({ children }) => {
     <>
       <PageWrap
         style={{
-          marginLeft: toggle.toggle && "0",
           margin: toggle.toggle && "0 auto",
-          display: toggle.toggle && "flex",
-          flexDirection: toggle.toggle && "column",
-          alignItems: toggle.toggle && "center",
+          width: toggle.toggle && "100%",
         }}
       >
         {children}

@@ -9,9 +9,7 @@ import { Comments } from "../Components/CommentsPreview";
 
 const NotifContainer = styled.div`
   display: flex;
-  width: 1474px;
   margin-bottom: 40px;
-
 `;
 
 export const CommentsContainer = styled(NotifContainer)`
@@ -19,7 +17,6 @@ export const CommentsContainer = styled(NotifContainer)`
   margin-bottom: 0;
   flex-direction: column;
   padding: 30px;
-  width: 1474px;
   box-shadow: 0px 4px 4px #00000005;
   border-radius: 20px;
   overflow: hidden;
