@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { PageWrapper } from "../GeneralComponents";
+import { PageWrapper, RenderError, RenderLoading } from "../GeneralComponents";
 import styled from "styled-components";
 import searchIcon from "../assets/iconSearchBar.png";
-import { bookingsData } from "../data/bookingsjson";
 import { info, statusinfo } from "../features/Bookings/bookingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../features/Bookings/bookingThunks";
-import { Hourglass } from "react-loader-spinner";
-import { TableContent } from "../Components/BookingsTable/BookingsTable";
-import { TableTitles } from "../Components/BookingsTable/BookingsTableTitles";
+import DynamicTable from "../Components/DynamicTable";
 
 const OuterContainer = styled.div`
   display: flex;
@@ -78,12 +75,6 @@ const SelectorFilter = styled.select`
   padding-left: 5px;
   font: normal normal 500 16px/25px Poppins;
   letter-spacing: 0px;
-`;
-
-export const Floater = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 40%;
 `;
 
 const OptionSelect = styled.option`
@@ -168,13 +159,31 @@ export const Bookings = () => {
     if (searchTerm === "") {
       setCurrentBookings(infoBookings);
     } else {
-      const filteredData = filtered.filter((booking) => {
+      const filteredData = infoBookings.filter((booking) => {
         const fullName =
           `${booking.guest.nombre} ${booking.guest.apellidos}`.toLowerCase();
         return fullName.includes(searchTerm);
       });
-      
+
       setCurrentBookings(filteredData);
+    }
+  };
+
+  const RenderTable = () => {
+    return (
+      <TableContainer>
+        <DynamicTable data={filtered} dataType={"bookings"} />
+      </TableContainer>
+    );
+  };
+
+  const renderStatus = () => {
+    if (currentStatus === "fulfilled") {
+      return <RenderTable />;
+    } else if (currentStatus === "rejected") {
+      return <RenderError />;
+    } else {
+      return <RenderLoading />;
     }
   };
 
@@ -230,7 +239,7 @@ export const Bookings = () => {
             />
             <SelectorFilter
               defaultValue="Orderdate"
-              onChange={(event) => setSelected(event.target.value)}
+              onInput={(event) => setSelected(event.target.value)}
             >
               <OptionSelect value="Guest">Guest</OptionSelect>
               <OptionSelect value="Orderdate">Order Date</OptionSelect>
@@ -238,28 +247,7 @@ export const Bookings = () => {
               <OptionSelect value="Checkout">Check out</OptionSelect>
             </SelectorFilter>
           </FilterContainer>
-          {currentStatus === "fulfilled" ? (
-            <>
-              <TableContainer>
-                <TableTitles data={bookingsData} />
-                <TableContent data={filtered} />
-              </TableContainer>
-            </>
-          ) : currentStatus === "rejected" ? (
-            alert("not good")
-          ) : (
-            <Floater>
-              <Hourglass
-                visible={true}
-                height="80"
-                width="80"
-                ariaLabel="hourglass-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-                colors={["#135846", "#e23428"]}
-              />
-            </Floater>
-          )}
+          {renderStatus()}
         </OuterContainer>
       </PageWrapper>
     </>
