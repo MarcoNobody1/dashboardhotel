@@ -5,15 +5,14 @@ import {
   ModalContainer,
   ModalContent,
   PageWrapper,
+  RenderError,
+  RenderLoading,
 } from "../GeneralComponents";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { getRoomsData } from "../features/Rooms/roomThunks";
 import { roomsInfo, roomstatusinfo } from "../features/Rooms/roomSlice";
-import { Floater } from "../Bookings/Bookings";
-import { Hourglass } from "react-loader-spinner";
-import { RoomTableTitles } from "../Components/RoomsTable/RoomsTableTitles";
-import { RoomTableContent } from "../Components/RoomsTable/RoomsTable";
+import DynamicTable from "../Components/DynamicTable";
 
 export const OuterContainer = styled.div`
   display: flex;
@@ -162,6 +161,24 @@ export const Rooms = () => {
     });
   }
 
+  const RenderTable = () => {
+    return (
+      <TableContainer>
+        <DynamicTable data={filtered} dataType={"rooms"} />
+      </TableContainer>
+    );
+  };
+
+  const renderStatus = () => {
+    if (currentStatus === "fulfilled") {
+      return <RenderTable />;
+    } else if (currentStatus === "rejected") {
+      return <RenderError />;
+    } else {
+      return <RenderLoading />;
+    }
+  };
+
   const Modal = ({ onClose }) => {
     return (
       <ModalBackground>
@@ -228,28 +245,7 @@ export const Rooms = () => {
             </OptionSelect>
           </SelectorFilter>
         </FilterContainer>
-        {currentStatus === "fulfilled" ? (
-          <>
-            <TableContainer>
-              <RoomTableTitles data={filtered} />
-              <RoomTableContent data={filtered} />
-            </TableContainer>
-          </>
-        ) : currentStatus === "rejected" ? (
-          alert("not good")
-        ) : (
-          <Floater>
-            <Hourglass
-              visible={true}
-              height="80"
-              width="80"
-              ariaLabel="hourglass-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-              colors={["#135846", "#e23428"]}
-            />
-          </Floater>
-        )}
+        {renderStatus()}
       </OuterContainer>
     </PageWrapper>
   );
