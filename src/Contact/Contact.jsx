@@ -3,7 +3,7 @@ import { PageWrapper } from "../GeneralComponents";
 import { CommentsContainer } from "../Dashboard/Dashboard";
 import { Comments } from "../Components/CommentsPreview";
 import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SelectorFilter, TableContainer } from "../Rooms/Rooms";
-import { Floater } from "../Bookings/Bookings";
+import { Floater } from "../GeneralComponents";
 import { Hourglass } from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { contactsInfo, contactstatusinfo } from "../features/Contact/contactSlice";

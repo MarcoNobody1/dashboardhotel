@@ -7,7 +7,7 @@ import room from "../assets/hotelRoom.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { detailData, statusinfo } from "../features/Bookings/bookingSlice";
 import { Hourglass } from "react-loader-spinner";
-import { Floater } from "./Bookings";
+import { Floater } from "../GeneralComponents";
 import { get1Data, getData } from "../features/Bookings/bookingThunks";
 
 export const formatDate = (inputDate) => {

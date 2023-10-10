@@ -6,7 +6,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { roomdetailData, roomstatusinfo } from "../features/Rooms/roomSlice";
 import { Hourglass } from "react-loader-spinner";
-import { Floater } from "../Bookings/Bookings";
+import { Floater } from "../GeneralComponents";
 import { get1RoomData, getRoomsData } from "../features/Rooms/roomThunks";
 
 const BookingWrapper = styled.div`

@@ -17,7 +17,7 @@ import {
   StatusDiv,
   TrashIcon,
 } from "../../GeneralComponents";
-import { Floater } from "../../Bookings/Bookings";
+import { Floater } from "../../GeneralComponents";
 import { LineWave } from "react-loader-spinner";
 
 const FloatCross = styled(CrossIcon)`

@@ -9,7 +9,7 @@ import {
   ModalContainer,
   ModalContent,
 } from "../GeneralComponents";
-import { Floater } from "../Bookings/Bookings";
+import { Floater } from "../GeneralComponents";
 import { Hourglass } from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import {
