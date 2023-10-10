@@ -3,6 +3,8 @@ import { RxCross2 } from "react-icons/rx";
 import { useContext } from "react";
 import { BsTrash3 } from "react-icons/bs";
 import { ToggleContext } from "./Sidebar/ToggleSidebar";
+import Swal from "sweetalert2";
+import { Hourglass } from "react-loader-spinner";
 
 export const Layout = styled.div`
   display: flex;
@@ -187,3 +189,37 @@ export const TrashIcon = styled(BsTrash3)`
     cursor: pointer;
   }
 `;
+
+export const Floater = styled.div`
+  position: absolute;
+  top: -10%;
+  right: -15%;
+`;
+
+export const RenderError = () => {
+  Swal.fire({
+    position: 'center',
+    icon: 'error',
+    title: "Something's Wrong!",
+    text: "Please refresh the page",
+    timer:2500,
+    showConfirmButton:false,
+    timerProgressBar:true,
+  })
+};
+
+export const RenderLoading = () => {
+  return (
+    <Floater>
+      <Hourglass
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="hourglass-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        colors={["#135846", "#e23428"]}
+      />
+    </Floater>
+  );
+};
