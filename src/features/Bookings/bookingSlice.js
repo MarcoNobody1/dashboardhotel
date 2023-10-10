@@ -41,7 +41,6 @@ const initialState = {
         })
         .addCase(get1Data.fulfilled, (state, action) => {
           state.status = "fulfilled";
-          console.log(action.payload)
           state.bookingDetail = state.bookings.filter((booking) => {return booking.guest.id_reserva === action.payload});
         })
         .addCase(get1Data.pending, (state, action) => {
