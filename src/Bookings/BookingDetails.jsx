@@ -244,6 +244,7 @@ export const BookingDetails = () => {
   useEffect(() => {
     if (statusInfo === "rejected") {
       setCurrentStatus(statusInfo);
+        alert("not good")
     } else if (statusInfo === "pending") {
       setCurrentStatus(statusInfo);
     } else if (statusInfo === "fulfilled") {
@@ -341,8 +342,6 @@ export const BookingDetails = () => {
             </ImageWrapper>
           </BookingWrapper>
         </PageWrapper>
-      ) : currentStatus === "rejected" ? (
-        alert("not good")
       ) : (
         <Floater>
           <Hourglass
