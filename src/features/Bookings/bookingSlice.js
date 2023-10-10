@@ -4,7 +4,7 @@ import { getData, deleteData, get1Data } from "./bookingThunks";
 
 const initialState = {
     error: "null",
-    initialFetch: [],
+    bookings: [],
     bookingDetail:[],
     status: "idle",
     deleteStatus: 'fulfilled',
@@ -19,7 +19,7 @@ const initialState = {
       builder
         .addCase(getData.fulfilled, (state, action) => {
           state.status = "fulfilled";
-          state.initialFetch = action.payload;
+          state.bookings = action.payload;
         })
         .addCase(getData.pending, (state, action) => {
           state.status = "pending";
@@ -30,7 +30,7 @@ const initialState = {
         })
         .addCase(deleteData.fulfilled, (state, action) => {
           state.deleteStatus = "fulfilled";
-          state.initialFetch = state.initialFetch.filter((booking) => {return booking.guest.id_reserva !== action.payload});
+          state.bookings = state.bookings.filter((booking) => {return booking.guest.id_reserva !== action.payload});
         })
         .addCase(deleteData.pending, (state, action) => {
           state.deleteStatus = "pending";
@@ -41,7 +41,8 @@ const initialState = {
         })
         .addCase(get1Data.fulfilled, (state, action) => {
           state.status = "fulfilled";
-          state.bookingDetail = state.initialFetch.filter((booking) => {return booking.guest.id_reserva === action.payload});
+          console.log(action.payload)
+          state.bookingDetail = state.bookings.filter((booking) => {return booking.guest.id_reserva === action.payload});
         })
         .addCase(get1Data.pending, (state, action) => {
           state.status = "pending";
@@ -53,7 +54,7 @@ const initialState = {
     },
   });
 
-  export const info = (state) => state.bookings.initialFetch;
+  export const info = (state) => state.bookings.bookings;
   export const statusinfo = (state) => state.bookings.status;
   export const detailData = (state) => state.bookings.bookingDetail[0];
   export const deleteStatus = (state) => state.bookings.deleteStatus;
