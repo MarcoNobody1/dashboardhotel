@@ -25,7 +25,7 @@ export const roomsData = [
       isOffer: true,
       discount: 10,
     },
-    status: "available",
+    availability: "available",
   },
   {
     room_name: {
@@ -51,7 +51,7 @@ export const roomsData = [
       isOffer: false,
       discount: 5,
     },
-    status: "available",
+    availability: "available",
   },
   {
     room_name: {
@@ -81,7 +81,7 @@ export const roomsData = [
       isOffer: true,
       discount: 15,
     },
-    status: "booked",
+    availability: "booked",
   },
   {
     room_name: {
@@ -106,7 +106,7 @@ export const roomsData = [
       isOffer: true,
       discount: 8,
     },
-    status: "available",
+    availability: "available",
   },
   {
     room_name: {
@@ -134,7 +134,7 @@ export const roomsData = [
       isOffer: true,
       discount: 12,
     },
-    status: "available",
+    availability: "available",
   },
   {
     room_name: {
@@ -159,7 +159,7 @@ export const roomsData = [
       isOffer: true,
       discount: 10,
     },
-    status: "available",
+    availability: "available",
   },
   {
     room_name: {
@@ -189,7 +189,7 @@ export const roomsData = [
       isOffer: false,
       discount: 0,
     },
-    status: "available",
+    availability: "available",
   },
   {
     room_name: {
@@ -217,7 +217,7 @@ export const roomsData = [
       isOffer: true,
       discount: 18,
     },
-    status: "available",
+    availability: "available",
   },
   // {
   //   room_name: {
@@ -242,7 +242,7 @@ export const roomsData = [
   //     isOffer: false,
   //     discount: 0,
   //   },
-  //   status: "booked",
+  //   availability: "booked",
   // },
   // {
   //   room_name: {
@@ -270,7 +270,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 10,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -295,7 +295,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 5,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -325,7 +325,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 20,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -353,7 +353,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 12,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -378,7 +378,7 @@ export const roomsData = [
   //     isOffer: false,
   //     discount: 8,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -406,7 +406,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 15,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -431,7 +431,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 10,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -461,7 +461,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 8,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -489,7 +489,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 18,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -514,7 +514,7 @@ export const roomsData = [
   //     isOffer: false,
   //     discount: 0,
   //   },
-  //   status: "booked",
+  //   availability: "booked",
   // },
   // {
   //   room_name: {
@@ -542,7 +542,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 10,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -567,7 +567,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 5,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -597,7 +597,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 15,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -625,7 +625,7 @@ export const roomsData = [
   //     isOffer: true,
   //     discount: 12,
   //   },
-  //   status: "available",
+  //   availability: "available",
   // },
   // {
   //   room_name: {
@@ -650,6 +650,6 @@ export const roomsData = [
   //     isOffer: false,
   //     discount: 0,
   //   },
-  //   status: "booked",
+  //   availability: "booked",
   // },
 ];
