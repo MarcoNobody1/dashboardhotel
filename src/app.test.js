@@ -17,4 +17,15 @@ describe("Tests hacia mi componente StatusDiv dentro de la tabla de Bookings", (
     expect(statusDivElement).toHaveStyle("color: #E2B308");
 
   });
+  test("StatusDiv existe en el DOM", () => {
+    render(
+      <div>
+        <StatusDiv data={"Check In"} />
+      </div>
+    );
+    const statusDivElement = screen.getByTestId("bookingStatusDiv");
+
+    expect(statusDivElement).toBeInTheDocument() ;
+
+  });
 });
