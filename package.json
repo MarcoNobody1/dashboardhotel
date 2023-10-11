@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
-    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
@@ -16,7 +15,7 @@
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
-    "styled-components": "^6.0.8",
+    "styled-components": "^5.3.10",
     "sweetalert2": "^11.7.31",
     "web-vitals": "^2.1.4"
   },
@@ -32,6 +31,9 @@
       "react-app/jest"
     ]
   },
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -43,5 +45,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.3",
+    "jest-environment-jsdom": "^29.7.0"
   }
 }
