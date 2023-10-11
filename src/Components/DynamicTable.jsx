@@ -47,6 +47,8 @@ const Th = styled.th`
   padding: 8px;
   text-transform: capitalize;
   border-bottom: 2px solid #f5f5f5;
+  width: ${(props) =>
+    props.header === "amenities" ? "480px" :props.header === "availability" ? "200px" : "130px"};
 `;
 
 const Tr = styled.tr`
@@ -100,6 +102,18 @@ const StatusDiv = styled.div`
   text-align: center;
   text-transform: capitalize;
   width: 70%;
+  background-color: ${(props) =>
+    props.status === "Check In" || props.status === "available"
+      ? "#e8ffee"
+      : props.status === "Check Out" || props.status === "booked"
+      ? "#FFEDEC"
+      : "#FEFFC2"};
+  color: ${(props) =>
+    props.status === "Check In" || props.status === "available"
+      ? "#5ad07a"
+      : props.status === "Check Out" || props.status === "booked"
+      ? "#E23428"
+      : "#E2B308"};
 `;
 
 const NoteContainer = styled(ModalContainer)`
@@ -185,7 +199,6 @@ const DynamicTable = ({ data, dataType }) => {
   const [currentRoomDeleteStatus, setCurrentRoomDeleteStatus] = useState("");
   const statusInfo = useSelector(deleteStatus);
   const roomDeleteStatusInfo = useSelector(roomdeleteStatus);
-  console.log(dataType);
 
   const isBookings = dataType === "bookings";
   const isRooms = dataType === "rooms";
@@ -218,6 +231,148 @@ const DynamicTable = ({ data, dataType }) => {
       : isRooms
       ? roomTitles
       : [];
+
+      const cellRenderer = (header, rowData) => {
+        switch (header) {
+          case "guest":
+            const guest = rowData.guest;
+            return (
+              <>
+                <div style={{ fontWeight: 600 }}>
+                  {guest.nombre} {guest.apellidos}
+                </div>
+                <StyledLink
+                  onClick={() => handleGetDetails(guest.id_reserva)}
+                  to={`/bookings/${guest.id_reserva}`}
+                >
+                  {guest.id_reserva}
+                </StyledLink>
+              </>
+            );
+      
+          case "special_request":
+            return (
+              <SpecialRequestButton
+                onClick={() => handleOpenNote(rowData.guest.id_reserva)}
+              >
+                Special Request
+              </SpecialRequestButton>
+            );
+      
+          case "room":
+            return `${rowData.room.room_type} - ${rowData.room.room_number}`;
+      
+          case "status":
+            const trashIcon = currentStatus === "fulfilled" ? (
+              <TrashIcon onClick={() => handleDelete(rowData.guest.id_reserva)} />
+            ) : currentStatus === "rejected" ? (
+              <TrashIcon style={{ color: "#e9d7d7" }} />
+            ) : (
+              <Floater>
+                <LineWave
+                  height="80"
+                  width="80"
+                  color=""
+                  ariaLabel="line-wave"
+                  wrapperStyle=""
+                  wrapperClass=""
+                  visible={true}
+                  firstLineColor="#113C30"
+                  middleLineColor="#517A6F"
+                  lastLineColor="#E3342C"
+                />
+              </Floater>
+            );
+            return (
+              <>
+                <StatusDiv status={rowData.status}>{rowData.status}</StatusDiv>
+                {trashIcon}
+              </>
+            );
+      
+          case "availability":
+            const availabilityTrashIcon =
+              currentRoomDeleteStatus === "fulfilled" ? (
+                <TrashIcon onClick={() => handleDelete(rowData.room_name.id)} />
+              ) : currentRoomDeleteStatus === "rejected" ? (
+                <TrashIcon style={{ color: "#e9d7d7" }} />
+              ) : (
+                <Floater>
+                  <LineWave
+                    height="80"
+                    width="80"
+                    color=""
+                    ariaLabel="line-wave"
+                    wrapperStyle=""
+                    wrapperClass=""
+                    visible={true}
+                    firstLineColor="#113C30"
+                    middleLineColor="#517A6F"
+                    lastLineColor="#E3342C"
+                  />
+                </Floater>
+              );
+            return (
+              <>
+                <StatusDiv status={rowData.availability}>{rowData.availability}</StatusDiv>
+                {availabilityTrashIcon}
+              </>
+            );
+      
+          case "offer_price":
+            return (
+              <InfoWrap
+                style={{
+                  fontWeight: 600,
+                  fontSize: "18px",
+                }}
+              >
+                {rowData.offer_price.isOffer &&
+                  "$" +
+                    (rowData.price - (rowData.price * rowData.offer_price.discount) / 100)}
+              </InfoWrap>
+            );
+      
+          case "price":
+            return (
+              <InfoWrap
+                style={{
+                  color: rowData.offer_price.isOffer ? "#b2b2b2" : "",
+                  textDecoration: rowData.offer_price.isOffer ? "line-through" : "",
+                  fontWeight: 600,
+                  fontSize: "18px",
+                }}
+              >
+                {`$${rowData[header]}`}
+              </InfoWrap>
+            );
+      
+          case "amenities":
+            return rowData.amenities.join(", ");
+      
+          case "room_name":
+            return (
+              <RoomPhotoWrap>
+                <ImageRoom src={rowData.room_name.room_photo} />
+                <PhotoSpecs>
+                  <PhotoId
+                    to={`/rooms/${rowData.room_name.id}`}
+                    onClick={() => handleGetDetails(rowData.room_name.id)}
+                  >
+                    {rowData.room_name.id}
+                  </PhotoId>
+                  <PhotoRoomSpec>
+                    {rowData.room_name.room_number}
+                  </PhotoRoomSpec>
+                </PhotoSpecs>
+              </RoomPhotoWrap>
+            );
+      
+          default:
+            return rowData[header];
+        }
+      };
+      
 
   const handleGetDetails = (id) => {
     dispatch(get1Data(id));
@@ -255,184 +410,20 @@ const DynamicTable = ({ data, dataType }) => {
       <Thead>
         <TrNotHover>
           {headers.map((header) => (
-            <Th key={header}>{header.replace(/_/g, " ")}</Th>
+            <Th key={header} header={header}>{header.replace(/_/g, " ")}</Th>
           ))}
         </TrNotHover>
       </Thead>
       <tbody>
-        {isBookings ? (
-          data.map((booking, index) => (
-            <Tr key={index}>
-              {headers.map((header) => (
-                <Td key={header}>
-                  {header === "guest" ? (
-                    <>
-                      <div style={{ fontWeight: 600 }}>
-                        {booking.guest.nombre} {booking.guest.apellidos}
-                      </div>
-                      <StyledLink
-                        onClick={() =>
-                          handleGetDetails(booking.guest.id_reserva)
-                        }
-                        to={`/bookings/${booking.guest.id_reserva}`}
-                      >
-                        {booking.guest.id_reserva}
-                      </StyledLink>
-                    </>
-                  ) : header === "special_request" ? (
-                    <SpecialRequestButton
-                      onClick={() => handleOpenNote(booking.guest.id_reserva)}
-                    >
-                      Special Request
-                    </SpecialRequestButton>
-                  ) : header === "room" ? (
-                    <>
-                      {booking.room.room_type} - {booking.room.room_number}
-                    </>
-                  ) : header === "status" ? (
-                    <>
-                      <StatusDiv
-                        style={{
-                          backgroundColor:
-                            booking.status === "Check In"
-                              ? "#e8ffee"
-                              : booking.status === "Check Out"
-                              ? "#FFEDEC"
-                              : "#FEFFC2",
-                          color:
-                            booking.status === "Check In"
-                              ? "#5ad07a"
-                              : booking.status === "Check Out"
-                              ? "#E23428"
-                              : "#E2B308",
-                        }}
-                      >
-                        {booking.status}
-                      </StatusDiv>
-                      {currentStatus === "fulfilled" ? (
-                        <TrashIcon
-                          onClick={() => handleDelete(booking.guest.id_reserva)}
-                        />
-                      ) : currentStatus === "rejected" ? (
-                        <TrashIcon style={{ color: "#e9d7d7" }} />
-                      ) : (
-                        <Floater>
-                          <LineWave
-                            height="80"
-                            width="80"
-                            color=""
-                            ariaLabel="line-wave"
-                            wrapperStyle=""
-                            wrapperClass=""
-                            visible={true}
-                            firstLineColor="#113C30"
-                            middleLineColor="#517A6F"
-                            lastLineColor="#E3342C"
-                          />
-                        </Floater>
-                      )}
-                    </>
-                  ) : (
-                    booking[header]
-                  )}
-                </Td>
-              ))}
-            </Tr>
-          ))
-        ) : isRooms ? (
-          data.map((room, index) => (
-            <Tr key={index}>
-              {headers.map((header) => (
-                <Td
-                  key={header}
-                  style={
-                    header === "price"
-                      ? {
-                          color: room.offer_price.isOffer ? "#b2b2b2" : "",
-                          textDecoration: room.offer_price.isOffer
-                            ? "line-through"
-                            : "",
-                          fontWeight: 600,
-                          fontSize: "18px",
-                        }
-                      : {
-                          width:
-                            header === "amenities"
-                              ? "480px"
-                              : header === "status"
-                              ? "200px"
-                              : "130px",
-                        }
-                  }
-                >
-                  {header === "room_name" ? (
-                    <RoomPhotoWrap>
-                      <ImageRoom src={room.room_name.room_photo} />
-                      <PhotoSpecs>
-                        <PhotoId
-                          to={`/rooms/${room.room_name.id}`}
-                          onClick={() => handleGetDetails(room.room_name.id)}
-                        >
-                          {room.room_name.id}
-                        </PhotoId>
-                        <PhotoRoomSpec>
-                          {room.room_name.room_number}
-                        </PhotoRoomSpec>
-                      </PhotoSpecs>
-                    </RoomPhotoWrap>
-                  ) : header === "status" ? (
-                    <>
-                      <StatusDiv
-                        style={{
-                          backgroundColor:
-                            room.status === "available" ? "#e8ffee" : "#FFEDEC",
-                          color:
-                            room.status === "available" ? "#5ad07a" : "#E23428",
-                          maxWidth: "130px",
-                        }}
-                      >
-                        {room.status}
-                      </StatusDiv>
-                      {currentRoomDeleteStatus === "fulfilled" ? (
-                        <TrashIcon
-                          onClick={() => handleDelete(room.room_name.id)}
-                        />
-                      ) : currentRoomDeleteStatus === "rejected" ? (
-                        <TrashIcon style={{ color: "#e9d7d7" }} />
-                      ) : (
-                        <Floater>
-                          <LineWave
-                            height="80"
-                            width="80"
-                            color=""
-                            ariaLabel="line-wave"
-                            wrapperStyle=""
-                            wrapperClass=""
-                            visible={true}
-                            firstLineColor="#113C30"
-                            middleLineColor="#517A6F"
-                            lastLineColor="#E3342C"
-                          />
-                        </Floater>
-                      )}
-                    </>
-                  ) : header === "offer_price" ? (
-                    <InfoWrap>
-                      {room.offer_price.isOffer &&
-                        "$" +
-                          (room.price -
-                            (room.price * room.offer_price.discount) / 100)}
-                    </InfoWrap>
-                  ) : (
-                    room[header]
-                  )}
-                </Td>
-              ))}
-            </Tr>
-          ))
-        ) : (
-          <div>I dunno...</div>
-        )}
+        {data.map((rowData, index) => (
+          <Tr key={index}>
+            {headers.map((header) => (
+              <Td key={header}>
+                {cellRenderer(header, rowData)}
+              </Td>
+            ))}
+          </Tr>
+        ))}
         {isNoteOpen && (
           <Modal
             commentId={selectedNoteId}
