@@ -14,6 +14,7 @@ import { deleteStatus } from "../features/Bookings/bookingSlice";
 import { LineWave } from "react-loader-spinner";
 import { deleteRoomsData } from "../features/Rooms/roomThunks";
 import { roomdeleteStatus } from "../features/Rooms/roomSlice";
+import { StatusDiv } from "./StatusDiv";
 
 const bookingTitles = [
   "Guest",
@@ -48,7 +49,11 @@ const Th = styled.th`
   text-transform: capitalize;
   border-bottom: 2px solid #f5f5f5;
   width: ${(props) =>
-    props.header === "amenities" ? "480px" :props.header === "availability" ? "200px" : "130px"};
+    props.header === "amenities"
+      ? "480px"
+      : props.header === "availability"
+      ? "200px"
+      : "130px"};
 `;
 
 const Tr = styled.tr`
@@ -92,28 +97,6 @@ const SpecialRequestButton = styled.button`
     background: #5ad07a;
     color: #eef9f2;
   }
-`;
-
-const StatusDiv = styled.div`
-  font: normal normal 500 14px/25px Poppins;
-  border-radius: 12px;
-  letter-spacing: 0px;
-  padding: 13px 26px;
-  text-align: center;
-  text-transform: capitalize;
-  width: 70%;
-  background-color: ${(props) =>
-    props.status === "Check In" || props.status === "available"
-      ? "#e8ffee"
-      : props.status === "Check Out" || props.status === "booked"
-      ? "#FFEDEC"
-      : "#FEFFC2"};
-  color: ${(props) =>
-    props.status === "Check In" || props.status === "available"
-      ? "#5ad07a"
-      : props.status === "Check Out" || props.status === "booked"
-      ? "#E23428"
-      : "#E2B308"};
 `;
 
 const NoteContainer = styled(ModalContainer)`
@@ -232,147 +215,146 @@ const DynamicTable = ({ data, dataType }) => {
       ? roomTitles
       : [];
 
-      const cellRenderer = (header, rowData) => {
-        switch (header) {
-          case "guest":
-            const guest = rowData.guest;
-            return (
-              <>
-                <div style={{ fontWeight: 600 }}>
-                  {guest.nombre} {guest.apellidos}
-                </div>
-                <StyledLink
-                  onClick={() => handleGetDetails(guest.id_reserva)}
-                  to={`/bookings/${guest.id_reserva}`}
-                >
-                  {guest.id_reserva}
-                </StyledLink>
-              </>
-            );
-      
-          case "special_request":
-            return (
-              <SpecialRequestButton
-                onClick={() => handleOpenNote(rowData.guest.id_reserva)}
+  const cellRenderer = (header, rowData) => {
+    switch (header) {
+      case "guest":
+        const guest = rowData.guest;
+        return (
+          <>
+            <div style={{ fontWeight: 600 }}>
+              {guest.nombre} {guest.apellidos}
+            </div>
+            <StyledLink
+              onClick={() => handleGetDetails(guest.id_reserva)}
+              to={`/bookings/${guest.id_reserva}`}
+            >
+              {guest.id_reserva}
+            </StyledLink>
+          </>
+        );
+
+      case "special_request":
+        return (
+          <SpecialRequestButton
+            onClick={() => handleOpenNote(rowData.guest.id_reserva)}
+          >
+            Special Request
+          </SpecialRequestButton>
+        );
+
+      case "room":
+        return `${rowData.room.room_type} - ${rowData.room.room_number}`;
+
+      case "status":
+        const trashIcon =
+          currentStatus === "fulfilled" ? (
+            <TrashIcon onClick={() => handleDelete(rowData.guest.id_reserva)} />
+          ) : currentStatus === "rejected" ? (
+            <TrashIcon style={{ color: "#e9d7d7" }} />
+          ) : (
+            <Floater>
+              <LineWave
+                height="80"
+                width="80"
+                color=""
+                ariaLabel="line-wave"
+                wrapperStyle=""
+                wrapperClass=""
+                visible={true}
+                firstLineColor="#113C30"
+                middleLineColor="#517A6F"
+                lastLineColor="#E3342C"
+              />
+            </Floater>
+          );
+        return (
+          <>
+            <StatusDiv data={rowData} />
+            {trashIcon}
+          </>
+        );
+
+      case "availability":
+        const availabilityTrashIcon =
+          currentRoomDeleteStatus === "fulfilled" ? (
+            <TrashIcon onClick={() => handleDelete(rowData.room_name.id)} />
+          ) : currentRoomDeleteStatus === "rejected" ? (
+            <TrashIcon style={{ color: "#e9d7d7" }} />
+          ) : (
+            <Floater>
+              <LineWave
+                height="80"
+                width="80"
+                color=""
+                ariaLabel="line-wave"
+                wrapperStyle=""
+                wrapperClass=""
+                visible={true}
+                firstLineColor="#113C30"
+                middleLineColor="#517A6F"
+                lastLineColor="#E3342C"
+              />
+            </Floater>
+          );
+        return (
+          <>
+            <StatusDiv data={rowData} />
+            {availabilityTrashIcon}
+          </>
+        );
+
+      case "offer_price":
+        return (
+          <InfoWrap
+            style={{
+              fontWeight: 600,
+              fontSize: "18px",
+            }}
+          >
+            {rowData.offer_price.isOffer &&
+              "$" +
+                (rowData.price -
+                  (rowData.price * rowData.offer_price.discount) / 100)}
+          </InfoWrap>
+        );
+
+      case "price":
+        return (
+          <InfoWrap
+            style={{
+              color: rowData.offer_price.isOffer ? "#b2b2b2" : "",
+              textDecoration: rowData.offer_price.isOffer ? "line-through" : "",
+              fontWeight: 600,
+              fontSize: "18px",
+            }}
+          >
+            {`$${rowData[header]}`}
+          </InfoWrap>
+        );
+
+      case "amenities":
+        return rowData.amenities.join(", ");
+
+      case "room_name":
+        return (
+          <RoomPhotoWrap>
+            <ImageRoom src={rowData.room_name.room_photo} />
+            <PhotoSpecs>
+              <PhotoId
+                to={`/rooms/${rowData.room_name.id}`}
+                onClick={() => handleGetDetails(rowData.room_name.id)}
               >
-                Special Request
-              </SpecialRequestButton>
-            );
-      
-          case "room":
-            return `${rowData.room.room_type} - ${rowData.room.room_number}`;
-      
-          case "status":
-            const trashIcon = currentStatus === "fulfilled" ? (
-              <TrashIcon onClick={() => handleDelete(rowData.guest.id_reserva)} />
-            ) : currentStatus === "rejected" ? (
-              <TrashIcon style={{ color: "#e9d7d7" }} />
-            ) : (
-              <Floater>
-                <LineWave
-                  height="80"
-                  width="80"
-                  color=""
-                  ariaLabel="line-wave"
-                  wrapperStyle=""
-                  wrapperClass=""
-                  visible={true}
-                  firstLineColor="#113C30"
-                  middleLineColor="#517A6F"
-                  lastLineColor="#E3342C"
-                />
-              </Floater>
-            );
-            return (
-              <>
-                <StatusDiv status={rowData.status}>{rowData.status}</StatusDiv>
-                {trashIcon}
-              </>
-            );
-      
-          case "availability":
-            const availabilityTrashIcon =
-              currentRoomDeleteStatus === "fulfilled" ? (
-                <TrashIcon onClick={() => handleDelete(rowData.room_name.id)} />
-              ) : currentRoomDeleteStatus === "rejected" ? (
-                <TrashIcon style={{ color: "#e9d7d7" }} />
-              ) : (
-                <Floater>
-                  <LineWave
-                    height="80"
-                    width="80"
-                    color=""
-                    ariaLabel="line-wave"
-                    wrapperStyle=""
-                    wrapperClass=""
-                    visible={true}
-                    firstLineColor="#113C30"
-                    middleLineColor="#517A6F"
-                    lastLineColor="#E3342C"
-                  />
-                </Floater>
-              );
-            return (
-              <>
-                <StatusDiv status={rowData.availability}>{rowData.availability}</StatusDiv>
-                {availabilityTrashIcon}
-              </>
-            );
-      
-          case "offer_price":
-            return (
-              <InfoWrap
-                style={{
-                  fontWeight: 600,
-                  fontSize: "18px",
-                }}
-              >
-                {rowData.offer_price.isOffer &&
-                  "$" +
-                    (rowData.price - (rowData.price * rowData.offer_price.discount) / 100)}
-              </InfoWrap>
-            );
-      
-          case "price":
-            return (
-              <InfoWrap
-                style={{
-                  color: rowData.offer_price.isOffer ? "#b2b2b2" : "",
-                  textDecoration: rowData.offer_price.isOffer ? "line-through" : "",
-                  fontWeight: 600,
-                  fontSize: "18px",
-                }}
-              >
-                {`$${rowData[header]}`}
-              </InfoWrap>
-            );
-      
-          case "amenities":
-            return rowData.amenities.join(", ");
-      
-          case "room_name":
-            return (
-              <RoomPhotoWrap>
-                <ImageRoom src={rowData.room_name.room_photo} />
-                <PhotoSpecs>
-                  <PhotoId
-                    to={`/rooms/${rowData.room_name.id}`}
-                    onClick={() => handleGetDetails(rowData.room_name.id)}
-                  >
-                    {rowData.room_name.id}
-                  </PhotoId>
-                  <PhotoRoomSpec>
-                    {rowData.room_name.room_number}
-                  </PhotoRoomSpec>
-                </PhotoSpecs>
-              </RoomPhotoWrap>
-            );
-      
-          default:
-            return rowData[header];
-        }
-      };
-      
+                {rowData.room_name.id}
+              </PhotoId>
+              <PhotoRoomSpec>{rowData.room_name.room_number}</PhotoRoomSpec>
+            </PhotoSpecs>
+          </RoomPhotoWrap>
+        );
+
+      default:
+        return rowData[header];
+    }
+  };
 
   const handleGetDetails = (id) => {
     dispatch(get1Data(id));
@@ -410,7 +392,9 @@ const DynamicTable = ({ data, dataType }) => {
       <Thead>
         <TrNotHover>
           {headers.map((header) => (
-            <Th key={header} header={header}>{header.replace(/_/g, " ")}</Th>
+            <Th key={header} header={header}>
+              {header.replace(/_/g, " ")}
+            </Th>
           ))}
         </TrNotHover>
       </Thead>
@@ -418,9 +402,7 @@ const DynamicTable = ({ data, dataType }) => {
         {data.map((rowData, index) => (
           <Tr key={index}>
             {headers.map((header) => (
-              <Td key={header}>
-                {cellRenderer(header, rowData)}
-              </Td>
+              <Td key={header}>{cellRenderer(header, rowData)}</Td>
             ))}
           </Tr>
         ))}
