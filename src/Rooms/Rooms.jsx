@@ -124,9 +124,9 @@ export const Rooms = () => {
       case "All Rooms":
         return true;
       case "Available":
-        return room.status === "available";
+        return room.availability === "available";
       case "Booked":
-        return room.status === "booked";
+        return room.availability === "booked";
       default:
         return false;
     }
