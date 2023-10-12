@@ -32,7 +32,7 @@ const roomTitles = [
   "Amenities",
   "Price",
   "Offer Price",
-  "Status",
+  "Availability",
 ];
 
 const Table = styled.table`
