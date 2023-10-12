@@ -42,6 +42,8 @@ const Table = styled.table`
 
 const Thead = styled.thead``;
 
+const Tbody = styled.tbody``;
+
 const Th = styled.th`
   background-color: #ffffff;
   text-align: left;
@@ -73,6 +75,7 @@ const TrNotHover = styled.tr`
 const Td = styled.td`
   padding: 8px;
   position: relative;
+
 `;
 
 const StyledLink = styled(Link)`
@@ -386,7 +389,7 @@ const DynamicTable = ({ data, dataType }) => {
       </NoteBackground>
     );
   };
-
+  
   return (
     <Table>
       <Thead>
@@ -398,7 +401,7 @@ const DynamicTable = ({ data, dataType }) => {
           ))}
         </TrNotHover>
       </Thead>
-      <tbody>
+      <Tbody>
         {data.map((rowData, index) => (
           <Tr key={index}>
             {headers.map((header) => (
@@ -412,7 +415,7 @@ const DynamicTable = ({ data, dataType }) => {
             onCloseNote={() => setIsNoteOpen(false)}
           />
         )}
-      </tbody>
+      </Tbody>
     </Table>
   );
 };
