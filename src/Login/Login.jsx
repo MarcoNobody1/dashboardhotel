@@ -129,6 +129,7 @@ export const Login = () => {
           <Logo src={logo} />
           <Label htmlFor="email">Email:</Label>
           <Input
+            data-cy="usernameInput"
             onChange={handleEmail}
             id="email"
             type="email"
@@ -137,13 +138,14 @@ export const Login = () => {
           />
           <Label htmlFor="password">Password:</Label>
           <Input
+          data-cy="passwordInput"
             onChange={handlePassword}
             id="password"
             type="password"
             placeholder="Type your password"
             autoComplete="on"
           />
-          <Button type="submit">Log In</Button>
+          <Button data-cy="loginButton" type="submit">Log In</Button>
           <Advertice>
             <strong>Hint:</strong>
           </Advertice>
