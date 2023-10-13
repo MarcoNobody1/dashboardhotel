@@ -31,4 +31,13 @@ describe("Pruebas de logeo en la aplicacion", () => {
     cy.visit("http://localhost:3000/login");
     cy.location("pathname").should("not.include", "login");
   });
+
+  it("Una vez logeado, se puede ir a otras paginas", () => {
+    cy.visit("http://localhost:3000/login");
+    cy.get('[data-cy="usernameInput"]').type("marcocamaradiaz@gmail.com");
+    cy.get('[data-cy="passwordInput"]').type("Marco");
+    cy.get('[data-cy="loginButton"]').click();
+    cy.visit("http://localhost:3000/rooms");
+    cy.location("pathname").should("include", "rooms");
+  });
 });
