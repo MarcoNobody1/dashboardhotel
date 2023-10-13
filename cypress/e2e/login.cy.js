@@ -1,6 +1,11 @@
 describe("Pruebas de logeo en la aplicacion", () => {
-  it("Si se introducen los datos correctos me lleva a la pagina principal", () => {
+
+  beforeEach(() => {
+
     cy.visit("http://localhost:3000/login");
+  });
+
+  it("Si se introducen los datos correctos me lleva a la pagina principal", () => {
     cy.get('[data-cy="usernameInput"]').type("marcocamaradiaz@gmail.com");
     cy.get('[data-cy="passwordInput"]').type("Marco");
     cy.get('[data-cy="loginButton"]').click();
@@ -8,7 +13,6 @@ describe("Pruebas de logeo en la aplicacion", () => {
   });
 
   it("Si se introducen los datos incorrectos me salta un modal de error y no me deja entrar a la pagina principal", () => {
-    cy.visit("http://localhost:3000/login");
     cy.get('[data-cy="usernameInput"]').type("hola@gmail.com");
     cy.get('[data-cy="passwordInput"]').type("mundo");
     cy.get('[data-cy="loginButton"]').click();
@@ -24,7 +28,6 @@ describe("Pruebas de logeo en la aplicacion", () => {
   });
 
   it("Una vez logeado, no se puede volver a /login", () => {
-    cy.visit("http://localhost:3000/login");
     cy.get('[data-cy="usernameInput"]').type("marcocamaradiaz@gmail.com");
     cy.get('[data-cy="passwordInput"]').type("Marco");
     cy.get('[data-cy="loginButton"]').click();
@@ -33,7 +36,6 @@ describe("Pruebas de logeo en la aplicacion", () => {
   });
 
   it("Una vez logeado, se puede ir a otras paginas", () => {
-    cy.visit("http://localhost:3000/login");
     cy.get('[data-cy="usernameInput"]').type("marcocamaradiaz@gmail.com");
     cy.get('[data-cy="passwordInput"]').type("Marco");
     cy.get('[data-cy="loginButton"]').click();
