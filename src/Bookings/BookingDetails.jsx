@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { PageWrapper } from "../GeneralComponents";
+import { PageWrapper, formatDate } from "../GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
 import room from "../assets/hotelRoom.jpg";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,49 +10,7 @@ import { Hourglass } from "react-loader-spinner";
 import { Floater } from "../GeneralComponents";
 import { get1Data, getData } from "../features/Bookings/bookingThunks";
 
-export const formatDate = (inputDate) => {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
-  const dateParts = inputDate.split("-");
-  const year = dateParts[0];
-  const monthIndex = parseInt(dateParts[1]) - 1;
-  const day = parseInt(dateParts[2]);
-
-  const month = months[monthIndex];
-
-  const daySuffix = getDaySuffix(day);
-
-  return `${month} ${day}${daySuffix}, ${year}`;
-};
-
-const getDaySuffix = (day) => {
-  if (day >= 11 && day <= 13) {
-    return "th";
-  }
-  switch (day % 10) {
-    case 1:
-      return "st";
-    case 2:
-      return "nd";
-    case 3:
-      return "rd";
-    default:
-      return "th";
-  }
-};
 
 const BookingWrapper = styled.div`
   background-color: #fff;
