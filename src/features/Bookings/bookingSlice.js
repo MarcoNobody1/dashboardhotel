@@ -56,4 +56,4 @@ const initialState = {
   export const info = (state) => state.bookings.bookings;
   export const statusinfo = (state) => state.bookings.status;
   export const detailData = (state) => state.bookings.bookingDetail[0];
-  export const deleteStatus = (state) => state.bookings.deleteStatus;
+  export const bookingDeleteStatus = (state) => state.bookings.deleteStatus;
