@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { PageWrapper } from "../GeneralComponents";
+import { PageWrapper, RenderError, RenderLoading } from "../GeneralComponents";
 import { CommentsContainer } from "../Dashboard/Dashboard";
 import { Comments } from "../Components/CommentsPreview";
 import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SelectorFilter, TableContainer } from "../Rooms/Rooms";
-import { Floater } from "../GeneralComponents";
-import { Hourglass } from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { contactsInfo, contactstatusinfo } from "../features/Contact/contactSlice";
 import { getContactsData } from "../features/Contact/contatctThunks";
-import { ContactsTableTitles } from "../Components/ContactsTable/ContactsTableTitles";
-import { ContactTableContent } from "../Components/ContactsTable/ContactsTable";
+import DynamicTable from "../Components/DynamicTable";
 
 export const Contact = () => {
   const infoContacts = useSelector(contactsInfo);
@@ -58,6 +55,24 @@ export const Contact = () => {
     });
   }
 
+  const RenderTable = () => {
+    return (
+      <TableContainer>
+        <DynamicTable data={filtered} dataType={"contact"} />
+      </TableContainer>
+    );
+  };
+
+  const renderStatus = () => {
+    if (currentStatus === "fulfilled") {
+      return <RenderTable />;
+    } else if (currentStatus === "rejected") {
+      return <RenderError />;
+    } else {
+      return <RenderLoading />;
+    }
+  };
+
   return (
     <>
       <PageWrapper>
@@ -96,28 +111,7 @@ export const Contact = () => {
             </OptionSelect>
           </SelectorFilter>
         </FilterContainer>
-        {currentStatus === "fulfilled" ? (
-          <>
-            <TableContainer>
-              <ContactsTableTitles data={filtered} />
-              <ContactTableContent data={filtered}/>
-            </TableContainer>
-          </>
-        ) : currentStatus === "rejected" ? (
-          alert("not good")
-        ) : (
-          <Floater>
-            <Hourglass
-              visible={true}
-              height="80"
-              width="80"
-              ariaLabel="hourglass-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-              colors={["#135846", "#e23428"]}
-            />
-          </Floater>
-        )}
+        {renderStatus()}
       </OuterContainer>
       </PageWrapper>
     </>
