@@ -10,11 +10,11 @@ import {
   ModalContainer,
 } from "../GeneralComponents";
 import { BsTrash3 } from "react-icons/bs";
-import { deleteStatus } from "../features/Bookings/bookingSlice";
 import { LineWave } from "react-loader-spinner";
 import { deleteRoomsData } from "../features/Rooms/roomThunks";
-import { roomdeleteStatus } from "../features/Rooms/roomSlice";
 import { StatusDiv } from "./StatusDiv";
+import { bookingDeleteStatus } from "../features/Bookings/bookingSlice";
+import { roomdeleteStatus } from "../features/Rooms/roomSlice";
 
 const bookingTitles = [
   "Guest",
@@ -75,7 +75,6 @@ const TrNotHover = styled.tr`
 const Td = styled.td`
   padding: 8px;
   position: relative;
-
 `;
 
 const StyledLink = styled(Link)`
@@ -181,42 +180,54 @@ const DynamicTable = ({ data, dataType }) => {
   const dispatch = useDispatch();
   const [selectedNoteId, setSelectedNoteId] = useState(null);
   const [isNoteOpen, setIsNoteOpen] = useState(false);
-  const [currentStatus, setCurrentStatus] = useState("");
-  const [currentRoomDeleteStatus, setCurrentRoomDeleteStatus] = useState("");
-  const statusInfo = useSelector(deleteStatus);
-  const roomDeleteStatusInfo = useSelector(roomdeleteStatus);
+  const statusInfo = useSelector(
+    dataType === "bookings"
+      ? bookingDeleteStatus
+      : dataType === "rooms"
+      ? roomdeleteStatus
+      : null
+  );
 
-  const isBookings = dataType === "bookings";
-  const isRooms = dataType === "rooms";
-
-  useEffect(() => {
-    if (
-      statusInfo === "rejected" ||
-      statusInfo === "pending" ||
-      statusInfo === "fulfilled"
-    ) {
-      setCurrentStatus(statusInfo);
-    }
-  }, [statusInfo]);
-
-  useEffect(() => {
-    if (
-      roomDeleteStatusInfo === "rejected" ||
-      roomDeleteStatusInfo === "pending" ||
-      roomDeleteStatusInfo === "fulfilled"
-    ) {
-      setCurrentRoomDeleteStatus(roomDeleteStatusInfo);
-    }
-  }, [roomDeleteStatusInfo]);
 
   const headers =
     data.length > 0
       ? Object.keys(data[0])
-      : isBookings
+      : dataType === "bookings"
       ? bookingTitles
-      : isRooms
+      : dataType === "rooms"
       ? roomTitles
       : [];
+
+  const handleGetDetails = (id) => {
+    dispatch(get1Data(id));
+  };
+
+  const handleOpenNote = (commentId) => {
+    setSelectedNoteId(commentId);
+    setIsNoteOpen(true);
+  };
+
+  const handleDelete = (id) => {
+    if (dataType === "bookings") {
+      dispatch(deleteData(id));
+    } else if (dataType === "rooms") {
+      dispatch(deleteRoomsData(id));
+    }
+  };
+
+  const Modal = ({ commentId, onCloseNote }) => {
+    const selectedNote = data.find(
+      (booking) => booking.guest.id_reserva === commentId
+    );
+    return (
+      <NoteBackground>
+        <NoteContainer>
+          <FloatCross onClick={onCloseNote} />
+          {selectedNote.special_request}
+        </NoteContainer>
+      </NoteBackground>
+    );
+  };
 
   const cellRenderer = (header, rowData) => {
     switch (header) {
@@ -250,9 +261,9 @@ const DynamicTable = ({ data, dataType }) => {
 
       case "status":
         const trashIcon =
-          currentStatus === "fulfilled" ? (
+          statusInfo === "fulfilled" ? (
             <TrashIcon onClick={() => handleDelete(rowData.guest.id_reserva)} />
-          ) : currentStatus === "rejected" ? (
+          ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
             <Floater>
@@ -279,9 +290,9 @@ const DynamicTable = ({ data, dataType }) => {
 
       case "availability":
         const availabilityTrashIcon =
-          currentRoomDeleteStatus === "fulfilled" ? (
+          statusInfo === "fulfilled" ? (
             <TrashIcon onClick={() => handleDelete(rowData.room_name.id)} />
-          ) : currentRoomDeleteStatus === "rejected" ? (
+          ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
             <Floater>
@@ -359,37 +370,6 @@ const DynamicTable = ({ data, dataType }) => {
     }
   };
 
-  const handleGetDetails = (id) => {
-    dispatch(get1Data(id));
-  };
-
-  const handleOpenNote = (commentId) => {
-    setSelectedNoteId(commentId);
-    setIsNoteOpen(true);
-  };
-
-  const handleDelete = (id) => {
-    if (isBookings) {
-      dispatch(deleteData(id));
-    } else if (isRooms) {
-      dispatch(deleteRoomsData(id));
-    }
-  };
-
-  const Modal = ({ commentId, onCloseNote }) => {
-    const selectedNote = data.find(
-      (booking) => booking.guest.id_reserva === commentId
-    );
-    return (
-      <NoteBackground>
-        <NoteContainer>
-          <FloatCross onClick={onCloseNote} />
-          {selectedNote.special_request}
-        </NoteContainer>
-      </NoteBackground>
-    );
-  };
-  
   return (
     <Table>
       <Thead>
