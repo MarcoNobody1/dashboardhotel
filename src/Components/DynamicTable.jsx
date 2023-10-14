@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -8,6 +8,7 @@ import {
   Floater,
   ModalBackground,
   ModalContainer,
+  formatDate,
 } from "../GeneralComponents";
 import { BsTrash3 } from "react-icons/bs";
 import { LineWave } from "react-loader-spinner";
@@ -35,6 +36,8 @@ const roomTitles = [
   "Availability",
 ];
 
+const contactTitles = ["Date", "Customer", "Subject", "Comment", "Archived"];
+
 const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
@@ -51,10 +54,12 @@ const Th = styled.th`
   text-transform: capitalize;
   border-bottom: 2px solid #f5f5f5;
   width: ${(props) =>
-    props.header === "amenities"
+    props.header === "amenities" || props.header === "comment"
       ? "480px"
       : props.header === "availability"
       ? "200px"
+      : props.header === "customer"
+      ? "300px"
       : "130px"};
 `;
 
@@ -176,6 +181,27 @@ const InfoWrap = styled.div`
   font-size: 18px;
 `;
 
+const InfoLine = styled.p`
+  font: normal normal 400 16px/25px Poppins;
+  letter-spacing: 0px;
+  color: #393939;
+`;
+
+const StatusButton = styled.button`
+  font: normal normal 600 14px/25px Poppins;
+  border-radius: 12px;
+  letter-spacing: 0px;
+  padding: 13px 13px;
+  text-align: center;
+  text-transform: capitalize;
+  border: none;
+  transition: all 150ms ease-out;
+  &:hover {
+    cursor: pointer;
+    filter: invert(0.2);
+  }
+`;
+
 const DynamicTable = ({ data, dataType }) => {
   const dispatch = useDispatch();
   const [selectedNoteId, setSelectedNoteId] = useState(null);
@@ -188,7 +214,6 @@ const DynamicTable = ({ data, dataType }) => {
       : null
   );
 
-
   const headers =
     data.length > 0
       ? Object.keys(data[0])
@@ -196,6 +221,8 @@ const DynamicTable = ({ data, dataType }) => {
       ? bookingTitles
       : dataType === "rooms"
       ? roomTitles
+      : dataType === "contact"
+      ? contactTitles
       : [];
 
   const handleGetDetails = (id) => {
@@ -365,6 +392,35 @@ const DynamicTable = ({ data, dataType }) => {
           </RoomPhotoWrap>
         );
 
+      case "date":
+        return <>{formatDate(rowData.date.send_date)}</>;
+
+      case "customer":
+          return (
+            <InfoWrap style={{ minWidth: "300px" }}>
+              <InfoLine>{rowData.customer.name}</InfoLine>
+              <InfoLine>{rowData.customer.email}</InfoLine>
+              <InfoLine>{rowData.customer.phone}</InfoLine>
+            </InfoWrap>
+          )
+      
+      case "subject":
+        return(
+          <InfoWrap style={{ fontWeight: 600 }}>{rowData.subject}</InfoWrap>
+        ) 
+        
+      case "archived":
+        return(
+          <StatusButton
+          style={{
+            backgroundColor: rowData.archived ? "#e8ffee" : "#FFEDEC",
+            color: rowData.archived ? "#5ad07a" : "#E23428",
+            maxWidth: "130px",
+          }}
+        >
+         { rowData.archived ? "Archived" : "Not Archived"}
+        </StatusButton>
+        )
       default:
         return rowData[header];
     }
