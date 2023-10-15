@@ -153,6 +153,8 @@ export const ModalContent = styled(MessageContent)`
 `;
 
 export const ModalContainer = styled(CommentContainer)`
+  min-width: 480px;
+  min-height: 200px;
   max-width: 500px;
   position: relative;
   z-index: 100;
@@ -242,14 +244,14 @@ export const Floater = styled.div`
 
 export const RenderError = () => {
   Swal.fire({
-    position: 'center',
-    icon: 'error',
+    position: "center",
+    icon: "error",
     title: "Something's Wrong!",
     text: "Please refresh the page",
-    timer:2500,
-    showConfirmButton:false,
-    timerProgressBar:true,
-  })
+    timer: 2500,
+    showConfirmButton: false,
+    timerProgressBar: true,
+  });
 };
 
 export const RenderLoading = () => {
