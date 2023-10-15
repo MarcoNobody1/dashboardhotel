@@ -8,20 +8,21 @@ import {
   ModalBackground,
   ModalContainer,
   ModalContent,
-} from "../GeneralComponents";
-import { Floater } from "../GeneralComponents";
-import { Hourglass } from "react-loader-spinner";
+  RenderError,
+  RenderLoading,
+} from "../../GeneralComponents";
 import { useDispatch, useSelector } from "react-redux";
 import {
   contactdetailData,
   contactsInfo,
   contactstatusinfo,
   detailStatus,
-} from "../features/Contact/contactSlice";
+} from "../../features/Contact/contactSlice";
 import {
   get1ContactData,
   getContactsData,
-} from "../features/Contact/contatctThunks";
+} from "../../features/Contact/contatctThunks";
+import { CommentModal } from "./CommentsModal";
 
 const CommentsWrapper = styled.div`
   background-color: #fff;
@@ -86,7 +87,6 @@ export const Comments = () => {
   const [currenContacts, setCurrentContacts] = useState([]);
   const [currentStatus, setCurrentStatus] = useState("");
   const [currentId, setCurrentId] = useState("");
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -114,52 +114,30 @@ export const Comments = () => {
   const Modal = ({ idContact, onClose }) => {
     const selectedContact = useSelector(contactdetailData);
     const detailContactStatus = useSelector(detailStatus);
-    const [currentContact, setCurrentContact] = useState([]);
     
     useEffect(() => {
       dispatch(get1ContactData(idContact));
     }, [idContact]);
 
-    useEffect(() => {
-      if (detailContactStatus === "rejected") {
-        setCurrentStatus(detailContactStatus);
-      } else if (detailContactStatus === "pending") {
-        setCurrentStatus(detailContactStatus);
-      } else if (detailContactStatus === "fulfilled") {
-        setCurrentStatus(detailContactStatus);
-        setCurrentContact(selectedContact);
-      }
-    }, [selectedContact, detailContactStatus]);
-
     return (
       <>
-        {currentStatus === "fulfilled" ? (
+        {detailContactStatus === "fulfilled" ? (
           <>
             <ModalBackground>
               <ModalContainer>
-                <FullName>{currentContact.customer.name}</FullName> */
+                <FullName>{selectedContact.customer.name}</FullName>
                 <CrossIcon onClick={onClose} />
-                <EmailAddress>{currentContact.customer.email}</EmailAddress>
-                <PhoneNumber>{currentContact.customer.phone}</PhoneNumber>
-                <Subject>{currentContact.subject}</Subject>
-                <ModalContent>{currentContact.comment}</ModalContent>
+                <EmailAddress>{selectedContact.customer.email}</EmailAddress>
+                <PhoneNumber>{selectedContact.customer.phone}</PhoneNumber>
+                <Subject>{selectedContact.subject}</Subject>
+                <ModalContent>{selectedContact.comment}</ModalContent>
               </ModalContainer>
             </ModalBackground>
           </>
-        ) : currentStatus === "rejected" ? (
-          alert("not good")
+        ) : detailContactStatus === "rejected" ? (
+         <RenderError />
         ) : (
-          <Floater>
-            <Hourglass
-              visible={true}
-              height="80"
-              width="80"
-              ariaLabel="hourglass-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-              colors={["#135846", "#e23428"]}
-            />
-          </Floater>
+          <RenderLoading />
         )}
       </>
     );
@@ -188,23 +166,13 @@ export const Comments = () => {
           </CommentsWrapper>
 
           {isModalOpen && (
-            <Modal idContact={currentId} onClose={() => setIsModalOpen(false)} />
+            <CommentModal idContact={currentId} onClose={() => setIsModalOpen(false)} />
           )}
         </>
       ) : currentStatus === "rejected" ? (
-        alert("not good")
+        <RenderError />
       ) : (
-        <Floater>
-          <Hourglass
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="hourglass-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            colors={["#135846", "#e23428"]}
-          />
-        </Floater>
+        <RenderLoading/>
       )}
     </>
   );
