@@ -33,7 +33,7 @@ export const bookingsData = [
     check_out: "2023-12-25",
     special_request: "Late check-out requested due to a late flight. Would like to keep the room until 4 PM. Also, please provide complimentary breakfast in the morning.",
     room: {
-      room_type: "Deluxe Suite",
+      room_type: "Suite",
       room_number: "401",
       price: Math.floor(Math.random() * (210 - 70 + 1)) + 70,
       amenities: [
@@ -56,7 +56,7 @@ export const bookingsData = [
     check_out: "2023-11-20",
     special_request: "Extra pillows and blankets requested for a more comfortable stay.",
     room: {
-      room_type: "Standard Room",
+      room_type: "Single Bed",
       room_number: "112",
       price: Math.floor(Math.random() * (210 - 70 + 1)) + 70,
       amenities: [
@@ -78,7 +78,7 @@ export const bookingsData = [
     check_out: "2023-10-13",
     special_request: "Room with a view of the garden and a bottle of champagne for our anniversary celebration.",
     room: {
-      room_type: "Junior Suite",
+      room_type: "Double Superior",
       room_number: "301",
       price: Math.floor(Math.random() * (210 - 70 + 1)) + 70,
       amenities: [
@@ -100,7 +100,7 @@ export const bookingsData = [
     check_out: "2023-11-30",
     special_request: "No seafood in meals. Severe seafood allergy. Please ensure no cross-contamination. Additionally, would like access to the pool and gym.",
     room: {
-      room_type: "Standard Room",
+      room_type: "Single Bed",
       room_number: "205",
       price: Math.floor(Math.random() * (210 - 70 + 1)) + 70,
       amenities: [
@@ -125,7 +125,7 @@ export const bookingsData = [
     check_out: "2023-12-10",
     special_request: "Early check-in required due to an early morning flight. Arriving at 7 AM. Also, requesting gym access and complimentary breakfast.",
     room: {
-      room_type: "Deluxe Suite",
+      room_type: "Suite",
       room_number: "501",
       price: Math.floor(Math.random() * (210 - 70 + 1)) + 70,
       amenities: [
@@ -149,7 +149,7 @@ export const bookingsData = [
     check_out: "2023-10-10",
     special_request: "Late check-in required. Flight arriving at 10 PM. Also, would like access to the pool.",
     room: {
-      room_type: "Standard Room",
+      room_type: "Double Bed",
       room_number: "102",
       price: Math.floor(Math.random() * (210 - 70 + 1)) + 70,
       amenities: [
