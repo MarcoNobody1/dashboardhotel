@@ -3,25 +3,16 @@ import styled from "styled-components";
 import { BsArrowsFullscreen, BsFillBookmarkCheckFill } from "react-icons/bs";
 import {
   CommentContainer,
-  CrossIcon,
   MessageContent,
-  ModalBackground,
-  ModalContainer,
-  ModalContent,
   RenderError,
   RenderLoading,
 } from "../../GeneralComponents";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  contactdetailData,
   contactsInfo,
   contactstatusinfo,
-  detailStatus,
 } from "../../features/Contact/contactSlice";
-import {
-  get1ContactData,
-  getContactsData,
-} from "../../features/Contact/contatctThunks";
+import { getContactsData } from "../../features/Contact/contatctThunks";
 import { CommentModal } from "./CommentsModal";
 
 const CommentsWrapper = styled.div`
@@ -77,8 +68,6 @@ const Subject = styled(FullName)`
   margin-bottom: 10px;
 `;
 
-
-
 export const Comments = () => {
   const infoContacts = useSelector(contactsInfo);
   const statusInfo = useSelector(contactstatusinfo);
@@ -93,7 +82,6 @@ export const Comments = () => {
     dispatch(getContactsData());
   }, [dispatch]);
 
-  
   useEffect(() => {
     if (statusInfo === "rejected") {
       setCurrentStatus(statusInfo);
@@ -105,42 +93,9 @@ export const Comments = () => {
     }
   }, [infoContacts, statusInfo]);
 
-
   const handleOpenModal = (id) => {
     setIsModalOpen(true);
     setCurrentId(id);
-  };
-  
-  const Modal = ({ idContact, onClose }) => {
-    const selectedContact = useSelector(contactdetailData);
-    const detailContactStatus = useSelector(detailStatus);
-    
-    useEffect(() => {
-      dispatch(get1ContactData(idContact));
-    }, [idContact]);
-
-    return (
-      <>
-        {detailContactStatus === "fulfilled" ? (
-          <>
-            <ModalBackground>
-              <ModalContainer>
-                <FullName>{selectedContact.customer.name}</FullName>
-                <CrossIcon onClick={onClose} />
-                <EmailAddress>{selectedContact.customer.email}</EmailAddress>
-                <PhoneNumber>{selectedContact.customer.phone}</PhoneNumber>
-                <Subject>{selectedContact.subject}</Subject>
-                <ModalContent>{selectedContact.comment}</ModalContent>
-              </ModalContainer>
-            </ModalBackground>
-          </>
-        ) : detailContactStatus === "rejected" ? (
-         <RenderError />
-        ) : (
-          <RenderLoading />
-        )}
-      </>
-    );
   };
 
   return (
@@ -166,13 +121,16 @@ export const Comments = () => {
           </CommentsWrapper>
 
           {isModalOpen && (
-            <CommentModal idContact={currentId} onClose={() => setIsModalOpen(false)} />
+            <CommentModal
+              idContact={currentId}
+              onClose={() => setIsModalOpen(false)}
+            />
           )}
         </>
       ) : currentStatus === "rejected" ? (
         <RenderError />
       ) : (
-        <RenderLoading/>
+        <RenderLoading />
       )}
     </>
   );
