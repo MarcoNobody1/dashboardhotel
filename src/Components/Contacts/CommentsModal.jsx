@@ -13,7 +13,7 @@ import {
   RenderError,
 } from "../../GeneralComponents";
 import { get1ContactData } from "../../features/Contact/contatctThunks";
-import { LineWave, MagnifyingGlass } from "react-loader-spinner";
+import { MagnifyingGlass } from "react-loader-spinner";
 
 const FullName = styled.h5`
   text-align: left;
@@ -80,8 +80,8 @@ export const CommentModal = ({ idContact, onClose }) => {
           ariaLabel="MagnifyingGlass-loading"
           wrapperStyle={{}}
           wrapperClass="MagnifyingGlass-wrapper"
-          glassColor="#517A6F"
-          color="#E3342C"
+          glassColor="#c0efff"
+          color="#517A6F"
         />
         </PendingWrapper>
       );
