@@ -6,8 +6,6 @@ import { deleteData, get1Data } from "../features/Bookings/bookingThunks";
 import {
   CrossIcon,
   Floater,
-  ModalBackground,
-  ModalContainer,
   formatDate,
 } from "../GeneralComponents";
 import { BsTrash3 } from "react-icons/bs";
