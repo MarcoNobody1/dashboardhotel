@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { PageWrapper, RenderError, RenderGlassLoading } from "../GeneralComponents";
+import { PageWrapper } from "../GeneralComponents";
 import styled from "styled-components";
 import searchIcon from "../assets/iconSearchBar.png";
 import { info, statusinfo } from "../features/Bookings/bookingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../features/Bookings/bookingThunks";
 import DynamicTable from "../Components/DynamicTable";
+import { renderStatus } from "../Components/RenderStatus";
 
 const OuterContainer = styled.div`
   display: flex;
@@ -177,16 +178,6 @@ export const Bookings = () => {
     );
   };
 
-  const renderStatus = () => {
-    if (currentStatus === "fulfilled") {
-      return <RenderTable />;
-    } else if (currentStatus === "rejected") {
-      return <RenderError />;
-    } else {
-      return <RenderGlassLoading />;
-    }
-  };
-
   return (
     <>
       <PageWrapper>
@@ -247,7 +238,7 @@ export const Bookings = () => {
               <OptionSelect value="Checkout">Check out</OptionSelect>
             </SelectorFilter>
           </FilterContainer>
-          {renderStatus()}
+          {renderStatus(currentStatus, RenderTable)}
         </OuterContainer>
       </PageWrapper>
     </>

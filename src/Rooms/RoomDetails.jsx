@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import styled from "styled-components";
-import {
-  PageWrapper,
-  RenderError,
-  RenderGlassLoading,
-} from "../GeneralComponents";
+import { PageWrapper } from "../GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { roomIdStatus, roomdetailData } from "../features/Rooms/roomSlice";
 import { get1RoomData, getRoomsData } from "../features/Rooms/roomThunks";
+import { renderStatus } from "../Components/RenderStatus";
 
 const BookingWrapper = styled.div`
   background-color: #fff;
@@ -155,73 +152,67 @@ export const RoomDetails = () => {
     dispatch(get1RoomData(id));
   }, [dispatch, id]);
 
-  const renderStatus = () => {
-    if (oneRoomStatus === "fulfilled") {
-      return (
-        <>
-          <DetailsWrapper>
-            <GuestName></GuestName>
-            <BookingId>ID {selectedRoom.room_name.id}</BookingId>
-            <InfoContainer>
-              <InfoWrap>
-                <InfoTitle>Room Type</InfoTitle>
-                <InfoContentBelowRow>
-                  {selectedRoom.room_type}
-                </InfoContentBelowRow>
-              </InfoWrap>
-              <Gap />
-              <InfoWrap>
-                <InfoTitle>Room Info</InfoTitle>
-                <InfoContentUpperRow>
-                  {selectedRoom.room_name.room_description}
-                </InfoContentUpperRow>
-              </InfoWrap>
-            </InfoContainer>
+  const data = () => {
+    return (
+      <>
+        <DetailsWrapper>
+          <GuestName></GuestName>
+          <BookingId>ID {selectedRoom.room_name.id}</BookingId>
+          <InfoContainer>
             <InfoWrap>
-              <InfoTitle>Amenities</InfoTitle>
-              <AmenitiesContainer>
-                {selectedRoom.amenities.map((amenity, index) => (
-                  <AmenityWrapper key={index}>
-                    <AmenityContent>{amenity}</AmenityContent>
-                  </AmenityWrapper>
-                ))}
-              </AmenitiesContainer>
+              <InfoTitle>Room Type</InfoTitle>
+              <InfoContentBelowRow>
+                {selectedRoom.room_type}
+              </InfoContentBelowRow>
             </InfoWrap>
-          </DetailsWrapper>
-          <ImageWrapper>
-            <Image src={selectedRoom.room_name.room_photo} />
-            <StatusWrapper
-              style={{
-                backgroundColor:
-                  selectedRoom.availability === "available"
-                    ? "#e8ffee"
-                    : selectedRoom.availability === "booked"
-                    ? "#FFEDEC"
-                    : "#FEFFC2",
-                color:
-                  selectedRoom.availability === "available"
-                    ? "#5ad07a"
-                    : selectedRoom.availability === "booked"
-                    ? "#E23428"
-                    : "#E2B308",
-                border:
-                  selectedRoom.availability === "available"
-                    ? "3px solid #5ad07a"
-                    : selectedRoom.availability === "booked"
-                    ? "3px solid #E23428"
-                    : "3px solid #E2B308",
-              }}
-            >
-              {selectedRoom.availability}
-            </StatusWrapper>
-          </ImageWrapper>
-        </>
-      );
-    } else if (oneRoomStatus === "rejected") {
-      return <RenderError />;
-    } else {
-      return <RenderGlassLoading />;
-    }
+            <Gap />
+            <InfoWrap>
+              <InfoTitle>Room Info</InfoTitle>
+              <InfoContentUpperRow>
+                {selectedRoom.room_name.room_description}
+              </InfoContentUpperRow>
+            </InfoWrap>
+          </InfoContainer>
+          <InfoWrap>
+            <InfoTitle>Amenities</InfoTitle>
+            <AmenitiesContainer>
+              {selectedRoom.amenities.map((amenity, index) => (
+                <AmenityWrapper key={index}>
+                  <AmenityContent>{amenity}</AmenityContent>
+                </AmenityWrapper>
+              ))}
+            </AmenitiesContainer>
+          </InfoWrap>
+        </DetailsWrapper>
+        <ImageWrapper>
+          <Image src={selectedRoom.room_name.room_photo} />
+          <StatusWrapper
+            style={{
+              backgroundColor:
+                selectedRoom.availability === "available"
+                  ? "#e8ffee"
+                  : selectedRoom.availability === "booked"
+                  ? "#FFEDEC"
+                  : "#FEFFC2",
+              color:
+                selectedRoom.availability === "available"
+                  ? "#5ad07a"
+                  : selectedRoom.availability === "booked"
+                  ? "#E23428"
+                  : "#E2B308",
+              border:
+                selectedRoom.availability === "available"
+                  ? "3px solid #5ad07a"
+                  : selectedRoom.availability === "booked"
+                  ? "3px solid #E23428"
+                  : "3px solid #E2B308",
+            }}
+          >
+            {selectedRoom.availability}
+          </StatusWrapper>
+        </ImageWrapper>
+      </>
+    );
   };
 
   return (
@@ -231,7 +222,7 @@ export const RoomDetails = () => {
           <ButtonReturn to="/rooms">
             <IoArrowBackOutline />
           </ButtonReturn>
-          {renderStatus()}
+          {renderStatus(oneRoomStatus, data)}
         </BookingWrapper>
       </PageWrapper>
     </>

@@ -4,15 +4,14 @@ import {
   ModalBackground,
   ModalContainer,
   ModalContent,
-  PageWrapper,
-  RenderError,
-  RenderGlassLoading,
+  PageWrapper
 } from "../GeneralComponents";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { getRoomsData } from "../features/Rooms/roomThunks";
 import { roomsInfo, roomstatusinfo } from "../features/Rooms/roomSlice";
 import DynamicTable from "../Components/DynamicTable";
+import { renderStatus } from "../Components/RenderStatus";
 
 export const OuterContainer = styled.div`
   display: flex;
@@ -169,16 +168,6 @@ export const Rooms = () => {
     );
   };
 
-  const renderStatus = () => {
-    if (currentStatus === "fulfilled") {
-      return <RenderTable />;
-    } else if (currentStatus === "rejected") {
-      return <RenderError />;
-    } else {
-      return <RenderGlassLoading />;
-    }
-  };
-
   const Modal = ({ onClose }) => {
     return (
       <ModalBackground>
@@ -245,7 +234,7 @@ export const Rooms = () => {
             </OptionSelect>
           </SelectorFilter>
         </FilterContainer>
-        {renderStatus()}
+        {renderStatus(currentStatus, RenderTable)}
       </OuterContainer>
     </PageWrapper>
   );

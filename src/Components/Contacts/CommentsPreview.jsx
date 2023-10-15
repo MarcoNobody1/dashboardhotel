@@ -3,9 +3,7 @@ import styled from "styled-components";
 import { BsArrowsFullscreen, BsFillBookmarkCheckFill } from "react-icons/bs";
 import {
   CommentContainer,
-  MessageContent,
-  RenderError,
-  RenderGlassLoading,
+  MessageContent
 } from "../../GeneralComponents";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,6 +12,7 @@ import {
 } from "../../features/Contact/contactSlice";
 import { getContactsData } from "../../features/Contact/contatctThunks";
 import { CommentModal } from "./CommentsModal";
+import { renderStatus } from "../RenderStatus";
 
 const CommentsWrapper = styled.div`
   min-width: 360px;
@@ -86,39 +85,31 @@ export const Comments = () => {
     setCurrentId(id);
   };
 
-  const renderStatus = () => {
-    if (statusInfo === "fulfilled") {
-      return (
-        <>
-          {infoContacts.map((contact) => (
-            <CommentContainer key={contact.date.id}>
-              <>
-                <FullName>{contact.customer.name}</FullName>
-                <IconWrapper>
-                  <ReadIcon />
-                  <FullscreenIcon
-                    onClick={() => handleOpenModal(contact.date.id)}
-                  />
-                </IconWrapper>
-                <EmailAddress>{contact.customer.email}</EmailAddress>
-                <PhoneNumber>{contact.customer.phone}</PhoneNumber>
-                <Subject>{contact.subject}</Subject>
-                <MessageContent>{contact.comment}</MessageContent>
-              </>
-            </CommentContainer>
-          ))}
-        </>
-      );
-    } else if (statusInfo === "rejected") {
-      return <RenderError />;
-    } else {
-      return <RenderGlassLoading />;
-    }
-  };
+  const data = () => {
+    return (<>
+      {infoContacts.map((contact) => (
+        <CommentContainer key={contact.date.id}>
+          <>
+            <FullName>{contact.customer.name}</FullName>
+            <IconWrapper>
+              <ReadIcon />
+              <FullscreenIcon
+                onClick={() => handleOpenModal(contact.date.id)}
+              />
+            </IconWrapper>
+            <EmailAddress>{contact.customer.email}</EmailAddress>
+            <PhoneNumber>{contact.customer.phone}</PhoneNumber>
+            <Subject>{contact.subject}</Subject>
+            <MessageContent>{contact.comment}</MessageContent>
+          </>
+        </CommentContainer>
+      ))}
+    </>);
+  }
 
   return (
     <>
-      <CommentsWrapper>{renderStatus()}</CommentsWrapper>
+      <CommentsWrapper>{renderStatus(statusInfo, data)}</CommentsWrapper>
       {isModalOpen && (
         <CommentModal
           idContact={currentId}

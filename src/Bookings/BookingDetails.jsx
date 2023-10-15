@@ -3,8 +3,6 @@ import { NavLink, useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
   PageWrapper,
-  RenderError,
-  RenderGlassLoading,
   formatDate,
 } from "../GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
@@ -15,6 +13,7 @@ import {
   detailData,
 } from "../features/Bookings/bookingSlice";
 import { get1Data, getData } from "../features/Bookings/bookingThunks";
+import { renderStatus } from "../Components/RenderStatus";
 
 const BookingWrapper = styled.div`
   background-color: #fff;
@@ -201,97 +200,91 @@ export const BookingDetails = () => {
     dispatch(get1Data(id));
   }, [dispatch, id]);
 
-  const renderStatus = () => {
-    if (oneBookingStatus === "fulfilled") {
-      return (
-        <>
-          <DetailsWrapper>
-            <GuestName>
-              {selectedBooking.guest.nombre} {selectedBooking.guest.apellidos}
-            </GuestName>
-            <BookingId>ID {selectedBooking.guest.id_reserva}</BookingId>
-            <InfoContainer>
-              <InfoWrap>
-                <InfoTitle>Check In</InfoTitle>
-                <InfoContentUpperRow>
-                  {formatDate(selectedBooking.check_in)}
-                </InfoContentUpperRow>
-              </InfoWrap>
-              <InfoWrap>
-                <InfoTitle>Check Out</InfoTitle>
-                <InfoContentUpperRow>
-                  {formatDate(selectedBooking.check_out)}
-                </InfoContentUpperRow>
-              </InfoWrap>
-              <Gap />
-              <InfoWrap>
-                <InfoTitle>Room Info</InfoTitle>
-                <InfoContentBelowRow>
-                  {selectedBooking.room.room_type} -{" "}
-                  {selectedBooking.room.room_number}
-                </InfoContentBelowRow>
-              </InfoWrap>
-              <InfoWrap>
-                <InfoTitle>Price</InfoTitle>
-                <InfoContentBelowRow>
-                  {selectedBooking.room.price}
-                </InfoContentBelowRow>
-                <PriceSpan>/night</PriceSpan>
-              </InfoWrap>
-            </InfoContainer>
-            <RequestWrapper>"{selectedBooking.special_request}"</RequestWrapper>
-            <InfoWrap>
-              <InfoTitle>Amenities</InfoTitle>
-              <AmenitiesContainer>
-                {selectedBooking.room.amenities.map((amenity, index) => (
-                  <AmenityWrapper key={index}>
-                    <AmenityContent>{amenity}</AmenityContent>
-                  </AmenityWrapper>
-                ))}
-              </AmenitiesContainer>
-            </InfoWrap>
-          </DetailsWrapper>
-          <ImageWrapper>
-            <Image src={room} />
-            <StatusWrapper
-              style={{
-                backgroundColor:
-                  selectedBooking.status === "Check In"
-                    ? "#e8ffee"
-                    : selectedBooking.status === "Check Out"
-                    ? "#FFEDEC"
-                    : "#FEFFC2",
-                color:
-                  selectedBooking.status === "Check In"
-                    ? "#5ad07a"
-                    : selectedBooking.status === "Check Out"
-                    ? "#E23428"
-                    : "#E2B308",
-                border:
-                  selectedBooking.status === "Check In"
-                    ? "3px solid #5ad07a"
-                    : selectedBooking.status === "Check Out"
-                    ? "3px solid #E23428"
-                    : "3px solid #E2B308",
-              }}
-            >
-              {selectedBooking.status}
-            </StatusWrapper>
-            <ImageRoomInfo>
-              <ImageRoomTitle>{selectedBooking.room.room_type}</ImageRoomTitle>
-              <ImageRoomDescription>
-                {selectedBooking.room.room_description}
-              </ImageRoomDescription>
-            </ImageRoomInfo>
-          </ImageWrapper>
-        </>
-      );
-    } else if (oneBookingStatus === "rejected") {
-      return <RenderError />;
-    } else {
-      return <RenderGlassLoading />;
-    }
-  };
+  const data = () =>{
+    return (
+      <>
+      <DetailsWrapper>
+        <GuestName>
+          {selectedBooking.guest.nombre} {selectedBooking.guest.apellidos}
+        </GuestName>
+        <BookingId>ID {selectedBooking.guest.id_reserva}</BookingId>
+        <InfoContainer>
+          <InfoWrap>
+            <InfoTitle>Check In</InfoTitle>
+            <InfoContentUpperRow>
+              {formatDate(selectedBooking.check_in)}
+            </InfoContentUpperRow>
+          </InfoWrap>
+          <InfoWrap>
+            <InfoTitle>Check Out</InfoTitle>
+            <InfoContentUpperRow>
+              {formatDate(selectedBooking.check_out)}
+            </InfoContentUpperRow>
+          </InfoWrap>
+          <Gap />
+          <InfoWrap>
+            <InfoTitle>Room Info</InfoTitle>
+            <InfoContentBelowRow>
+              {selectedBooking.room.room_type} -{" "}
+              {selectedBooking.room.room_number}
+            </InfoContentBelowRow>
+          </InfoWrap>
+          <InfoWrap>
+            <InfoTitle>Price</InfoTitle>
+            <InfoContentBelowRow>
+              {selectedBooking.room.price}
+            </InfoContentBelowRow>
+            <PriceSpan>/night</PriceSpan>
+          </InfoWrap>
+        </InfoContainer>
+        <RequestWrapper>"{selectedBooking.special_request}"</RequestWrapper>
+        <InfoWrap>
+          <InfoTitle>Amenities</InfoTitle>
+          <AmenitiesContainer>
+            {selectedBooking.room.amenities.map((amenity, index) => (
+              <AmenityWrapper key={index}>
+                <AmenityContent>{amenity}</AmenityContent>
+              </AmenityWrapper>
+            ))}
+          </AmenitiesContainer>
+        </InfoWrap>
+      </DetailsWrapper>
+      <ImageWrapper>
+        <Image src={room} />
+        <StatusWrapper
+          style={{
+            backgroundColor:
+              selectedBooking.status === "Check In"
+                ? "#e8ffee"
+                : selectedBooking.status === "Check Out"
+                ? "#FFEDEC"
+                : "#FEFFC2",
+            color:
+              selectedBooking.status === "Check In"
+                ? "#5ad07a"
+                : selectedBooking.status === "Check Out"
+                ? "#E23428"
+                : "#E2B308",
+            border:
+              selectedBooking.status === "Check In"
+                ? "3px solid #5ad07a"
+                : selectedBooking.status === "Check Out"
+                ? "3px solid #E23428"
+                : "3px solid #E2B308",
+          }}
+        >
+          {selectedBooking.status}
+        </StatusWrapper>
+        <ImageRoomInfo>
+          <ImageRoomTitle>{selectedBooking.room.room_type}</ImageRoomTitle>
+          <ImageRoomDescription>
+            {selectedBooking.room.room_description}
+          </ImageRoomDescription>
+        </ImageRoomInfo>
+      </ImageWrapper>
+    </>
+    )
+  }
 
   return (
     <>
@@ -300,7 +293,7 @@ export const BookingDetails = () => {
           <ButtonReturn to="/bookings">
             <IoArrowBackOutline />
           </ButtonReturn>
-          {renderStatus()}
+          {renderStatus(oneBookingStatus, data)}
         </BookingWrapper>
       </PageWrapper>
     </>

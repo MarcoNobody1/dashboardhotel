@@ -9,11 +9,10 @@ import {
   CrossIcon,
   ModalContent,
   ModalBackground,
-  ModalContainer,
-  RenderError,
-  RenderGlassLoading,
+  ModalContainer
 } from "../../GeneralComponents";
 import { get1ContactData } from "../../features/Contact/contatctThunks";
+import { renderStatus } from "../RenderStatus";
 
 const FullName = styled.h5`
   text-align: left;
@@ -51,32 +50,23 @@ export const CommentModal = ({ idContact, onClose }) => {
     dispatch(get1ContactData(idContact));
   }, [idContact, dispatch]);
 
-  const renderStatus = () => {
-    if (detailContactStatus === "fulfilled") {
-      return (
-        <>
-          <FullName>{selectedContact.customer.name}</FullName>
-          <EmailAddress>{selectedContact.customer.email}</EmailAddress>
-          <PhoneNumber>{selectedContact.customer.phone}</PhoneNumber>
-          <Subject>{selectedContact.subject}</Subject>
-          <ModalContent>{selectedContact.comment}</ModalContent>
-        </>
-      );
-    } else if (detailContactStatus === "rejected") {
-      return <RenderError />;
-    } else {
-      return (
-        <RenderGlassLoading/>
-      );
-    }
-  };
+  const data = () => {
+    return ( <>
+      <FullName>{selectedContact.customer.name}</FullName>
+      <EmailAddress>{selectedContact.customer.email}</EmailAddress>
+      <PhoneNumber>{selectedContact.customer.phone}</PhoneNumber>
+      <Subject>{selectedContact.subject}</Subject>
+      <ModalContent>{selectedContact.comment}</ModalContent>
+    </>);
+  }
+
 
   return (
     <>
       <ModalBackground>
         <ModalContainer>
           <CrossIcon onClick={onClose} />
-          {renderStatus()}
+          {renderStatus(detailContactStatus, data)}
         </ModalContainer>
       </ModalBackground>
     </>

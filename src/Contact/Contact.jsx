@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PageWrapper, RenderError, RenderGlassLoading } from "../GeneralComponents";
+import { PageWrapper } from "../GeneralComponents";
 import { CommentsContainer } from "../Dashboard/Dashboard";
 import { Comments } from "../Components/Contacts/CommentsPreview";
 import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SelectorFilter, TableContainer } from "../Rooms/Rooms";
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { contactsInfo, contactstatusinfo } from "../features/Contact/contactSlice";
 import { getContactsData } from "../features/Contact/contatctThunks";
 import DynamicTable from "../Components/DynamicTable";
+import { renderStatus } from "../Components/RenderStatus";
 
 export const Contact = () => {
   const infoContacts = useSelector(contactsInfo);
@@ -63,16 +64,6 @@ export const Contact = () => {
     );
   };
 
-  const renderStatus = () => {
-    if (currentStatus === "fulfilled") {
-      return <RenderTable />;
-    } else if (currentStatus === "rejected") {
-      return <RenderError />;
-    } else {
-      return <RenderGlassLoading />;
-    }
-  };
-
   return (
     <>
       <PageWrapper>
@@ -111,7 +102,7 @@ export const Contact = () => {
             </OptionSelect>
           </SelectorFilter>
         </FilterContainer>
-        {renderStatus()}
+        {renderStatus(currentStatus, RenderTable)}
       </OuterContainer>
       </PageWrapper>
     </>
