@@ -107,15 +107,33 @@ const SpecialRequestButton = styled.button`
   }
 `;
 
-const NoteContainer = styled(ModalContainer)`
+const NoteContainer = styled.td`
   min-height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #ebebeb;
+  border-radius: 20px;
+  padding: 30px;
+  transition: all 250ms ease-in-out;
+  min-width: 480px;
+  max-width: 500px;
+  position: relative;
+  z-index: 100;
 `;
 
-const NoteBackground = styled(ModalBackground)`
-  background-color: rgba(0, 0, 0, 0.2);
+const NoteBackground = styled.tr`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
 `;
 
 const FloatCross = styled(CrossIcon)`
