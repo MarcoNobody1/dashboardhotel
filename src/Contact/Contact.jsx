@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PageWrapper, RenderError, RenderLoading } from "../GeneralComponents";
+import { PageWrapper, RenderError, RenderGlassLoading } from "../GeneralComponents";
 import { CommentsContainer } from "../Dashboard/Dashboard";
 import { Comments } from "../Components/Contacts/CommentsPreview";
 import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SelectorFilter, TableContainer } from "../Rooms/Rooms";
@@ -69,7 +69,7 @@ export const Contact = () => {
     } else if (currentStatus === "rejected") {
       return <RenderError />;
     } else {
-      return <RenderLoading />;
+      return <RenderGlassLoading />;
     }
   };
 

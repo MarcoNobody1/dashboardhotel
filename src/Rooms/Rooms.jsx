@@ -6,7 +6,7 @@ import {
   ModalContent,
   PageWrapper,
   RenderError,
-  RenderLoading,
+  RenderGlassLoading,
 } from "../GeneralComponents";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
@@ -175,7 +175,7 @@ export const Rooms = () => {
     } else if (currentStatus === "rejected") {
       return <RenderError />;
     } else {
-      return <RenderLoading />;
+      return <RenderGlassLoading />;
     }
   };
 

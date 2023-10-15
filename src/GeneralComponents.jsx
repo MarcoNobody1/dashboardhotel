@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { BsTrash3 } from "react-icons/bs";
 import { ToggleContext } from "./Sidebar/ToggleSidebar";
 import Swal from "sweetalert2";
-import { Hourglass } from "react-loader-spinner";
+import { MagnifyingGlass } from "react-loader-spinner";
 
 export const formatDate = (inputDate) => {
   const months = [
@@ -236,10 +236,12 @@ export const TrashIcon = styled(BsTrash3)`
   }
 `;
 
-export const Floater = styled.div`
-  position: absolute;
-  top: -10%;
-  right: -15%;
+const PendingWrapper = styled.div`
+  width: 100%;
+  min-height: 131px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const RenderError = () => {
@@ -254,18 +256,19 @@ export const RenderError = () => {
   });
 };
 
-export const RenderLoading = () => {
+export const RenderGlassLoading = () => {
   return (
-    <Floater>
-      <Hourglass
+    <PendingWrapper>
+      <MagnifyingGlass
         visible={true}
         height="80"
         width="80"
-        ariaLabel="hourglass-loading"
+        ariaLabel="MagnifyingGlass-loading"
         wrapperStyle={{}}
-        wrapperClass=""
-        colors={["#135846", "#e23428"]}
+        wrapperClass="MagnifyingGlass-wrapper"
+        glassColor="#c0efff"
+        color="#517A6F"
       />
-    </Floater>
+    </PendingWrapper>
   );
 };

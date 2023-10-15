@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PageWrapper, RenderError, RenderLoading } from "../GeneralComponents";
+import { PageWrapper, RenderError, RenderGlassLoading } from "../GeneralComponents";
 import styled from "styled-components";
 import searchIcon from "../assets/iconSearchBar.png";
 import { info, statusinfo } from "../features/Bookings/bookingSlice";
@@ -183,7 +183,7 @@ export const Bookings = () => {
     } else if (currentStatus === "rejected") {
       return <RenderError />;
     } else {
-      return <RenderLoading />;
+      return <RenderGlassLoading />;
     }
   };
 

@@ -11,9 +11,9 @@ import {
   ModalBackground,
   ModalContainer,
   RenderError,
+  RenderGlassLoading,
 } from "../../GeneralComponents";
 import { get1ContactData } from "../../features/Contact/contatctThunks";
-import { MagnifyingGlass } from "react-loader-spinner";
 
 const FullName = styled.h5`
   text-align: left;
@@ -40,13 +40,7 @@ const Subject = styled(FullName)`
   margin-bottom: 10px;
 `;
 
-const PendingWrapper = styled.div`
-  width: 100%;
-  min-height: 131px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+
 
 export const CommentModal = ({ idContact, onClose }) => {
   const selectedContact = useSelector(contactdetailData);
@@ -72,18 +66,7 @@ export const CommentModal = ({ idContact, onClose }) => {
       return <RenderError />;
     } else {
       return (
-        <PendingWrapper>
-        <MagnifyingGlass
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="MagnifyingGlass-loading"
-          wrapperStyle={{}}
-          wrapperClass="MagnifyingGlass-wrapper"
-          glassColor="#c0efff"
-          color="#517A6F"
-        />
-        </PendingWrapper>
+        <RenderGlassLoading/>
       );
     }
   };
