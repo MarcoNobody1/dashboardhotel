@@ -236,6 +236,12 @@ export const TrashIcon = styled(BsTrash3)`
   }
 `;
 
+export const Floater = styled.div`
+  position: absolute;
+  top: -10%;
+  right: -15%;
+`;
+
 const PendingWrapper = styled.div`
   width: 100%;
   min-height: 131px;
