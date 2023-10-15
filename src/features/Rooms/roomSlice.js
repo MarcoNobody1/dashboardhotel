@@ -7,6 +7,7 @@ const initialState = {
     rooms: [],
     roomDetail:[],
     status: "idle",
+    roomIdStatus:"idle",
     deleteStatus: 'fulfilled',
   };
   
@@ -40,14 +41,14 @@ const initialState = {
           state.error = action.error.message;
         })
         .addCase(get1RoomData.fulfilled, (state, action) => {
-          state.status = "fulfilled";
+          state.roomIdStatus = "fulfilled";
           state.roomDetail = state.rooms.filter((room) => {return room.room_name.id === action.payload});
         })
         .addCase(get1RoomData.pending, (state, action) => {
-          state.status = "pending";
+          state.roomIdStatus = "pending";
         })
         .addCase(get1RoomData.rejected, (state, action) => {
-          state.status = "rejected";
+          state.roomIdStatus = "rejected";
           state.error = action.error.message;
         })
     },
@@ -57,3 +58,4 @@ const initialState = {
   export const roomstatusinfo = (state) => state.rooms.status;
   export const roomdetailData = (state) => state.rooms.roomDetail[0];
   export const roomdeleteStatus = (state) => state.rooms.deleteStatus;
+  export const roomIdStatus = (state) => state.rooms.roomIdStatus;

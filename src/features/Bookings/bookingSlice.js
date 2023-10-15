@@ -7,6 +7,7 @@ const initialState = {
     bookings: [],
     bookingDetail:[],
     status: "idle",
+    getBookingStatus:"idle",
     deleteStatus: 'fulfilled',
   };
   
@@ -40,14 +41,14 @@ const initialState = {
           state.error = action.error.message;
         })
         .addCase(get1Data.fulfilled, (state, action) => {
-          state.status = "fulfilled";
+          state.getBookingStatus = "fulfilled";
           state.bookingDetail = state.bookings.filter((booking) => {return booking.guest.id_reserva === action.payload});
         })
         .addCase(get1Data.pending, (state, action) => {
-          state.status = "pending";
+          state.getBookingStatus = "pending";
         })
         .addCase(get1Data.rejected, (state, action) => {
-          state.status = "rejected";
+          state.getBookingStatus = "rejected";
           state.error = action.error.message;
         })
     },
@@ -57,3 +58,4 @@ const initialState = {
   export const statusinfo = (state) => state.bookings.status;
   export const detailData = (state) => state.bookings.bookingDetail[0];
   export const bookingDeleteStatus = (state) => state.bookings.deleteStatus;
+  export const bookingIdStatus = (state) => state.bookings.getBookingStatus;
