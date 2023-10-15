@@ -4,8 +4,8 @@ import { LiaBedSolid } from "react-icons/lia";
 import { LuCalendarCheck2 } from "react-icons/lu";
 import { BsBoxArrowInRight, BsBoxArrowRight } from "react-icons/bs";
 import styled from "styled-components";
-import { Notification } from "../Components/NotificationPreview";
-import { Comments } from "../Components/CommentsPreview";
+import { Notification } from "../Components/Dashboard/NotificationPreview";
+import { Comments } from "../Components/Contacts/CommentsPreview";
 
 const NotifContainer = styled.div`
   display: flex;

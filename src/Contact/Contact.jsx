@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PageWrapper, RenderError, RenderLoading } from "../GeneralComponents";
 import { CommentsContainer } from "../Dashboard/Dashboard";
-import { Comments } from "../Components/CommentsPreview";
+import { Comments } from "../Components/Contacts/CommentsPreview";
 import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SelectorFilter, TableContainer } from "../Rooms/Rooms";
 import { useDispatch, useSelector } from "react-redux";
 import { contactsInfo, contactstatusinfo } from "../features/Contact/contactSlice";
@@ -58,7 +58,7 @@ export const Contact = () => {
   const RenderTable = () => {
     return (
       <TableContainer>
-        <DynamicTable data={filtered} dataType={"contact"} />
+        <DynamicTable data={filtered} dataType={"contacts"} />
       </TableContainer>
     );
   };
