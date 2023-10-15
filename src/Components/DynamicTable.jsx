@@ -16,6 +16,7 @@ import { deleteRoomsData } from "../features/Rooms/roomThunks";
 import { StatusDiv } from "./StatusDiv";
 import { bookingDeleteStatus } from "../features/Bookings/bookingSlice";
 import { roomdeleteStatus } from "../features/Rooms/roomSlice";
+import { contactdeleteStatus } from "../features/Contact/contactSlice";
 
 const bookingTitles = [
   "Guest",
@@ -211,6 +212,8 @@ const DynamicTable = ({ data, dataType }) => {
       ? bookingDeleteStatus
       : dataType === "rooms"
       ? roomdeleteStatus
+      : dataType === "contacts"
+      ? contactdeleteStatus
       : null
   );
 
@@ -221,7 +224,7 @@ const DynamicTable = ({ data, dataType }) => {
       ? bookingTitles
       : dataType === "rooms"
       ? roomTitles
-      : dataType === "contact"
+      : dataType === "contacts"
       ? contactTitles
       : [];
 
@@ -396,31 +399,31 @@ const DynamicTable = ({ data, dataType }) => {
         return <>{formatDate(rowData.date.send_date)}</>;
 
       case "customer":
-          return (
-            <InfoWrap style={{ minWidth: "300px" }}>
-              <InfoLine>{rowData.customer.name}</InfoLine>
-              <InfoLine>{rowData.customer.email}</InfoLine>
-              <InfoLine>{rowData.customer.phone}</InfoLine>
-            </InfoWrap>
-          )
-      
+        return (
+          <InfoWrap style={{ minWidth: "300px" }}>
+            <InfoLine>{rowData.customer.name}</InfoLine>
+            <InfoLine>{rowData.customer.email}</InfoLine>
+            <InfoLine>{rowData.customer.phone}</InfoLine>
+          </InfoWrap>
+        );
+
       case "subject":
-        return(
+        return (
           <InfoWrap style={{ fontWeight: 600 }}>{rowData.subject}</InfoWrap>
-        ) 
-        
+        );
+
       case "archived":
-        return(
+        return (
           <StatusButton
-          style={{
-            backgroundColor: rowData.archived ? "#e8ffee" : "#FFEDEC",
-            color: rowData.archived ? "#5ad07a" : "#E23428",
-            maxWidth: "130px",
-          }}
-        >
-         { rowData.archived ? "Archived" : "Not Archived"}
-        </StatusButton>
-        )
+            style={{
+              backgroundColor: rowData.archived ? "#e8ffee" : "#FFEDEC",
+              color: rowData.archived ? "#5ad07a" : "#E23428",
+              maxWidth: "130px",
+            }}
+          >
+            {rowData.archived ? "Archived" : "Not Archived"}
+          </StatusButton>
+        );
       default:
         return rowData[header];
     }
