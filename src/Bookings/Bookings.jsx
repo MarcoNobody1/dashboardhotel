@@ -55,20 +55,20 @@ const ButtonFilter = styled.button`
 
 const SearchInput = styled.input`
   min-width: 427px;
-  max-height: 35px;
+  max-height: 60px;
   border-radius: 10px;
   border: 1px solid #135846;
   text-align: right;
   font: normal normal 300 14px/25px Poppins;
-  padding: 5px 35px 5px 0;
+  padding: 5px 40px 0px 0;
   background-image: url(${searchIcon});
   background-repeat: no-repeat;
-  background-position: right 8px center;
+  background-position: right 10px center;
 `;
 
 const SelectorFilter = styled.select`
   min-width: 150px;
-  max-height: 35px;
+  max-height: 60px;
   background-color: #fff;
   border: 1px solid #135846;
   color: #135846;
@@ -93,20 +93,12 @@ export const Bookings = () => {
   const statusInfo = useSelector(statusinfo);
 
   const [currenBookings, setCurrentBookings] = useState([]);
-  const [currentStatus, setCurrentStatus] = useState("");
   const [filter, setFilter] = useState("All Bookings");
   const [selected, setSelected] = useState("Orderdate");
 
   useEffect(() => {
-    if (statusInfo === "rejected") {
-      setCurrentStatus(statusInfo);
-    } else if (statusInfo === "pending") {
-      setCurrentStatus(statusInfo);
-    } else if (statusInfo === "fulfilled") {
-      setCurrentStatus(statusInfo);
       setCurrentBookings(infoBookings);
-    }
-  }, [infoBookings, statusInfo]);
+  }, [infoBookings]);
 
   const filtered = currenBookings.filter((booking) => {
     switch (filter) {
@@ -224,11 +216,13 @@ export const Bookings = () => {
               </ButtonFilter>
             </ButtonsContainer>
             <SearchInput
+            name="searchBookingInput"
               onChange={(event) => handleSearch(event.target.value)}
               placeholder="Search booking by client name..."
               type="text"
             />
             <SelectorFilter
+            name="filterBookingSelector"
               defaultValue="Orderdate"
               onInput={(event) => setSelected(event.target.value)}
             >
@@ -238,7 +232,7 @@ export const Bookings = () => {
               <OptionSelect value="Checkout">Check out</OptionSelect>
             </SelectorFilter>
           </FilterContainer>
-          {renderStatus(currentStatus, RenderTable)}
+          {renderStatus(statusInfo, RenderTable)}
         </OuterContainer>
       </PageWrapper>
     </>
