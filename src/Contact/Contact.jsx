@@ -12,8 +12,6 @@ import { renderStatus } from "../Components/RenderStatus";
 export const Contact = () => {
   const infoContacts = useSelector(contactsInfo);
   const statusInfo = useSelector(contactstatusinfo);
-  const [currenContacts, setCurrentContacts] = useState([]);
-  const [currentStatus, setCurrentStatus] = useState("");
   const dispatch = useDispatch();
 
   const [filter, setFilter] = useState("All Contacts");
@@ -23,18 +21,8 @@ export const Contact = () => {
     dispatch(getContactsData());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (statusInfo === "rejected") {
-      setCurrentStatus(statusInfo);
-    } else if (statusInfo === "pending") {
-      setCurrentStatus(statusInfo);
-    } else if (statusInfo === "fulfilled") {
-      setCurrentStatus(statusInfo);
-      setCurrentContacts(infoContacts);
-    }
-  }, [infoContacts, statusInfo]);
 
-  const filtered = currenContacts.filter((contact) => {
+  const filtered = infoContacts.filter((contact) => {
     switch (filter) {
       case "All Contacts":
         return true;
@@ -93,6 +81,7 @@ export const Contact = () => {
             </ButtonFilter>
           </ButtonsContainer>
           <SelectorFilter
+          name="filterContactSelector"
             defaultValue="Date"
             onChange={(event) => setSelected(event.target.value)}
           >
@@ -102,7 +91,7 @@ export const Contact = () => {
             </OptionSelect>
           </SelectorFilter>
         </FilterContainer>
-        {renderStatus(currentStatus, RenderTable)}
+        {renderStatus(statusInfo, RenderTable)}
       </OuterContainer>
       </PageWrapper>
     </>
