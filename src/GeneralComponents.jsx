@@ -74,9 +74,11 @@ export const DefaultIcon = styled.div.attrs((props) => ({
 
 const PageWrap = styled.main`
   background-color: #f8f8f8;
-  height: 810px;
   padding: 50px;
   min-width: 1474px;
+  max-height: 810px;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
 `;
 
 export const PageWrapper = ({ children }) => {
