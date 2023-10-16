@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {
-  CrossIcon,
-  ModalBackground,
-  ModalContainer,
-  ModalContent,
-  PageWrapper
-} from "../GeneralComponents";
+import { CrossIcon, ModalBackground, PageWrapper } from "../GeneralComponents";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { getRoomsData } from "../features/Rooms/roomThunks";
 import { roomsInfo, roomstatusinfo } from "../features/Rooms/roomSlice";
 import DynamicTable from "../Components/DynamicTable";
 import { renderStatus } from "../Components/RenderStatus";
+import { RoomCreator } from "../Components/Rooms/RoomCreator";
 
 export const OuterContainer = styled.div`
   display: flex;
@@ -74,7 +69,7 @@ export const OptionSelect = styled.option`
   font: normal normal 400 16px/25px Poppins;
 `;
 
-const AddRoomButton = styled.button`
+export const AddRoomButton = styled.button`
   background-color: #135846;
   text-align: center;
   font: normal normal 500 16px/25px Poppins;
@@ -84,11 +79,42 @@ const AddRoomButton = styled.button`
   padding: 13px 55px;
   border: none;
   transition: all 250ms ease-out;
-  
-  &:hover{
+
+  &:hover {
     cursor: pointer;
     transform: scale(1.05);
   }
+`;
+
+const AdNewContainer = styled.div`
+  background-color: #ffffff;
+  min-width: 1300px;
+  min-height: 700px;
+  border: 1px solid #135846;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 4px 4px;
+  padding: 30px;
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  z-index: 100;
+`;
+
+const NewRoomTitle = styled.p`
+  text-align: center;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: 0px;
+  color: rgb(38, 38, 38);
+  flex: 1;
+`;
+
+export const ButtonAdNew = styled(AddRoomButton)`
+  position: absolute;
+  bottom: 30px;
+  left: 42%;
 `;
 
 export const Rooms = () => {
@@ -101,24 +127,11 @@ export const Rooms = () => {
   const infoRooms = useSelector(roomsInfo);
   const statusInfo = useSelector(roomstatusinfo);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currenRooms, setCurrentRooms] = useState([]);
-  const [currentStatus, setCurrentStatus] = useState("");
   const [filter, setFilter] = useState("All Rooms");
-
-  useEffect(() => {
-    if (statusInfo === "rejected") {
-      setCurrentStatus(statusInfo);
-    } else if (statusInfo === "pending") {
-      setCurrentStatus(statusInfo);
-    } else if (statusInfo === "fulfilled") {
-      setCurrentStatus(statusInfo);
-      setCurrentRooms(infoRooms);
-    }
-  }, [infoRooms, statusInfo]);
 
   const [selected, setSelected] = useState("Roomnumber");
 
-  const filtered = currenRooms.filter((room) => {
+  const filtered = infoRooms.filter((room) => {
     switch (filter) {
       case "All Rooms":
         return true;
@@ -171,16 +184,14 @@ export const Rooms = () => {
   const Modal = ({ onClose }) => {
     return (
       <ModalBackground>
-        <ModalContainer>
-
+        <AdNewContainer>
           <CrossIcon onClick={onClose} />
-
-          <ModalContent>Hello World!</ModalContent>
-        </ModalContainer>
+          <NewRoomTitle>Create a New Room</NewRoomTitle>
+          <RoomCreator closeModal={onClose}/>
+        </AdNewContainer>
       </ModalBackground>
     );
   };
-
 
   return (
     <PageWrapper>
@@ -215,13 +226,12 @@ export const Rooms = () => {
               Booked
             </ButtonFilter>
           </ButtonsContainer>
-          <AddRoomButton onClick={() => setIsModalOpen(true)} >+ New Room</AddRoomButton>
-          {isModalOpen && (
-        <Modal
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
+          <AddRoomButton onClick={() => setIsModalOpen(true)}>
+            + New Room
+          </AddRoomButton>
+          {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
           <SelectorFilter
+          name="filterRoomsSelector"
             defaultValue="Roomnumber"
             onChange={(event) => setSelected(event.target.value)}
           >
@@ -234,7 +244,7 @@ export const Rooms = () => {
             </OptionSelect>
           </SelectorFilter>
         </FilterContainer>
-        {renderStatus(currentStatus, RenderTable)}
+        {renderStatus(statusInfo, RenderTable)}
       </OuterContainer>
     </PageWrapper>
   );
