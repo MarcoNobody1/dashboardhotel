@@ -1,4 +1,4 @@
-export const bookingsData = [
+export const bookingsData:object[] = [
   {
     guest: {
       nombre: "Bob",
