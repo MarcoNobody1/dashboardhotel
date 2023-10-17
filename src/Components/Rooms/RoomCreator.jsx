@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ButtonAdNew } from "../../Rooms/Rooms";
+import { useDispatch } from "react-redux";
+import { roomAmenities } from "../../data/roomAmenities";
+import { roomPhotos } from "../../data/roomPhotos";
+import { addRoomData } from "../../features/Rooms/roomThunks";
+import Swal from "sweetalert2";
 
 const Form = styled.form`
   display: flex;
@@ -37,6 +42,7 @@ const ActionRow = styled.div`
   flex: 1;
   display: flex;
   padding: 10px 0;
+  transition: all 250ms ease-out;
 `;
 
 const PhotoWrapper = styled.div`
@@ -138,19 +144,12 @@ const PhotoGroup = ({ src, checked, onChange }) => {
   );
 };
 
-const photos = [
-  "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg",
-  "https://ywcavan.org/sites/default/files/styles/scale_width_1440/public/assets/room/room_image/Single-bed-room-YWCA_Hotel_Vancouver.jpg",
-  "https://galeriemagazine.com/wp-content/uploads/2019/03/243f89e0-8235-11e7-a767-bc310e55dd10_1320x770_154749-1024x597.jpg",
-  "https://image-tc.galaxy.tf/wijpeg-clozx94odvn436foy8vjci4wz/empire-hotel-superior-double-room_standard.jpg",
-  "https://www.cvent.com/sites/default/files/image/2021-10/hotel%20room%20with%20beachfront%20view.jpg",
-];
-
 export const RoomCreator = ({ closeModal }) => {
+  const dispatch = useDispatch();
   const [checkedStates, setCheckedStates] = useState([
-    true,
-    true,
-    true,
+    false,
+    false,
+    false,
     false,
     false,
   ]);
@@ -161,6 +160,7 @@ export const RoomCreator = ({ closeModal }) => {
   const [description, setDescription] = useState("");
   const [amenities, setAmenities] = useState("Standard");
   const [allowDiscount, setAllowDiscount] = useState(false);
+  const hasTrueValue = checkedStates.some((isChecked) => isChecked);
 
   const handleCheckboxChange = (index) => {
     const newCheckedStates = [...checkedStates];
@@ -173,61 +173,28 @@ export const RoomCreator = ({ closeModal }) => {
     return price - price * percentage;
   };
 
-  const handleCreateNewRoom = (array) => {
-    const photos = checkedStates.map((isChecked, index) =>
-      isChecked ? photos.push(array[index]) : null
-    );
-    console.log(photos);
+  const handleCreateNewRoom = () => {
+    const finalPhotos = checkedStates
+      .map((isChecked, index) => (isChecked ? roomPhotos[index] : null))
+      .filter((photo) => photo !== null);
 
-    const roomAmenities = {
-      Standard: [
-        "1/3 Bed Space",
-        "Air Conditioner",
-        "Television",
-        "Towels",
-        "Coffee Set",
-      ],
-      Advanced: [
-        "1/2 Bathroom",
-        "Free Wifi",
-        "Air Conditioner",
-        "Television",
-        "Towels",
-        "Mini Bar",
-        "Coffee Set",
-      ],
-      Premium: [
-        "1/3 Bed Space",
-        "24-Hour Guard",
-        "Free Wifi",
-        "Air Conditioner",
-        "Television",
-        "Towels",
-        "Mini Bar",
-        "Coffee Set",
-        "Nice Views",
-      ],
-      FullRoom: [
-        "1/3 Bed Space",
-        "24-Hour Guard",
-        "Free Wifi",
-        "Air Conditioner",
-        "Television",
-        "Towels",
-        "Mini Bar",
-        "Coffee Set",
-        "Bathtub",
-        "Jacuzzi",
-        "Nice Views",
-      ],
-    };
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
 
     const newRoom = {
       room_name: {
-        id: Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345,
-        room_photo: photos[0],
-        room_number: roomNumber,
-        room_description: description,
+        id: parseInt(Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345).toString(),
+        room_photo: finalPhotos[0],
+        room_number: roomNumber === "" ? 111 : roomNumber,
+        room_description:
+          (description.replace(/\s/g, "") === "") | (description === null)
+            ? "This is a sample description text"
+            : description,
       },
       room_type: roomType,
       amenities:
@@ -241,23 +208,36 @@ export const RoomCreator = ({ closeModal }) => {
       price: price,
       offer_price: {
         isOffer: allowDiscount,
-        discount: discount,
+        discount: allowDiscount ? discount : 0,
       },
       availability: "available",
     };
 
-    console.log(newRoom); // Aquí puedes hacer lo que quieras con el nuevo objeto newRoom
+    if (hasTrueValue) {
+      dispatch(addRoomData(newRoom));
+      setCheckedStates([false, false, false, false, false]);
+      setPrice(150);
+      setDiscount(15);
+      setRoomType("Single Room");
+      setRoomNumber(111);
+      setDescription("");
+      setAmenities("Standard");
+      setAllowDiscount(false);
+      Toast.fire({
+        icon: "success",
+        title: "Success!",
+        timer: 1500,
+        timerProgressBar: false,
+        html: "<em>Room added to your list.</em>",
+      });
 
-    setCheckedStates([true, true, true, false, false]);
-    setPrice(150);
-    setDiscount(15);
-    setRoomType("Single Room");
-    setRoomNumber(111);
-    setDescription("");
-    setAmenities("Standard");
-    setAllowDiscount(false);
-
-    closeModal(); //cierra el modal mediante props
+      closeModal();
+    } else {
+      Toast.fire({
+        icon: "error",
+        title: "You must pick one photo!",
+      });
+    }
   };
 
   return (
@@ -265,7 +245,7 @@ export const RoomCreator = ({ closeModal }) => {
       name="createRoom"
       onSubmit={(e) => {
         e.preventDefault();
-        handleCreateNewRoom(photos);
+        handleCreateNewRoom();
       }}
     >
       <Instructions>
@@ -282,32 +262,37 @@ export const RoomCreator = ({ closeModal }) => {
       <Actions>
         <ActionRow>
           <PhotoGroup
-            src={photos[0]}
+            src={roomPhotos[0]}
             checked={checkedStates[0]}
             onChange={() => handleCheckboxChange(0)}
           ></PhotoGroup>
           <PhotoGroup
-            src={photos[1]}
+            src={roomPhotos[1]}
             checked={checkedStates[1]}
             onChange={() => handleCheckboxChange(1)}
           ></PhotoGroup>
           <PhotoGroup
-            src={photos[2]}
+            src={roomPhotos[2]}
             checked={checkedStates[2]}
             onChange={() => handleCheckboxChange(2)}
           ></PhotoGroup>
           <PhotoGroup
-            src={photos[3]}
+            src={roomPhotos[3]}
             checked={checkedStates[3]}
             onChange={() => handleCheckboxChange(3)}
           ></PhotoGroup>
           <PhotoGroup
-            src={photos[4]}
+            src={roomPhotos[4]}
             checked={checkedStates[4]}
             onChange={() => handleCheckboxChange(4)}
           ></PhotoGroup>
         </ActionRow>
-        <ActionRow>
+        <ActionRow
+          style={{
+            opacity: hasTrueValue ? 1 : 0.5,
+            pointerEvents: hasTrueValue ? "all" : "none",
+          }}
+        >
           <ActionGroup>
             <Action>
               <ActionTitle>room type:</ActionTitle>
@@ -363,8 +348,8 @@ export const RoomCreator = ({ closeModal }) => {
                 name="roomNumberInput"
                 type="number"
                 defaultValue={roomNumber}
-                min="1"
-                max="256"
+                min="100"
+                max="9999"
                 onChange={(event) => setRoomNumber(event.target.value)}
               />
             </Action>
@@ -378,7 +363,13 @@ export const RoomCreator = ({ closeModal }) => {
             </Action>
           </ActionGroup>
         </ActionRow>
-        <ActionRow>
+        <ActionRow
+          style={{
+            opacity: hasTrueValue && description.length > 0 ? 1 : 0.5,
+            pointerEvents:
+              hasTrueValue && description.length > 0 ? "all" : "none",
+          }}
+        >
           <ActionGroup>
             <Action>
               <ActionTitle>price:</ActionTitle>
@@ -444,7 +435,11 @@ export const RoomCreator = ({ closeModal }) => {
           </ActionGroup>
         </ActionRow>
       </Actions>
-      <ButtonAdNew>Add Room</ButtonAdNew>
+      <ButtonAdNew  style={{
+            opacity: hasTrueValue && description.length > 0 ? 1 : 0.5,
+            pointerEvents:
+              hasTrueValue && description.length > 0 ? "all" : "none",
+          }}>Add Room</ButtonAdNew>
     </Form>
   );
 };
