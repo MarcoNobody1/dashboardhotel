@@ -32,6 +32,7 @@ const InstructionTitle = styled.p`
   font-weight: 600;
   font-size: 28px;
   color: rgb(38, 38, 38);
+  transition: all 250ms ease-out;
 `;
 
 const Actions = styled(Instructions)`
@@ -188,7 +189,9 @@ export const RoomCreator = ({ closeModal }) => {
 
     const newRoom = {
       room_name: {
-        id: parseInt(Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345).toString(),
+        id: parseInt(
+          Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345
+        ).toString(),
         room_photo: finalPhotos[0],
         room_number: roomNumber === "" ? 111 : roomNumber,
         room_description:
@@ -253,10 +256,24 @@ export const RoomCreator = ({ closeModal }) => {
           <InstructionTitle>1. Select Photos:</InstructionTitle>
         </Instruction>
         <Instruction>
-          <InstructionTitle>2. Set Up Room:</InstructionTitle>
+          <InstructionTitle
+            style={{
+              opacity: hasTrueValue ? 1 : 0,
+              fontSize: hasTrueValue ? "28px" : "0px",
+            }}
+          >
+            2. Set Up Room:
+          </InstructionTitle>
         </Instruction>
         <Instruction>
-          <InstructionTitle>3. Set Pricing:</InstructionTitle>
+          <InstructionTitle
+            style={{
+              opacity: hasTrueValue && description.length > 0 ? 1 : 0,
+              fontSize: hasTrueValue && description.length > 0 ? "28px" : "0px",
+            }}
+          >
+            3. Set Pricing:
+          </InstructionTitle>
         </Instruction>
       </Instructions>
       <Actions>
@@ -289,7 +306,7 @@ export const RoomCreator = ({ closeModal }) => {
         </ActionRow>
         <ActionRow
           style={{
-            opacity: hasTrueValue ? 1 : 0.5,
+            opacity: hasTrueValue ? 1 : 0,
             pointerEvents: hasTrueValue ? "all" : "none",
           }}
         >
@@ -365,7 +382,7 @@ export const RoomCreator = ({ closeModal }) => {
         </ActionRow>
         <ActionRow
           style={{
-            opacity: hasTrueValue && description.length > 0 ? 1 : 0.5,
+            opacity: hasTrueValue && description.length > 0 ? 1 : 0,
             pointerEvents:
               hasTrueValue && description.length > 0 ? "all" : "none",
           }}
@@ -435,11 +452,15 @@ export const RoomCreator = ({ closeModal }) => {
           </ActionGroup>
         </ActionRow>
       </Actions>
-      <ButtonAdNew  style={{
-            opacity: hasTrueValue && description.length > 0 ? 1 : 0.5,
-            pointerEvents:
-              hasTrueValue && description.length > 0 ? "all" : "none",
-          }}>Add Room</ButtonAdNew>
+      <ButtonAdNew
+        style={{
+          opacity: hasTrueValue && description.length > 0 ? 1 : 0,
+          pointerEvents:
+            hasTrueValue && description.length > 0 ? "all" : "none",
+        }}
+      >
+        Add Room
+      </ButtonAdNew>
     </Form>
   );
 };
