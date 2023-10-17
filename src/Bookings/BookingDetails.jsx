@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import {
   PageWrapper,
@@ -7,12 +7,11 @@ import {
 } from "../GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
 import room from "../assets/hotelRoom.jpg";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   bookingIdStatus,
   detailData,
 } from "../features/Bookings/bookingSlice";
-import { get1Data, getData } from "../features/Bookings/bookingThunks";
 import { renderStatus } from "../Components/RenderStatus";
 
 const BookingWrapper = styled.div`
@@ -192,13 +191,6 @@ const Image = styled.img`
 export const BookingDetails = () => {
   const selectedBooking = useSelector(detailData);
   const oneBookingStatus = useSelector(bookingIdStatus);
-  const { id } = useParams();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getData());
-    dispatch(get1Data(id));
-  }, [dispatch, id]);
 
   const data = () =>{
     return (

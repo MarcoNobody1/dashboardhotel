@@ -144,12 +144,6 @@ const Image = styled.img`
 export const RoomDetails = () => {
   const selectedRoom = useSelector(roomdetailData);
   const oneRoomStatus = useSelector(roomIdStatus);
-  const { id } = useParams();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(get1RoomData(id));
-  }, [dispatch, id]);
 
   const data = () => {
     return (
