@@ -1,4 +1,6 @@
-export const roomsData = [
+import { RoomInterface } from "../features/Interfaces/Interfaces";
+
+export const roomsData:RoomInterface[] = [
   {
     room_name: {
       id: "1ABCD123",

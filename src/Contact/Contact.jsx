@@ -5,7 +5,7 @@ import { Comments } from "../Components/Contacts/CommentsPreview";
 import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SelectorFilter, TableContainer } from "../Rooms/Rooms";
 import { useDispatch, useSelector } from "react-redux";
 import { contactsInfo, contactstatusinfo } from "../features/Contact/contactSlice";
-import { getContactsData } from "../features/Contact/contatctThunks";
+import { getContactsData } from "../features/Contact/contactThunks";
 import DynamicTable from "../Components/DynamicTable";
 import { renderStatus } from "../Components/RenderStatus";
 
