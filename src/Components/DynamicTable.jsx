@@ -10,7 +10,7 @@ import {
 } from "../GeneralComponents";
 import { BsTrash3 } from "react-icons/bs";
 import { LineWave } from "react-loader-spinner";
-import { deleteRoomsData } from "../features/Rooms/roomThunks";
+import { deleteRoomsData, get1RoomData } from "../features/Rooms/roomThunks";
 import { StatusDiv } from "./StatusDiv";
 import { bookingDeleteStatus } from "../features/Bookings/bookingSlice";
 import { roomdeleteStatus } from "../features/Rooms/roomSlice";
@@ -245,7 +245,11 @@ const DynamicTable = ({ data, dataType }) => {
       : [];
 
   const handleGetDetails = (id) => {
-    dispatch(get1Data(id));
+    if (dataType === "bookings") {
+      dispatch(get1Data(id));
+    } else if (dataType === "rooms") {
+      dispatch(get1RoomData(id));
+    }
   };
 
   const handleOpenNote = (commentId) => {
@@ -260,6 +264,10 @@ const DynamicTable = ({ data, dataType }) => {
       dispatch(deleteRoomsData(id));
     }
   };
+
+  const handleArchiveComment = (id) => {
+    
+  }
 
   const Modal = ({ commentId, onCloseNote }) => {
     const selectedNote = data.find(
@@ -431,6 +439,7 @@ const DynamicTable = ({ data, dataType }) => {
       case "archived":
         return (
           <StatusButton
+          onClick={() => handleArchiveComment()}
             style={{
               backgroundColor: rowData.archived ? "#e8ffee" : "#FFEDEC",
               color: rowData.archived ? "#5ad07a" : "#E23428",
