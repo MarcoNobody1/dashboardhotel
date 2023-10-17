@@ -148,7 +148,6 @@ export const RoomDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getRoomsData());
     dispatch(get1RoomData(id));
   }, [dispatch, id]);
 
