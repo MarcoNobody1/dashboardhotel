@@ -21,3 +21,7 @@ export const deleteContactsData = createAsyncThunk("contacts/deleteContactsData"
 export const get1ContactData = createAsyncThunk("contacts/get1ContactData", async (id) => {
   return await delay(id);
 });
+
+export const archiveData = createAsyncThunk("contacts/archiveData", async (id) => {
+  return await delay(id);
+});
