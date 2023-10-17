@@ -1,8 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUsersData, deleteUsersData, get1UserData } from "./userThunks";
+import { UserInterface } from "../Interfaces/Interfaces";
+import { RootState } from "../../app/store";
+import { deleteUsersData, get1UserData, getUsersData } from "./userThunks";
+
+interface UserInitialState {
+  error: string | undefined,
+  users: UserInterface[],
+  userDetails:UserInterface[],
+  status:'idle' | 'fulfilled' | 'pending' | 'rejected',
+  deleteStatus:'idle' | 'fulfilled' | 'pending' | 'rejected',
+}
 
 
-const initialState = {
+const initialState: UserInitialState = {
     error: "null",
     users: [],
     userDetails:[],
@@ -21,7 +31,7 @@ const initialState = {
           state.status = "fulfilled";
           state.users = action.payload;
         })
-        .addCase(getUsersData.pending, (state, action) => {
+        .addCase(getUsersData.pending, (state) => {
           state.status = "pending";
         })
         .addCase(getUsersData.rejected, (state, action) => {
@@ -32,7 +42,7 @@ const initialState = {
           state.deleteStatus = "fulfilled";
           state.users = state.users.filter((user) => {return user.name.id !== action.payload});
         })
-        .addCase(deleteUsersData.pending, (state, action) => {
+        .addCase(deleteUsersData.pending, (state) => {
           state.deleteStatus = "pending";
         })
         .addCase(deleteUsersData.rejected, (state, action) => {
@@ -41,9 +51,9 @@ const initialState = {
         })
         .addCase(get1UserData.fulfilled, (state, action) => {
           state.status = "fulfilled";
-          state.userDetails = state.users.filter((user) => {return user.name.ida === action.payload});
+          state.userDetails = state.users.filter((user) => {return user.name.id === action.payload});
         })
-        .addCase(get1UserData.pending, (state, action) => {
+        .addCase(get1UserData.pending, (state) => {
           state.status = "pending";
         })
         .addCase(get1UserData.rejected, (state, action) => {
@@ -53,7 +63,7 @@ const initialState = {
     },
   });
 
-  export const info = (state) => state.users.users;
-  export const statusinfo = (state) => state.users.status;
-  export const detailData = (state) => state.users.userDetails[0];
-  export const deleteStatus = (state) => state.users.deleteStatus;
+  export const info = (state:RootState) => state.users.users;
+  export const statusinfo = (state:RootState) => state.users.status;
+  export const detailData = (state:RootState) => state.users.userDetails[0];
+  export const deleteStatus = (state:RootState) => state.users.deleteStatus;
