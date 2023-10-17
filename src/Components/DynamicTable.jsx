@@ -63,7 +63,7 @@ const Th = styled.th`
 `;
 
 const Tr = styled.tr`
-  transition: all 250ms ease-out;
+  transition: all 200ms ease-out;
   background-color: #ffffff;
 
   &:hover {
