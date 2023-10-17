@@ -3,18 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { deleteData, get1Data } from "../features/Bookings/bookingThunks";
-import {
-  CrossIcon,
-  Floater,
-  formatDate,
-} from "../GeneralComponents";
+import { CrossIcon, Floater, formatDate } from "../GeneralComponents";
 import { BsTrash3 } from "react-icons/bs";
-import { LineWave } from "react-loader-spinner";
+import { ColorRing, LineWave } from "react-loader-spinner";
 import { deleteRoomsData, get1RoomData } from "../features/Rooms/roomThunks";
 import { StatusDiv } from "./StatusDiv";
 import { bookingDeleteStatus } from "../features/Bookings/bookingSlice";
 import { roomdeleteStatus } from "../features/Rooms/roomSlice";
-import { contactdeleteStatus } from "../features/Contact/contactSlice";
+import {
+  archiveStatus,
+  contactdeleteStatus,
+} from "../features/Contact/contactSlice";
+import { archiveData } from "../features/Contact/contatctThunks";
+import Swal from "sweetalert2";
 
 const bookingTitles = [
   "Guest",
@@ -212,11 +213,22 @@ const StatusButton = styled.button`
   text-align: center;
   text-transform: capitalize;
   border: none;
+  position: relative;
+  min-height: 51px;
+  min-width: 118px;
   transition: all 150ms ease-out;
   &:hover {
     cursor: pointer;
     filter: invert(0.2);
   }
+`;
+
+const CenterDiv = styled.div`
+  height: 51px;
+  width: 118px;
+  position: absolute;
+  top: 5px;
+  left: 0;
 `;
 
 const DynamicTable = ({ data, dataType }) => {
@@ -232,6 +244,7 @@ const DynamicTable = ({ data, dataType }) => {
       ? contactdeleteStatus
       : null
   );
+  const archiveContactStatus = useSelector(archiveStatus);
 
   const headers =
     data.length > 0
@@ -266,8 +279,24 @@ const DynamicTable = ({ data, dataType }) => {
   };
 
   const handleArchiveComment = (id) => {
-    
-  }
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "center-end",
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+    });
+
+    dispatch(archiveData(id));
+    if (archiveContactStatus === "fulfilled") {
+      Toast.fire({
+        icon: "success",
+        title: "Comment Archived",
+        timer: 1500,
+        timerProgressBar: false,
+      });
+    }
+  };
 
   const Modal = ({ commentId, onCloseNote }) => {
     const selectedNote = data.find(
@@ -437,16 +466,44 @@ const DynamicTable = ({ data, dataType }) => {
         );
 
       case "archived":
+        const statusContact = () => {
+          if (archiveContactStatus === "rejected") {
+            alert("Not Good");
+          } else if (archiveContactStatus === "pending") {
+            return (
+              <CenterDiv>
+                <ColorRing
+                  visible={true}
+                  height="40"
+                  width="40"
+                  ariaLabel="blocks-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="blocks-wrapper"
+                  colors={[
+                    "#E3342C",
+                    "#517A6F",
+                    "#618D82",
+                    "#6C7C7C",
+                    "#113C30",
+                  ]}
+                />
+              </CenterDiv>
+            );
+          } else {
+            return rowData.archived ? "Archived" : "Not Archived";
+          }
+        };
+
         return (
           <StatusButton
-          onClick={() => handleArchiveComment()}
+            onClick={() => handleArchiveComment(rowData.date.id)}
             style={{
               backgroundColor: rowData.archived ? "#e8ffee" : "#FFEDEC",
               color: rowData.archived ? "#5ad07a" : "#E23428",
               maxWidth: "130px",
             }}
           >
-            {rowData.archived ? "Archived" : "Not Archived"}
+            {statusContact()}
           </StatusButton>
         );
       default:
