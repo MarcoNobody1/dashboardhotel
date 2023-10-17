@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { PageWrapper } from "../GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { roomIdStatus, roomdetailData } from "../features/Rooms/roomSlice";
-import { get1RoomData } from "../features/Rooms/roomThunks";
 import { renderStatus } from "../Components/RenderStatus";
 
 const BookingWrapper = styled.div`
