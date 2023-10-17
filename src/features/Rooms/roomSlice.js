@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getRoomsData, deleteRoomsData, get1RoomData } from "./roomThunks";
+import { getRoomsData, deleteRoomsData, get1RoomData, addRoomData } from "./roomThunks";
 
 
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
     status: "idle",
     roomIdStatus:"idle",
     deleteStatus: 'fulfilled',
+    addRoomStatus: 'idle',
   };
   
   export const roomSlice = createSlice({
@@ -51,6 +52,18 @@ const initialState = {
           state.roomIdStatus = "rejected";
           state.error = action.error.message;
         })
+        .addCase(addRoomData.fulfilled, (state, action) => {
+          state.addRoomStatus = "fulfilled";
+          state.rooms =[ ...state.rooms, action.payload];
+
+        })
+        .addCase(addRoomData.pending, (state, action) => {
+          state.addRoomStatus = "pending";
+        })
+        .addCase(addRoomData.rejected, (state, action) => {
+          state.addRoomStatus = "rejected";
+          state.error = action.error.message;
+        })
     },
   });
 
@@ -59,3 +72,4 @@ const initialState = {
   export const roomdetailData = (state) => state.rooms.roomDetail[0];
   export const roomdeleteStatus = (state) => state.rooms.deleteStatus;
   export const roomIdStatus = (state) => state.rooms.roomIdStatus;
+  export const addRoomStatus = (state) => state.rooms.addRoomStatus;
