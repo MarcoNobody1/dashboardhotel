@@ -1,8 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getData, deleteData, get1Data } from "./bookingThunks";
+import { BookingInterface } from "../Interfaces/Interfaces";
+import { RootState } from "../../app/store";
+
+interface BookingInitialState {
+    error: string | undefined,
+    bookings: BookingInterface[],
+    bookingDetail:BookingInterface[],
+    status:'idle' | 'fulfilled' | 'pending' | 'rejected',
+    getBookingStatus:'idle' | 'fulfilled' | 'pending' | 'rejected',
+    deleteStatus:'idle' | 'fulfilled' | 'pending' | 'rejected',
+}
 
 
-const initialState = {
+const initialState: BookingInitialState = {
     error: "null",
     bookings: [],
     bookingDetail:[],
@@ -22,7 +33,7 @@ const initialState = {
           state.status = "fulfilled";
           state.bookings = action.payload;
         })
-        .addCase(getData.pending, (state, action) => {
+        .addCase(getData.pending, (state) => {
           state.status = "pending";
         })
         .addCase(getData.rejected, (state, action) => {
@@ -33,7 +44,7 @@ const initialState = {
           state.deleteStatus = "fulfilled";
           state.bookings = state.bookings.filter((booking) => {return booking.guest.id_reserva !== action.payload});
         })
-        .addCase(deleteData.pending, (state, action) => {
+        .addCase(deleteData.pending, (state) => {
           state.deleteStatus = "pending";
         })
         .addCase(deleteData.rejected, (state, action) => {
@@ -44,7 +55,7 @@ const initialState = {
           state.getBookingStatus = "fulfilled";
           state.bookingDetail = state.bookings.filter((booking) => {return booking.guest.id_reserva === action.payload});
         })
-        .addCase(get1Data.pending, (state, action) => {
+        .addCase(get1Data.pending, (state) => {
           state.getBookingStatus = "pending";
         })
         .addCase(get1Data.rejected, (state, action) => {
@@ -54,8 +65,8 @@ const initialState = {
     },
   });
 
-  export const info = (state) => state.bookings.bookings;
-  export const statusinfo = (state) => state.bookings.status;
-  export const detailData = (state) => state.bookings.bookingDetail[0];
-  export const bookingDeleteStatus = (state) => state.bookings.deleteStatus;
-  export const bookingIdStatus = (state) => state.bookings.getBookingStatus;
+  export const info = (state:RootState) => state.bookings.bookings;
+  export const statusinfo = (state:RootState) => state.bookings.status;
+  export const detailData = (state:RootState) => state.bookings.bookingDetail[0];
+  export const bookingDeleteStatus = (state:RootState) => state.bookings.deleteStatus;
+  export const bookingIdStatus = (state:RootState) => state.bookings.getBookingStatus;
