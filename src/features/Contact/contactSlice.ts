@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getContactsData, deleteContactsData, get1ContactData } from "./contatctThunks";
+import { getContactsData, deleteContactsData, get1ContactData, archiveData } from "./contactThunks";
 import { ContactInterface } from "../Interfaces/Interfaces";
 import { RootState } from "../../app/store";
 
@@ -10,6 +10,7 @@ interface RoomInitialState {
   status:'idle' | 'fulfilled' | 'pending' | 'rejected',
   detailStatus:'idle' | 'fulfilled' | 'pending' | 'rejected',
   deleteStatus:'idle' | 'fulfilled' | 'pending' | 'rejected',
+  archiveStatus: 'idle' | 'fulfilled' | 'pending' | 'rejected',
 }
 
 const initialState: RoomInitialState = {
@@ -19,6 +20,7 @@ const initialState: RoomInitialState = {
     status: "idle",
     detailStatus:'idle',
     deleteStatus: 'fulfilled',
+    archiveStatus:'idle',
   };
   
   export const contactSlice = createSlice({
@@ -61,6 +63,20 @@ const initialState: RoomInitialState = {
           state.detailStatus = "rejected";
           state.error = action.error.message;
         })
+        .addCase(archiveData.fulfilled, (state, action) => {
+          state.archiveStatus = "fulfilled";
+          const contactIndex = state.contacts.findIndex((contact) => contact.date.id === action.payload);
+          if (contactIndex !== -1) {
+           state.contacts[contactIndex].archived = !state.contacts[contactIndex].archived;
+           }
+        })
+        .addCase(archiveData.pending, (state) => {
+          state.archiveStatus = "pending";
+        })
+        .addCase(archiveData.rejected, (state, action) => {
+          state.archiveStatus = "rejected";
+          state.error = action.error.message;
+        })
     },
   });
 
@@ -69,3 +85,4 @@ const initialState: RoomInitialState = {
   export const contactdetailData = (state:RootState) => state.contacts.contactDetail[0];
   export const contactdeleteStatus = (state:RootState) => state.contacts.deleteStatus;
   export const detailStatus = (state:RootState) => state.contacts.detailStatus;
+  export const archiveStatus = (state:RootState) => state.contacts.archiveStatus;

@@ -10,7 +10,7 @@ import {
   contactsInfo,
   contactstatusinfo,
 } from "../../features/Contact/contactSlice";
-import { getContactsData } from "../../features/Contact/contatctThunks";
+import { getContactsData } from "../../features/Contact/contactThunks";
 import { CommentModal } from "./CommentsModal";
 import { renderStatus } from "../RenderStatus";
 
