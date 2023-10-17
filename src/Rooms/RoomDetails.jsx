@@ -5,7 +5,7 @@ import { PageWrapper } from "../GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { roomIdStatus, roomdetailData } from "../features/Rooms/roomSlice";
-import { get1RoomData, getRoomsData } from "../features/Rooms/roomThunks";
+import { get1RoomData } from "../features/Rooms/roomThunks";
 import { renderStatus } from "../Components/RenderStatus";
 
 const BookingWrapper = styled.div`
