@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getContactsData, deleteContactsData, get1ContactData } from "./contatctThunks";
+import { getContactsData, deleteContactsData, get1ContactData, archiveData } from "./contatctThunks";
 
 
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
     status: "idle",
     detailStatus:'idle',
     deleteStatus: 'fulfilled',
+    archiveStatus: "idle",
   };
   
   export const contactSlice = createSlice({
@@ -51,6 +52,20 @@ const initialState = {
           state.detailStatus = "rejected";
           state.error = action.error.message;
         })
+        .addCase(archiveData.fulfilled, (state, action) => {
+          state.archiveStatus = "fulfilled";
+          const contactIndex = state.contacts.findIndex((contact) => contact.date.id === action.payload);
+          if (contactIndex !== -1) {
+           state.contacts[contactIndex].archived = !state.contacts[contactIndex].archived;
+           }
+        })
+        .addCase(archiveData.pending, (state, action) => {
+          state.archiveStatus = "pending";
+        })
+        .addCase(archiveData.rejected, (state, action) => {
+          state.archiveStatus = "rejected";
+          state.error = action.error.message;
+        })
     },
   });
 
@@ -59,3 +74,4 @@ const initialState = {
   export const contactdetailData = (state) => state.contacts.contactDetail[0];
   export const contactdeleteStatus = (state) => state.contacts.deleteStatus;
   export const detailStatus = (state) => state.contacts.detailStatus;
+  export const archiveStatus = (state) => state.contacts.archiveStatus;
