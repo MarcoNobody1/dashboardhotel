@@ -1,15 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getContactsData, deleteContactsData, get1ContactData, archiveData } from "./contatctThunks";
+import { getContactsData, deleteContactsData, get1ContactData, archiveData } from "./contactThunks";
+import { ContactInterface } from "../Interfaces/Interfaces";
+import { RootState } from "../../app/store";
 
+interface RoomInitialState {
+  error: string | undefined,
+  contacts: ContactInterface[],
+  contactDetail:ContactInterface[],
+  status:'idle' | 'fulfilled' | 'pending' | 'rejected',
+  detailStatus:'idle' | 'fulfilled' | 'pending' | 'rejected',
+  deleteStatus:'idle' | 'fulfilled' | 'pending' | 'rejected',
+  archiveStatus: 'idle' | 'fulfilled' | 'pending' | 'rejected',
+}
 
-const initialState = {
+const initialState: RoomInitialState = {
     error: "null",
     contacts: [],
     contactDetail:[],
     status: "idle",
     detailStatus:'idle',
     deleteStatus: 'fulfilled',
-    archiveStatus: "idle",
+    archiveStatus:'idle',
   };
   
   export const contactSlice = createSlice({
@@ -23,7 +34,7 @@ const initialState = {
           state.status = "fulfilled";
           state.contacts = action.payload;
         })
-        .addCase(getContactsData.pending, (state, action) => {
+        .addCase(getContactsData.pending, (state) => {
           state.status = "pending";
         })
         .addCase(getContactsData.rejected, (state, action) => {
@@ -34,7 +45,7 @@ const initialState = {
           state.deleteStatus = "fulfilled";
           state.contacts = state.contacts.filter((contact) => {return contact.date.id !== action.payload});
         })
-        .addCase(deleteContactsData.pending, (state, action) => {
+        .addCase(deleteContactsData.pending, (state) => {
           state.deleteStatus = "pending";
         })
         .addCase(deleteContactsData.rejected, (state, action) => {
@@ -45,7 +56,7 @@ const initialState = {
           state.detailStatus = "fulfilled";
           state.contactDetail = state.contacts.filter((contact) => {return contact.date.id === action.payload});
         })
-        .addCase(get1ContactData.pending, (state, action) => {
+        .addCase(get1ContactData.pending, (state) => {
           state.detailStatus = "pending";
         })
         .addCase(get1ContactData.rejected, (state, action) => {
@@ -59,7 +70,7 @@ const initialState = {
            state.contacts[contactIndex].archived = !state.contacts[contactIndex].archived;
            }
         })
-        .addCase(archiveData.pending, (state, action) => {
+        .addCase(archiveData.pending, (state) => {
           state.archiveStatus = "pending";
         })
         .addCase(archiveData.rejected, (state, action) => {
@@ -69,9 +80,9 @@ const initialState = {
     },
   });
 
-  export const contactsInfo = (state) => state.contacts.contacts;
-  export const contactstatusinfo = (state) => state.contacts.status;
-  export const contactdetailData = (state) => state.contacts.contactDetail[0];
-  export const contactdeleteStatus = (state) => state.contacts.deleteStatus;
-  export const detailStatus = (state) => state.contacts.detailStatus;
-  export const archiveStatus = (state) => state.contacts.archiveStatus;
+  export const contactsInfo = (state:RootState) => state.contacts.contacts;
+  export const contactstatusinfo = (state:RootState) => state.contacts.status;
+  export const contactdetailData = (state:RootState) => state.contacts.contactDetail[0];
+  export const contactdeleteStatus = (state:RootState) => state.contacts.deleteStatus;
+  export const detailStatus = (state:RootState) => state.contacts.detailStatus;
+  export const archiveStatus = (state:RootState) => state.contacts.archiveStatus;
