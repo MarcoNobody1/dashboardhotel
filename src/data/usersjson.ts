@@ -1,4 +1,6 @@
-export const usersData = [
+import { UserInterface } from "../features/Interfaces/Interfaces";
+
+export const usersData:UserInterface[] = [
     {
       "name": {
         "photo": "https://robohash.org/employee1.jpg",
