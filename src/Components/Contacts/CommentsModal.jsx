@@ -11,7 +11,7 @@ import {
   ModalBackground,
   ModalContainer
 } from "../../GeneralComponents";
-import { get1ContactData } from "../../features/Contact/contatctThunks";
+import { get1ContactData } from "../../features/Contact/contactThunks";
 import { renderStatus } from "../RenderStatus";
 
 const FullName = styled.h5`

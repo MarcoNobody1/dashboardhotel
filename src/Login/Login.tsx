@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, ChangeEvent, FormEvent } from "react";
 import styled from "styled-components";
 import logo from "../assets/LogoHotelHub.png";
 import { useNavigate } from "react-router";
@@ -87,7 +87,7 @@ export const Login = () => {
     }
   }, [auth, nav]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>):void => {
     event.preventDefault();
 
     if (email === "marcocamaradiaz@gmail.com" && password === "Marco") {
@@ -114,11 +114,11 @@ export const Login = () => {
     }
   };
 
-  const handleEmail = (event) => {
+  const handleEmail = (event: ChangeEvent<HTMLInputElement>):void => {
     setEmail(event.target.value);
   };
 
-  const handlePassword = (event) => {
+  const handlePassword = (event: ChangeEvent<HTMLInputElement>):void => {
     setPassword(event.target.value);
   };
 

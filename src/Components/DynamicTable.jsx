@@ -14,7 +14,7 @@ import {
   archiveStatus,
   contactdeleteStatus,
 } from "../features/Contact/contactSlice";
-import { archiveData } from "../features/Contact/contatctThunks";
+import { archiveData } from "../features/Contact/contactThunks";
 import Swal from "sweetalert2";
 
 const bookingTitles = [
