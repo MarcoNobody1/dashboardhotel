@@ -27,3 +27,8 @@ export const addRoomData = createAsyncThunk("rooms/addRoomData", async (room:Roo
   
   return( await delay(room)) as RoomInterface;
 })
+
+export const updateRoomData = createAsyncThunk("rooms/updateRoomData", async (room:RoomInterface) => {
+  
+  return( await delay(room)) as RoomInterface;
+})
