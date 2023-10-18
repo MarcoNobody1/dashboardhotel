@@ -1,4 +1,12 @@
-export const roomAmenities = {
+interface roomAmenitiesInterface {
+  Standard:string[],
+  Advanced: string[],
+  Premium: string[],
+  FullRoom: string[],
+}
+
+
+export const roomAmenities:roomAmenitiesInterface = {
     Standard: [
       "1/3 Bed Space",
       "Air Conditioner",
