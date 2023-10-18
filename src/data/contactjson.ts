@@ -1,4 +1,6 @@
-export const contactMessages = [
+import { ContactInterface } from "../features/Interfaces/Interfaces";
+
+export const contactMessages:ContactInterface[] = [
   {
     "date": {
       "id": "12345",
