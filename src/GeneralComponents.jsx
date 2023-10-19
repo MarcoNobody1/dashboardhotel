@@ -5,6 +5,7 @@ import { BsTrash3 } from "react-icons/bs";
 import { ToggleContext } from "./Sidebar/ToggleSidebar";
 import Swal from "sweetalert2";
 import { MagnifyingGlass } from "react-loader-spinner";
+import searchIcon from "./assets/iconSearchBar.png"
 
 export const formatDate = (inputDate) => {
   const months = [
@@ -128,10 +129,12 @@ export const CommentContainer = styled.div`
   border-radius: 20px;
   padding: 30px;
   position: relative;
+  opacity: ${(props) => (props.archived ? "0.6" : "1")};
   transition: all 250ms ease-in-out;
 
   &:hover {
-    box-shadow: 0px 16px 30px #00000014;
+    box-shadow: ${(props) =>
+      props.archived ? "0" : " 0px 16px 30px #00000014"};
   }
 `;
 
@@ -280,3 +283,77 @@ export const RenderGlassLoading = () => {
     </PendingWrapper>
   );
 };
+
+export const OuterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+`;
+
+export const FilterContainer = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 55px;
+`;
+
+export const TableContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 21px;
+`;
+
+export const ButtonsContainer = styled(FilterContainer)`
+  gap: 10px;
+  padding: 5px;
+  padding-bottom: 0;
+  margin-right: 250px;
+  border-bottom: 1px solid #d4d4d4;
+`;
+
+export const ButtonFilter = styled.button`
+  text-align: center;
+  font: normal normal medium 16px/25px Poppins;
+  letter-spacing: 0px;
+  color: #6e6e6e;
+  background-color: transparent;
+  width: max-content;
+  padding: 5px 15px;
+  border: none;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    color: #135846;
+    cursor: pointer;
+    border-bottom: 2px solid #135846;
+  }
+`;
+
+export const SearchInput = styled.input`
+  min-width: 427px;
+  max-height: 60px;
+  border-radius: 10px;
+  border: 1px solid #135846;
+  text-align: right;
+  font: normal normal 300 14px/25px Poppins;
+  padding: 5px 40px 0px 0;
+  background-image: url(${searchIcon});
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+`;
+
+export const SelectorFilter = styled.select`
+  min-width: 150px;
+  max-height: 60px;
+  background-color: #fff;
+  border: 1px solid #135846;
+  color: #135846;
+  border-radius: 12px;
+  padding-left: 5px;
+  font: normal normal 500 16px/25px Poppins;
+  letter-spacing: 0px;
+`;
+
+export const OptionSelect = styled.option`
+  font: normal normal 400 16px/25px Poppins;
+`;

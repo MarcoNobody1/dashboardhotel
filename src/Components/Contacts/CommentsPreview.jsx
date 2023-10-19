@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsArrowsFullscreen, BsFillBookmarkCheckFill } from "react-icons/bs";
-import {
-  CommentContainer,
-  MessageContent
-} from "../../GeneralComponents";
+import { CommentContainer, MessageContent } from "../../GeneralComponents";
 import { useDispatch, useSelector } from "react-redux";
 import {
   contactsInfo,
   contactstatusinfo,
 } from "../../features/Contact/contactSlice";
-import { getContactsData } from "../../features/Contact/contactThunks";
+import {
+  archiveData,
+  getContactsData,
+} from "../../features/Contact/contactThunks";
 import { CommentModal } from "./CommentsModal";
 import { renderStatus } from "../RenderStatus";
 
@@ -31,7 +31,8 @@ const IconWrapper = styled.div`
 `;
 
 const ReadIcon = styled(BsFillBookmarkCheckFill)`
-  color: #e23428;
+  color: ${(props) => (props.archived ? "#5ad07a" : "#e23428")};
+  transition: all 150ms ease-in;
 `;
 
 const FullscreenIcon = styled(BsArrowsFullscreen)`
@@ -80,32 +81,40 @@ export const Comments = () => {
     dispatch(getContactsData());
   }, [dispatch]);
 
-  const handleOpenModal = (id) => {
+  const handleOpenModal = (id, archived) => {
     setIsModalOpen(true);
     setCurrentId(id);
+
+    if (!archived) {
+      dispatch(archiveData(id));
+    }
   };
 
   const data = () => {
-    return (<>
-      {infoContacts.map((contact) => (
-        <CommentContainer key={contact.date.id}>
-          <>
-            <FullName>{contact.customer.name}</FullName>
-            <IconWrapper>
-              <ReadIcon />
-              <FullscreenIcon
-                onClick={() => handleOpenModal(contact.date.id)}
-              />
-            </IconWrapper>
-            <EmailAddress>{contact.customer.email}</EmailAddress>
-            <PhoneNumber>{contact.customer.phone}</PhoneNumber>
-            <Subject>{contact.subject}</Subject>
-            <MessageContent>{contact.comment}</MessageContent>
-          </>
-        </CommentContainer>
-      ))}
-    </>);
-  }
+    return (
+      <>
+        {infoContacts.map((contact) => (
+          <CommentContainer archived={contact.archived}  key={contact.date.id}>
+            <>
+              <FullName>{contact.customer.name}</FullName>
+              <IconWrapper>
+                <ReadIcon archived={contact.archived} />
+                <FullscreenIcon
+                  onClick={() =>
+                    handleOpenModal(contact.date.id, contact.archived)
+                  }
+                />
+              </IconWrapper>
+              <EmailAddress>{contact.customer.email}</EmailAddress>
+              <PhoneNumber>{contact.customer.phone}</PhoneNumber>
+              <Subject>{contact.subject}</Subject>
+              <MessageContent>{contact.comment}</MessageContent>
+            </>
+          </CommentContainer>
+        ))}
+      </>
+    );
+  };
 
   return (
     <>
