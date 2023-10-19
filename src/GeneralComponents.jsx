@@ -128,10 +128,12 @@ export const CommentContainer = styled.div`
   border-radius: 20px;
   padding: 30px;
   position: relative;
+  opacity: ${(props) => (props.archived ? "0.6" : "1")};
   transition: all 250ms ease-in-out;
 
   &:hover {
-    box-shadow: 0px 16px 30px #00000014;
+    box-shadow: ${(props) =>
+      props.archived ? "0" : " 0px 16px 30px #00000014"};
   }
 `;
 
