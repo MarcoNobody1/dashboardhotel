@@ -16,6 +16,9 @@ import {
 } from "../features/Contact/contactSlice";
 import { archiveData } from "../features/Contact/contactThunks";
 import Swal from "sweetalert2";
+import { userDeleteStatus } from "../features/Users/userSlice";
+import { deleteUsersData } from "../features/Users/userThunks";
+import {BsTelephoneInbound} from "react-icons/bs";
 
 const bookingTitles = [
   "Guest",
@@ -38,6 +41,14 @@ const roomTitles = [
 
 const contactTitles = ["Date", "Customer", "Subject", "Comment", "Archived"];
 
+const userTitles = [
+  "name",
+  "start_date",
+  "job_description",
+  "contact",
+  "status",
+];
+
 const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
@@ -58,8 +69,10 @@ const Th = styled.th`
       ? "480px"
       : props.header === "availability"
       ? "200px"
-      : props.header === "customer"
+      : props.header === "customer" 
       ? "300px"
+      : props.header === "job_description"
+      ? "500px"
       : "130px"};
 `;
 
@@ -155,8 +168,13 @@ const RoomPhotoWrap = styled.div`
   flex-direction: row;
   display: flex;
   gap: 15px;
-  flex-direction: row;
   min-width: 300px;
+`;
+
+const UserDataWrap = styled.div`
+display:flex;
+flex-direction: row;
+gap: 10px;
 `;
 
 const ImageRoom = styled.img`
@@ -165,16 +183,23 @@ const ImageRoom = styled.img`
   background-color: #747474;
 `;
 
-const PhotoSpecs = styled.div`
+const UserImage = styled.img`
+  width: 70px;
+  height: 70px;
+  background: transparent;
+`;
+
+const DataSpecs = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
-const PhotoId = styled(Link)`
+const DataId = styled(Link)`
   font: normal normal 400 14px/21px Poppins;
   letter-spacing: 0px;
   color: #799283;
+  text-transform: uppercase;
   &::before {
     font-size: 12px;
     content: "#";
@@ -189,6 +214,32 @@ const PhotoRoomSpec = styled.p`
   &::before {
     font-size: 12px;
     content: "Nº ";
+  }
+`;
+
+const UserName = styled.p`
+font-size: 16px;
+font-weight: 600;
+color: #393939;
+`;
+
+const UserJob = styled.p`
+font-size: 14px;
+font-weight: 400;
+color: #393939;
+`;
+
+const UserLink = styled.a`
+  font-size: 14px;
+  font-weight: 500;
+  color: #393939;
+  text-decoration: none;
+  transition: all 200ms ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+    text-decoration: underline;
   }
 `;
 
@@ -242,7 +293,7 @@ const DynamicTable = ({ data, dataType }) => {
       ? roomdeleteStatus
       : dataType === "contacts"
       ? contactdeleteStatus
-      : null
+      : userDeleteStatus
   );
   const archiveContactStatus = useSelector(archiveStatus);
 
@@ -255,7 +306,7 @@ const DynamicTable = ({ data, dataType }) => {
       ? roomTitles
       : dataType === "contacts"
       ? contactTitles
-      : [];
+      : userTitles;
 
   const handleGetDetails = (id) => {
     if (dataType === "bookings") {
@@ -275,15 +326,17 @@ const DynamicTable = ({ data, dataType }) => {
       dispatch(deleteData(id));
     } else if (dataType === "rooms") {
       dispatch(deleteRoomsData(id));
+    } else if (dataType === "users") {
+      dispatch(deleteUsersData(id));
     }
   };
 
-  const handleArchiveComment = (id) => {
+  const handleArchiveComment = (id, archived) => {
     const Toast = Swal.mixin({
       toast: true,
       position: "center-end",
       showConfirmButton: false,
-      timer: 1000,
+      timer: archived ? 1500 : 1000,
       timerProgressBar: true,
     });
 
@@ -291,8 +344,7 @@ const DynamicTable = ({ data, dataType }) => {
     if (archiveContactStatus === "fulfilled") {
       Toast.fire({
         icon: "success",
-        title: "Comment Archived",
-        timer: 1500,
+        title: archived ? "Comment Dearchived" : "Comment Archived",
         timerProgressBar: false,
       });
     }
@@ -436,15 +488,15 @@ const DynamicTable = ({ data, dataType }) => {
         return (
           <RoomPhotoWrap>
             <ImageRoom src={rowData.room_name.room_photo} />
-            <PhotoSpecs>
-              <PhotoId
+            <DataSpecs>
+              <DataId
                 to={`/rooms/${rowData.room_name.id}`}
                 onClick={() => handleGetDetails(rowData.room_name.id)}
               >
                 {rowData.room_name.id}
-              </PhotoId>
+              </DataId>
               <PhotoRoomSpec>{rowData.room_name.room_number}</PhotoRoomSpec>
-            </PhotoSpecs>
+            </DataSpecs>
           </RoomPhotoWrap>
         );
 
@@ -468,7 +520,21 @@ const DynamicTable = ({ data, dataType }) => {
       case "archived":
         const statusContact = () => {
           if (archiveContactStatus === "rejected") {
-            alert("Not Good");
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "center",
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+            });
+
+            Toast.fire({
+              icon: "error",
+              title: "Somethin's wrong",
+              timer: 1500,
+              timerProgressBar: false,
+              html: "<p>Please, try again...</p>",
+            });
           } else if (archiveContactStatus === "pending") {
             return (
               <CenterDiv>
@@ -496,7 +562,9 @@ const DynamicTable = ({ data, dataType }) => {
 
         return (
           <StatusButton
-            onClick={() => handleArchiveComment(rowData.date.id)}
+            onClick={() =>
+              handleArchiveComment(rowData.date.id, rowData.archived)
+            }
             style={{
               backgroundColor: rowData.archived ? "#e8ffee" : "#FFEDEC",
               color: rowData.archived ? "#5ad07a" : "#E23428",
@@ -506,6 +574,65 @@ const DynamicTable = ({ data, dataType }) => {
             {statusContact()}
           </StatusButton>
         );
+
+      case "name":
+        return (
+          <UserDataWrap>
+            <UserImage src={rowData.name.photo} />
+            <DataSpecs>
+              <UserName>{rowData.name.username}</UserName>
+              <DataId
+                to={`/rooms/${rowData.name.id}`}
+                onClick={() => handleGetDetails(rowData.name.id)}
+              >
+                {rowData.name.id}
+              </DataId>
+              <UserLink href={`mailto:${rowData.name.email}`}>{rowData.name.email}</UserLink>
+            </DataSpecs>
+          </UserDataWrap>
+        );
+
+      case "activity":
+        const trashUserIcon =
+          statusInfo === "fulfilled" ? (
+            <TrashIcon onClick={() => handleDelete(rowData.name.id)} />
+          ) : statusInfo === "rejected" ? (
+            <TrashIcon style={{ color: "#e9d7d7" }} />
+          ) : (
+            <Floater>
+              <LineWave
+                height="80"
+                width="80"
+                color=""
+                ariaLabel="line-wave"
+                wrapperStyle=""
+                wrapperClass=""
+                visible={true}
+                firstLineColor="#113C30"
+                middleLineColor="#517A6F"
+                lastLineColor="#E3342C"
+              />
+            </Floater>
+          );
+        return (
+          <>
+            <StatusDiv data={rowData} />
+            {trashUserIcon}
+          </>
+        );
+
+        case "job_description":
+        return (
+              <UserJob>{rowData.job_description}</UserJob>
+        );
+        case "contact":
+        return(
+          <UserDataWrap>
+          <BsTelephoneInbound/>
+          <UserLink href={`tel:${rowData.contact}`}>{rowData.contact}</UserLink>
+          </UserDataWrap>
+        )
+
       default:
         return rowData[header];
     }
