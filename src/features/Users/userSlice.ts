@@ -63,7 +63,7 @@ const initialState: UserInitialState = {
     },
   });
 
-  export const info = (state:RootState) => state.users.users;
-  export const statusinfo = (state:RootState) => state.users.status;
-  export const detailData = (state:RootState) => state.users.userDetails[0];
-  export const deleteStatus = (state:RootState) => state.users.deleteStatus;
+  export const usersInfo = (state:RootState) => state.users.users;
+  export const usersStatusinfo = (state:RootState) => state.users.status;
+  export const userDetailData = (state:RootState) => state.users.userDetails[0];
+  export const userDeleteStatus = (state:RootState) => state.users.deleteStatus;
