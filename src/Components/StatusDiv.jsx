@@ -10,31 +10,36 @@ const GeneralStatusDiv = styled.div`
   text-transform: capitalize;
   width: 70%;
   background-color: ${(props) =>
-    props.status === "Check In" || props.status === "available"
+    props.status === "Check In" || props.status === "available" || props.status === "active"
       ? "#e8ffee"
-      : props.status === "Check Out" || props.status === "booked"
+      : props.status === "Check Out" || props.status === "booked" || props.status === "inactive"
       ? "#FFEDEC"
       : "#FEFFC2"};
   color: ${(props) =>
-    props.status === "Check In" || props.status === "available"
+    props.status === "Check In" || props.status === "available" || props.status === "active"
       ? "#5ad07a"
-      : props.status === "Check Out" || props.status === "booked"
+      : props.status === "Check Out" || props.status === "booked" || props.status === "inactive"
       ? "#E23428"
       : "#E2B308"};
 `;
 
-export const StatusDiv = ({data = {availability: "Loading..."}}) => {
+export const StatusDiv = ({ data = { availability: "Loading..." } }) => {
+  const roomsData = data.availability !== undefined ? data.availability : null;
+  const bookingsData = data.status !== undefined ? data.status : null;
+  const usersData = data.activity !== undefined ? data.activity : null;
 
-    const roomsData =
-      data.availability !== undefined ? data.availability : null;
-    const bookingsData =
-      data.status !== undefined ? data.status : null;
+  const statusData =
+    roomsData !== null
+      ? roomsData
+      : bookingsData !== null
+      ? bookingsData
+      : usersData !== null
+      ? usersData
+      : data.availability;
 
-      const statusData = roomsData !== null ? roomsData : (bookingsData !== null ? bookingsData : data.availability);
-
-    return (
-      <GeneralStatusDiv data-testid="bookingStatusDiv" status={statusData}>
-        {statusData}
-      </GeneralStatusDiv>
-    );
+  return (
+    <GeneralStatusDiv data-testid="bookingStatusDiv" status={statusData}>
+      {statusData}
+    </GeneralStatusDiv>
+  );
 };
