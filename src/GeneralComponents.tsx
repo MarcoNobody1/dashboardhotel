@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
-import { useContext } from "react";
+import { FC, useContext } from "react";
 import { BsTrash3 } from "react-icons/bs";
 import { ToggleContext } from "./Sidebar/ToggleSidebar";
 import Swal from "sweetalert2";
 import { MagnifyingGlass } from "react-loader-spinner";
 import searchIcon from "./assets/iconSearchBar.png";
 
-export const formatDate = (inputDate) => {
-  const months = [
+export const formatDate = (inputDate: Date | string) => {
+  const months: string[] = [
     "January",
     "February",
     "March",
@@ -23,10 +23,19 @@ export const formatDate = (inputDate) => {
     "December",
   ];
 
-  const dateParts = inputDate.split("-");
-  const year = dateParts[0];
-  const monthIndex = parseInt(dateParts[1]) - 1;
-  const day = parseInt(dateParts[2]);
+  let date: Date;
+
+  if (typeof inputDate === 'string') {
+    date = new Date(inputDate);
+  } else if (inputDate instanceof Date) {
+    date = inputDate;
+  } else {
+    throw new Error('Invalid input date format');
+  }
+
+  const year = date.getFullYear();
+  const monthIndex = date.getMonth();
+  const day = date.getDate();
 
   const month = months[monthIndex];
 
@@ -35,7 +44,7 @@ export const formatDate = (inputDate) => {
   return `${month} ${day}${daySuffix}, ${year}`;
 };
 
-const getDaySuffix = (day) => {
+const getDaySuffix = (day:number):string => {
   if (day >= 11 && day <= 13) {
     return "th";
   }
@@ -61,11 +70,13 @@ export const InnerLayout = styled(Layout)`
   transition: all 250ms ease-out;
 `;
 
-export const DefaultIcon = styled.div.attrs((props) => ({
-  $color: props.$color || "#135846",
-}))`
+interface DefaultIconProps {
+  $color?: string;
+}
+
+export const DefaultIcon = styled.div<DefaultIconProps>`
   font-size: 24px;
-  color: ${(props) => props.$color};
+  color: ${(props) => props.$color || '#135846'};
   cursor: pointer;
   transition: all 0.3s ease-out;
   &:hover {
@@ -82,14 +93,19 @@ const PageWrap = styled.main`
   overscroll-behavior: contain;
 `;
 
-export const PageWrapper = ({ children }) => {
+interface PageWrapperProps {
+  children: React.ReactNode;
+}
+
+export const PageWrapper: FC<PageWrapperProps> = ({ children }) => {
   const { toggle } = useContext(ToggleContext);
+
   return (
     <>
       <PageWrap
         style={{
-          margin: toggle.toggle && "0 auto",
-          width: toggle.toggle && "100%",
+          margin: toggle.toggle ? "0 auto" : undefined,
+          width: toggle.toggle ? "100%" : undefined,
         }}
       >
         {children}
@@ -123,7 +139,11 @@ export const ModalBackground = styled.div`
   z-index: 99;
 `;
 
-export const CommentContainer = styled.div`
+interface CommentContainerProps {
+  archived?: boolean;
+}
+
+export const CommentContainer= styled.div<CommentContainerProps>`
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #ebebeb;
   border-radius: 20px;
@@ -308,7 +328,11 @@ export const TableContainer = styled.div`
   padding: 21px;
 `;
 
-export const ButtonsContainer = styled(FilterContainer)`
+interface ButtonsContainerProps{
+  user: boolean
+}
+
+export const ButtonsContainer = styled(FilterContainer)<ButtonsContainerProps>`
   gap: 10px;
   padding: 5px;
   padding-bottom: 0;
