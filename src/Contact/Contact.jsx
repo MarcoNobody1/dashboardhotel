@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { PageWrapper } from "../GeneralComponents";
 import { CommentsContainer } from "../Dashboard/Dashboard";
 import { Comments } from "../Components/Contacts/CommentsPreview";
-import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SelectorFilter, TableContainer } from "../Rooms/Rooms";
+import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SelectorFilter, TableContainer } from "../GeneralComponents";
 import { useDispatch, useSelector } from "react-redux";
 import { contactsInfo, contactstatusinfo } from "../features/Contact/contactSlice";
 import { getContactsData } from "../features/Contact/contactThunks";
