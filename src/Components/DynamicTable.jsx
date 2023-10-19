@@ -227,6 +227,7 @@ const UserJob = styled.p`
 font-size: 14px;
 font-weight: 400;
 color: #393939;
+font-style: italic;
 `;
 
 const UserLink = styled.a`
