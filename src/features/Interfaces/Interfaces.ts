@@ -62,5 +62,5 @@ export interface UserInterface {
   start_date: string;
   job_description: string;
   contact: string;
-  status: string;
+  activity: string;
 }
