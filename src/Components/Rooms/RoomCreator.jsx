@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { ButtonAdNew } from "../../Rooms/Rooms";
+import { ButtonAdNew } from "../../GeneralComponents";
 import { useDispatch } from "react-redux";
 import { roomAmenities } from "../../data/roomAmenities";
-import { roomPhotos } from "../../data/roomPhotos";
+import { roomPhotos } from "../../data/createNewPhotos";
 import { addRoomData } from "../../features/Rooms/roomThunks";
 import Swal from "sweetalert2";
 
