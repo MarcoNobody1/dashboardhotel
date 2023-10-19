@@ -114,24 +114,28 @@ const NewProfilePhoto = styled.img`
   bottom: 60%;
 `;
 
-export const UserCard = () => {
+interface ModalInterface {
+  onClose: () => void
+}
+
+export const UserCard: React.FC = () => {
   const { auth, authDispatch } = useContext(AuthContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const Modal = ({ onClose }) => {
+  const Modal: React.FC<ModalInterface> = ({ onClose }) => {
     const [newUser, setNewUser] = useState("");
     const [newEmail, setNewEmail] = useState("");
     const [imageUrl, setImageUrl] = useState("");
 
-    const handleUserChange = (event) => {
+    const handleUserChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setNewUser(event.target.value);
     };
 
-    const handleEmailChange = (event) => {
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setNewEmail(event.target.value);
     };
 
-    const handleNewPhoto = (event) => {
-      const file = event.target.files[0];
+    const handleNewPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
       if (file && file.type.startsWith("image/")) {
         const imageUrl = URL.createObjectURL(file);
 
@@ -141,7 +145,7 @@ export const UserCard = () => {
       }
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent) => {
       event.preventDefault();
       authDispatch({
         type: "update",
@@ -201,7 +205,7 @@ export const UserCard = () => {
     <>
       <OuterWrap>
         <ImageWrap>
-          <ProfilePic src={auth.photo} />
+          <ProfilePic src={auth.photo || ""} />
         </ImageWrap>
         <ContentWrap>
           <FullName>{auth.username}</FullName>
