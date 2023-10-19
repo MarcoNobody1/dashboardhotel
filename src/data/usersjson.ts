@@ -39,7 +39,7 @@ export const usersData:UserInterface[] = [
         password_hash: "s1t2u3v4w5x6y7z8"
       },
       start_date: "2023-03-10",
-      job_description: "Room cleaning and maintenance, guest services delivery.",
+      job_description: "Room cleaning, guest requests fulfillment, housekeeping duties.",
       contact: "+1112223333",
       activity: "active"
     },
@@ -53,7 +53,7 @@ export const usersData:UserInterface[] = [
         password_hash: "p9q8r7s6t5u4v3w2x1"
       },
       start_date: "2021-11-05",
-      job_description: "Hotel operations management, staff coordination, budget planning.",
+      job_description: "General hotel management, staff supervision, strategic decision-making.",
       contact: "+5556667777",
       activity: "active"
     },
@@ -67,7 +67,7 @@ export const usersData:UserInterface[] = [
         password_hash: "h1i2j3k4l5m6n7o8"
       },
       start_date: "2020-08-15",
-      job_description: "Greet and assist guests, handle reservations, proid information.",
+      job_description: "Customer service at the front desk, guest check-in, reservation management.",
       contact: "+4443332222",
       activity: "active"
     },
@@ -95,7 +95,7 @@ export const usersData:UserInterface[] = [
         password_hash: "a9b8c7d6e5f4g3h2i1"
       },
       start_date: "2023-02-10",
-      job_description: "Oversee hotel operations, team management, financial planning.",
+      job_description: "General hotel management, staff supervision, strategic decision-making.",
       contact: "+7778889999",
       activity: "active"
     },
@@ -109,7 +109,7 @@ export const usersData:UserInterface[] = [
         password_hash: "b1c2d3e4f5g6h7i8j9"
       },
       start_date: "2022-07-03",
-      job_description: "Front desk support, check-ins, guest inquiries handling.",
+      job_description: "Customer service at the front desk, guest check-in, reservation management.",
       contact: "+3334445555",
       activity: "active"
     },
@@ -123,7 +123,7 @@ export const usersData:UserInterface[] = [
         password_hash: "k1l2m3n4o5p6q7r8s9"
       },
       start_date: "2021-12-20",
-      job_description: "Housekeeping, room maintenance, guest service delivery.",
+      job_description: "Room cleaning, guest requests fulfillment, housekeeping duties.",
       contact: "+2223334444",
       activity: "inactive"
     },
@@ -137,7 +137,7 @@ export const usersData:UserInterface[] = [
         password_hash: "s9t8u7v6w5x4y3z2"
       },
       start_date: "2023-04-18",
-      job_description: "Hotel management, staff supervision, strategic planning.",
+      job_description: "General hotel management, staff supervision, strategic decision-making.",
       contact: "+6665554444",
       activity: "active"
     }

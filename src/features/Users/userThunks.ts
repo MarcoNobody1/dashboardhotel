@@ -21,3 +21,8 @@ export const deleteUsersData = createAsyncThunk("users/deleteUsersData", async (
 export const get1UserData = createAsyncThunk("users/get1UserData", async (id:string) => {
   return (await delay(id)) as string;
 });
+
+export const addUserData = createAsyncThunk("rooms/addUserData", async (user:UserInterface) => {
+  
+  return( await delay(user)) as UserInterface;
+})

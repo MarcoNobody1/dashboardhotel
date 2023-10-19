@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ButtonAdNew } from "../../GeneralComponents";
 import { useDispatch } from "react-redux";
-import { roomAmenities } from "../../data/roomAmenities";
-import { roomPhotos, userPhotos } from "../../data/createNewPhotos";
-import { addRoomData } from "../../features/Rooms/roomThunks";
+import { userPhotos } from "../../data/createNewPhotos";
+import { addUserData } from "../../features/Users/userThunks";
 import Swal from "sweetalert2";
 
 const Form = styled.form`
@@ -60,12 +59,14 @@ const Photo = styled.img`
   border-radius: 20px;
   border: 1px solid #135846;
   transition: all 250ms ease-out;
+  cursor: pointer;
 `;
 
 const Checker = styled.input`
   width: 20px;
   height: 20px;
   cursor: pointer;
+  display: none;
 `;
 
 const ActionGroup = styled.div`
@@ -81,6 +82,7 @@ const Action = styled.div`
   gap: 10px;
   align-items: center;
   flex-direction: column;
+  position: relative;
 `;
 
 const ActionTitle = styled.p`
@@ -91,7 +93,7 @@ const ActionTitle = styled.p`
 `;
 
 const Selector = styled.select`
-  width: 90%;
+  width: 80%;
   padding: 5px 10px;
   border-radius: 12px;
   font-size: 16px;
@@ -112,73 +114,130 @@ const TextArea = styled.textarea`
   padding: 5px;
 `;
 
-const NumberInput = styled.input`
+const TextInput = styled.input`
   width: 80%;
-  text-align: center;
+  text-align: left;
   font-size: 16px;
   font-weight: 500;
-`;
+  border-radius: 12px;
+  padding: 5px;
 
-const RangeInput = styled.input`
-  cursor: pointer;
+  &:hover{
+    cursor: text;
+  }
+  
 `;
 
 const InfoParagraph = styled.p`
   font-weight: 500;
-  font-size: 14px;
-  width: 100%;
-  text-align: center;
+  font-size: 12px;
+  width: 80%;
+  text-align: left;
+  color: #0d3128;
+  position: absolute;
+  bottom: -20px;
+  display: ${(props) => (props.password.length >= 1 ? "initial" : "none")};
 `;
 
-const PhotoGroup = ({ src, checked, onChange }) => {
-  return (
-    <PhotoWrapper>
-      <Photo src={src} style={{ border: checked && "5px solid #135846" }} />
-      <Checker
-        name="checker"
-        value={src}
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-      />
-    </PhotoWrapper>
-  );
+const InputLabel = styled.label`
+  font-size: 1rem;
+  position: relative;
+  display: inline-block;
+  width: 4em;
+  height: 2em;
+
+  &input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+`;
+
+const SliderSpan = styled.span`
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #eee;
+  transition: 0.4s;
+  border-radius: 0.5em;
+  box-shadow: 0 0.2em #dfd9d9;
+
+  &:before {
+    position: absolute;
+    content: "";
+    height: 1.5em;
+    width: 1.4em;
+    border-radius: 0.3em;
+    left: 0.3em;
+    bottom: 0.7em;
+    background-color: lightsalmon;
+    transition: 0.4s;
+    box-shadow: 0 0.4em #bcb4b4;
+  }
+
+  &:hover::before {
+    box-shadow: 0 0.2em #bcb4b4;
+    bottom: 0.5em;
+  }
+`;
+
+const SliderInput = styled.input`
+  &:checked + ${SliderSpan}:before {
+    transform: translateX(2em);
+    background: lightgreen;
+  }
+`;
+
+const NotActiveStatus = styled.p`
+  position: absolute;
+  font-weight: 600;
+  text-align: left;
+  font-size: ${(props) => (props.active ? "10px" : "16px")};
+  text-transform: uppercase;
+  top: 55%;
+  left: 75px;
+  color: #e23428;
+  opacity: ${(props) => (props.active ? 0 : 1)};
+  transition: all 250ms ease-out;
+`;
+
+const ActiveStatus = styled.p`
+  position: absolute;
+  text-align: left;
+  font-weight: 600;
+  font-size: ${(props) => (props.active ? "16px" : "10px")};
+  text-transform: uppercase;
+  top: 55%;
+  right: 115px;
+  color: #5ad07a;
+  opacity: ${(props) => (props.active ? 1 : 0)};
+  transition: all 250ms ease-out;
+`;
+
+const getFormattedDate = () => {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const yyyy = today.getFullYear();
+  return `${yyyy}-${mm}-${dd}`;
 };
+
 
 export const UserCreator = ({ closeModal }) => {
   const dispatch = useDispatch();
-  const [checkedStates, setCheckedStates] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
-  const [price, setPrice] = useState(150);
-  const [discount, setDiscount] = useState(15);
-  const [roomType, setRoomType] = useState("Single Room");
-  const [roomNumber, setRoomNumber] = useState(111);
+  const [active, setActive] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [date, setDate] = useState("");
+  const [position, setPosition] = useState("Room Service");
   const [description, setDescription] = useState("");
-  const [amenities, setAmenities] = useState("Standard");
-  const [allowDiscount, setAllowDiscount] = useState(false);
-  const hasTrueValue = checkedStates.some((isChecked) => isChecked);
+  const [minDate, setMinDate] = useState(getFormattedDate());
 
-  const handleCheckboxChange = (index) => {
-    const newCheckedStates = [...checkedStates];
-    newCheckedStates[index] = !newCheckedStates[index];
-    setCheckedStates(newCheckedStates);
-  };
 
-  const calcTotalFee = () => {
-    const percentage = discount / 100;
-    return price - price * percentage;
-  };
-
-  const handleCreateNewRoom = () => {
-    const finalPhotos = checkedStates
-      .map((isChecked, index) => (isChecked ? roomPhotos[index] : null))
-      .filter((photo) => photo !== null);
-
+  const handleCreateNewUser = () => {
     const Toast = Swal.mixin({
       toast: true,
       position: "top",
@@ -187,51 +246,76 @@ export const UserCreator = ({ closeModal }) => {
       timerProgressBar: true,
     });
 
-    const newRoom = {
-      room_name: {
+  if (username.trim().length === 0) {
+      Toast.fire({
+        icon: "error",
+        title: "Full Name must contain at least one character.",
+      });
+      return;
+    }
+
+    if (phone.length < 9) {
+      Toast.fire({
+        icon: "error",
+        title: "Phone number must have at least 9 digits.",
+      });
+      return;
+    }
+
+  
+
+    if (password.length < 5) {
+      Toast.fire({
+        icon: "error",
+        title: "Password must have at least 5 characters.",
+      });
+      return;
+    }
+
+    if (description.trim().length === 0) {
+      Toast.fire({
+        icon: "error",
+        title: "Description must have at least one character.",
+      });
+      return;
+    }
+
+    const newUser = {
+      name: {
+        photo: selectedPhoto,
+        username: username,
         id: parseInt(
           Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345
         ).toString(),
-        room_photo: finalPhotos[0],
-        room_number: roomNumber === "" ? 111 : roomNumber,
-        room_description:
-          (description.replace(/\s/g, "") === "") | (description === null)
-            ? "This is a sample description text"
-            : description,
+        employee_position: position,
+        email: email,
+        password_hash: password,
       },
-      room_type: roomType,
-      amenities:
-        amenities === "Standard"
-          ? roomAmenities.Standard
-          : amenities === "Advanced"
-          ? roomAmenities.Advanced
-          : amenities === "Premium"
-          ? roomAmenities.Premium
-          : roomAmenities.FullRoom,
-      price: price,
-      offer_price: {
-        isOffer: allowDiscount,
-        discount: allowDiscount ? discount : 0,
-      },
-      availability: "available",
+      start_date: date,
+      job_description: description,
+      contact: phone,
+      activity: active ? "active" : "inactive",
     };
+    console.log(active)
 
-    if (hasTrueValue) {
-      dispatch(addRoomData(newRoom));
-      setCheckedStates([false, false, false, false, false]);
-      setPrice(150);
-      setDiscount(15);
-      setRoomType("Single Room");
-      setRoomNumber(111);
-      setDescription("");
-      setAmenities("Standard");
-      setAllowDiscount(false);
+    if (selectedPhoto) {
+      dispatch(addUserData(newUser));
+      setActive(false)
+      setSelectedPhoto(null)
+      setPhone("")
+      setPassword("")
+      setUsername("")
+      setEmail("")
+      setDate("")
+      setPosition("Room Service")
+      setDescription("")
+
       Toast.fire({
         icon: "success",
         title: "Success!",
         timer: 1500,
         timerProgressBar: false,
-        html: "<em>Room added to your list.</em>",
+        html: "<em>User added to your list.</em>",
       });
 
       closeModal();
@@ -242,224 +326,267 @@ export const UserCreator = ({ closeModal }) => {
       });
     }
   };
- 
+
   return (
     <Form
-      name="createRoom"
+      name="createUser"
       onSubmit={(e) => {
         e.preventDefault();
-        handleCreateNewRoom();
+        handleCreateNewUser();
       }}
     >
       <Instructions>
         <Instruction>
-          <InstructionTitle>1. Select Photos:</InstructionTitle>
+          <InstructionTitle>1. Select Photo:</InstructionTitle>
         </Instruction>
         <Instruction>
           <InstructionTitle
             style={{
-              opacity: hasTrueValue ? 1 : 0,
-              fontSize: hasTrueValue ? "28px" : "0px",
+              opacity: selectedPhoto ? 1 : 0,
+              fontSize: selectedPhoto ? "28px" : "0px",
             }}
           >
-            2. Set Up Room:
+            2. Set Personal Data:
           </InstructionTitle>
         </Instruction>
         <Instruction>
           <InstructionTitle
             style={{
-              opacity: hasTrueValue && description.length > 0 ? 1 : 0,
-              fontSize: hasTrueValue && description.length > 0 ? "28px" : "0px",
+              opacity:
+                selectedPhoto && username.length > 0 && password.length >= 1
+                  ? 1
+                  : 0,
+              fontSize:
+                selectedPhoto && username.length > 0 && password.length >= 1
+                  ? "28px"
+                  : "0px",
             }}
           >
-            3. Set Pricing:
+            3. Set Details:
           </InstructionTitle>
         </Instruction>
       </Instructions>
       <Actions>
         <ActionRow>
-          <PhotoGroup
-            src={userPhotos[0]}
-            checked={checkedStates[0]}
-            onChange={() => handleCheckboxChange(0)}
-          ></PhotoGroup>
-          <PhotoGroup
-            src={userPhotos[1]}
-            checked={checkedStates[1]}
-            onChange={() => handleCheckboxChange(1)}
-          ></PhotoGroup>
-          <PhotoGroup
-            src={userPhotos[2]}
-            checked={checkedStates[2]}
-            onChange={() => handleCheckboxChange(2)}
-          ></PhotoGroup>
-          <PhotoGroup
-            src={userPhotos[3]}
-            checked={checkedStates[3]}
-            onChange={() => handleCheckboxChange(3)}
-          ></PhotoGroup>
-          <PhotoGroup
-            src={userPhotos[4]}
-            checked={checkedStates[4]}
-            onChange={() => handleCheckboxChange(4)}
-          ></PhotoGroup>
+          <PhotoWrapper>
+            <Photo
+              src={userPhotos[0]}
+              style={{
+                border: selectedPhoto === userPhotos[0] && "5px solid #135846",
+              }}
+              onClick={() => setSelectedPhoto(userPhotos[0])}
+            />
+            <Checker
+              name="checker"
+              value={userPhotos[0]}
+              type="radio"
+              checked={selectedPhoto === userPhotos[0]}
+              onChange={() => setSelectedPhoto(userPhotos[0])}
+            />
+          </PhotoWrapper>
+          <PhotoWrapper>
+            <Photo
+              src={userPhotos[1]}
+              style={{
+                border: selectedPhoto === userPhotos[1] && "5px solid #135846",
+              }}
+              onClick={() => setSelectedPhoto(userPhotos[1])}
+            />
+            <Checker
+              name="checker2"
+              value={userPhotos[1]}
+              type="radio"
+              checked={selectedPhoto === userPhotos[1]}
+              onChange={() => setSelectedPhoto(userPhotos[1])}
+            />
+          </PhotoWrapper>
+          <PhotoWrapper>
+            <Photo
+              src={userPhotos[2]}
+              style={{
+                border: selectedPhoto === userPhotos[2] && "5px solid #135846",
+              }}
+              onClick={() => setSelectedPhoto(userPhotos[2])}
+            />
+            <Checker
+              name="checker3"
+              value={userPhotos[2]}
+              type="radio"
+              checked={selectedPhoto === userPhotos[2]}
+              onChange={() => setSelectedPhoto(userPhotos[2])}
+            />
+          </PhotoWrapper>
+          <PhotoWrapper>
+            <Photo
+              src={userPhotos[3]}
+              style={{
+                border: selectedPhoto === userPhotos[3] && "5px solid #135846",
+              }}
+              onClick={() => setSelectedPhoto(userPhotos[3])}
+            />
+            <Checker
+              name="checker4"
+              value={userPhotos[3]}
+              type="radio"
+              checked={selectedPhoto === userPhotos[3]}
+              onChange={() => setSelectedPhoto(userPhotos[3])}
+            />
+          </PhotoWrapper>
+          <PhotoWrapper>
+            <Photo
+              src={userPhotos[4]}
+              style={{
+                border: selectedPhoto === userPhotos[4] && "5px solid #135846",
+              }}
+              onClick={() => setSelectedPhoto(userPhotos[4])}
+            />
+            <Checker
+              name="checker5"
+              value={userPhotos[4]}
+              type="radio"
+              checked={selectedPhoto === userPhotos[4]}
+              onChange={() => setSelectedPhoto(userPhotos[4])}
+            />
+          </PhotoWrapper>
         </ActionRow>
         <ActionRow
           style={{
-            opacity: hasTrueValue ? 1 : 0,
-            pointerEvents: hasTrueValue ? "all" : "none",
+            opacity: selectedPhoto ? 1 : 0,
+            pointerEvents: selectedPhoto ? "all" : "none",
           }}
         >
           <ActionGroup>
             <Action>
-              <ActionTitle>room type:</ActionTitle>
-              <Selector
+              <ActionTitle>Full Name:</ActionTitle>
+              <TextInput
                 name="typeSelector"
                 onChange={(event) => {
-                  setRoomType(event.target.value);
+                  setUsername(event.target.value);
                 }}
-                defaultValue={roomType}
-              >
-                <Option name="Single Room" value="Single Room">
-                  Single Room
-                </Option>
-                <Option name="Double Room" value="Double Room">
-                  Double Room
-                </Option>
-                <Option name="Double Superior" value="Double Superior">
-                  Double Superior
-                </Option>
-                <Option name="Suite" value="Suite">
-                  Suite
-                </Option>
-              </Selector>
+                placeholder={`e.g. :  Mr. Krabs`}
+                minLength={1}
+              />
             </Action>
             <Action>
-              <ActionTitle>amenities:</ActionTitle>
-              <Selector
-                name="amenitiesSelector"
+              <ActionTitle>Password:</ActionTitle>
+              <TextInput
+                name="userPasswordInput"
+                type="password"
+                placeholder={`e.g. : ILoveMyBankAccount@99`}
+                onChange={(event) => setPassword(event.target.value)}
+                autoComplete="new-password"
+                minLength="5"
+              />
+              <InfoParagraph password={password}>
+                Your Password: {password}
+              </InfoParagraph>
+            </Action>
+          </ActionGroup>
+          <ActionGroup>
+            <Action>
+              <ActionTitle>Email:</ActionTitle>
+              <TextInput
+                name="userEmailInput"
+                type="email"
+                placeholder={`e.g. :  mrkrabs@iwantmymoney.com`}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </Action>
+            <Action>
+              <ActionTitle>Phone Number:</ActionTitle>
+              <TextInput
+                name="userPhoneInput"
+                type="tel"
+                placeholder={`e.g. : 878888523`}
+                minlength="9"
+                onChange={(event) => setPhone(event.target.value)}
+              />
+            </Action>
+          </ActionGroup>
+        </ActionRow>
+        <ActionRow
+          style={{
+            opacity:
+              selectedPhoto && username.length > 0 && password.length >= 1
+                ? 1
+                : 0,
+            pointerEvents:
+              selectedPhoto && username.length > 0 && password.length >= 1
+                ? "all"
+                : "none",
+          }}
+        >
+          <ActionGroup>
+            <Action>
+              <ActionTitle>Start Date:</ActionTitle>
+              <TextInput
+                name="typeSelector"
+                type="date"
+                min={minDate}
                 onChange={(event) => {
-                  setAmenities(event.target.value);
+                  setDate(event.target.value);
                 }}
-                defaultValue="Standard"
+              />
+            </Action>
+            <Action>
+              <ActionTitle>Employee Position:</ActionTitle>
+              <Selector
+                name="positionSelector"
+                onChange={(event) => {
+                  setPosition(event.target.value);
+                }}
+                defaultValue="Room Service"
               >
-                <Option name="Standard" value="Standard">
-                  Standard Pack
+                <Option name="Room Service" value="Room Service">
+                  Room Service
                 </Option>
-                <Option name="Advanced" value="Advanced">
-                  Advanced Pack
+                <Option name="Recepcionist" value="Recepcionist">
+                  Recepcionist
                 </Option>
-                <Option name="Premium" value="Premium">
-                  Premium Pack
-                </Option>
-                <Option name="FullRoom" value="FullRoom">
-                  'Full-Room' Pack
+                <Option name="Manager" value="Manager">
+                  Manager
                 </Option>
               </Selector>
             </Action>
           </ActionGroup>
           <ActionGroup>
             <Action>
-              <ActionTitle>room number:</ActionTitle>
-              <NumberInput
-                name="roomNumberInput"
-                type="number"
-                defaultValue={roomNumber}
-                min="100"
-                max="9999"
-                onChange={(event) => setRoomNumber(event.target.value)}
-              />
+              <ActionTitle>Activy:</ActionTitle>
+              <InputLabel>
+                <SliderInput
+                name="userActiveCheckbox"
+                  type="checkbox"
+                  onChange={(event) => setActive(event.target.checked)}
+                />
+                <SliderSpan></SliderSpan>
+              </InputLabel>
+              <NotActiveStatus active={active}>Not Active</NotActiveStatus>
+              <ActiveStatus active={active}>Active</ActiveStatus>
             </Action>
             <Action>
               <ActionTitle>description:</ActionTitle>
               <TextArea
                 name="descriptionInput"
-                placeholder="Add a brief description for the room..."
+                placeholder="Add a brief description for the job..."
                 onChange={(event) => setDescription(event.target.value)}
               ></TextArea>
-            </Action>
-          </ActionGroup>
-        </ActionRow>
-        <ActionRow
-          style={{
-            opacity: hasTrueValue && description.length > 0 ? 1 : 0,
-            pointerEvents:
-              hasTrueValue && description.length > 0 ? "all" : "none",
-          }}
-        >
-          <ActionGroup>
-            <Action>
-              <ActionTitle>price:</ActionTitle>
-              <RangeInput
-                name="priceInput"
-                onChange={(event) => setPrice(event.target.value)}
-                type="range"
-                min="50"
-                max="900"
-                step="25"
-                defaultValue={price}
-              />
-              <InfoParagraph>Your current price is ${price}.</InfoParagraph>
-            </Action>
-          </ActionGroup>
-          <ActionGroup style={{ position: "relative" }}>
-            <Action
-              style={{
-                position: "absolute",
-                top: "0",
-                left: "-100px",
-                flexDirection: "row",
-                padding: "5px 0 0 0",
-                justifyContent: "flex-start",
-              }}
-            >
-              <ActionTitle>allow discount?</ActionTitle>
-              <Checker
-                name="offerInput"
-                onChange={(event) => setAllowDiscount(event.target.checked)}
-                type="checkbox"
-                defaultChecked={allowDiscount}
-              />
-            </Action>
-            <Action style={{ flex: "20" }}>
-              <ActionTitle>discount:</ActionTitle>
-              <RangeInput
-                disabled={allowDiscount ? false : true}
-                name="discountInput"
-                onChange={(event) => setDiscount(event.target.value)}
-                type="range"
-                min="5"
-                max="30"
-                step="5"
-                defaultValue={discount}
-              />
-              <InfoParagraph style={{ opacity: allowDiscount ? "100" : "0" }}>
-                Your current discount is {discount}%.
-              </InfoParagraph>
-              <InfoParagraph
-                style={{
-                  fontSize: "20px",
-                  fontWeight: 600,
-                  position: "absolute",
-                  bottom: "-10px",
-                  left: "0px",
-                  opacity: allowDiscount ? "100" : "0",
-                }}
-              >
-                The final price will be ${calcTotalFee()}
-              </InfoParagraph>
             </Action>
           </ActionGroup>
         </ActionRow>
       </Actions>
       <ButtonAdNew
         style={{
-          opacity: hasTrueValue && description.length > 0 ? 1 : 0,
+          opacity:
+            selectedPhoto && username.length > 0 && password.length >= 1
+              ? 1
+              : 0,
           pointerEvents:
-            hasTrueValue && description.length > 0 ? "all" : "none",
+            selectedPhoto && username.length > 0 && password.length >= 1
+              ? "all"
+              : "none",
         }}
       >
-        Add Room
+        Add User
       </ButtonAdNew>
     </Form>
   );

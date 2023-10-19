@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserInterface } from "../Interfaces/Interfaces";
 import { RootState } from "../../app/store";
-import { deleteUsersData, get1UserData, getUsersData } from "./userThunks";
+import { deleteUsersData, get1UserData, getUsersData, addUserData } from "./userThunks";
 
 interface UserInitialState {
   error: string | undefined,
@@ -9,6 +9,7 @@ interface UserInitialState {
   userDetails:UserInterface[],
   status:'idle' | 'fulfilled' | 'pending' | 'rejected',
   deleteStatus:'idle' | 'fulfilled' | 'pending' | 'rejected',
+  addUserStatus:'idle' | 'fulfilled' | 'pending' | 'rejected',
 }
 
 
@@ -18,6 +19,7 @@ const initialState: UserInitialState = {
     userDetails:[],
     status: "idle",
     deleteStatus: 'fulfilled',
+    addUserStatus: "idle",
   };
   
   export const userSlice = createSlice({
@@ -60,6 +62,17 @@ const initialState: UserInitialState = {
           state.status = "rejected";
           state.error = action.error.message;
         })
+        .addCase(addUserData.fulfilled, (state, action) => {
+          state.addUserStatus = "fulfilled";
+          state.users = [...state.users, action.payload];
+        })
+        .addCase(addUserData.pending, (state) => {
+          state.addUserStatus = "pending";
+        })
+        .addCase(addUserData.rejected, (state, action) => {
+          state.addUserStatus = "rejected";
+          state.error = action.error.message;
+        })
     },
   });
 
@@ -67,3 +80,4 @@ const initialState: UserInitialState = {
   export const usersStatusinfo = (state:RootState) => state.users.status;
   export const userDetailData = (state:RootState) => state.users.userDetails[0];
   export const userDeleteStatus = (state:RootState) => state.users.deleteStatus;
+  export const userAddUserStatus = (state:RootState) => state.users.addUserStatus;
