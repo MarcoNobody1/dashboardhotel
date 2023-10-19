@@ -31,7 +31,7 @@ const IconWrapper = styled.div`
 `;
 
 const ReadIcon = styled(BsFillBookmarkCheckFill)`
-  color: ${(props) => (props.archived ? "#5ad07a" : "#e23428")};
+  color: ${(props) => (props.archived === "true" ? "#5ad07a" : "#e23428")};
   transition: all 150ms ease-in;
 `;
 
@@ -98,7 +98,7 @@ export const Comments = () => {
             <>
               <FullName>{contact.customer.name}</FullName>
               <IconWrapper>
-                <ReadIcon archived={contact.archived} />
+                <ReadIcon archived={contact.archived.toString()} /> 
                 <FullscreenIcon
                   onClick={() =>
                     handleOpenModal(contact.date.id, contact.archived)

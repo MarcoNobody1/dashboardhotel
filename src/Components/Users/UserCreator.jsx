@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ButtonAdNew } from "../../GeneralComponents";
 import { useDispatch } from "react-redux";
 import { roomAmenities } from "../../data/roomAmenities";
-import { roomPhotos } from "../../data/createNewPhotos";
+import { roomPhotos, userPhotos } from "../../data/createNewPhotos";
 import { addRoomData } from "../../features/Rooms/roomThunks";
 import Swal from "sweetalert2";
 
@@ -145,7 +145,7 @@ const PhotoGroup = ({ src, checked, onChange }) => {
   );
 };
 
-export const RoomCreator = ({ closeModal }) => {
+export const UserCreator = ({ closeModal }) => {
   const dispatch = useDispatch();
   const [checkedStates, setCheckedStates] = useState([
     false,
@@ -279,27 +279,27 @@ export const RoomCreator = ({ closeModal }) => {
       <Actions>
         <ActionRow>
           <PhotoGroup
-            src={roomPhotos[0]}
+            src={userPhotos[0]}
             checked={checkedStates[0]}
             onChange={() => handleCheckboxChange(0)}
           ></PhotoGroup>
           <PhotoGroup
-            src={roomPhotos[1]}
+            src={userPhotos[1]}
             checked={checkedStates[1]}
             onChange={() => handleCheckboxChange(1)}
           ></PhotoGroup>
           <PhotoGroup
-            src={roomPhotos[2]}
+            src={userPhotos[2]}
             checked={checkedStates[2]}
             onChange={() => handleCheckboxChange(2)}
           ></PhotoGroup>
           <PhotoGroup
-            src={roomPhotos[3]}
+            src={userPhotos[3]}
             checked={checkedStates[3]}
             onChange={() => handleCheckboxChange(3)}
           ></PhotoGroup>
           <PhotoGroup
-            src={roomPhotos[4]}
+            src={userPhotos[4]}
             checked={checkedStates[4]}
             onChange={() => handleCheckboxChange(4)}
           ></PhotoGroup>

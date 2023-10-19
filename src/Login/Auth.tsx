@@ -1,5 +1,4 @@
 import { useEffect, createContext, useReducer, ReactNode, FC } from "react";
-import { useAppDispatch } from "../app/hooks";
 
 const auth_key: string = "auth_info";
 

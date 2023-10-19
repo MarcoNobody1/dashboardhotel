@@ -5,3 +5,13 @@ export const roomPhotos:string[] = [
     "https://image-tc.galaxy.tf/wijpeg-clozx94odvn436foy8vjci4wz/empire-hotel-superior-double-room_standard.jpg",
     "https://www.cvent.com/sites/default/files/image/2021-10/hotel%20room%20with%20beachfront%20view.jpg",
   ];
+
+const randomnumber = Math.floor(Math.random() * 100) + 1;
+
+  export const userPhotos:string[] = [
+    `https://robohash.org/newemployee1${randomnumber}?set=set3`,
+    `https://robohash.org/newemployee2${randomnumber}?set=set3`,
+    `https://robohash.org/newemployee3${randomnumber}?set=set3`,
+    `https://robohash.org/newemployee4${randomnumber}?set=set3`,
+    `https://robohash.org/newemployee5${randomnumber}?set=set3`,
+  ]

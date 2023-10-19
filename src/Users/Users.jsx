@@ -1,12 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { PageWrapper } from "../GeneralComponents";
+import {
+  AdNewContainer,
+  AddUserButton,
+  CrossIcon,
+  ModalBackground,
+  NewDataTitle,
+  PageWrapper,
+  UserSearchInput,
+} from "../GeneralComponents";
 import { getUsersData } from "../features/Users/userThunks";
 import { useDispatch, useSelector } from "react-redux";
 import { usersInfo, usersStatusinfo } from "../features/Users/userSlice";
 import styled from "styled-components";
 import DynamicTable from "../Components/DynamicTable";
-import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SearchInput, SelectorFilter } from "../GeneralComponents";
+import {
+  ButtonFilter,
+  ButtonsContainer,
+  FilterContainer,
+  OptionSelect,
+  OuterContainer,
+  SelectorFilter,
+} from "../GeneralComponents";
 import { renderStatus } from "../Components/RenderStatus";
+import { UserCreator } from "../Components/Users/UserCreator";
 
 const TableContainer = styled.div`
   display: flex;
@@ -24,7 +40,7 @@ export const Users = () => {
 
   const usersData = useSelector(usersInfo);
   const userStatusInfo = useSelector(usersStatusinfo);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentUsers, setCurrentUsers] = useState([]);
   const [filter, setFilter] = useState("All Users");
   const [selected, setSelected] = useState("Start Date");
@@ -101,12 +117,25 @@ export const Users = () => {
     );
   };
 
+  const Modal = ({ onClose }) => {
+    return (
+      <ModalBackground>
+        <AdNewContainer>
+          <CrossIcon onClick={onClose} />
+          <NewDataTitle>Create a New User</NewDataTitle>
+          <UserCreator closeModal={onClose}/>
+        </AdNewContainer>
+      </ModalBackground>
+    );
+  };
+
+
   return (
     <PageWrapper>
       {" "}
       <OuterContainer>
         <FilterContainer>
-          <ButtonsContainer>
+          <ButtonsContainer user>
             <ButtonFilter
               style={{
                 color: filter === "All Users" && "#135846",
@@ -128,14 +157,19 @@ export const Users = () => {
             <ButtonFilter
               style={{
                 color: filter === "Inactive Users" && "#135846",
-                borderBottom: filter === "Inactive Users" && "2px solid #135846",
+                borderBottom:
+                  filter === "Inactive Users" && "2px solid #135846",
               }}
               onClick={() => setFilter("Inactive Users")}
             >
               Inactive Users
             </ButtonFilter>
           </ButtonsContainer>
-          <SearchInput
+          <AddUserButton onClick={() => setIsModalOpen(true)}>
+            + New User
+          </AddUserButton>
+          {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
+          <UserSearchInput
             name="searchUsersInput"
             onChange={(event) => handleSearch(event.target.value)}
             placeholder="Search user by name..."

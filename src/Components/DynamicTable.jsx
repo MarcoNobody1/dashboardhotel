@@ -18,7 +18,7 @@ import { archiveData } from "../features/Contact/contactThunks";
 import Swal from "sweetalert2";
 import { userDeleteStatus } from "../features/Users/userSlice";
 import { deleteUsersData } from "../features/Users/userThunks";
-import {BsTelephoneInbound} from "react-icons/bs";
+import { BsTelephoneInbound } from "react-icons/bs";
 
 const bookingTitles = [
   "Guest",
@@ -69,7 +69,7 @@ const Th = styled.th`
       ? "480px"
       : props.header === "availability"
       ? "200px"
-      : props.header === "customer" 
+      : props.header === "customer"
       ? "300px"
       : props.header === "job_description"
       ? "500px"
@@ -172,9 +172,9 @@ const RoomPhotoWrap = styled.div`
 `;
 
 const UserDataWrap = styled.div`
-display:flex;
-flex-direction: row;
-gap: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 `;
 
 const ImageRoom = styled.img`
@@ -206,6 +206,24 @@ const DataId = styled(Link)`
   }
 `;
 
+const UserId = styled.p`
+  font: normal normal 400 14px/21px Poppins;
+  letter-spacing: 0px;
+  color: #799283;
+  text-transform: uppercase;
+  &::before {
+    font-size: 12px;
+    content: "#";
+  }
+`;
+
+const UserEmployee = styled.p`
+font: normal normal 400 12px/21px Poppins;
+  letter-spacing: 0px;
+  color: #E3342C;
+  text-transform: uppercase;
+`;
+
 const PhotoRoomSpec = styled.p`
   font: normal normal 500 16px/25px Poppins;
   letter-spacing: 0px;
@@ -218,15 +236,16 @@ const PhotoRoomSpec = styled.p`
 `;
 
 const UserName = styled.p`
-font-size: 16px;
-font-weight: 600;
-color: #393939;
+  font-size: 16px;
+  font-weight: 600;
+  color: #393939;
 `;
 
 const UserJob = styled.p`
-font-size: 14px;
-font-weight: 400;
-color: #393939;
+  font-size: 14px;
+  font-weight: 400;
+  color: #393939;
+  font-style: italic;
 `;
 
 const UserLink = styled.a`
@@ -581,13 +600,11 @@ const DynamicTable = ({ data, dataType }) => {
             <UserImage src={rowData.name.photo} />
             <DataSpecs>
               <UserName>{rowData.name.username}</UserName>
-              <DataId
-                to={`/rooms/${rowData.name.id}`}
-                onClick={() => handleGetDetails(rowData.name.id)}
-              >
-                {rowData.name.id}
-              </DataId>
-              <UserLink href={`mailto:${rowData.name.email}`}>{rowData.name.email}</UserLink>
+              <UserId>{rowData.name.id}</UserId>
+              <UserLink href={`mailto:${rowData.name.email}`}>
+                {rowData.name.email}
+              </UserLink>
+              <UserEmployee>{rowData.name.employee_position}</UserEmployee>
             </DataSpecs>
           </UserDataWrap>
         );
@@ -621,17 +638,17 @@ const DynamicTable = ({ data, dataType }) => {
           </>
         );
 
-        case "job_description":
+      case "job_description":
+        return <UserJob>{rowData.job_description}</UserJob>;
+      case "contact":
         return (
-              <UserJob>{rowData.job_description}</UserJob>
-        );
-        case "contact":
-        return(
           <UserDataWrap>
-          <BsTelephoneInbound/>
-          <UserLink href={`tel:${rowData.contact}`}>{rowData.contact}</UserLink>
+            <BsTelephoneInbound />
+            <UserLink href={`tel:${rowData.contact}`}>
+              {rowData.contact}
+            </UserLink>
           </UserDataWrap>
-        )
+        );
 
       default:
         return rowData[header];

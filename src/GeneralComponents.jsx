@@ -5,7 +5,7 @@ import { BsTrash3 } from "react-icons/bs";
 import { ToggleContext } from "./Sidebar/ToggleSidebar";
 import Swal from "sweetalert2";
 import { MagnifyingGlass } from "react-loader-spinner";
-import searchIcon from "./assets/iconSearchBar.png"
+import searchIcon from "./assets/iconSearchBar.png";
 
 export const formatDate = (inputDate) => {
   const months = [
@@ -154,7 +154,12 @@ export const MessageContent = styled.p`
 export const ModalContent = styled(MessageContent)`
   max-width: 450px;
   max-height: none;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: justify;
   white-space: normal;
+  padding: 10px 10px 0;
 `;
 
 export const ModalContainer = styled(CommentContainer)`
@@ -307,7 +312,7 @@ export const ButtonsContainer = styled(FilterContainer)`
   gap: 10px;
   padding: 5px;
   padding-bottom: 0;
-  margin-right: 250px;
+  margin-right:  ${(props) => (props.user ? 0 :"250px")};
   border-bottom: 1px solid #d4d4d4;
 `;
 
@@ -342,6 +347,10 @@ export const SearchInput = styled.input`
   background-position: right 10px center;
 `;
 
+export const UserSearchInput = styled(SearchInput)`
+ min-width: 250px;
+`;
+
 export const SelectorFilter = styled.select`
   min-width: 150px;
   max-height: 60px;
@@ -356,4 +365,58 @@ export const SelectorFilter = styled.select`
 
 export const OptionSelect = styled.option`
   font: normal normal 400 16px/25px Poppins;
+`;
+
+export const AddRoomButton = styled.button`
+  background-color: #135846;
+  text-align: center;
+  font: normal normal 500 16px/25px Poppins;
+  letter-spacing: 0px;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 13px 55px;
+  border: none;
+  transition: all 250ms ease-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+`;
+
+export const AddUserButton = styled(AddRoomButton)`
+  font: normal normal 500 14px/10px Poppins;
+  padding: 13px 55px;
+  width: 400px;
+`;
+
+export const ButtonAdNew = styled(AddRoomButton)`
+  position: absolute;
+  bottom: 30px;
+  left: 42%;
+`;
+
+export const AdNewContainer = styled.div`
+  background-color: #ffffff;
+  min-width: 1300px;
+  min-height: 700px;
+  border: 1px solid #135846;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 4px 4px;
+  padding: 30px;
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  z-index: 100;
+`;
+
+export const NewDataTitle = styled.p`
+  text-align: center;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: 0px;
+  color: rgb(38, 38, 38);
+  flex: 1;
 `;
