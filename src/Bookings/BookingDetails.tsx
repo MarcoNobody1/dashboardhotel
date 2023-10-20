@@ -13,6 +13,7 @@ import {
   detailData,
 } from "../features/Bookings/bookingSlice";
 import { renderStatus } from "../Components/RenderStatus";
+import { FC } from 'react';
 
 const BookingWrapper = styled.div`
   background-color: #fff;
@@ -188,7 +189,7 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-export const BookingDetails = () => {
+export const BookingDetails : FC = () => {
   const selectedBooking = useSelector(detailData);
   const oneBookingStatus = useSelector(bookingIdStatus);
 
