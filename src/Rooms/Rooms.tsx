@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   AdNewContainer,
   AddRoomButton,
@@ -21,7 +21,7 @@ import { renderStatus } from "../Components/RenderStatus";
 import { RoomCreator } from "../Components/Rooms/RoomCreator";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 
-export const Rooms = () => {
+export const Rooms: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -103,28 +103,28 @@ export const Rooms = () => {
         <FilterContainer>
           <ButtonsContainer>
             <ButtonFilter
-              style={{
-                color: filter === "All Rooms" && "#135846",
-                borderBottom: filter === "All Rooms" && "2px solid #135846",
-              }}
+              style={filter === "All Rooms" ? {
+                color: "#135846",
+                borderBottom: "2px solid #135846",
+              } : {}}
               onClick={() => setFilter("All Rooms")}
             >
               All Rooms
             </ButtonFilter>
             <ButtonFilter
-              style={{
-                color: filter === "Available" && "#135846",
-                borderBottom: filter === "Available" && "2px solid #135846",
-              }}
+              style={ filter === "Available" ? {
+                color:"#135846",
+                borderBottom:"2px solid #135846",
+              } : {}}
               onClick={() => setFilter("Available")}
             >
               Available
             </ButtonFilter>
             <ButtonFilter
-              style={{
-                color: filter === "Booked" && "#135846",
-                borderBottom: filter === "Booked" && "2px solid #135846",
-              }}
+              style={ filter === "Booked" ? {
+                color: "#135846",
+                borderBottom:"2px solid #135846",
+              }:{}}
               onClick={() => setFilter("Booked")}
             >
               Booked
