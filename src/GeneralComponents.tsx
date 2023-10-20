@@ -376,7 +376,7 @@ export const SearchInput = styled.input`
   border: 1px solid #135846;
   text-align: right;
   font: normal normal 300 14px/25px Poppins;
-  padding: 5px 40px 0px 0;
+  padding: 5px 42px 0px 0;
   background-image: url(${searchIcon});
   background-repeat: no-repeat;
   background-position: right 10px center;
