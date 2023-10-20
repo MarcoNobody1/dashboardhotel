@@ -44,7 +44,7 @@ export const formatDate = (inputDate: Date | string) => {
   return `${month} ${day}${daySuffix}, ${year}`;
 };
 
-const getDaySuffix = (day:number):string => {
+const getDaySuffix = (day: number): string => {
   if (day >= 11 && day <= 13) {
     return "th";
   }
@@ -143,7 +143,7 @@ interface CommentContainerProps {
   archived?: boolean;
 }
 
-export const CommentContainer= styled.div<CommentContainerProps>`
+export const CommentContainer = styled.div<CommentContainerProps>`
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #ebebeb;
   border-radius: 20px;
@@ -154,7 +154,7 @@ export const CommentContainer= styled.div<CommentContainerProps>`
 
   &:hover {
     box-shadow: ${(props) =>
-      props.archived ? "0" : " 0px 16px 30px #00000014"};
+    props.archived ? "0" : " 0px 16px 30px #00000014"};
   }
 `;
 
@@ -280,6 +280,11 @@ const PendingWrapper = styled.div`
   align-items: center;
 `;
 
+const SimpleMessage = styled.p`
+font-size: 14px;
+font-weight: 600;
+`;
+
 export const RenderError = () => {
   Swal.fire({
     position: "center",
@@ -290,6 +295,12 @@ export const RenderError = () => {
     showConfirmButton: false,
     timerProgressBar: true,
   });
+
+  return (
+    <SimpleMessage>Please refresh the page</SimpleMessage>
+  );
+
+
 };
 
 export const RenderGlassLoading = () => {
@@ -328,15 +339,15 @@ export const TableContainer = styled.div`
   padding: 21px;
 `;
 
-interface ButtonsContainerProps{
+interface ButtonsContainerProps {
   user: boolean
 }
 
-export const ButtonsContainer = styled(FilterContainer)<ButtonsContainerProps>`
+export const ButtonsContainer = styled(FilterContainer) <ButtonsContainerProps>`
   gap: 10px;
   padding: 5px;
   padding-bottom: 0;
-  margin-right:  ${(props) => (props.user ? 0 :"250px")};
+  margin-right:  ${(props) => (props.user ? 0 : "250px")};
   border-bottom: 1px solid #d4d4d4;
 `;
 
