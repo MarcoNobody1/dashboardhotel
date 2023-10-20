@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Login/Auth";
 import { ToggleContext } from "../Sidebar/ToggleSidebar";
 import { FC } from 'react';
+import { SwitchSunMoon } from "./SwitchSunMoon";
 
 const OuterWrap = styled.nav`
   background-color: #fff;
@@ -89,6 +90,7 @@ export const Header: FC = () => {
           <MenuIcon />
         </IconWrap>
         <Title>{title}</Title>
+        <SwitchSunMoon/>
         <IconWrap>
           <MessageIcon />
         </IconWrap>
@@ -98,6 +100,7 @@ export const Header: FC = () => {
         <IconWrap onClick={handleLogOut}>
           <LogOutIcon />
         </IconWrap>
+      
       </OuterWrap>
     </>
   );
