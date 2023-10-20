@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import styled from "styled-components";
 import { ButtonAdNew } from "../../GeneralComponents";
 import { userPhotos } from "../../data/createNewPhotos";
@@ -128,7 +128,11 @@ const TextInput = styled.input`
   
 `;
 
-const InfoParagraph = styled.p`
+interface InfoParagraphProps {
+  password: string;
+}
+
+const InfoParagraph = styled.p<InfoParagraphProps>`
   font-weight: 500;
   font-size: 12px;
   width: 80%;
@@ -188,7 +192,11 @@ const SliderInput = styled.input`
   }
 `;
 
-const NotActiveStatus = styled.p`
+interface StatusProps {
+  active: boolean;
+}
+
+const NotActiveStatus = styled.p<StatusProps>`
   position: absolute;
   font-weight: 600;
   text-align: left;
@@ -201,7 +209,7 @@ const NotActiveStatus = styled.p`
   transition: all 250ms ease-out;
 `;
 
-const ActiveStatus = styled.p`
+const ActiveStatus = styled.p<StatusProps>`
   position: absolute;
   text-align: left;
   font-weight: 600;
@@ -222,11 +230,15 @@ const getFormattedDate = () => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
+interface UserCreatorProps {
+  closeModal: () => void;
+}
 
-export const UserCreator = ({ closeModal }) => {
+
+export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
   const dispatch = useAppDispatch();
   const [active, setActive] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [selectedPhoto, setSelectedPhoto] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -246,7 +258,7 @@ export const UserCreator = ({ closeModal }) => {
       timerProgressBar: true,
     });
 
-  if (username.trim().length === 0) {
+    if (username.trim().length === 0) {
       Toast.fire({
         icon: "error",
         title: "Full Name must contain at least one character.",
@@ -262,7 +274,7 @@ export const UserCreator = ({ closeModal }) => {
       return;
     }
 
-  
+
 
     if (password.length < 5) {
       Toast.fire({
@@ -282,11 +294,9 @@ export const UserCreator = ({ closeModal }) => {
 
     const newUser = {
       name: {
-        photo: selectedPhoto,
+        photo: selectedPhoto || "",
         username: username,
-        id: parseInt(
-          Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345
-        ).toString(),
+        id: (Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345).toString(),
         employee_position: position,
         email: email,
         password_hash: password,
@@ -301,7 +311,7 @@ export const UserCreator = ({ closeModal }) => {
     if (selectedPhoto) {
       dispatch(addUserData(newUser));
       setActive(false)
-      setSelectedPhoto(null)
+      setSelectedPhoto("")
       setPhone("")
       setPassword("")
       setUsername("")
@@ -371,9 +381,9 @@ export const UserCreator = ({ closeModal }) => {
           <PhotoWrapper>
             <Photo
               src={userPhotos[0]}
-              style={{
-                border: selectedPhoto === userPhotos[0] && "5px solid #135846",
-              }}
+              style={selectedPhoto === userPhotos[0] ? {
+                border: "5px solid #135846",
+              } : {}}
               onClick={() => setSelectedPhoto(userPhotos[0])}
             />
             <Checker
@@ -387,9 +397,9 @@ export const UserCreator = ({ closeModal }) => {
           <PhotoWrapper>
             <Photo
               src={userPhotos[1]}
-              style={{
-                border: selectedPhoto === userPhotos[1] && "5px solid #135846",
-              }}
+              style={ selectedPhoto === userPhotos[1] ? {
+                border: "5px solid #135846",
+              }: {}}
               onClick={() => setSelectedPhoto(userPhotos[1])}
             />
             <Checker
@@ -403,9 +413,9 @@ export const UserCreator = ({ closeModal }) => {
           <PhotoWrapper>
             <Photo
               src={userPhotos[2]}
-              style={{
-                border: selectedPhoto === userPhotos[2] && "5px solid #135846",
-              }}
+              style={ selectedPhoto === userPhotos[2] ? {
+                border:"5px solid #135846",
+              }:{}}
               onClick={() => setSelectedPhoto(userPhotos[2])}
             />
             <Checker
@@ -419,9 +429,9 @@ export const UserCreator = ({ closeModal }) => {
           <PhotoWrapper>
             <Photo
               src={userPhotos[3]}
-              style={{
-                border: selectedPhoto === userPhotos[3] && "5px solid #135846",
-              }}
+              style={ selectedPhoto === userPhotos[3] ? {
+                border:"5px solid #135846",
+              }: {}}
               onClick={() => setSelectedPhoto(userPhotos[3])}
             />
             <Checker
@@ -435,9 +445,9 @@ export const UserCreator = ({ closeModal }) => {
           <PhotoWrapper>
             <Photo
               src={userPhotos[4]}
-              style={{
-                border: selectedPhoto === userPhotos[4] && "5px solid #135846",
-              }}
+              style={ selectedPhoto === userPhotos[4] ? {
+                border: "5px solid #135846",
+              }: {}}
               onClick={() => setSelectedPhoto(userPhotos[4])}
             />
             <Checker
@@ -475,7 +485,7 @@ export const UserCreator = ({ closeModal }) => {
                 placeholder={`e.g. : ILoveMyBankAccount@99`}
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete="new-password"
-                minLength="5"
+                minLength={5}
               />
               <InfoParagraph password={password}>
                 Your Password: {password}
@@ -498,7 +508,7 @@ export const UserCreator = ({ closeModal }) => {
                 name="userPhoneInput"
                 type="tel"
                 placeholder={`e.g. : 878888523`}
-                minlength="9"
+                minLength={9}
                 onChange={(event) => setPhone(event.target.value)}
               />
             </Action>
@@ -537,13 +547,13 @@ export const UserCreator = ({ closeModal }) => {
                 }}
                 defaultValue="Room Service"
               >
-                <Option name="Room Service" value="Room Service">
+                <Option value="Room Service">
                   Room Service
                 </Option>
-                <Option name="Recepcionist" value="Recepcionist">
+                <Option value="Recepcionist">
                   Recepcionist
                 </Option>
-                <Option name="Manager" value="Manager">
+                <Option value="Manager">
                   Manager
                 </Option>
               </Selector>
@@ -554,7 +564,7 @@ export const UserCreator = ({ closeModal }) => {
               <ActionTitle>Activy:</ActionTitle>
               <InputLabel>
                 <SliderInput
-                name="userActiveCheckbox"
+                  name="userActiveCheckbox"
                   type="checkbox"
                   onChange={(event) => setActive(event.target.checked)}
                 />
