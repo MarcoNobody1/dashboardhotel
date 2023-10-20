@@ -5,6 +5,7 @@ import { getData } from "../features/Bookings/bookingThunks";
 import DynamicTable from "../Components/DynamicTable";
 import { renderStatus } from "../Components/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { BookingInterface } from "../features/Interfaces/Interfaces";
 
 export const Bookings = () => {
   const dispatch = useAppDispatch();
@@ -16,12 +17,12 @@ export const Bookings = () => {
   const infoBookings = useAppSelector(info);
   const statusInfo = useAppSelector(statusinfo);
 
-  const [currenBookings, setCurrentBookings] = useState([]);
+  const [currenBookings, setCurrentBookings] = useState<BookingInterface[]>([]);
   const [filter, setFilter] = useState("All Bookings");
   const [selected, setSelected] = useState("Orderdate");
 
   useEffect(() => {
-      setCurrentBookings(infoBookings);
+    setCurrentBookings(infoBookings);
   }, [infoBookings]);
 
   const filtered = currenBookings.filter((booking) => {
@@ -43,19 +44,19 @@ export const Bookings = () => {
     filtered.sort((a, b) => {
       const dateA = new Date(a.order_date);
       const dateB = new Date(b.order_date);
-      return dateB - dateA;
+      return dateB.getTime() - dateA.getTime();
     });
   } else if (selected === "Checkin") {
     filtered.sort((a, b) => {
       const dateA = new Date(a.check_in);
       const dateB = new Date(b.check_in);
-      return dateB - dateA;
+      return dateB.getTime() - dateA.getTime();
     });
   } else if (selected === "Checkout") {
     filtered.sort((a, b) => {
       const dateA = new Date(a.check_out);
       const dateB = new Date(b.check_out);
-      return dateB - dateA;
+      return dateB.getTime() - dateA.getTime();
     });
   } else if (selected === "Guest") {
     filtered.sort((a, b) => {
@@ -71,7 +72,7 @@ export const Bookings = () => {
     });
   }
 
-  const handleSearch = (input) => {
+  const handleSearch = (input: string) => {
     const searchTerm = input.toLowerCase();
     if (searchTerm === "") {
       setCurrentBookings(infoBookings);
@@ -102,9 +103,9 @@ export const Bookings = () => {
             <ButtonsContainer>
               <ButtonFilter
                 style={{
-                  color: filter === "All Bookings" && "#135846",
+                  color: filter === "All Bookings" ? "#135846" : undefined,
                   borderBottom:
-                    filter === "All Bookings" && "2px solid #135846",
+                    filter === "All Bookings" ? "2px solid #135846" : undefined,
                 }}
                 onClick={() => setFilter("All Bookings")}
               >
@@ -112,8 +113,8 @@ export const Bookings = () => {
               </ButtonFilter>
               <ButtonFilter
                 style={{
-                  color: filter === "Checking In" && "#135846",
-                  borderBottom: filter === "Checking In" && "2px solid #135846",
+                  color: filter === "Checking In" ? "#135846" : undefined,
+                  borderBottom: filter === "Checking In" ? "2px solid #135846" : undefined,
                 }}
                 onClick={() => setFilter("Checking In")}
               >
@@ -121,9 +122,9 @@ export const Bookings = () => {
               </ButtonFilter>
               <ButtonFilter
                 style={{
-                  color: filter === "Checking Out" && "#135846",
+                  color: filter === "Checking Out" ? "#135846" : undefined,
                   borderBottom:
-                    filter === "Checking Out" && "2px solid #135846",
+                    filter === "Checking Out" ? "2px solid #135846" : undefined,
                 }}
                 onClick={() => setFilter("Checking Out")}
               >
@@ -131,8 +132,8 @@ export const Bookings = () => {
               </ButtonFilter>
               <ButtonFilter
                 style={{
-                  color: filter === "In Progress" && "#135846",
-                  borderBottom: filter === "In Progress" && "2px solid #135846",
+                  color: filter === "In Progress" ? "#135846" : undefined,
+                  borderBottom: filter === "In Progress" ? "2px solid #135846" : undefined,
                 }}
                 onClick={() => setFilter("In Progress")}
               >
@@ -140,15 +141,18 @@ export const Bookings = () => {
               </ButtonFilter>
             </ButtonsContainer>
             <SearchInput
-            name="searchBookingInput"
+              name="searchBookingInput"
               onChange={(event) => handleSearch(event.target.value)}
               placeholder="Search booking by client name..."
               type="text"
             />
             <SelectorFilter
-            name="filterBookingSelector"
+              name="filterBookingSelector"
               defaultValue="Orderdate"
-              onInput={(event) => setSelected(event.target.value)}
+              onInput={(event) => {
+                const selectedValue = (event.target as HTMLSelectElement).value;
+                setSelected(selectedValue);
+              }}
             >
               <OptionSelect value="Guest">Guest</OptionSelect>
               <OptionSelect value="Orderdate">Order Date</OptionSelect>
