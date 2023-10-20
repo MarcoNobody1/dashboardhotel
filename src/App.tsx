@@ -13,8 +13,9 @@ import { AuthContainer } from "./Login/Auth";
 import { ToggleContainer } from "./Sidebar/ToggleSidebar";
 import RoomDetails from "./Rooms/RoomDetails";
 import { InnerLayout, Layout } from "./GeneralComponents";
+import { FC } from 'react';
 
-export const App = () => {
+export const App: FC = () => {
   return (
     <BrowserRouter>
       <AuthContainer>
