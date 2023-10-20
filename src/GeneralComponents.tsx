@@ -405,11 +405,12 @@ export const OptionSelect = styled.option`
 export const AddRoomButton = styled.button`
   background-color: #135846;
   text-align: center;
-  font: normal normal 500 16px/25px Poppins;
+  font: normal normal 500 16px/10px Poppins;
   letter-spacing: 0px;
   color: #ffffff;
   border-radius: 12px;
-  padding: 13px 55px;
+  padding: 16px 55px;
+  width: 400px;
   border: none;
   transition: all 250ms ease-out;
 
@@ -421,7 +422,7 @@ export const AddRoomButton = styled.button`
 
 export const AddUserButton = styled(AddRoomButton)`
   font: normal normal 500 14px/10px Poppins;
-  padding: 13px 55px;
+  padding: 16px 55px;
   width: 400px;
 `;
 
