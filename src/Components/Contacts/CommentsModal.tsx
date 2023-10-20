@@ -13,6 +13,7 @@ import {
 import { get1ContactData } from "../../features/Contact/contactThunks";
 import { renderStatus } from "../RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { FC } from 'react';
 
 const FullName = styled.h5`
   text-align: left;
@@ -39,9 +40,12 @@ const Subject = styled(FullName)`
   margin-bottom: 10px;
 `;
 
+interface CommentModalProps {
+  idContact: string;
+  onClose: () => void;
+}
 
-
-export const CommentModal = ({ idContact, onClose }) => {
+export const CommentModal: FC<CommentModalProps>= ({ idContact, onClose }) => {
   const selectedContact = useAppSelector(contactdetailData);
   const detailContactStatus = useAppSelector(detailStatus);
   const dispatch = useAppDispatch();
