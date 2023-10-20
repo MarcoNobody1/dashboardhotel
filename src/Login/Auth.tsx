@@ -51,12 +51,17 @@ export const AuthContext = createContext<AuthContextInterface>({
 
 
 const initialState = (): InitialStateInterface => {
-  if (localStorage.getItem(auth_key)) {
-    return JSON.parse(localStorage.getItem(auth_key) || "");
+
+ const initial = { authenticated: false, username: null, email: null, photo: "https://robohash.org/smartass" };
+  const localKey = localStorage.getItem(auth_key) || "";
+
+  if (localKey) {
+    return {...initial, ...JSON.parse(localKey)};
   } else {
-    return { authenticated: false, username: null, email: null, photo: "https://robohash.org/smartass" };
+    return initial;
   }
 };
+
 const reducer = (state: InitialStateInterface, action: Actions) => {
   switch (action.type) {
     case "login":
