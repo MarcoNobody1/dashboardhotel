@@ -20,6 +20,7 @@ import DynamicTable from "../Components/DynamicTable";
 import { renderStatus } from "../Components/RenderStatus";
 import { RoomCreator } from "../Components/Rooms/RoomCreator";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { RoomInterface } from "../features/Interfaces/Interfaces";
 
 export const Rooms: FC = () => {
   const dispatch = useAppDispatch();
@@ -48,7 +49,7 @@ export const Rooms: FC = () => {
     }
   });
 
-  const calculateRealPrice = (room) => {
+  const calculateRealPrice = (room:RoomInterface) => {
     if (room.offer_price && room.offer_price.isOffer) {
       const discount = room.offer_price.discount;
       const discountedPrice = room.price * (1 - discount / 100);
@@ -85,7 +86,11 @@ export const Rooms: FC = () => {
     );
   };
 
-  const Modal = ({ onClose }) => {
+
+  interface ModalProps{
+    onClose: () => void
+  }
+  const Modal : FC<ModalProps> = ({ onClose }) => {
     return (
       <ModalBackground>
         <AdNewContainer>
