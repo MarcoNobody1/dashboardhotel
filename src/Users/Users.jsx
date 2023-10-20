@@ -9,7 +9,6 @@ import {
   UserSearchInput,
 } from "../GeneralComponents";
 import { getUsersData } from "../features/Users/userThunks";
-import { useDispatch, useSelector } from "react-redux";
 import { usersInfo, usersStatusinfo } from "../features/Users/userSlice";
 import styled from "styled-components";
 import DynamicTable from "../Components/DynamicTable";
@@ -23,6 +22,7 @@ import {
 } from "../GeneralComponents";
 import { renderStatus } from "../Components/RenderStatus";
 import { UserCreator } from "../Components/Users/UserCreator";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 const TableContainer = styled.div`
   display: flex;
@@ -32,14 +32,14 @@ const TableContainer = styled.div`
 `;
 
 export const Users = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getUsersData());
   }, [dispatch]);
 
-  const usersData = useSelector(usersInfo);
-  const userStatusInfo = useSelector(usersStatusinfo);
+  const usersData = useAppSelector(usersInfo);
+  const userStatusInfo = useAppSelector(usersStatusinfo);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentUsers, setCurrentUsers] = useState([]);
   const [filter, setFilter] = useState("All Users");

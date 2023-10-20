@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ButtonAdNew } from "../../GeneralComponents";
-import { useDispatch } from "react-redux";
 import { roomAmenities } from "../../data/roomAmenities";
 import { roomPhotos } from "../../data/createNewPhotos";
 import { addRoomData } from "../../features/Rooms/roomThunks";
 import Swal from "sweetalert2";
+import { useAppDispatch } from "../../app/hooks";
 
 const Form = styled.form`
   display: flex;
@@ -146,7 +146,7 @@ const PhotoGroup = ({ src, checked, onChange }) => {
 };
 
 export const RoomCreator = ({ closeModal }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [checkedStates, setCheckedStates] = useState([
     false,
     false,

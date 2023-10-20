@@ -7,6 +7,7 @@ import { DefaultIcon } from "../GeneralComponents";
 import { useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Login/Auth";
 import { ToggleContext } from "../Sidebar/ToggleSidebar";
+import { FC } from 'react';
 
 const OuterWrap = styled.nav`
   background-color: #fff;
@@ -36,7 +37,7 @@ const Title = styled.h1`
   flex: 8;
 `;
 
-export const Header = () => {
+export const Header: FC = () => {
   const navigate = useNavigate();
   const { auth, authDispatch } = useContext(AuthContext);
   const { toggleDispatch } = useContext(ToggleContext);

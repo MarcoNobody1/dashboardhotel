@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import React from "react";
+import React, { FC } from "react";
 
-const GeneralStatusDiv = styled.div`
+
+const GeneralStatusDiv = styled.div<{status: string | undefined}>`
   font: normal normal 500 14px/25px Poppins;
   border-radius: 12px;
   letter-spacing: 0px;
@@ -23,7 +24,15 @@ const GeneralStatusDiv = styled.div`
       : "#E2B308"};
 `;
 
-export const StatusDiv = ({ data = { availability: "Loading..." } }) => {
+interface StatusDivProps {
+  data?: {
+    availability?: string;
+    status?: string;
+    activity?: string;
+  };
+}
+
+export const StatusDiv: FC<StatusDivProps> = ({ data = { availability: "Loading..." } }) => {
   const roomsData = data.availability !== undefined ? data.availability : null;
   const bookingsData = data.status !== undefined ? data.status : null;
   const usersData = data.activity !== undefined ? data.activity : null;

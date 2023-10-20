@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { deleteData, get1Data } from "../features/Bookings/bookingThunks";
@@ -19,6 +18,8 @@ import Swal from "sweetalert2";
 import { userDeleteStatus } from "../features/Users/userSlice";
 import { deleteUsersData } from "../features/Users/userThunks";
 import { BsTelephoneInbound } from "react-icons/bs";
+import { BookingInterface, ContactInterface, RoomInterface, UserInterface } from "../features/Interfaces/Interfaces";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 const bookingTitles = [
   "Guest",
@@ -58,7 +59,11 @@ const Thead = styled.thead``;
 
 const Tbody = styled.tbody``;
 
-const Th = styled.th`
+interface ThProps {
+  header: string;
+}
+
+const Th = styled.th<ThProps>`
   background-color: #ffffff;
   text-align: left;
   padding: 8px;
@@ -68,12 +73,12 @@ const Th = styled.th`
     props.header === "amenities" || props.header === "comment"
       ? "480px"
       : props.header === "availability"
-      ? "200px"
-      : props.header === "customer"
-      ? "300px"
-      : props.header === "job_description"
-      ? "500px"
-      : "130px"};
+        ? "200px"
+        : props.header === "customer"
+          ? "300px"
+          : props.header === "job_description"
+            ? "500px"
+            : "130px"};
 `;
 
 const Tr = styled.tr`
@@ -301,33 +306,47 @@ const CenterDiv = styled.div`
   left: 0;
 `;
 
-const DynamicTable = ({ data, dataType }) => {
-  const dispatch = useDispatch();
-  const [selectedNoteId, setSelectedNoteId] = useState(null);
-  const [isNoteOpen, setIsNoteOpen] = useState(false);
-  const statusInfo = useSelector(
+const SimpleDiv = styled.div`
+font-weight: 600;
+`;
+
+interface DynamicTableProps {
+  data: Object[] | BookingInterface[] | RoomInterface[] | ContactInterface[] | UserInterface[];
+  dataType: string;
+}
+
+interface ModalProps {
+  commentId: string;
+  onCloseNote: () => void;
+}
+
+const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
+  const dispatch = useAppDispatch();
+  const [selectedNoteId, setSelectedNoteId] = useState<string>("");
+  const [isNoteOpen, setIsNoteOpen] = useState<boolean>(false);
+  const statusInfo = useAppSelector(
     dataType === "bookings"
       ? bookingDeleteStatus
       : dataType === "rooms"
-      ? roomdeleteStatus
-      : dataType === "contacts"
-      ? contactdeleteStatus
-      : userDeleteStatus
+        ? roomdeleteStatus
+        : dataType === "contacts"
+          ? contactdeleteStatus
+          : userDeleteStatus
   );
-  const archiveContactStatus = useSelector(archiveStatus);
+  const archiveContactStatus = useAppSelector(archiveStatus);
 
   const headers =
     data.length > 0
       ? Object.keys(data[0])
       : dataType === "bookings"
-      ? bookingTitles
-      : dataType === "rooms"
-      ? roomTitles
-      : dataType === "contacts"
-      ? contactTitles
-      : userTitles;
+        ? bookingTitles
+        : dataType === "rooms"
+          ? roomTitles
+          : dataType === "contacts"
+            ? contactTitles
+            : userTitles;
 
-  const handleGetDetails = (id) => {
+  const handleGetDetails = (id: string) => {
     if (dataType === "bookings") {
       dispatch(get1Data(id));
     } else if (dataType === "rooms") {
@@ -335,12 +354,12 @@ const DynamicTable = ({ data, dataType }) => {
     }
   };
 
-  const handleOpenNote = (commentId) => {
+  const handleOpenNote = (commentId: string) => {
     setSelectedNoteId(commentId);
     setIsNoteOpen(true);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     if (dataType === "bookings") {
       dispatch(deleteData(id));
     } else if (dataType === "rooms") {
@@ -350,7 +369,7 @@ const DynamicTable = ({ data, dataType }) => {
     }
   };
 
-  const handleArchiveComment = (id, archived) => {
+  const handleArchiveComment = (id: string, archived: boolean) => {
     const Toast = Swal.mixin({
       toast: true,
       position: "center-end",
@@ -369,29 +388,97 @@ const DynamicTable = ({ data, dataType }) => {
     }
   };
 
-  const Modal = ({ commentId, onCloseNote }) => {
-    const selectedNote = data.find(
-      (booking) => booking.guest.id_reserva === commentId
-    );
+  type TableRow =
+    | BookingInterface
+    | RoomInterface
+    | ContactInterface
+    | UserInterface;
+
+  type DataArray =
+    | BookingInterface[]
+    | RoomInterface[]
+    | ContactInterface[]
+    | UserInterface[];
+
+  const Modal: FC<ModalProps> = ({ commentId, onCloseNote }) => {
+    const selectedNote = (data as DataArray).find((booking: TableRow) => {
+      if (dataType === "bookings" && (booking as BookingInterface).guest) {
+        return (booking as BookingInterface).guest.id_reserva === commentId;
+      } else {
+        return false;
+      }
+    });
     return (
       <NoteBackground>
         <NoteContainer>
           <FloatCross onClick={onCloseNote} />
-          {selectedNote.special_request}
+          {selectedNote && dataType === "bookings" && 'special_request' in (selectedNote as BookingInterface) ? (
+            (selectedNote as BookingInterface).special_request
+          ) : (
+            'Special request not found. Please, try again.'
+          )}
         </NoteContainer>
       </NoteBackground>
     );
   };
 
-  const cellRenderer = (header, rowData) => {
+  type Header = "guest" | "special_request" | "room" | "status" | "availability" | "offer_price" | "price" | "amenities" | "room_name" | "date" | "customer" | "subject" | "archived" | "name" | "activity" | "job_description" | "contact";
+
+  type RowData = {
+    guest: {
+      nombre: string;
+      apellidos: string;
+      id_reserva: string;
+    };
+    room: {
+      room_type: string;
+      room_number: string;
+    };
+    status: string;
+    availability: string;
+    offer_price: {
+      isOffer: boolean;
+      discount: number;
+    };
+    price: number;
+    amenities: string[];
+    room_name: {
+      room_photo: string;
+      id: string;
+      room_number: string;
+    };
+    date: {
+      send_date: string;
+      id: string;
+    };
+    customer: {
+      name: string;
+      email: string;
+      phone: string;
+    };
+    subject: string;
+    archived: boolean;
+    name: {
+      username: string;
+      id: string;
+      email: string;
+      employee_position: string;
+      photo: string;
+    };
+    activity: string;
+    job_description: string;
+    contact: string;
+  };
+
+  const cellRenderer = (header: Header, rowData: RowData) => {
     switch (header) {
       case "guest":
         const guest = rowData.guest;
         return (
           <>
-            <div style={{ fontWeight: 600 }}>
+            <SimpleDiv>
               {guest.nombre} {guest.apellidos}
-            </div>
+            </SimpleDiv>
             <StyledLink
               onClick={() => handleGetDetails(guest.id_reserva)}
               to={`/bookings/${guest.id_reserva}`}
@@ -426,7 +513,6 @@ const DynamicTable = ({ data, dataType }) => {
                 width="80"
                 color=""
                 ariaLabel="line-wave"
-                wrapperStyle=""
                 wrapperClass=""
                 visible={true}
                 firstLineColor="#113C30"
@@ -455,7 +541,6 @@ const DynamicTable = ({ data, dataType }) => {
                 width="80"
                 color=""
                 ariaLabel="line-wave"
-                wrapperStyle=""
                 wrapperClass=""
                 visible={true}
                 firstLineColor="#113C30"
@@ -481,8 +566,8 @@ const DynamicTable = ({ data, dataType }) => {
           >
             {rowData.offer_price.isOffer &&
               "$" +
-                (rowData.price -
-                  (rowData.price * rowData.offer_price.discount) / 100)}
+              (rowData.price -
+                (rowData.price * rowData.offer_price.discount) / 100)}
           </InfoWrap>
         );
 
@@ -622,7 +707,6 @@ const DynamicTable = ({ data, dataType }) => {
                 width="80"
                 color=""
                 ariaLabel="line-wave"
-                wrapperStyle=""
                 wrapperClass=""
                 visible={true}
                 firstLineColor="#113C30"
@@ -670,7 +754,10 @@ const DynamicTable = ({ data, dataType }) => {
         {data.map((rowData, index) => (
           <Tr key={index}>
             {headers.map((header) => (
-              <Td key={header}>{cellRenderer(header, rowData)}</Td>
+              <Td key={header as Header}>
+                {headers.includes(header as Header) && cellRenderer(header as Header, rowData as RowData)}
+              </Td>
+
             ))}
           </Tr>
         ))}

@@ -14,22 +14,22 @@ import {
   SelectorFilter,
   TableContainer,
 } from "../GeneralComponents";
-import { useDispatch, useSelector } from "react-redux";
 import { getRoomsData } from "../features/Rooms/roomThunks";
 import { roomsInfo, roomstatusinfo } from "../features/Rooms/roomSlice";
 import DynamicTable from "../Components/DynamicTable";
 import { renderStatus } from "../Components/RenderStatus";
 import { RoomCreator } from "../Components/Rooms/RoomCreator";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 export const Rooms = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getRoomsData());
   }, [dispatch]);
 
-  const infoRooms = useSelector(roomsInfo);
-  const statusInfo = useSelector(roomstatusinfo);
+  const infoRooms = useAppSelector(roomsInfo);
+  const statusInfo = useAppSelector(roomstatusinfo);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState("All Rooms");
 

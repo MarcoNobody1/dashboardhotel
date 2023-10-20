@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   contactdetailData,
   detailStatus,
@@ -13,6 +12,7 @@ import {
 } from "../../GeneralComponents";
 import { get1ContactData } from "../../features/Contact/contactThunks";
 import { renderStatus } from "../RenderStatus";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const FullName = styled.h5`
   text-align: left;
@@ -42,9 +42,9 @@ const Subject = styled(FullName)`
 
 
 export const CommentModal = ({ idContact, onClose }) => {
-  const selectedContact = useSelector(contactdetailData);
-  const detailContactStatus = useSelector(detailStatus);
-  const dispatch = useDispatch();
+  const selectedContact = useAppSelector(contactdetailData);
+  const detailContactStatus = useAppSelector(detailStatus);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(get1ContactData(idContact));

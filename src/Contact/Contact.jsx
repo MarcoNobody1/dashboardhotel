@@ -3,16 +3,16 @@ import { PageWrapper } from "../GeneralComponents";
 import { CommentsContainer } from "../Dashboard/Dashboard";
 import { Comments } from "../Components/Contacts/CommentsPreview";
 import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SelectorFilter, TableContainer } from "../GeneralComponents";
-import { useDispatch, useSelector } from "react-redux";
 import { contactsInfo, contactstatusinfo } from "../features/Contact/contactSlice";
 import { getContactsData } from "../features/Contact/contactThunks";
 import DynamicTable from "../Components/DynamicTable";
 import { renderStatus } from "../Components/RenderStatus";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 export const Contact = () => {
-  const infoContacts = useSelector(contactsInfo);
-  const statusInfo = useSelector(contactstatusinfo);
-  const dispatch = useDispatch();
+  const infoContacts = useAppSelector(contactsInfo);
+  const statusInfo = useAppSelector(contactstatusinfo);
+  const dispatch = useAppDispatch();
 
   const [filter, setFilter] = useState("All Contacts");
   const [selected, setSelected] = useState("Date");
