@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { PageWrapper } from "../GeneralComponents";
@@ -140,7 +140,7 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-export const RoomDetails = () => {
+export const RoomDetails: FC = () => {
   const selectedRoom = useAppSelector(roomdetailData);
   const oneRoomStatus = useAppSelector(roomIdStatus);
 

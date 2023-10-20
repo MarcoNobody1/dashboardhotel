@@ -23,6 +23,8 @@ import {
 import { renderStatus } from "../Components/RenderStatus";
 import { UserCreator } from "../Components/Users/UserCreator";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { FC } from 'react';
+import { UserInterface } from "../features/Interfaces/Interfaces";
 
 const TableContainer = styled.div`
   display: flex;
@@ -41,7 +43,7 @@ export const Users = () => {
   const usersData = useAppSelector(usersInfo);
   const userStatusInfo = useAppSelector(usersStatusinfo);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentUsers, setCurrentUsers] = useState([]);
+  const [currentUsers, setCurrentUsers] = useState<UserInterface[]>([]);
   const [filter, setFilter] = useState("All Users");
   const [selected, setSelected] = useState("Start Date");
 
@@ -66,7 +68,7 @@ export const Users = () => {
     filtered.sort((a, b) => {
       const dateA = new Date(a.start_date);
       const dateB = new Date(b.start_date);
-      return dateB - dateA;
+      return dateB.getTime() - dateA.getTime();
     });
   } else if (selected === "Name(A-Z)") {
     filtered.sort((a, b) => {
@@ -94,7 +96,7 @@ export const Users = () => {
     });
   }
 
-  const handleSearch = (input) => {
+  const handleSearch = (input: string) => {
     const searchTerm = input.toLowerCase();
     if (searchTerm === "") {
       setCurrentUsers(usersData);
@@ -117,13 +119,17 @@ export const Users = () => {
     );
   };
 
-  const Modal = ({ onClose }) => {
+  interface ModalParams {
+    onClose: () => void
+  }
+
+  const Modal: FC<ModalParams> = ({ onClose }) => {
     return (
       <ModalBackground>
         <AdNewContainer>
           <CrossIcon onClick={onClose} />
           <NewDataTitle>Create a New User</NewDataTitle>
-          <UserCreator closeModal={onClose}/>
+          <UserCreator closeModal={onClose} />
         </AdNewContainer>
       </ModalBackground>
     );
@@ -137,29 +143,28 @@ export const Users = () => {
         <FilterContainer>
           <ButtonsContainer user>
             <ButtonFilter
-              style={{
-                color: filter === "All Users" && "#135846",
-                borderBottom: filter === "All Users" && "2px solid #135846",
-              }}
+              style={filter === "All Users" ? {
+                color: "#135846",
+                borderBottom: "2px solid #135846",
+              } : {}}
               onClick={() => setFilter("All Users")}
             >
               All Users
             </ButtonFilter>
             <ButtonFilter
-              style={{
-                color: filter === "Active Users" && "#135846",
-                borderBottom: filter === "Active Users" && "2px solid #135846",
-              }}
+              style={filter === "Active Users" ? {
+                color: "#135846",
+                borderBottom: "2px solid #135846",
+              } : {}}
               onClick={() => setFilter("Active Users")}
             >
               Active Users
             </ButtonFilter>
             <ButtonFilter
-              style={{
-                color: filter === "Inactive Users" && "#135846",
-                borderBottom:
-                  filter === "Inactive Users" && "2px solid #135846",
-              }}
+              style={filter === "Inactive Users" ? {
+                color: "#135846",
+                borderBottom: "2px solid #135846",
+              } : {}}
               onClick={() => setFilter("Inactive Users")}
             >
               Inactive Users
@@ -178,7 +183,10 @@ export const Users = () => {
           <SelectorFilter
             name="filterUsersSelector"
             defaultValue="Start Date"
-            onInput={(event) => setSelected(event.target.value)}
+            onInput={(event) => {
+              const selectedValue = (event.target as HTMLSelectElement).value;
+              setSelected(selectedValue);
+            }}
           >
             <OptionSelect value="Start Date">Start Date</OptionSelect>
             <OptionSelect value="Name(A-Z)">Name(A-Z)</OptionSelect>
