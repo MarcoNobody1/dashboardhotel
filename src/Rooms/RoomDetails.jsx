@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { PageWrapper } from "../GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
 import { roomIdStatus, roomdetailData } from "../features/Rooms/roomSlice";
 import { renderStatus } from "../Components/RenderStatus";
+import { useAppSelector } from "../app/hooks";
 
 const BookingWrapper = styled.div`
   background-color: #fff;
@@ -141,8 +141,8 @@ const Image = styled.img`
 `;
 
 export const RoomDetails = () => {
-  const selectedRoom = useSelector(roomdetailData);
-  const oneRoomStatus = useSelector(roomIdStatus);
+  const selectedRoom = useAppSelector(roomdetailData);
+  const oneRoomStatus = useAppSelector(roomIdStatus);
 
   const data = () => {
     return (

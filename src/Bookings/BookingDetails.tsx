@@ -7,13 +7,13 @@ import {
 } from "../GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
 import room from "../assets/hotelRoom.jpg";
-import { useSelector } from "react-redux";
 import {
   bookingIdStatus,
   detailData,
 } from "../features/Bookings/bookingSlice";
 import { renderStatus } from "../Components/RenderStatus";
 import { FC } from 'react';
+import { useAppSelector } from "../app/hooks";
 
 const BookingWrapper = styled.div`
   background-color: #fff;
@@ -190,8 +190,8 @@ const Image = styled.img`
 `;
 
 export const BookingDetails : FC = () => {
-  const selectedBooking = useSelector(detailData);
-  const oneBookingStatus = useSelector(bookingIdStatus);
+  const selectedBooking = useAppSelector(detailData);
+  const oneBookingStatus = useAppSelector(bookingIdStatus);
 
   const data = () =>{
     return (

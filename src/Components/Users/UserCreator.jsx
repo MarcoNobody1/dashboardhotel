@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ButtonAdNew } from "../../GeneralComponents";
-import { useDispatch } from "react-redux";
 import { userPhotos } from "../../data/createNewPhotos";
 import { addUserData } from "../../features/Users/userThunks";
 import Swal from "sweetalert2";
+import { useAppDispatch } from "../../app/hooks";
 
 const Form = styled.form`
   display: flex;
@@ -224,7 +224,7 @@ const getFormattedDate = () => {
 
 
 export const UserCreator = ({ closeModal }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [active, setActive] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [phone, setPhone] = useState("");

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsArrowsFullscreen, BsFillBookmarkCheckFill } from "react-icons/bs";
 import { CommentContainer, MessageContent } from "../../GeneralComponents";
-import { useDispatch, useSelector } from "react-redux";
 import {
   contactsInfo,
   contactstatusinfo,
@@ -13,6 +12,7 @@ import {
 } from "../../features/Contact/contactThunks";
 import { CommentModal } from "./CommentsModal";
 import { renderStatus } from "../RenderStatus";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const CommentsWrapper = styled.div`
   min-width: 360px;
@@ -71,11 +71,11 @@ const Subject = styled(FullName)`
 `;
 
 export const Comments = () => {
-  const infoContacts = useSelector(contactsInfo);
-  const statusInfo = useSelector(contactstatusinfo);
+  const infoContacts = useAppSelector(contactsInfo);
+  const statusInfo = useAppSelector(contactstatusinfo);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentId, setCurrentId] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getContactsData());

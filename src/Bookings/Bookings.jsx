@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, PageWrapper, SearchInput, SelectorFilter, TableContainer } from "../GeneralComponents";
 import { info, statusinfo } from "../features/Bookings/bookingSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../features/Bookings/bookingThunks";
 import DynamicTable from "../Components/DynamicTable";
 import { renderStatus } from "../Components/RenderStatus";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 export const Bookings = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getData());
   }, [dispatch]);
 
-  const infoBookings = useSelector(info);
-  const statusInfo = useSelector(statusinfo);
+  const infoBookings = useAppSelector(info);
+  const statusInfo = useAppSelector(statusinfo);
 
   const [currenBookings, setCurrentBookings] = useState([]);
   const [filter, setFilter] = useState("All Bookings");
