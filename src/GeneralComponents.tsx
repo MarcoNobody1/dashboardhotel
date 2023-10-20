@@ -285,7 +285,7 @@ font-size: 14px;
 font-weight: 600;
 `;
 
-export const RenderError = () => {
+export const RenderError: FC = () => {
   Swal.fire({
     position: "center",
     icon: "error",
@@ -303,7 +303,7 @@ export const RenderError = () => {
 
 };
 
-export const RenderGlassLoading = () => {
+export const RenderGlassLoading: FC= () => {
   return (
     <PendingWrapper>
       <MagnifyingGlass
