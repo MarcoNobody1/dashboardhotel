@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { PageWrapper } from "../GeneralComponents";
 import { CommentsContainer } from "../Dashboard/Dashboard";
 import { Comments } from "../Components/Contacts/CommentsPreview";
@@ -9,7 +9,7 @@ import DynamicTable from "../Components/DynamicTable";
 import { renderStatus } from "../Components/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 
-export const Contact = () => {
+export const Contact: FC = () => {
   const infoContacts = useAppSelector(contactsInfo);
   const statusInfo = useAppSelector(contactstatusinfo);
   const dispatch = useAppDispatch();
@@ -36,11 +36,11 @@ export const Contact = () => {
   if (selected === "Date") {
     filtered.sort((a, b) => {
       
-      return new Date(b.date.send_date) - new Date(a.date.send_date)
+      return new Date(b.date.send_date).getTime() - new Date(a.date.send_date).getTime()
     });
   } else if (selected === "Oldest") {
     filtered.sort((a, b) => {
-      return new Date(a.date.send_date) - new Date(b.date.send_date)
+      return new Date(a.date.send_date).getTime() - new Date(b.date.send_date).getTime()
     });
   }
 
@@ -62,19 +62,19 @@ export const Contact = () => {
         <FilterContainer style={{justifyContent: "space-between"}}>
           <ButtonsContainer>
             <ButtonFilter
-              style={{
-                color: filter === "All Contacts" && "#135846",
-                borderBottom: filter === "All Contacts" && "2px solid #135846",
-              }}
+              style={filter === "All Contacts" ? {
+                color: "#135846",
+                borderBottom:"2px solid #135846",
+              }: {}}
               onClick={() => setFilter("All Contacts")}
             >
               All Contacts
             </ButtonFilter>
             <ButtonFilter
-              style={{
-                color: filter === "Archived" && "#135846",
-                borderBottom: filter === "Archived" && "2px solid #135846",
-              }}
+              style={filter === "Archived" ? {
+                color: "#135846",
+                borderBottom: "2px solid #135846",
+              }: {}}
               onClick={() => setFilter("Archived")}
             >
               Archived
