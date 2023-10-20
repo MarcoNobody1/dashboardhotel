@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { DefaultIcon } from "../../GeneralComponents";
 import { useNavigate } from "react-router";
+import { FC } from "react";
 
 const ImageWrapper = styled.div`
   padding: 20px;
@@ -64,7 +65,13 @@ const NotificationWrapper = styled.div`
   display: flex;
 `;
 
-export const Notification = (props) => {
+interface NotificationProps {
+  icon: React.ElementType;
+  number: number;
+  text: string;
+}
+
+export const Notification: FC<NotificationProps> = (props) => {
   const Icon = () => <NotificationIcon as={props.icon} />;
   const nav = useNavigate();
 
