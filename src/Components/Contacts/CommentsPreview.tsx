@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsArrowsFullscreen, BsFillBookmarkCheckFill } from "react-icons/bs";
 import { CommentContainer, MessageContent } from "../../GeneralComponents";
@@ -30,7 +30,11 @@ const IconWrapper = styled.div`
   right: 10px;
 `;
 
-const ReadIcon = styled(BsFillBookmarkCheckFill)`
+interface ReadIconProps {
+  archived: string;
+}
+
+const ReadIcon = styled(BsFillBookmarkCheckFill)<ReadIconProps>`
   color: ${(props) => (props.archived === "true" ? "#5ad07a" : "#e23428")};
   transition: all 150ms ease-in;
 `;
@@ -70,7 +74,21 @@ const Subject = styled(FullName)`
   margin-bottom: 10px;
 `;
 
-export const Comments = () => {
+interface Comment {
+  archived: boolean;
+  date: {
+    id: string;
+  };
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+  subject: string;
+  comment: string;
+}
+
+export const Comments: FC = () => {
   const infoContacts = useAppSelector(contactsInfo);
   const statusInfo = useAppSelector(contactstatusinfo);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -81,7 +99,7 @@ export const Comments = () => {
     dispatch(getContactsData());
   }, [dispatch]);
 
-  const handleOpenModal = (id, archived) => {
+  const handleOpenModal = (id: string, archived: boolean) => {
     setIsModalOpen(true);
     setCurrentId(id);
 
