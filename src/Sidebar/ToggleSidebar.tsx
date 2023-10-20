@@ -8,7 +8,7 @@ interface InitialStateInterface {
 
 interface ToggleInterface {
   type: "toggle";
-  payload: {
+  payload?: {
     toggle: boolean;
   };
 }
