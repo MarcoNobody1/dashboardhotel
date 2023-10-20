@@ -340,7 +340,7 @@ export const TableContainer = styled.div`
 `;
 
 interface ButtonsContainerProps {
-  user: boolean
+  user?: boolean
 }
 
 export const ButtonsContainer = styled(FilterContainer) <ButtonsContainerProps>`
