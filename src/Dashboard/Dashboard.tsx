@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { PageWrapper } from "../GeneralComponents";
 import { LiaBedSolid } from "react-icons/lia";
 import { LuCalendarCheck2 } from "react-icons/lu";
@@ -30,7 +30,7 @@ export const CommentsTitle = styled.p`
   margin-bottom: 30px;
 `;
 
-export const Dashboard = () => {
+export const Dashboard: FC = () => {
   return (
     <>
       <PageWrapper>
