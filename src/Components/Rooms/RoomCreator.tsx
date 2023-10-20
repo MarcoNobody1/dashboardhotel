@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import styled from "styled-components";
 import { ButtonAdNew } from "../../GeneralComponents";
 import { roomAmenities } from "../../data/roomAmenities";
@@ -130,10 +130,16 @@ const InfoParagraph = styled.p`
   text-align: center;
 `;
 
-const PhotoGroup = ({ src, checked, onChange }) => {
+interface PhotoGroupProps {
+  src: string;
+  checked: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const PhotoGroup: FC<PhotoGroupProps> = ({ src, checked, onChange }) => {
   return (
     <PhotoWrapper>
-      <Photo src={src} style={{ border: checked && "5px solid #135846" }} />
+      <Photo src={src} style={checked ? { border: "5px solid #135846" } : {}} />
       <Checker
         name="checker"
         value={src}
@@ -145,9 +151,13 @@ const PhotoGroup = ({ src, checked, onChange }) => {
   );
 };
 
-export const RoomCreator = ({ closeModal }) => {
+interface RoomCreatorProps {
+  closeModal: () => void;
+}
+
+export const RoomCreator: FC<RoomCreatorProps> = ({ closeModal }) => {
   const dispatch = useAppDispatch();
-  const [checkedStates, setCheckedStates] = useState([
+  const [checkedStates, setCheckedStates] = useState<boolean[]>([
     false,
     false,
     false,
@@ -163,7 +173,7 @@ export const RoomCreator = ({ closeModal }) => {
   const [allowDiscount, setAllowDiscount] = useState(false);
   const hasTrueValue = checkedStates.some((isChecked) => isChecked);
 
-  const handleCheckboxChange = (index) => {
+  const handleCheckboxChange = (index: number) => {
     const newCheckedStates = [...checkedStates];
     newCheckedStates[index] = !newCheckedStates[index];
     setCheckedStates(newCheckedStates);
@@ -189,13 +199,11 @@ export const RoomCreator = ({ closeModal }) => {
 
     const newRoom = {
       room_name: {
-        id: parseInt(
-          Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345
-        ).toString(),
-        room_photo: finalPhotos[0],
-        room_number: roomNumber === "" ? 111 : roomNumber,
+        id: (Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345).toString(),
+        room_photo: finalPhotos[0] || "",
+        room_number: roomNumber === null ? 111 : roomNumber,
         room_description:
-          (description.replace(/\s/g, "") === "") | (description === null)
+          (description.replace(/\s/g, "") === "") || (description === null)
             ? "This is a sample description text"
             : description,
       },
@@ -320,16 +328,16 @@ export const RoomCreator = ({ closeModal }) => {
                 }}
                 defaultValue={roomType}
               >
-                <Option name="Single Room" value="Single Room">
+                <Option value="Single Room">
                   Single Room
                 </Option>
-                <Option name="Double Room" value="Double Room">
+                <Option  value="Double Room">
                   Double Room
                 </Option>
-                <Option name="Double Superior" value="Double Superior">
+                <Option value="Double Superior">
                   Double Superior
                 </Option>
-                <Option name="Suite" value="Suite">
+                <Option value="Suite">
                   Suite
                 </Option>
               </Selector>
@@ -343,16 +351,16 @@ export const RoomCreator = ({ closeModal }) => {
                 }}
                 defaultValue="Standard"
               >
-                <Option name="Standard" value="Standard">
+                <Option value="Standard">
                   Standard Pack
                 </Option>
-                <Option name="Advanced" value="Advanced">
+                <Option value="Advanced">
                   Advanced Pack
                 </Option>
-                <Option name="Premium" value="Premium">
+                <Option value="Premium">
                   Premium Pack
                 </Option>
-                <Option name="FullRoom" value="FullRoom">
+                <Option value="FullRoom">
                   'Full-Room' Pack
                 </Option>
               </Selector>
@@ -367,7 +375,7 @@ export const RoomCreator = ({ closeModal }) => {
                 defaultValue={roomNumber}
                 min="100"
                 max="9999"
-                onChange={(event) => setRoomNumber(event.target.value)}
+                onChange={(event) => setRoomNumber(parseInt(event.target.value))}
               />
             </Action>
             <Action>
@@ -392,7 +400,7 @@ export const RoomCreator = ({ closeModal }) => {
               <ActionTitle>price:</ActionTitle>
               <RangeInput
                 name="priceInput"
-                onChange={(event) => setPrice(event.target.value)}
+                onChange={(event) => setPrice(parseInt(event.target.value))}
                 type="range"
                 min="50"
                 max="900"
@@ -426,7 +434,7 @@ export const RoomCreator = ({ closeModal }) => {
               <RangeInput
                 disabled={allowDiscount ? false : true}
                 name="discountInput"
-                onChange={(event) => setDiscount(event.target.value)}
+                onChange={(event) => setDiscount(parseInt(event.target.value))}
                 type="range"
                 min="5"
                 max="30"
