@@ -19,7 +19,7 @@ const NavWrap = styled.aside`
   background-color: #fff;
   padding: 42px 0px;
   text-align: center;
-  transition: all 250ms ease-out;
+  transition: all 150ms ease-out;
 `;
 
 const Logo = styled.img`
@@ -36,7 +36,7 @@ const OptionWrapper = styled(NavLink)`
   padding: 20px 0;
   cursor: pointer;
   color: #799283;
-  transition: all 250ms ease-out;
+  transition: all 150ms ease-out;
   text-decoration: none;
 
   &:hover {
