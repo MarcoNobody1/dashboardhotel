@@ -67,7 +67,7 @@ const NotificationWrapper = styled.div`
 
 interface NotificationProps {
   icon: React.ElementType;
-  number: number;
+  number: string;
   text: string;
 }
 
