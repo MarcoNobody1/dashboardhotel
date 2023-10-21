@@ -75,7 +75,7 @@ interface DefaultIconProps {
 }
 
 export const DefaultIcon = styled.div<DefaultIconProps>`
-  font-size: 24px;
+  font-size: 30px;
   color: ${(props) => props.$color || '#135846'};
   cursor: pointer;
   transition: all 0.3s ease-out;
