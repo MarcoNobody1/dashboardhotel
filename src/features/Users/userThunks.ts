@@ -26,3 +26,8 @@ export const addUserData = createAsyncThunk("rooms/addUserData", async (user:Use
   
   return( await delay(user)) as UserInterface;
 })
+
+export const updateUserData = createAsyncThunk("rooms/updateUserData", async (user:UserInterface) => {
+  
+  return( await delay(user)) as UserInterface;
+})

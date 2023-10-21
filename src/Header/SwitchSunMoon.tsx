@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FC } from 'react';
 
 const ThemeToggleButton = styled.label`
-  font-size: 18px;
+  font-size: 10px;
   position: relative;
   display: inline-block;
   width: 7em;

@@ -21,10 +21,10 @@ import {
   SelectorFilter,
 } from "../GeneralComponents";
 import { renderStatus } from "../Components/RenderStatus";
-import { UserCreator } from "../Components/Users/UserCreator";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { FC } from 'react';
 import { UserInterface } from "../features/Interfaces/Interfaces";
+import { UserEditorCreator } from "../Components/Users/UserEditorCreator";
 
 const TableContainer = styled.div`
   display: flex;
@@ -129,7 +129,7 @@ export const Users = () => {
         <AdNewContainer>
           <CrossIcon onClick={onClose} />
           <NewDataTitle>Create a New User</NewDataTitle>
-          <UserCreator closeModal={onClose} />
+          <UserEditorCreator closeModal={onClose} />
         </AdNewContainer>
       </ModalBackground>
     );
@@ -138,7 +138,6 @@ export const Users = () => {
 
   return (
     <PageWrapper>
-      {" "}
       <OuterContainer>
         <FilterContainer>
           <ButtonsContainer user>

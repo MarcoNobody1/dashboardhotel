@@ -429,7 +429,7 @@ export const AddUserButton = styled(AddRoomButton)`
 export const ButtonAdNew = styled(AddRoomButton)`
   position: absolute;
   bottom: 30px;
-  left: 42%;
+  left: 35%;
 `;
 
 export const AdNewContainer = styled.div`
@@ -450,9 +450,15 @@ export const AdNewContainer = styled.div`
 export const NewDataTitle = styled.p`
   text-align: center;
   display: inline-block;
-  font-weight: 600;
-  font-size: 40px;
+  font-weight: 500;
+  font-size: 36px;
   letter-spacing: 0px;
   color: rgb(38, 38, 38);
   flex: 1;
+`;
+
+export const UpadtingTitle = styled(NewDataTitle)`
+font-weight: 400;
+font-size: 30px;
+font-style: italic;
 `;
