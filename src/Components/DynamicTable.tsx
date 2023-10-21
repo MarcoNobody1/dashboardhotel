@@ -21,6 +21,7 @@ import { BsTelephoneInbound } from "react-icons/bs";
 import { BookingInterface, ContactInterface, RoomInterface, UserInterface } from "../features/Interfaces/Interfaces";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { UserEditorCreator } from "./Users/UserEditorCreator";
+import { RoomCreator } from "./Rooms/RoomCreator";
 
 const bookingTitles = [
   "Guest",
@@ -345,12 +346,19 @@ interface UserEditorProps {
   onCloseUserEditor: () => void;
 }
 
+interface RoomEditorProps {
+  roomId: string;
+  onCloseRoomEditor: () => void;
+}
+
 const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
   const dispatch = useAppDispatch();
   const [selectedNoteId, setSelectedNoteId] = useState<string>("");
   const [isNoteOpen, setIsNoteOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<string>("");
+  const [selectedRoom, setSelectedRoom] = useState<string>("");
   const [isUserEditOpen, setIsUserEditOpen] = useState<boolean>(false);
+  const [isRoomEditOpen, setIsRoomEditOpen] = useState<boolean>(false);
   const statusInfo = useAppSelector(
     dataType === "bookings"
       ? bookingDeleteStatus
@@ -396,9 +404,15 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     }
   };
 
-  const handleOpenModal = (userId: string) => {
-    setSelectedUser(userId);
+  const handleOpenModal = (id: string, dataType: string) => {
+    if (dataType === "users"){
+      setSelectedUser(id);
     setIsUserEditOpen(true);
+    } else if (dataType === "rooms"){
+      setSelectedRoom(id);
+    setIsRoomEditOpen(true);
+    }
+    
   }
 
   const handleArchiveComment = (id: string, archived: boolean) => {
@@ -471,6 +485,31 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
             <>
               <UpadtingTitle>Updating #{(selectedUser as UserInterface).name.id}  User:</UpadtingTitle>
               <UserEditorCreator select={selectedUser as UserInterface} closeModal={onCloseUserEditor} />
+            </>
+          ) : (
+            'Special request not found. Please, try again.'
+          )}
+        </AdNewContainer>
+      </NoteBackground>
+    );
+  };
+
+  const RoomEditor: FC<RoomEditorProps> = ({roomId, onCloseRoomEditor}) => {
+    const selectedRoom = (data as DataArray).find((room: TableRow) => {
+      if (dataType === "rooms" && (room as RoomInterface).room_name) {
+        return (room as RoomInterface).room_name.id === roomId;
+      } else {
+        return false;
+      }
+    });
+    return (
+      <NoteBackground>
+        <AdNewContainer>
+          <FloatCross onClick={onCloseRoomEditor} />
+          {selectedRoom && dataType === "rooms" ? (
+            <>
+              <UpadtingTitle>Updating #{(selectedRoom as RoomInterface).room_name.id}  Room:</UpadtingTitle>
+              <RoomCreator select={selectedRoom as RoomInterface} closeModal={onCloseRoomEditor} />
             </>
           ) : (
             'Special request not found. Please, try again.'
@@ -607,10 +646,31 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
               />
             </Floater>
           );
+          const EditRoomIcon =
+          statusInfo === "fulfilled" ? (
+            <EditIcon onClick={() => handleOpenModal(rowData.room_name.id, dataType)} />
+          ) : statusInfo === "rejected" ? (
+            <EditIcon style={{ color: "#e9d7d7" }} />
+          ) : (
+            <Floater>
+              <LineWave
+                height="80"
+                width="80"
+                color=""
+                ariaLabel="line-wave"
+                wrapperClass=""
+                visible={true}
+                firstLineColor="#113C30"
+                middleLineColor="#517A6F"
+                lastLineColor="#E3342C"
+              />
+            </Floater>
+          );
         return (
           <>
             <StatusDiv data={rowData} />
             {availabilityTrashIcon}
+            {EditRoomIcon}
           </>
         );
 
@@ -776,7 +836,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
 
         const EditUserIcon =
           statusInfo === "fulfilled" ? (
-            <EditIcon onClick={() => handleOpenModal(rowData.name.id)} />
+            <EditIcon onClick={() => handleOpenModal(rowData.name.id, dataType)} />
           ) : statusInfo === "rejected" ? (
             <EditIcon style={{ color: "#e9d7d7" }} />
           ) : (
@@ -852,6 +912,12 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <UserEditor
             userId={selectedUser}
             onCloseUserEditor={() => setIsUserEditOpen(false)}
+          />
+        )}
+        {isRoomEditOpen && (
+          <RoomEditor
+            roomId={selectedRoom}
+            onCloseRoomEditor={() => setIsRoomEditOpen(false)}
           />
         )}
       </Tbody>
