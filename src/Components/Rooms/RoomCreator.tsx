@@ -6,6 +6,7 @@ import { roomPhotos } from "../../data/createNewPhotos";
 import { addRoomData } from "../../features/Rooms/roomThunks";
 import Swal from "sweetalert2";
 import { useAppDispatch } from "../../app/hooks";
+import { RoomInterface } from "../../features/Interfaces/Interfaces";
 
 const Form = styled.form`
   display: flex;
@@ -44,6 +45,7 @@ const ActionRow = styled.div`
   display: flex;
   padding: 10px 0;
   transition: all 250ms ease-out;
+  position: relative;
 `;
 
 const PhotoWrapper = styled.div`
@@ -152,17 +154,25 @@ const PhotoGroup: FC<PhotoGroupProps> = ({ src, checked, onChange }) => {
 };
 
 interface RoomCreatorProps {
+  select?: RoomInterface;
   closeModal: () => void;
 }
 
-export const RoomCreator: FC<RoomCreatorProps> = ({ closeModal }) => {
+export const RoomCreator: FC<RoomCreatorProps> = ({ select, closeModal }) => {
   const dispatch = useAppDispatch();
-  const [checkedStates, setCheckedStates] = useState<boolean[]>([
+  const [checkedStates, setCheckedStates] = useState<boolean[]>(select ? [
     false,
     false,
     false,
     false,
     false,
+  ] : [
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
   ]);
   const [price, setPrice] = useState(150);
   const [discount, setDiscount] = useState(15);
@@ -199,7 +209,7 @@ export const RoomCreator: FC<RoomCreatorProps> = ({ closeModal }) => {
 
     const newRoom = {
       room_name: {
-        id: (Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345).toString(),
+        id: select ? select.room_name.id : (Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345).toString(),
         room_photo: finalPhotos[0] || "",
         room_number: roomNumber === null ? 111 : roomNumber,
         room_description:
@@ -212,10 +222,10 @@ export const RoomCreator: FC<RoomCreatorProps> = ({ closeModal }) => {
         amenities === "Standard"
           ? roomAmenities.Standard
           : amenities === "Advanced"
-          ? roomAmenities.Advanced
-          : amenities === "Premium"
-          ? roomAmenities.Premium
-          : roomAmenities.FullRoom,
+            ? roomAmenities.Advanced
+            : amenities === "Premium"
+              ? roomAmenities.Premium
+              : roomAmenities.FullRoom,
       price: price,
       offer_price: {
         isOffer: allowDiscount,
@@ -226,7 +236,7 @@ export const RoomCreator: FC<RoomCreatorProps> = ({ closeModal }) => {
 
     if (hasTrueValue) {
       dispatch(addRoomData(newRoom));
-      setCheckedStates([false, false, false, false, false]);
+      setCheckedStates([false, false, false, false, true]);
       setPrice(150);
       setDiscount(15);
       setRoomType("Single Room");
@@ -286,6 +296,17 @@ export const RoomCreator: FC<RoomCreatorProps> = ({ closeModal }) => {
       </Instructions>
       <Actions>
         <ActionRow>
+          {select ?
+            <PhotoWrapper style={{ position: "absolute", top: "0px", left: "-40px" }}>
+              <Photo src={select.room_name.room_photo} style={checkedStates[5] ? { border: "5px solid #135846", width: "60px", height: "60px" } : { width: "40px", height: "40px" }} />
+              <Checker
+                name="checker"
+                value={select.room_name.room_photo}
+                type="checkbox"
+                checked={checkedStates[5]}
+                onChange={() => handleCheckboxChange(5)}
+              />
+            </PhotoWrapper> : null}
           <PhotoGroup
             src={roomPhotos[0]}
             checked={checkedStates[0]}
@@ -331,7 +352,7 @@ export const RoomCreator: FC<RoomCreatorProps> = ({ closeModal }) => {
                 <Option value="Single Room">
                   Single Room
                 </Option>
-                <Option  value="Double Room">
+                <Option value="Double Room">
                   Double Room
                 </Option>
                 <Option value="Double Superior">
