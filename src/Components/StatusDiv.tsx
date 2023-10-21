@@ -9,7 +9,7 @@ const GeneralStatusDiv = styled.div<{status: string | undefined}>`
   padding: 13px 26px;
   text-align: center;
   text-transform: capitalize;
-  width: 70%;
+  width: 80%;
   background-color: ${(props) =>
     props.status === "Check In" || props.status === "available" || props.status === "active"
       ? "#e8ffee"
