@@ -9,7 +9,7 @@ const ImageWrapper = styled.div`
   align-items: center;
   background-color: #ffedec;
   border-radius: 8px;
-  transition: all 250ms ease-out;
+  transition: all 0.3s ease-out;
   margin-right: 22px;
 `;
 
@@ -25,20 +25,36 @@ const NotificationOuter = styled.div`
   padding: 30px;
   display: inline-block;
   margin-right: 20px;
-  transition: all 250ms ease-out;
+  transition: all 0.3s ease-out;
   cursor: pointer;
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
+    box-shadow: 0px 4px 4px #00000029;
   }
 
   &:hover ${ImageWrapper} {
     background-color: #e23428;
+    transform: scale(1.1);
   }
 
   &:hover ${NotificationIcon} {
     color: #fff;
+    transform: scale(1.15);
+    animation: pulsate-fwd 1.5s ease-in-out infinite both;
   }
+
+  @keyframes pulsate-fwd {
+  0% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
 `;
 
 const ContentWrap = styled.div`

@@ -432,7 +432,7 @@ export const ButtonAdNew = styled(AddRoomButton)`
   left: 35%;
 `;
 
-export const AdNewContainer = styled.div`
+export const AdNewContainer = styled.td`
   background-color: #ffffff;
   min-width: 1300px;
   min-height: 700px;

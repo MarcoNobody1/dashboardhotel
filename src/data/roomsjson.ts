@@ -42,7 +42,6 @@ export const roomsData:RoomInterface[] = [
     room_type: "Single Bed",
     amenities: [
       "1/3 Bed Space",
-      "Free Wifi",
       "Air Conditioner",
       "Television",
       "Towels",
@@ -97,6 +96,7 @@ export const roomsData:RoomInterface[] = [
     room_type: "Double Bed",
     amenities: [
       "1/2 Bathroom",
+      "Free Wifi",
       "Air Conditioner",
       "Television",
       "Towels",
@@ -150,6 +150,7 @@ export const roomsData:RoomInterface[] = [
     room_type: "Double Bed",
     amenities: [
       "1/2 Bathroom",
+      "Free Wifi",
       "Air Conditioner",
       "Television",
       "Towels",
@@ -233,7 +234,6 @@ export const roomsData:RoomInterface[] = [
     room_type: "Single Bed",
     amenities: [
       "1/3 Bed Space",
-      "Free Wifi",
       "Air Conditioner",
       "Television",
       "Towels",
@@ -286,6 +286,7 @@ export const roomsData:RoomInterface[] = [
     room_type: "Double Bed",
     amenities: [
       "1/2 Bathroom",
+      "Free Wifi",
       "Air Conditioner",
       "Television",
       "Towels",
@@ -369,7 +370,6 @@ export const roomsData:RoomInterface[] = [
     room_type: "Single Bed",
     amenities: [
       "1/3 Bed Space",
-      "Free Wifi",
       "Air Conditioner",
       "Television",
       "Towels",
@@ -422,6 +422,7 @@ export const roomsData:RoomInterface[] = [
     room_type: "Double Bed",
     amenities: [
       "1/2 Bathroom",
+      "Free Wifi",
       "Air Conditioner",
       "Television",
       "Towels",
@@ -505,7 +506,6 @@ export const roomsData:RoomInterface[] = [
     room_type: "Single Bed",
     amenities: [
       "1/3 Bed Space",
-      "Free Wifi",
       "Air Conditioner",
       "Television",
       "Towels",
@@ -558,6 +558,7 @@ export const roomsData:RoomInterface[] = [
     room_type: "Double Bed",
     amenities: [
       "1/2 Bathroom",
+      "Free Wifi",
       "Air Conditioner",
       "Television",
       "Towels",
@@ -641,7 +642,6 @@ export const roomsData:RoomInterface[] = [
     room_type: "Single Bed",
     amenities: [
       "1/3 Bed Space",
-      "Free Wifi",
       "Air Conditioner",
       "Television",
       "Towels",
