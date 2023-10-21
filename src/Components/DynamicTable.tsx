@@ -2,8 +2,8 @@ import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { deleteData, get1Data } from "../features/Bookings/bookingThunks";
-import { CrossIcon, Floater, formatDate } from "../GeneralComponents";
-import { BsTrash3 } from "react-icons/bs";
+import { AdNewContainer, CrossIcon, Floater, NewDataTitle, UpadtingTitle, formatDate } from "../GeneralComponents";
+import { BsPencilSquare, BsTrash3 } from "react-icons/bs";
 import { ColorRing, LineWave } from "react-loader-spinner";
 import { deleteRoomsData, get1RoomData } from "../features/Rooms/roomThunks";
 import { StatusDiv } from "./StatusDiv";
@@ -16,10 +16,11 @@ import {
 import { archiveData } from "../features/Contact/contactThunks";
 import Swal from "sweetalert2";
 import { userDeleteStatus } from "../features/Users/userSlice";
-import { deleteUsersData } from "../features/Users/userThunks";
+import { deleteUsersData, updateUserData } from '../features/Users/userThunks';
 import { BsTelephoneInbound } from "react-icons/bs";
 import { BookingInterface, ContactInterface, RoomInterface, UserInterface } from "../features/Interfaces/Interfaces";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { UserEditorCreator } from "./Users/UserEditorCreator";
 
 const bookingTitles = [
   "Guest",
@@ -72,7 +73,7 @@ const Th = styled.th<ThProps>`
   width: ${(props) =>
     props.header === "amenities" || props.header === "comment"
       ? "480px"
-      : props.header === "availability"
+      : props.header === "availability" || props.header === "activity"
         ? "200px"
         : props.header === "customer"
           ? "300px"
@@ -130,14 +131,20 @@ const NoteContainer = styled.td`
   justify-content: center;
   align-items: center;
   background: #ffffff 0% 0% no-repeat padding-box;
-  border: 1px solid #ebebeb;
+  border: 1px solid #135846;
   border-radius: 20px;
   padding: 30px;
   transition: all 250ms ease-in-out;
   min-width: 480px;
-  max-width: 500px;
+  max-width: 900px;
   position: relative;
   z-index: 100;
+`;
+
+const SpecialRequest = styled.p`
+font-size: 14px;
+font-style: italic;
+max-width: 400px;
 `;
 
 const NoteBackground = styled.tr`
@@ -158,11 +165,24 @@ const FloatCross = styled(CrossIcon)`
   right: 10px;
 `;
 
+const EditIcon = styled(BsPencilSquare)`
+ font-size: 20px;
+  position: absolute;
+  top: 60%;
+  right: 10px;
+  color:#517A6F;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const TrashIcon = styled(BsTrash3)`
   font-size: 20px;
   position: absolute;
-  top: 27.5px;
-  right: 5px;
+  top: 20%;
+  right: 10px;
+  color: #E3342C;
 
   &:hover {
     cursor: pointer;
@@ -320,10 +340,17 @@ interface ModalProps {
   onCloseNote: () => void;
 }
 
+interface UserEditorProps {
+  userId: string;
+  onCloseUserEditor: () => void;
+}
+
 const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
   const dispatch = useAppDispatch();
   const [selectedNoteId, setSelectedNoteId] = useState<string>("");
   const [isNoteOpen, setIsNoteOpen] = useState<boolean>(false);
+  const [selectedUser, setSelectedUser] = useState<string>("");
+  const [isUserEditOpen, setIsUserEditOpen] = useState<boolean>(false);
   const statusInfo = useAppSelector(
     dataType === "bookings"
       ? bookingDeleteStatus
@@ -369,6 +396,11 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     }
   };
 
+  const handleOpenModal = (userId: string) => {
+    setSelectedUser(userId);
+    setIsUserEditOpen(true);
+  }
+
   const handleArchiveComment = (id: string, archived: boolean) => {
     const Toast = Swal.mixin({
       toast: true,
@@ -413,11 +445,37 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         <NoteContainer>
           <FloatCross onClick={onCloseNote} />
           {selectedNote && dataType === "bookings" && 'special_request' in (selectedNote as BookingInterface) ? (
-            (selectedNote as BookingInterface).special_request
+            <SpecialRequest>  {(selectedNote as BookingInterface).special_request}</SpecialRequest>
+
           ) : (
             'Special request not found. Please, try again.'
           )}
         </NoteContainer>
+      </NoteBackground>
+    );
+  };
+
+  const UserEditor: FC<UserEditorProps> = ({ userId, onCloseUserEditor }) => {
+    const selectedUser = (data as DataArray).find((user: TableRow) => {
+      if (dataType === "users" && (user as UserInterface).name) {
+        return (user as UserInterface).name.id === userId;
+      } else {
+        return false;
+      }
+    });
+    return (
+      <NoteBackground>
+        <AdNewContainer>
+          <FloatCross onClick={onCloseUserEditor} />
+          {selectedUser && dataType === "users" ? (
+            <>
+              <UpadtingTitle>Updating #{(selectedUser as UserInterface).name.id}  User:</UpadtingTitle>
+              <UserEditorCreator select={selectedUser as UserInterface} closeModal={onCloseUserEditor} />
+            </>
+          ) : (
+            'Special request not found. Please, try again.'
+          )}
+        </AdNewContainer>
       </NoteBackground>
     );
   };
@@ -715,10 +773,33 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
               />
             </Floater>
           );
+
+        const EditUserIcon =
+          statusInfo === "fulfilled" ? (
+            <EditIcon onClick={() => handleOpenModal(rowData.name.id)} />
+          ) : statusInfo === "rejected" ? (
+            <EditIcon style={{ color: "#e9d7d7" }} />
+          ) : (
+            <Floater>
+              <LineWave
+                height="80"
+                width="80"
+                color=""
+                ariaLabel="line-wave"
+                wrapperClass=""
+                visible={true}
+                firstLineColor="#113C30"
+                middleLineColor="#517A6F"
+                lastLineColor="#E3342C"
+              />
+            </Floater>
+          );
+
         return (
           <>
             <StatusDiv data={rowData} />
             {trashUserIcon}
+            {EditUserIcon}
           </>
         );
 
@@ -765,6 +846,12 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <Modal
             commentId={selectedNoteId}
             onCloseNote={() => setIsNoteOpen(false)}
+          />
+        )}
+        {isUserEditOpen && (
+          <UserEditor
+            userId={selectedUser}
+            onCloseUserEditor={() => setIsUserEditOpen(false)}
           />
         )}
       </Tbody>
