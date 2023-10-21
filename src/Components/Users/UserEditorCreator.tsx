@@ -2,9 +2,10 @@ import React, { FC, useState } from "react";
 import styled from "styled-components";
 import { ButtonAdNew } from "../../GeneralComponents";
 import { userPhotos } from "../../data/createNewPhotos";
-import { addUserData } from "../../features/Users/userThunks";
+import { addUserData, updateUserData } from "../../features/Users/userThunks";
 import Swal from "sweetalert2";
 import { useAppDispatch } from "../../app/hooks";
+import { UserInterface } from "../../features/Interfaces/Interfaces";
 
 const Form = styled.form`
   display: flex;
@@ -16,6 +17,7 @@ const Instructions = styled.div`
   flex-direction: column;
   flex: 1;
   padding-bottom: 51px;
+  gap: 35px;
 `;
 
 const Instruction = styled.div`
@@ -23,6 +25,7 @@ const Instruction = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  padding-bottom: 35px;
 `;
 
 const InstructionTitle = styled.p`
@@ -36,6 +39,7 @@ const InstructionTitle = styled.p`
 
 const Actions = styled(Instructions)`
   flex: 2.5;
+  margin-bottom: 15px;
 `;
 
 const ActionRow = styled.div`
@@ -43,6 +47,7 @@ const ActionRow = styled.div`
   display: flex;
   padding: 10px 0;
   transition: all 250ms ease-out;
+  position: relative;
 `;
 
 const PhotoWrapper = styled.div`
@@ -73,6 +78,7 @@ const ActionGroup = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 15px;
 `;
 
 const Action = styled.div`
@@ -230,26 +236,27 @@ const getFormattedDate = () => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
-interface UserCreatorProps {
+interface UserEditorCreatorProps {
+  select?: UserInterface;
   closeModal: () => void;
 }
 
 
-export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
+export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeModal }) => {
   const dispatch = useAppDispatch();
-  const [active, setActive] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [date, setDate] = useState("");
-  const [position, setPosition] = useState("Room Service");
-  const [description, setDescription] = useState("");
+  const [active, setActive] = useState(select && select.activity === "active" ? true : false);
+  const [selectedPhoto, setSelectedPhoto] = useState(select ? select.name.photo : "");
+  const [phone, setPhone] = useState(select ? select.contact : "");
+  const [password, setPassword] = useState(select ? select.name.password_hash : "");
+  const [username, setUsername] = useState(select ? select.name.username : "");
+  const [email, setEmail] = useState(select ? select.name.email : "");
+  const [date, setDate] = useState(select ? select.start_date : "");
+  const [position, setPosition] = useState(select ? select.name.employee_position : "Room Service");
+  const [description, setDescription] = useState(select ? select.job_description : "");
   const [minDate, setMinDate] = useState(getFormattedDate());
 
 
-  const handleCreateNewUser = () => {
+  const handleUpdateCreateUser = () => {
     const Toast = Swal.mixin({
       toast: true,
       position: "top",
@@ -274,8 +281,6 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
       return;
     }
 
-
-
     if (password.length < 5) {
       Toast.fire({
         icon: "error",
@@ -292,24 +297,24 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
       return;
     }
 
-    const newUser = {
+    const dataUser = {
       name: {
         photo: selectedPhoto || "",
         username: username,
-        id: (Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345).toString(),
+        id: select ? select.name.id : (Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345).toString(),
         employee_position: position,
         email: email,
         password_hash: password,
       },
-      start_date: date,
+      start_date: date === "" ? getFormattedDate() : date,
       job_description: description,
       contact: phone,
       activity: active ? "active" : "inactive",
     };
-    console.log(active)
 
     if (selectedPhoto) {
-      dispatch(addUserData(newUser));
+      const action = select ? updateUserData : addUserData;
+      dispatch(action(dataUser));
       setActive(false)
       setSelectedPhoto("")
       setPhone("")
@@ -325,7 +330,7 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
         title: "Success!",
         timer: 1500,
         timerProgressBar: false,
-        html: "<em>User added to your list.</em>",
+        html: "<em>User added to your list!.</em>",
       });
 
       closeModal();
@@ -339,10 +344,10 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
 
   return (
     <Form
-      name="createUser"
+      name="updateCreateUser"
       onSubmit={(e) => {
         e.preventDefault();
-        handleCreateNewUser();
+        handleUpdateCreateUser();
       }}
     >
       <Instructions>
@@ -378,6 +383,23 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
       </Instructions>
       <Actions>
         <ActionRow>
+          {select ? (<PhotoWrapper style={{ position: "absolute", top:"0px", left:"-40px" }}>
+            <Photo
+              src={select.name.photo}
+              style={selectedPhoto === select.name.photo ? {
+                border: "5px solid #135846",
+                width: "60px", height: "60px"
+              } : { width: "40px", height: "40px" }}
+              onClick={() => setSelectedPhoto(select.name.photo)}
+            />
+            <Checker
+              name="checker"
+              value={select.name.photo}
+              type="radio"
+              checked={selectedPhoto === select.name.photo}
+              onChange={() => setSelectedPhoto(select.name.photo)}
+            />
+          </PhotoWrapper>) : null}
           <PhotoWrapper>
             <Photo
               src={userPhotos[0]}
@@ -397,9 +419,9 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
           <PhotoWrapper>
             <Photo
               src={userPhotos[1]}
-              style={ selectedPhoto === userPhotos[1] ? {
+              style={selectedPhoto === userPhotos[1] ? {
                 border: "5px solid #135846",
-              }: {}}
+              } : {}}
               onClick={() => setSelectedPhoto(userPhotos[1])}
             />
             <Checker
@@ -413,9 +435,9 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
           <PhotoWrapper>
             <Photo
               src={userPhotos[2]}
-              style={ selectedPhoto === userPhotos[2] ? {
-                border:"5px solid #135846",
-              }:{}}
+              style={selectedPhoto === userPhotos[2] ? {
+                border: "5px solid #135846",
+              } : {}}
               onClick={() => setSelectedPhoto(userPhotos[2])}
             />
             <Checker
@@ -429,9 +451,9 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
           <PhotoWrapper>
             <Photo
               src={userPhotos[3]}
-              style={ selectedPhoto === userPhotos[3] ? {
-                border:"5px solid #135846",
-              }: {}}
+              style={selectedPhoto === userPhotos[3] ? {
+                border: "5px solid #135846",
+              } : {}}
               onClick={() => setSelectedPhoto(userPhotos[3])}
             />
             <Checker
@@ -445,9 +467,9 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
           <PhotoWrapper>
             <Photo
               src={userPhotos[4]}
-              style={ selectedPhoto === userPhotos[4] ? {
+              style={selectedPhoto === userPhotos[4] ? {
                 border: "5px solid #135846",
-              }: {}}
+              } : {}}
               onClick={() => setSelectedPhoto(userPhotos[4])}
             />
             <Checker
@@ -475,6 +497,7 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
                 }}
                 placeholder={`e.g. :  Mr. Krabs`}
                 minLength={1}
+                defaultValue={select ? select.name.username : undefined}
               />
             </Action>
             <Action>
@@ -486,6 +509,7 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete="new-password"
                 minLength={5}
+                defaultValue={select ? select.name.password_hash : undefined}
               />
               <InfoParagraph password={password}>
                 Your Password: {password}
@@ -500,6 +524,7 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
                 type="email"
                 placeholder={`e.g. :  mrkrabs@iwantmymoney.com`}
                 onChange={(event) => setEmail(event.target.value)}
+                defaultValue={select ? select.name.email : undefined}
               />
             </Action>
             <Action>
@@ -510,6 +535,7 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
                 placeholder={`e.g. : 878888523`}
                 minLength={9}
                 onChange={(event) => setPhone(event.target.value)}
+                defaultValue={select ? select.contact : undefined}
               />
             </Action>
           </ActionGroup>
@@ -532,10 +558,11 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
               <TextInput
                 name="typeSelector"
                 type="date"
-                min={minDate}
+                min={select ? select.start_date : minDate}
                 onChange={(event) => {
                   setDate(event.target.value);
                 }}
+                defaultValue={select ? select.start_date : undefined}
               />
             </Action>
             <Action>
@@ -545,7 +572,7 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
                 onChange={(event) => {
                   setPosition(event.target.value);
                 }}
-                defaultValue="Room Service"
+                defaultValue={select ? select.name.employee_position : "Room Service"}
               >
                 <Option value="Room Service">
                   Room Service
@@ -567,6 +594,7 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
                   name="userActiveCheckbox"
                   type="checkbox"
                   onChange={(event) => setActive(event.target.checked)}
+                  defaultChecked={select && select.activity === "active" ? true : false}
                 />
                 <SliderSpan></SliderSpan>
               </InputLabel>
@@ -579,6 +607,7 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
                 name="descriptionInput"
                 placeholder="Add a brief description for the job..."
                 onChange={(event) => setDescription(event.target.value)}
+                defaultValue={select ? select.job_description : undefined}
               ></TextArea>
             </Action>
           </ActionGroup>
@@ -595,8 +624,8 @@ export const UserCreator: FC<UserCreatorProps> = ({ closeModal }) => {
               ? "all"
               : "none",
         }}
-      >
-        Add User
+      > {select ? "Save Changes" : "Add Room"}
+
       </ButtonAdNew>
     </Form>
   );
