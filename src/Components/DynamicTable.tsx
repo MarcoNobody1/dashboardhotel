@@ -21,7 +21,7 @@ import { BsTelephoneInbound } from "react-icons/bs";
 import { BookingInterface, ContactInterface, RoomInterface, UserInterface } from "../features/Interfaces/Interfaces";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { UserEditorCreator } from "./Users/UserEditorCreator";
-import { RoomCreator } from "./Rooms/RoomCreator";
+import { RoomeEditorCreator } from "./Rooms/RoomEditorCreator";
 
 const bookingTitles = [
   "Guest",
@@ -509,7 +509,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           {selectedRoom && dataType === "rooms" ? (
             <>
               <UpadtingTitle>Updating #{(selectedRoom as RoomInterface).room_name.id}  Room:</UpadtingTitle>
-              <RoomCreator select={selectedRoom as RoomInterface} closeModal={onCloseRoomEditor} />
+              <RoomeEditorCreator select={selectedRoom as RoomInterface} closeModal={onCloseRoomEditor} />
             </>
           ) : (
             'Special request not found. Please, try again.'

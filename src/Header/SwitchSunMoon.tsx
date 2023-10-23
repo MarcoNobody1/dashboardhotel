@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FC } from 'react';
 
 const ThemeToggleButton = styled.label`
-  font-size: 10px;
+  font-size: 8px;
   position: relative;
   display: inline-block;
   width: 7em;
@@ -96,7 +96,7 @@ export const SwitchSunMoon: FC = () => {
 
     return (
         <ThemeToggleButton>
-            <Toggle type="checkbox" onChange={() => handleToggleChange()} />
+            <Toggle name="darkModeToggle" type="checkbox" onChange={() => handleToggleChange()} />
             <svg
                 viewBox="0 0 69.667 44"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
