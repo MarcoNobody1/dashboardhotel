@@ -106,7 +106,7 @@ export const roomsData:RoomInterface[] = [
     price: 180,
     offer_price: {
       isOffer: true,
-      discount: 8,
+      discount: 10,
     },
     availability: "available",
   },
@@ -134,7 +134,7 @@ export const roomsData:RoomInterface[] = [
     price: 275,
     offer_price: {
       isOffer: true,
-      discount: 12,
+      discount: 15,
     },
     availability: "available",
   },
@@ -218,7 +218,7 @@ export const roomsData:RoomInterface[] = [
     price: 300,
     offer_price: {
       isOffer: true,
-      discount: 18,
+      discount: 20,
     },
     availability: "available",
   },
@@ -354,7 +354,7 @@ export const roomsData:RoomInterface[] = [
     price: 270,
     offer_price: {
       isOffer: true,
-      discount: 12,
+      discount: 15,
     },
     availability: "available",
   },
@@ -378,7 +378,7 @@ export const roomsData:RoomInterface[] = [
     price: 125,
     offer_price: {
       isOffer: false,
-      discount: 8,
+      discount: 10,
     },
     availability: "available",
   },
@@ -462,7 +462,7 @@ export const roomsData:RoomInterface[] = [
     price: 920,
     offer_price: {
       isOffer: true,
-      discount: 8,
+      discount: 10,
     },
     availability: "available",
   },
@@ -490,7 +490,7 @@ export const roomsData:RoomInterface[] = [
     price: 310,
     offer_price: {
       isOffer: true,
-      discount: 18,
+      discount: 20,
     },
     availability: "available",
   },
@@ -626,7 +626,7 @@ export const roomsData:RoomInterface[] = [
     price: 290,
     offer_price: {
       isOffer: true,
-      discount: 12,
+      discount: 15,
     },
     availability: "available",
   },
