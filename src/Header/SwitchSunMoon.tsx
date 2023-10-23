@@ -8,6 +8,7 @@ const ThemeToggleButton = styled.label`
   display: inline-block;
   width: 7em;
   cursor: pointer;
+  margin-right: 30px;
 `;
 
 const Container = styled.rect`
