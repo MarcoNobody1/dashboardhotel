@@ -18,7 +18,7 @@ import { getRoomsData } from "../features/Rooms/roomThunks";
 import { roomsInfo, roomstatusinfo } from "../features/Rooms/roomSlice";
 import DynamicTable from "../Components/DynamicTable";
 import { renderStatus } from "../Components/RenderStatus";
-import { RoomCreator } from "../Components/Rooms/RoomCreator";
+import { RoomeEditorCreator } from "../Components/Rooms/RoomEditorCreator";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { RoomInterface } from "../features/Interfaces/Interfaces";
 
@@ -96,7 +96,7 @@ export const Rooms: FC = () => {
         <AdNewContainer>
           <CrossIcon onClick={onClose} />
           <NewDataTitle>Create a New Room</NewDataTitle>
-          <RoomCreator closeModal={onClose} />
+          <RoomeEditorCreator closeModal={onClose} />
         </AdNewContainer>
       </ModalBackground>
     );
