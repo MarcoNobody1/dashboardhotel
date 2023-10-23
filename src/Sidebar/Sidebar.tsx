@@ -19,7 +19,7 @@ const NavWrap = styled.aside`
   background-color: #fff;
   padding: 42px 0px;
   text-align: center;
-  transition: all 0ms.2 ease;
+  transition: all 0.2s ease;
 `;
 
 const Logo = styled.img`
