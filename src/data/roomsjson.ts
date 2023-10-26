@@ -58,7 +58,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "3IJKL789",
       room_photo:
-        "https://galeriemagazine.com/wp-content/uploads/2019/03/243f89e0-8235-11e7-a767-bc310e55dd10_1320x770_154749-1024x597.jpg",
+        "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg",
       room_number: 9876,
       room_description: "Our suites are the epitome of luxury and elegance. They provide ample space, a separate living area, and first-class amenities. Suites are ideal for those seeking an unforgettable lodging experience.",
 
@@ -168,7 +168,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "7ABCDEF333",
       room_photo:
-        "https://galeriemagazine.com/wp-content/uploads/2019/03/243f89e0-8235-11e7-a767-bc310e55dd10_1320x770_154749-1024x597.jpg",
+        "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg",
       room_number: 7777,
       room_description: "Our suites are the epitome of luxury and elegance. They provide ample space, a separate living area, and first-class amenities. Suites are ideal for those seeking an unforgettable lodging experience.",
 
@@ -304,7 +304,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "12XYZ123",
       room_photo:
-        "https://galeriemagazine.com/wp-content/uploads/2019/03/243f89e0-8235-11e7-a767-bc310e55dd10_1320x770_154749-1024x597.jpg",
+        "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg",
       room_number: 9876,
       room_description: "Our suites are the epitome of luxury and elegance. They provide ample space, a separate living area, and first-class amenities. Suites are ideal for those seeking an unforgettable lodging experience.",
 
@@ -440,7 +440,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "17STUV123",
       room_photo:
-        "https://galeriemagazine.com/wp-content/uploads/2019/03/243f89e0-8235-11e7-a767-bc310e55dd10_1320x770_154749-1024x597.jpg",
+        "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg",
       room_number: 5555,
       room_description: "Our suites are the epitome of luxury and elegance. They provide ample space, a separate living area, and first-class amenities. Suites are ideal for those seeking an unforgettable lodging experience.",
 
@@ -576,7 +576,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "22DEFGHI222",
       room_photo:
-        "https://galeriemagazine.com/wp-content/uploads/2019/03/243f89e0-8235-11e7-a767-bc310e55dd10_1320x770_154749-1024x597.jpg",
+        "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg",
       room_number: 1234,
       room_description: "Our suites are the epitome of luxury and elegance. They provide ample space, a separate living area, and first-class amenities. Suites are ideal for those seeking an unforgettable lodging experience.",
 
