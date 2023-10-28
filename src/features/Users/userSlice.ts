@@ -26,7 +26,7 @@ const initialState: UserInitialState = {
   status: "idle",
   deleteStatus: "fulfilled",
   addUserStatus: "idle",
-  updateUserStatus: "idle",
+  updateUserStatus: "fulfilled",
 };
 
 export const userSlice = createSlice({

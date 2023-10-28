@@ -28,7 +28,7 @@ const initialState: RoomInitialState = {
   roomIdStatus: "idle",
   deleteStatus: "fulfilled",
   addRoomStatus: "idle",
-  updateRoomStatus: "idle",
+  updateRoomStatus: "fulfilled",
 };
 
 export const roomSlice = createSlice({
@@ -109,4 +109,4 @@ export const roomdetailData = (state: RootState) => state.rooms.roomDetail[0];
 export const roomdeleteStatus = (state: RootState) => state.rooms.deleteStatus;
 export const roomIdStatus = (state: RootState) => state.rooms.roomIdStatus;
 export const addRoomStatus = (state: RootState) => state.rooms.addRoomStatus;
-export const updateRoomStatus = (state: RootState) => state.rooms.updateRoomStatus;
+export const roomUpdateStatus = (state: RootState) => state.rooms.updateRoomStatus;

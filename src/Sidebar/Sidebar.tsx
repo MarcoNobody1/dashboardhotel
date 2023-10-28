@@ -17,13 +17,13 @@ import { ToggleContext } from "./ToggleSidebar";
 const NavWrap = styled.aside`
   min-width: 345px;
   background-color: #fff;
-  padding: 42px 0px;
   text-align: center;
   transition: all 0.2s ease;
 `;
 
 const Logo = styled.img`
   padding-left: 10px;
+  padding-top: 42px;
   width: 300px;
   height: auto;
   margin-bottom: 20px;
