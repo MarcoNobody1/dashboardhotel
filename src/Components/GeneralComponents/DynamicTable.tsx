@@ -1,27 +1,27 @@
 import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { deleteData, get1Data } from "../features/Bookings/bookingThunks";
-import { AdNewContainer, CommentWrapper, CrossIcon, Floater, NewDataTitle, UpadtingTitle, formatDate } from "../GeneralComponents";
+import { deleteData, get1Data } from "../../features/Bookings/bookingThunks";
+import { AdNewContainer, CommentWrapper, CrossIcon, Floater, NewDataTitle, UpadtingTitle, formatDate } from "./GeneralComponents";
 import { BsPencilSquare, BsTrash3 } from "react-icons/bs";
 import { ColorRing, LineWave } from "react-loader-spinner";
-import { deleteRoomsData, get1RoomData } from "../features/Rooms/roomThunks";
+import { deleteRoomsData, get1RoomData } from "../../features/Rooms/roomThunks";
 import { StatusDiv } from "./StatusDiv";
-import { bookingDeleteStatus } from "../features/Bookings/bookingSlice";
-import { roomUpdateStatus, roomdeleteStatus } from "../features/Rooms/roomSlice";
+import { bookingDeleteStatus } from "../../features/Bookings/bookingSlice";
+import { roomUpdateStatus, roomdeleteStatus } from "../../features/Rooms/roomSlice";
 import {
   archiveStatus,
   contactdeleteStatus,
-} from "../features/Contact/contactSlice";
-import { archiveData, deleteContactsData } from "../features/Contact/contactThunks";
+} from "../../features/Contact/contactSlice";
+import { archiveData, deleteContactsData } from "../../features/Contact/contactThunks";
 import Swal from "sweetalert2";
-import { userDeleteStatus, userUpdateStatus } from "../features/Users/userSlice";
-import { deleteUsersData, updateUserData } from '../features/Users/userThunks';
+import { userDeleteStatus, userUpdateStatus } from "../../features/Users/userSlice";
+import { deleteUsersData, updateUserData } from '../../features/Users/userThunks';
 import { BsTelephoneInbound } from "react-icons/bs";
-import { BookingInterface, ContactInterface, RoomInterface, UserInterface } from "../features/Interfaces/Interfaces";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { UserEditorCreator } from "./Users/UserEditorCreator";
-import { RoomeEditorCreator } from "./Rooms/RoomEditorCreator";
+import { BookingInterface, ContactInterface, RoomInterface, UserInterface } from "../../features/Interfaces/Interfaces";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { UserEditorCreator } from "../Users/UserEditorCreator";
+import { RoomeEditorCreator } from "../Rooms/RoomEditorCreator";
 
 const bookingTitles = [
   "Guest",

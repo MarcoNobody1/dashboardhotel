@@ -4,16 +4,16 @@ import styled from "styled-components";
 import {
   PageWrapper,
   formatDate,
-} from "../GeneralComponents";
+} from "../GeneralComponents/GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
 import room from "../assets/hotelRoom.jpg";
 import {
   bookingIdStatus,
   detailData,
-} from "../features/Bookings/bookingSlice";
-import { renderStatus } from "../Components/RenderStatus";
+} from "../../features/Bookings/bookingSlice";
+import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { FC } from 'react';
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../../app/hooks";
 
 const BookingWrapper = styled.div`
   background-color: #fff;

@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { PiArrowsLeftRightBold } from "react-icons/pi";
 import { BsMailbox2, BsBellFill } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
-import { DefaultIcon } from "../GeneralComponents";
+import { DefaultIcon } from "../GeneralComponents/GeneralComponents";
 import { useLocation, useNavigate } from "react-router";
-import { AuthContext } from "../Login/Auth";
-import { ToggleContext } from "../Sidebar/ToggleSidebar";
+import { AuthContext } from "../../Context/Auth";
+import { ToggleContext } from "../../Context/ToggleSidebar";
 import { FC } from 'react';
 import { SwitchSunMoon } from "./SwitchSunMoon";
 

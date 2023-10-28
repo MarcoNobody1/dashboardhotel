@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import logo from "../assets/LogoHotelHub.png";
-import { DefaultIcon } from "../GeneralComponents";
+import { DefaultIcon } from "../GeneralComponents/GeneralComponents";
 import {
   LuLayoutDashboard,
   LuKeyRound,
@@ -11,8 +11,8 @@ import {
 import { TbMessage2 } from "react-icons/tb";
 import { UserCard } from "./UserCard";
 import { NavLink } from "react-router-dom";
-import { AuthContext } from "../Login/Auth";
-import { ToggleContext } from "./ToggleSidebar";
+import { AuthContext } from "../../Context/Auth";
+import { ToggleContext } from "../../Context/ToggleSidebar";
 
 const NavWrap = styled.aside`
   min-width: 345px;

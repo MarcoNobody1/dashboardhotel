@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logo from "../assets/LogoHotelHub.png";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { AuthContext } from "./Auth";
+import { AuthContext } from "../../Context/Auth";
 
 const LogWrapper = styled.div`
   background-color: lightcyan;

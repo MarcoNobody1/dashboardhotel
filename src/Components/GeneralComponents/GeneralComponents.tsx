@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
 import { FC, useContext } from "react";
 import { BsTrash3 } from "react-icons/bs";
-import { ToggleContext } from "./Sidebar/ToggleSidebar";
+import { ToggleContext } from "../../Context/ToggleSidebar";
 import Swal from "sweetalert2";
 import { MagnifyingGlass } from "react-loader-spinner";
 import searchIcon from "./assets/iconSearchBar.png";

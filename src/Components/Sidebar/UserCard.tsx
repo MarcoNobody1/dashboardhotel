@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import { AuthContext } from "../Login/Auth";
+import { AuthContext } from "../../Context/Auth";
 import {
   CrossIcon,
   ModalBackground,
   ModalContainer,
   ModalContent,
-} from "../GeneralComponents";
+} from "../GeneralComponents/GeneralComponents";
 
 const OuterWrap = styled.div`
   display: flex;

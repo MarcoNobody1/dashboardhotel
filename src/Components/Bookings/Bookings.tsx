@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, PageWrapper, SearchInput, SelectorFilter, TableContainer } from "../GeneralComponents";
-import { info, statusinfo } from "../features/Bookings/bookingSlice";
-import { getData } from "../features/Bookings/bookingThunks";
-import DynamicTable from "../Components/DynamicTable";
-import { renderStatus } from "../Components/RenderStatus";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { BookingInterface } from "../features/Interfaces/Interfaces";
+import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, PageWrapper, SearchInput, SelectorFilter, TableContainer } from "../GeneralComponents/GeneralComponents";
+import { info, statusinfo } from "../../features/Bookings/bookingSlice";
+import { getData } from "../../features/Bookings/bookingThunks";
+import DynamicTable from "../GeneralComponents/DynamicTable";
+import { renderStatus } from "../GeneralComponents/RenderStatus";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { BookingInterface } from "../../features/Interfaces/Interfaces";
 
 export const Bookings = () => {
   const dispatch = useAppDispatch();

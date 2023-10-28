@@ -13,14 +13,14 @@ import {
   PageWrapper,
   SelectorFilter,
   TableContainer,
-} from "../GeneralComponents";
-import { getRoomsData } from "../features/Rooms/roomThunks";
-import { roomsInfo, roomstatusinfo } from "../features/Rooms/roomSlice";
-import DynamicTable from "../Components/DynamicTable";
-import { renderStatus } from "../Components/RenderStatus";
-import { RoomeEditorCreator } from "../Components/Rooms/RoomEditorCreator";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { RoomInterface } from "../features/Interfaces/Interfaces";
+} from "../GeneralComponents/GeneralComponents";
+import { getRoomsData } from "../../features/Rooms/roomThunks";
+import { roomsInfo, roomstatusinfo } from "../../features/Rooms/roomSlice";
+import DynamicTable from "../GeneralComponents/DynamicTable";
+import { renderStatus } from "../GeneralComponents/RenderStatus";
+import { RoomeEditorCreator } from "./RoomEditorCreator";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { RoomInterface } from "../../features/Interfaces/Interfaces";
 
 export const Rooms: FC = () => {
   const dispatch = useAppDispatch();

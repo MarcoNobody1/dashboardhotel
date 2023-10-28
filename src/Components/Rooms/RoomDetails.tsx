@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { PageWrapper } from "../GeneralComponents";
+import { PageWrapper } from "../GeneralComponents/GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { roomIdStatus, roomdetailData } from "../features/Rooms/roomSlice";
-import { renderStatus } from "../Components/RenderStatus";
-import { useAppSelector } from "../app/hooks";
+import { roomIdStatus, roomdetailData } from "../../features/Rooms/roomSlice";
+import { renderStatus } from "../GeneralComponents/RenderStatus";
+import { useAppSelector } from "../../app/hooks";
 
 const BookingWrapper = styled.div`
   background-color: #fff;
