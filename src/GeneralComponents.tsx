@@ -268,8 +268,9 @@ export const TrashIcon = styled(BsTrash3)`
 
 export const Floater = styled.div`
   position: absolute;
-  top: -10%;
-  right: -15%;
+  top:  ${(props) => (props.datatype === "contacts" ? "5%" : props.datatype === "bookings" ? "-30%" : props.datatype === "users" ? "-12%" : props.datatype === "roomtrash" ? "-10%" : "25%")};
+  right: ${(props) => (props.datatype === "contacts" ? "-17%" : props.datatype === "rooms" ? "-11%" : props.datatype === "roomtrash" ? "-10%" : "-15%")};
+  
 `;
 
 const PendingWrapper = styled.div`
@@ -303,7 +304,7 @@ export const RenderError: FC = () => {
 
 };
 
-export const RenderGlassLoading: FC= () => {
+export const RenderGlassLoading: FC = () => {
   return (
     <PendingWrapper>
       <MagnifyingGlass
@@ -461,4 +462,31 @@ export const UpadtingTitle = styled(NewDataTitle)`
 font-weight: 400;
 font-size: 30px;
 font-style: italic;
+`;
+
+export const CommentWrapper = styled.div`
+height: 100px;
+max-width: 500px;
+overflow-x: hidden;
+overflow-y: scroll;
+padding: 0 10px;
+
+&::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f1f1f1;
+}
+
+&::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 15px;
+}
+
+&::-webkit-scrollbar-button {
+  display: none;
+
+}
+
+&::-webkit-scrollbar-corner {
+  border-radius: 15px;
+}
 `;
