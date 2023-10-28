@@ -2,20 +2,20 @@ import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { deleteData, get1Data } from "../features/Bookings/bookingThunks";
-import { AdNewContainer, CrossIcon, Floater, NewDataTitle, UpadtingTitle, formatDate } from "../GeneralComponents";
+import { AdNewContainer, CommentWrapper, CrossIcon, Floater, NewDataTitle, UpadtingTitle, formatDate } from "../GeneralComponents";
 import { BsPencilSquare, BsTrash3 } from "react-icons/bs";
 import { ColorRing, LineWave } from "react-loader-spinner";
 import { deleteRoomsData, get1RoomData } from "../features/Rooms/roomThunks";
 import { StatusDiv } from "./StatusDiv";
 import { bookingDeleteStatus } from "../features/Bookings/bookingSlice";
-import { roomdeleteStatus } from "../features/Rooms/roomSlice";
+import { roomUpdateStatus, roomdeleteStatus } from "../features/Rooms/roomSlice";
 import {
   archiveStatus,
   contactdeleteStatus,
 } from "../features/Contact/contactSlice";
-import { archiveData } from "../features/Contact/contactThunks";
+import { archiveData, deleteContactsData } from "../features/Contact/contactThunks";
 import Swal from "sweetalert2";
-import { userDeleteStatus } from "../features/Users/userSlice";
+import { userDeleteStatus, userUpdateStatus } from "../features/Users/userSlice";
 import { deleteUsersData, updateUserData } from '../features/Users/userThunks';
 import { BsTelephoneInbound } from "react-icons/bs";
 import { BookingInterface, ContactInterface, RoomInterface, UserInterface } from "../features/Interfaces/Interfaces";
@@ -72,7 +72,7 @@ const Th = styled.th<ThProps>`
   text-transform: capitalize;
   border-bottom: 2px solid #f5f5f5;
   width: ${(props) =>
-    props.header === "amenities" || props.header === "comment"
+    props.header === "amenities"
       ? "480px"
       : props.header === "availability" || props.header === "activity"
         ? "200px"
@@ -80,7 +80,9 @@ const Th = styled.th<ThProps>`
           ? "300px"
           : props.header === "job_description"
             ? "500px"
-            : "130px"};
+            : props.header === "comment"
+              ? "350px"
+              : "130px"};
 `;
 
 const Tr = styled.tr`
@@ -178,11 +180,15 @@ const EditIcon = styled(BsPencilSquare)`
   }
 `;
 
-const TrashIcon = styled(BsTrash3)`
+interface TrashProps {
+  datatype?: string
+}
+
+const TrashIcon = styled(BsTrash3) <TrashProps>`
   font-size: 20px;
   position: absolute;
-  top: 20%;
-  right: 10px;
+  top: ${(props) => (props.datatype === "contact" ? "40%" : props.datatype === "bookings" ? "35%" : "20%")};
+  right: ${(props) => (props.datatype === "bookings" ? "6%" : "10px")};
   color: #E3342C;
 
   &:hover {
@@ -369,6 +375,11 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           : userDeleteStatus
   );
   const archiveContactStatus = useAppSelector(archiveStatus);
+  const editStatus = useAppSelector(
+    dataType === "users"
+      ? userUpdateStatus
+      : roomUpdateStatus
+  );
 
   const headers =
     data.length > 0
@@ -401,18 +412,20 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       dispatch(deleteRoomsData(id));
     } else if (dataType === "users") {
       dispatch(deleteUsersData(id));
+    } else if (dataType === "contacts") {
+      dispatch(deleteContactsData(id))
     }
   };
 
   const handleOpenModal = (id: string, dataType: string) => {
-    if (dataType === "users"){
+    if (dataType === "users") {
       setSelectedUser(id);
-    setIsUserEditOpen(true);
-    } else if (dataType === "rooms"){
+      setIsUserEditOpen(true);
+    } else if (dataType === "rooms") {
       setSelectedRoom(id);
-    setIsRoomEditOpen(true);
+      setIsRoomEditOpen(true);
     }
-    
+
   }
 
   const handleArchiveComment = (id: string, archived: boolean) => {
@@ -494,7 +507,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     );
   };
 
-  const RoomEditor: FC<RoomEditorProps> = ({roomId, onCloseRoomEditor}) => {
+  const RoomEditor: FC<RoomEditorProps> = ({ roomId, onCloseRoomEditor }) => {
     const selectedRoom = (data as DataArray).find((room: TableRow) => {
       if (dataType === "rooms" && (room as RoomInterface).room_name) {
         return (room as RoomInterface).room_name.id === roomId;
@@ -519,7 +532,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     );
   };
 
-  type Header = "guest" | "special_request" | "room" | "status" | "availability" | "offer_price" | "price" | "amenities" | "room_name" | "date" | "customer" | "subject" | "archived" | "name" | "activity" | "job_description" | "contact";
+  type Header = "guest" | "special_request" | "room" | "status" | "availability" | "offer_price" | "price" | "amenities" | "room_name" | "date" | "customer" | "subject" | "archived" | "name" | "activity" | "job_description" | "contact" | "comment";
 
   type RowData = {
     guest: {
@@ -565,6 +578,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     activity: string;
     job_description: string;
     contact: string;
+    comment: string;
   };
 
   const cellRenderer = (header: Header, rowData: RowData) => {
@@ -600,11 +614,11 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "status":
         const trashIcon =
           statusInfo === "fulfilled" ? (
-            <TrashIcon onClick={() => handleDelete(rowData.guest.id_reserva)} />
+            <TrashIcon datatype="bookings" onClick={() => handleDelete(rowData.guest.id_reserva)} />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
-            <Floater>
+            <Floater datatype="bookings">
               <LineWave
                 height="80"
                 width="80"
@@ -632,10 +646,10 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
-            <Floater>
+            <Floater datatype="roomtrash">
               <LineWave
-                height="80"
-                width="80"
+                height="60"
+                width="60"
                 color=""
                 ariaLabel="line-wave"
                 wrapperClass=""
@@ -646,16 +660,16 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
               />
             </Floater>
           );
-          const EditRoomIcon =
-          statusInfo === "fulfilled" ? (
+        const EditRoomIcon =
+          editStatus === "fulfilled" ? (
             <EditIcon onClick={() => handleOpenModal(rowData.room_name.id, dataType)} />
-          ) : statusInfo === "rejected" ? (
+          ) : editStatus === "rejected" ? (
             <EditIcon style={{ color: "#e9d7d7" }} />
           ) : (
-            <Floater>
+            <Floater datatype="rooms">
               <LineWave
-                height="80"
-                width="80"
+                height="60"
+                width="60"
                 color=""
                 ariaLabel="line-wave"
                 wrapperClass=""
@@ -736,10 +750,29 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
 
       case "subject":
         return (
-          <InfoWrap style={{ fontWeight: 600 }}>{rowData.subject}</InfoWrap>
+          <InfoWrap>{rowData.subject}</InfoWrap>
         );
 
       case "archived":
+
+        const trashContactIcon =
+          statusInfo === "fulfilled" ? (
+            <TrashIcon datatype="contact" onClick={() => handleDelete(rowData.date.id)} />
+          ) : statusInfo === "rejected" ? (
+            <TrashIcon style={{ color: "#e9d7d7" }} />
+          ) : (
+            <Floater datatype="contacts">
+              <LineWave
+                height="80"
+                width="80"
+                ariaLabel="line-wave"
+                visible={true}
+                firstLineColor="#113C30"
+                middleLineColor="#517A6F"
+                lastLineColor="#E3342C"
+              />
+            </Floater>
+          );
         const statusContact = () => {
           if (archiveContactStatus === "rejected") {
             const Toast = Swal.mixin({
@@ -783,18 +816,21 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         };
 
         return (
-          <StatusButton
-            onClick={() =>
-              handleArchiveComment(rowData.date.id, rowData.archived)
-            }
-            style={{
-              backgroundColor: rowData.archived ? "#e8ffee" : "#FFEDEC",
-              color: rowData.archived ? "#5ad07a" : "#E23428",
-              maxWidth: "130px",
-            }}
-          >
-            {statusContact()}
-          </StatusButton>
+          <>
+            <StatusButton
+              onClick={() =>
+                handleArchiveComment(rowData.date.id, rowData.archived)
+              }
+              style={{
+                backgroundColor: rowData.archived ? "#e8ffee" : "#FFEDEC",
+                color: rowData.archived ? "#5ad07a" : "#E23428",
+                maxWidth: "130px",
+              }}
+            >
+              {statusContact()}
+            </StatusButton>
+            {trashContactIcon}
+          </>
         );
 
       case "name":
@@ -819,7 +855,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
-            <Floater>
+            <Floater datatype="users">
               <LineWave
                 height="80"
                 width="80"
@@ -835,9 +871,9 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           );
 
         const EditUserIcon =
-          statusInfo === "fulfilled" ? (
+          editStatus === "fulfilled" ? (
             <EditIcon onClick={() => handleOpenModal(rowData.name.id, dataType)} />
-          ) : statusInfo === "rejected" ? (
+          ) : editStatus === "rejected" ? (
             <EditIcon style={{ color: "#e9d7d7" }} />
           ) : (
             <Floater>
@@ -874,6 +910,12 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
             </UserLink>
           </UserDataWrap>
         );
+      case "comment":
+        return (
+          <>
+            <CommentWrapper>{rowData.comment}</CommentWrapper>
+          </>
+        )
 
       default:
         return rowData[header];
