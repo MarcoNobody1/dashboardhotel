@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   contactdetailData,
   detailStatus,
@@ -14,6 +14,7 @@ import { get1ContactData } from "../../features/Contact/contactThunks";
 import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { FC } from 'react';
+import { ThemeContext } from "../../Context/ToggleTheme";
 
 const FullName = styled.h5`
   text-align: left;
@@ -49,6 +50,7 @@ export const CommentModal: FC<CommentModalProps>= ({ idContact, onClose }) => {
   const selectedContact = useAppSelector(contactdetailData);
   const detailContactStatus = useAppSelector(detailStatus);
   const dispatch = useAppDispatch();
+  const { dark } = useContext(ThemeContext);
 
   useEffect(() => {
     dispatch(get1ContactData(idContact));
@@ -56,11 +58,11 @@ export const CommentModal: FC<CommentModalProps>= ({ idContact, onClose }) => {
 
   const data = () => {
     return ( <>
-      <FullName>{selectedContact.customer.name}</FullName>
+      <FullName style={{color: dark.dark ? "#FFF" : "#262626"}}>{selectedContact.customer.name}</FullName>
       <EmailAddress>{selectedContact.customer.email}</EmailAddress>
       <PhoneNumber>{selectedContact.customer.phone}</PhoneNumber>
-      <Subject>{selectedContact.subject}</Subject>
-      <ModalContent>{selectedContact.comment}</ModalContent>
+      <Subject style={{color: dark.dark ? "#FFF" : "#262626"}}>{selectedContact.subject}</Subject>
+      <ModalContent style={{color: dark.dark ? "#FFF" : "#262626"}}>{selectedContact.comment}</ModalContent>
     </>);
   }
 
@@ -68,10 +70,10 @@ export const CommentModal: FC<CommentModalProps>= ({ idContact, onClose }) => {
   return (
     <>
       <ModalBackground>
-        <ModalContainer>
+        <ModalContainer style={{backgroundColor: dark.dark ? "#262626" : "#FFF" }}>
           <CrossIcon onClick={onClose} />
           {renderStatus(detailContactStatus, data)}
-        </ModalContainer>
+        </ModalContainer >
       </ModalBackground>
     </>
   );

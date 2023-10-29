@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsArrowsFullscreen, BsFillBookmarkCheckFill } from "react-icons/bs";
 import { CommentContainer, MessageContent } from "../GeneralComponents/GeneralComponents";
@@ -13,13 +13,14 @@ import {
 import { CommentModal } from "./CommentsModal";
 import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { ThemeContext } from "../../Context/ToggleTheme";
 
 const CommentsWrapper = styled.div`
   min-width: 360px;
   min-height: 190px;
-  background-color: #fff;
   display: flex;
   gap: 40px;
+  transition: all 0.25s ease-in-out;
 `;
 
 const IconWrapper = styled.div`
@@ -53,7 +54,7 @@ const FullName = styled.h5`
   text-align: left;
   font: normal normal 600 16px/25px Poppins;
   letter-spacing: 0px;
-  color: #262626;
+  transition: all 0.25s ease-in-out;
 `;
 
 const EmailAddress = styled.p`
@@ -72,6 +73,7 @@ const Subject = styled(FullName)`
   font: normal normal 600 14px/25px Poppins;
   text-align: right;
   margin-bottom: 10px;
+  transition: all 0.25s ease-in-out;
 `;
 
 interface Comment {
@@ -94,6 +96,7 @@ export const Comments: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentId, setCurrentId] = useState("");
   const dispatch = useAppDispatch();
+  const { dark } = useContext(ThemeContext);
 
   useEffect(() => {
     dispatch(getContactsData());
@@ -112,9 +115,9 @@ export const Comments: FC = () => {
     return (
       <>
         {infoContacts.map((contact) => (
-          <CommentContainer archived={contact.archived}  key={contact.date.id}>
+          <CommentContainer dark={dark.dark} style={{backgroundColor: dark.dark ? "#202020" : "#FFF", border: dark.dark ?  "1px solid #3D3D3D" : "1px solid #ebebeb"}} archived={contact.archived}  key={contact.date.id}>
             <>
-              <FullName>{contact.customer.name}</FullName>
+              <FullName style={{color: dark.dark ? "#FFF" : "#262626"}}>{contact.customer.name}</FullName>
               <IconWrapper>
                 <ReadIcon archived={contact.archived.toString()} /> 
                 <FullscreenIcon
@@ -125,8 +128,8 @@ export const Comments: FC = () => {
               </IconWrapper>
               <EmailAddress>{contact.customer.email}</EmailAddress>
               <PhoneNumber>{contact.customer.phone}</PhoneNumber>
-              <Subject>{contact.subject}</Subject>
-              <MessageContent>{contact.comment}</MessageContent>
+              <Subject style={{color: dark.dark ? "#FFF" : "#262626"}}>{contact.subject}</Subject>
+              <MessageContent style={{color: dark.dark ? "#FFF" : "#6e6e6e"}}>{contact.comment}</MessageContent>
             </>
           </CommentContainer>
         ))}
@@ -136,7 +139,7 @@ export const Comments: FC = () => {
 
   return (
     <>
-      <CommentsWrapper>{renderStatus(statusInfo, data)}</CommentsWrapper>
+      <CommentsWrapper style={{  backgroundColor: dark.dark ? "#202020" : "#fff"}}>{renderStatus(statusInfo, data)}</CommentsWrapper>
       {isModalOpen && (
         <CommentModal
           idContact={currentId}

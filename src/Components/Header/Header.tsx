@@ -21,6 +21,7 @@ const OuterWrap = styled.nav<ThemeProps>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  box-shadow: 0px 3px 10px #00000005;
   transition: all 0.25s ease-in-out;
 `;
 

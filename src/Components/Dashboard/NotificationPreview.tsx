@@ -1,16 +1,22 @@
+import { useContext } from 'react';
 import styled from "styled-components";
 import { DefaultIcon } from "../GeneralComponents/GeneralComponents";
 import { useNavigate } from "react-router";
 import { FC } from "react";
+import { ThemeContext } from "../../Context/ToggleTheme";
 
-const ImageWrapper = styled.div`
+interface ImageWrapperInterface {
+  dark?: boolean
+}
+
+const ImageWrapper = styled.div<ImageWrapperInterface>`
   padding: 20px;
   display: flex;
   align-items: center;
-  background-color: #ffedec;
   border-radius: 8px;
   transition: all 0.3s ease-out;
   margin-right: 22px;
+  background-color: ${(props) => props.dark ? "#E234281C" : "#ffedec"};
 `;
 
 const NotificationIcon = styled(DefaultIcon)`
@@ -19,13 +25,12 @@ const NotificationIcon = styled(DefaultIcon)`
 
 const NotificationOuter = styled.div`
   width: 340px;
-  background: #ffffff;
   box-shadow: 0px 4px 4px #00000005;
   border-radius: 12px;
   padding: 30px;
   display: inline-block;
   margin-right: 20px;
-  transition: all 0.3s ease-out;
+  transition: all 0.25s ease-in-out;
   cursor: pointer;
 
   &:hover {
@@ -65,8 +70,8 @@ const NotificationNumber = styled.h5`
   text-align: left;
   font: normal normal 600 30px/46px Poppins;
   letter-spacing: 0px;
-  color: #393939;
   user-select: none;
+  transition: all 0.25s ease-in-out;
 `;
 
 const NotificationType = styled.p`
@@ -86,24 +91,26 @@ interface NotificationProps {
   number: string;
   text: string;
 }
-
 export const Notification: FC<NotificationProps> = (props) => {
   const Icon = () => <NotificationIcon as={props.icon} />;
   const nav = useNavigate();
+  const { dark } = useContext(ThemeContext);
+
 
   return (
     <>
       <NotificationOuter
+        style={{ backgroundColor: dark.dark ? "#202020" : "#FFF" }}
         onClick={() => {
           nav("/bookings");
         }}
       >
         <NotificationWrapper>
-          <ImageWrapper>
+          <ImageWrapper dark={dark.dark}>
             <Icon />
           </ImageWrapper>
           <ContentWrap>
-            <NotificationNumber>{props.number}</NotificationNumber>
+            <NotificationNumber style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}>{props.number}</NotificationNumber>
             <NotificationType>{props.text}</NotificationType>
           </ContentWrap>
         </NotificationWrapper>
