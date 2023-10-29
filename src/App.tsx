@@ -14,42 +14,45 @@ import { ToggleContainer } from "./Context/ToggleSidebar";
 import RoomDetails from "./Components/Rooms/RoomDetails";
 import { InnerLayout, Layout } from "./Components/GeneralComponents/GeneralComponents";
 import { FC } from 'react';
+import { DarkContainer } from "./Context/ToggleTheme";
 
 export const App: FC = () => {
   return (
     <BrowserRouter>
-      <AuthContainer>
-        <ToggleContainer>
-          <Layout>
-            <Sidebar />
-            <InnerLayout>
-            <Header />
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route
-                path="/*"
-                element={
-                  <PrivateRoute>
-                    <Routes>
-                      <Route index element={<Dashboard />} />
-                      <Route path="/bookings" element={<Bookings />} />
-                      <Route
-                        path="/bookings/:id"
-                        element={<BookingDetails />}
-                      />
-                      <Route path="/rooms" element={<Rooms />} />
-                      <Route path="/rooms/:id" element={<RoomDetails />} />
-                      <Route path="/contact" element={<Contact />} />
-                      <Route path="/users" element={<Users />} />
-                    </Routes>
-                  </PrivateRoute>
-                }
-              />
-            </Routes>
-            </InnerLayout>
-          </Layout>
-        </ToggleContainer>
-      </AuthContainer>
+      <DarkContainer>
+        <AuthContainer>
+          <ToggleContainer>
+            <Layout>
+              <Sidebar />
+              <InnerLayout>
+                <Header />
+                <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route
+                    path="/*"
+                    element={
+                      <PrivateRoute>
+                        <Routes>
+                          <Route index element={<Dashboard />} />
+                          <Route path="/bookings" element={<Bookings />} />
+                          <Route
+                            path="/bookings/:id"
+                            element={<BookingDetails />}
+                          />
+                          <Route path="/rooms" element={<Rooms />} />
+                          <Route path="/rooms/:id" element={<RoomDetails />} />
+                          <Route path="/contact" element={<Contact />} />
+                          <Route path="/users" element={<Users />} />
+                        </Routes>
+                      </PrivateRoute>
+                    }
+                  />
+                </Routes>
+              </InnerLayout>
+            </Layout>
+          </ToggleContainer>
+        </AuthContainer>
+      </DarkContainer>
     </BrowserRouter>
   );
 };
