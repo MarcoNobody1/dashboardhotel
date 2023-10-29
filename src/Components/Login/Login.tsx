@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, ChangeEvent, FormEvent } from "react";
 import styled from "styled-components";
-import logo from "../assets/LogoHotelHub.png";
+import logo from "../../assets/LogoHotelHub.png";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/Auth";
