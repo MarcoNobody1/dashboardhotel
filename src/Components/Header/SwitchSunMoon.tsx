@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { FC } from 'react';
 import { ThemeContext } from "../../Context/ToggleTheme";
+import { is } from "cypress/types/bluebird";
 
 const ThemeToggleButton = styled.label`
   font-size: 8px;
@@ -90,16 +91,15 @@ const Toggle = styled.input`
 
 export const SwitchSunMoon: FC = () => {
     const [isChecked, setIsChecked] = useState(false);
-    const { darkDispatch } = useContext(ThemeContext);
+    const { dark, darkDispatch } = useContext(ThemeContext);
     const handleToggleChange = () => {
         setIsChecked(!isChecked);
-        console.log(isChecked)
         darkDispatch({type: 'dark'})
     };
 
     return (
         <ThemeToggleButton>
-            <Toggle name="darkModeToggle" type="checkbox" onChange={() => handleToggleChange()} />
+            <Toggle name="darkModeToggle" type="checkbox" checked={dark.dark} onChange={() => handleToggleChange()} />
             <svg
                 viewBox="0 0 69.667 44"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
