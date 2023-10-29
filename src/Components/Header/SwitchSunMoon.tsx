@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { FC } from 'react';
 import { ThemeContext } from "../../Context/ToggleTheme";
-import { is } from "cypress/types/bluebird";
 
 const ThemeToggleButton = styled.label`
   font-size: 8px;
@@ -89,7 +88,10 @@ const Toggle = styled.input`
   }
 `;
 
-export const SwitchSunMoon: FC = () => {
+interface SwtichInterface {
+    absolute?: boolean
+}
+export const SwitchSunMoon: FC<SwtichInterface>= ({absolute}) => {
     const [isChecked, setIsChecked] = useState(false);
     const { dark, darkDispatch } = useContext(ThemeContext);
     const handleToggleChange = () => {
@@ -98,7 +100,7 @@ export const SwitchSunMoon: FC = () => {
     };
 
     return (
-        <ThemeToggleButton>
+        <ThemeToggleButton style={absolute ? {position:"absolute", top:"22%", right:"47%"} : {}}>
             <Toggle name="darkModeToggle" type="checkbox" checked={dark.dark} onChange={() => handleToggleChange()} />
             <svg
                 viewBox="0 0 69.667 44"
