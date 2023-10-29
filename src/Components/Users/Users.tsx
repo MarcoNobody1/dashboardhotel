@@ -7,11 +7,11 @@ import {
   NewDataTitle,
   PageWrapper,
   UserSearchInput,
-} from "../GeneralComponents";
-import { getUsersData } from "../features/Users/userThunks";
-import { usersInfo, usersStatusinfo } from "../features/Users/userSlice";
+} from "../GeneralComponents/GeneralComponents";
+import { getUsersData } from "../../features/Users/userThunks";
+import { usersInfo, usersStatusinfo } from "../../features/Users/userSlice";
 import styled from "styled-components";
-import DynamicTable from "../Components/DynamicTable";
+import DynamicTable from "../GeneralComponents/DynamicTable";
 import {
   ButtonFilter,
   ButtonsContainer,
@@ -19,12 +19,12 @@ import {
   OptionSelect,
   OuterContainer,
   SelectorFilter,
-} from "../GeneralComponents";
-import { renderStatus } from "../Components/RenderStatus";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+} from "../GeneralComponents/GeneralComponents";
+import { renderStatus } from "../GeneralComponents/RenderStatus";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { FC } from 'react';
-import { UserInterface } from "../features/Interfaces/Interfaces";
-import { UserEditorCreator } from "../Components/Users/UserEditorCreator";
+import { UserInterface } from "../../features/Interfaces/Interfaces";
+import { UserEditorCreator } from "./UserEditorCreator";
 
 const TableContainer = styled.div`
   display: flex;

@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
-import { ButtonAdNew } from "../../GeneralComponents";
+import { ButtonAdNew } from "../GeneralComponents/GeneralComponents";
 import { userPhotos } from "../../data/createNewPhotos";
 import { addUserData, updateUserData } from "../../features/Users/userThunks";
 import Swal from "sweetalert2";

@@ -1,27 +1,27 @@
 import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { deleteData, get1Data } from "../features/Bookings/bookingThunks";
-import { AdNewContainer, CommentWrapper, CrossIcon, Floater, NewDataTitle, UpadtingTitle, formatDate } from "../GeneralComponents";
+import { deleteData, get1Data } from "../../features/Bookings/bookingThunks";
+import { AdNewContainer, CommentWrapper, CrossIcon, Floater, NewDataTitle, UpdatingTitle, formatDate } from "./GeneralComponents";
 import { BsPencilSquare, BsTrash3 } from "react-icons/bs";
 import { ColorRing, LineWave } from "react-loader-spinner";
-import { deleteRoomsData, get1RoomData } from "../features/Rooms/roomThunks";
+import { deleteRoomsData, get1RoomData } from "../../features/Rooms/roomThunks";
 import { StatusDiv } from "./StatusDiv";
-import { bookingDeleteStatus } from "../features/Bookings/bookingSlice";
-import { roomUpdateStatus, roomdeleteStatus } from "../features/Rooms/roomSlice";
+import { bookingDeleteStatus } from "../../features/Bookings/bookingSlice";
+import { roomUpdateStatus, roomdeleteStatus } from "../../features/Rooms/roomSlice";
 import {
   archiveStatus,
   contactdeleteStatus,
-} from "../features/Contact/contactSlice";
-import { archiveData, deleteContactsData } from "../features/Contact/contactThunks";
+} from "../../features/Contact/contactSlice";
+import { archiveData, deleteContactsData } from "../../features/Contact/contactThunks";
 import Swal from "sweetalert2";
-import { userDeleteStatus, userUpdateStatus } from "../features/Users/userSlice";
-import { deleteUsersData, updateUserData } from '../features/Users/userThunks';
+import { userDeleteStatus, userUpdateStatus } from "../../features/Users/userSlice";
+import { deleteUsersData, updateUserData } from '../../features/Users/userThunks';
 import { BsTelephoneInbound } from "react-icons/bs";
-import { BookingInterface, ContactInterface, RoomInterface, UserInterface } from "../features/Interfaces/Interfaces";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { UserEditorCreator } from "./Users/UserEditorCreator";
-import { RoomeEditorCreator } from "./Rooms/RoomEditorCreator";
+import { BookingInterface, ContactInterface, RoomInterface, UserInterface } from "../../features/Interfaces/Interfaces";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { UserEditorCreator } from "../Users/UserEditorCreator";
+import { RoomeEditorCreator } from "../Rooms/RoomEditorCreator";
 
 const bookingTitles = [
   "Guest",
@@ -496,7 +496,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <FloatCross onClick={onCloseUserEditor} />
           {selectedUser && dataType === "users" ? (
             <>
-              <UpadtingTitle>Updating #{(selectedUser as UserInterface).name.id}  User:</UpadtingTitle>
+              <UpdatingTitle>Updating #{(selectedUser as UserInterface).name.id}  User:</UpdatingTitle>
               <UserEditorCreator select={selectedUser as UserInterface} closeModal={onCloseUserEditor} />
             </>
           ) : (
@@ -521,7 +521,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <FloatCross onClick={onCloseRoomEditor} />
           {selectedRoom && dataType === "rooms" ? (
             <>
-              <UpadtingTitle>Updating #{(selectedRoom as RoomInterface).room_name.id}  Room:</UpadtingTitle>
+              <UpdatingTitle>Updating #{(selectedRoom as RoomInterface).room_name.id}  Room:</UpdatingTitle>
               <RoomeEditorCreator select={selectedRoom as RoomInterface} closeModal={onCloseRoomEditor} />
             </>
           ) : (

@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsArrowsFullscreen, BsFillBookmarkCheckFill } from "react-icons/bs";
-import { CommentContainer, MessageContent } from "../../GeneralComponents";
+import { CommentContainer, MessageContent } from "../GeneralComponents/GeneralComponents";
 import {
   contactsInfo,
   contactstatusinfo,
@@ -11,7 +11,7 @@ import {
   getContactsData,
 } from "../../features/Contact/contactThunks";
 import { CommentModal } from "./CommentsModal";
-import { renderStatus } from "../RenderStatus";
+import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const CommentsWrapper = styled.div`

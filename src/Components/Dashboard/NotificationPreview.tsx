@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DefaultIcon } from "../../GeneralComponents";
+import { DefaultIcon } from "../GeneralComponents/GeneralComponents";
 import { useNavigate } from "react-router";
 import { FC } from "react";
 

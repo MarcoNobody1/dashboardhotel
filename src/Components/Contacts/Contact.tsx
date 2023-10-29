@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from "react";
-import { PageWrapper } from "../GeneralComponents";
+import { PageWrapper } from "../GeneralComponents/GeneralComponents";
 import { CommentsContainer } from "../Dashboard/Dashboard";
-import { Comments } from "../Components/Contacts/CommentsPreview";
-import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SelectorFilter, TableContainer } from "../GeneralComponents";
-import { contactsInfo, contactstatusinfo } from "../features/Contact/contactSlice";
-import { getContactsData } from "../features/Contact/contactThunks";
-import DynamicTable from "../Components/DynamicTable";
-import { renderStatus } from "../Components/RenderStatus";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { Comments } from "./CommentsPreview";
+import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, SelectorFilter, TableContainer } from "../GeneralComponents/GeneralComponents";
+import { contactsInfo, contactstatusinfo } from "../../features/Contact/contactSlice";
+import { getContactsData } from "../../features/Contact/contactThunks";
+import DynamicTable from "../GeneralComponents/DynamicTable";
+import { renderStatus } from "../GeneralComponents/RenderStatus";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export const Contact: FC = () => {
   const infoContacts = useAppSelector(contactsInfo);

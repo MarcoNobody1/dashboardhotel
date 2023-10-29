@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
 import { FC, useContext } from "react";
 import { BsTrash3 } from "react-icons/bs";
-import { ToggleContext } from "./Sidebar/ToggleSidebar";
+import { ToggleContext } from "../../Context/ToggleSidebar";
 import Swal from "sweetalert2";
 import { MagnifyingGlass } from "react-loader-spinner";
-import searchIcon from "./assets/iconSearchBar.png";
+import searchIcon from "../../assets/iconSearchBar.png";
 
 export const formatDate = (inputDate: Date | string) => {
   const months: string[] = [
@@ -458,7 +458,7 @@ export const NewDataTitle = styled.p`
   flex: 1;
 `;
 
-export const UpadtingTitle = styled(NewDataTitle)`
+export const UpdatingTitle = styled(NewDataTitle)`
 font-weight: 400;
 font-size: 30px;
 font-style: italic;

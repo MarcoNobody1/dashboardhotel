@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { FC } from 'react';
+import { ThemeContext } from "../../Context/ToggleTheme";
 
 const ThemeToggleButton = styled.label`
   font-size: 8px;
@@ -89,10 +90,11 @@ const Toggle = styled.input`
 
 export const SwitchSunMoon: FC = () => {
     const [isChecked, setIsChecked] = useState(false);
-
+    const { darkDispatch } = useContext(ThemeContext);
     const handleToggleChange = () => {
         setIsChecked(!isChecked);
         console.log(isChecked)
+        darkDispatch({type: 'dark'})
     };
 
     return (

@@ -9,9 +9,9 @@ import {
   ModalContent,
   ModalBackground,
   ModalContainer
-} from "../../GeneralComponents";
+} from "../GeneralComponents/GeneralComponents";
 import { get1ContactData } from "../../features/Contact/contactThunks";
-import { renderStatus } from "../RenderStatus";
+import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { FC } from 'react';
 

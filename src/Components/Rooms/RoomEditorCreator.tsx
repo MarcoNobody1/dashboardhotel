@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
-import { ButtonAdNew } from "../../GeneralComponents";
+import { ButtonAdNew } from "../GeneralComponents/GeneralComponents";
 import { roomAmenities, roomAmenitiesInterface } from "../../data/roomAmenities";
 import { roomPhotos } from "../../data/createNewPhotos";
 import { addRoomData, updateRoomData } from "../../features/Rooms/roomThunks";
