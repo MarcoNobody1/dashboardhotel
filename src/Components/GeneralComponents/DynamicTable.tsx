@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { deleteData, get1Data } from "../../features/Bookings/bookingThunks";
-import { AdNewContainer, CommentWrapper, CrossIcon, Floater, NewDataTitle, UpadtingTitle, formatDate } from "./GeneralComponents";
+import { AdNewContainer, CommentWrapper, CrossIcon, Floater, NewDataTitle, UpdatingTitle, formatDate } from "./GeneralComponents";
 import { BsPencilSquare, BsTrash3 } from "react-icons/bs";
 import { ColorRing, LineWave } from "react-loader-spinner";
 import { deleteRoomsData, get1RoomData } from "../../features/Rooms/roomThunks";
@@ -496,7 +496,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <FloatCross onClick={onCloseUserEditor} />
           {selectedUser && dataType === "users" ? (
             <>
-              <UpadtingTitle>Updating #{(selectedUser as UserInterface).name.id}  User:</UpadtingTitle>
+              <UpdatingTitle>Updating #{(selectedUser as UserInterface).name.id}  User:</UpdatingTitle>
               <UserEditorCreator select={selectedUser as UserInterface} closeModal={onCloseUserEditor} />
             </>
           ) : (
@@ -521,7 +521,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <FloatCross onClick={onCloseRoomEditor} />
           {selectedRoom && dataType === "rooms" ? (
             <>
-              <UpadtingTitle>Updating #{(selectedRoom as RoomInterface).room_name.id}  Room:</UpadtingTitle>
+              <UpdatingTitle>Updating #{(selectedRoom as RoomInterface).room_name.id}  Room:</UpdatingTitle>
               <RoomeEditorCreator select={selectedRoom as RoomInterface} closeModal={onCloseRoomEditor} />
             </>
           ) : (
