@@ -80,7 +80,7 @@ export const Header: FC = () => {
   },[location.pathname])
 
   if (!auth.authenticated) {
-    return null;
+    return <SwitchSunMoon absolute={true}/>;
   }
 
   const handleLogOut = () => {
@@ -99,7 +99,7 @@ export const Header: FC = () => {
           <MenuIcon />
         </IconWrap>
         <Title dark={dark.dark}>{title}</Title>
-        <SwitchSunMoon/>
+        <SwitchSunMoon absolute={false}/>
         <IconWrap>
           <MessageIcon />
         </IconWrap>
