@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -6,7 +5,7 @@ import {
   formatDate,
 } from "../GeneralComponents/GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
-import room from "../assets/hotelRoom.jpg";
+import room from "../../assets/hotelRoom.jpg";
 import {
   bookingIdStatus,
   detailData,
