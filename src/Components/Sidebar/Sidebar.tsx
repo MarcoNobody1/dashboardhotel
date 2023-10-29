@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import logo from "../../assets/LogoHotelHub.png";
+import logoDark from "../../assets/LogoDarkHotelHub.png";
 import { DefaultIcon } from "../GeneralComponents/GeneralComponents";
 import {
   LuLayoutDashboard,
@@ -13,12 +14,12 @@ import { UserCard } from "./UserCard";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../Context/Auth";
 import { ToggleContext } from "../../Context/ToggleSidebar";
+import { ThemeContext } from "../../Context/ToggleTheme";
 
 const NavWrap = styled.aside`
   min-width: 345px;
-  background-color: #fff;
   text-align: center;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease-in-out;
 `;
 
 const Logo = styled.img`
@@ -27,6 +28,7 @@ const Logo = styled.img`
   width: 300px;
   height: auto;
   margin-bottom: 20px;
+  transition: all 0.25s ease-in-out;
 `;
 
 const OptionWrapper = styled(NavLink)`
@@ -92,6 +94,7 @@ const FooterName = styled.p`
   letter-spacing: 0px;
   color: #212121;
   text-transform: capitalize;
+  transition: all 0.25s ease-in-out;
 `;
 
 const FooterRights = styled.p`
@@ -108,6 +111,7 @@ const FooterFinal = styled(FooterRights)`
 export const Sidebar = () => {
   const { auth } = useContext(AuthContext);
   const { toggle } = useContext(ToggleContext);
+  const { dark } = useContext(ThemeContext);
 
   if (!auth.authenticated) {
     return null;
@@ -118,9 +122,10 @@ export const Sidebar = () => {
       <NavWrap
         style={{
           marginLeft: toggle.toggle ? "-345px" : "0",
+          backgroundColor: dark.dark ? "#202020" : "#FFF",
         }}
       >
-        <Logo src={logo} />
+        <Logo src= {dark.dark ? logoDark : logo} />
         <OptionWrapper to="/" title="dashboard">
           <DashboardIcon />
           <OptionTitle>Dashboard</OptionTitle>
@@ -143,7 +148,7 @@ export const Sidebar = () => {
         </OptionWrapper>
         <UserCard />
         <Footer>
-          <FooterName>hotelHub admin dashboard</FooterName>
+          <FooterName style={{color: dark.dark ? "#FFF" : "#212121"}}>hotelHub admin dashboard</FooterName>
           <FooterRights>© 2023 All Rights Reserved</FooterRights>
         </Footer>
         <FooterFinal>Made with ♥ by MarcoNobody</FooterFinal>

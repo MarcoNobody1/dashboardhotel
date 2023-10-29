@@ -1,24 +1,25 @@
-import React, { useState, useContext, useEffect, ChangeEvent, FormEvent } from "react";
+import { useState, useContext, useEffect, ChangeEvent, FormEvent } from "react";
 import styled from "styled-components";
 import logo from "../../assets/LogoHotelHub.png";
+import logoDark from "../../assets/LogoDarkHotelHub.png";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/Auth";
+import { ThemeContext } from "../../Context/ToggleTheme";
 
 const LogWrapper = styled.div`
-  background-color: lightcyan;
   height: 930px;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 250ms ease-in-out;
 `;
 
 const LogForm = styled.form`
-  border: 1px solid black;
   padding: 20px;
   text-align: center;
   border-radius: 15px;
-  background-color: #f8f8f8;
+  transition: all 250ms ease-in-out;
 `;
 
 export const Input = styled.input.attrs((props) => ({
@@ -31,7 +32,6 @@ export const Input = styled.input.attrs((props) => ({
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 5px;
-  border: 2px solid black;
   transition: all 0.3s ease-out;
 
   &:hover {
@@ -43,6 +43,7 @@ export const Input = styled.input.attrs((props) => ({
 const Label = styled.label`
   display: block;
   margin-bottom: 10px;
+  transition: all 0.25s ease-in-out;
 `;
 
 const Button = styled.button`
@@ -67,11 +68,13 @@ const Button = styled.button`
 const Logo = styled.img`
   width: 220px;
   margin-bottom: 10px;
+  transition: all 0.25s ease-in-out;
 `;
 
 const Advertice = styled.p`
   font-size: 0.7rem;
   display: inline-block;
+  transition: all 0.25s ease-in-out;
 `;
 
 export const Login = () => {
@@ -79,15 +82,16 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const nav = useNavigate();
   const { auth, authDispatch } = useContext(AuthContext);
+  const { dark } = useContext(ThemeContext);
 
   useEffect(() => {
     if (auth && auth.authenticated) {
       nav("/");
-      
+
     }
   }, [auth, nav]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>):void => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     if (email === "marcocamaradiaz@gmail.com" && password === "Marco") {
@@ -95,7 +99,7 @@ export const Login = () => {
         type: "login",
         payload: { username: password, email: email },
       });
-      
+
       nav("/");
     } else {
       const Toast = Swal.mixin({
@@ -114,21 +118,22 @@ export const Login = () => {
     }
   };
 
-  const handleEmail = (event: ChangeEvent<HTMLInputElement>):void => {
+  const handleEmail = (event: ChangeEvent<HTMLInputElement>): void => {
     setEmail(event.target.value);
   };
 
-  const handlePassword = (event: ChangeEvent<HTMLInputElement>):void => {
+  const handlePassword = (event: ChangeEvent<HTMLInputElement>): void => {
     setPassword(event.target.value);
   };
 
   return (
     <>
-      <LogWrapper>
-        <LogForm onSubmit={handleSubmit}>
-          <Logo src={logo} />
-          <Label htmlFor="email">Email:</Label>
+      <LogWrapper style={{ backgroundColor: dark.dark ? "#171717" : "lightcyan" }}>
+        <LogForm style={{ backgroundColor: dark.dark ? "#202020" : "#f8f8f8", border: dark.dark ? "1px solid #3D3D3D" : "1px solid black" }} onSubmit={handleSubmit}>
+          <Logo src={dark.dark ? logoDark : logo} />
+          <Label style={{ color: dark.dark ? "#FFEDEC" : "#393939" }} htmlFor="email">Email:</Label>
           <Input
+            style={{ color: dark.dark ? "#FFEDEC" : "#393939", border: dark.dark ? "2px solid #FFF" : "2px solid black", backgroundColor: dark.dark ? "#000" : "#FFF" }}
             data-cy="usernameInput"
             onChange={handleEmail}
             id="email"
@@ -136,9 +141,10 @@ export const Login = () => {
             placeholder="Type your e-mail"
             autoComplete="on"
           />
-          <Label htmlFor="password">Password:</Label>
+          <Label style={{ color: dark.dark ? "#FFEDEC" : "#393939" }} htmlFor="password">Password:</Label>
           <Input
-          data-cy="passwordInput"
+            style={{ color: dark.dark ? "#FFEDEC" : "#393939", border: dark.dark ? "2px solid #FFF" : "2px solid black", backgroundColor: dark.dark ? "#000" : "#FFF" }}
+            data-cy="passwordInput"
             onChange={handlePassword}
             id="password"
             type="password"
@@ -146,13 +152,13 @@ export const Login = () => {
             autoComplete="on"
           />
           <Button data-cy="loginButton" type="submit">Log In</Button>
-          <Advertice>
+          <Advertice style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}>
             <strong>Hint:</strong>
           </Advertice>
           <br />
-          <Advertice> Email: marcocamaradiaz@gmail.com </Advertice>
+          <Advertice style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}> Email: marcocamaradiaz@gmail.com </Advertice>
           <br />
-          <Advertice>Password: Marco</Advertice>
+          <Advertice style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}>Password: Marco</Advertice>
         </LogForm>
       </LogWrapper>
     </>
