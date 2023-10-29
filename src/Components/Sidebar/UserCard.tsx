@@ -7,6 +7,7 @@ import {
   ModalContainer,
   ModalContent,
 } from "../GeneralComponents/GeneralComponents";
+import { ThemeContext } from "../../Context/ToggleTheme";
 
 const OuterWrap = styled.div`
   display: flex;
@@ -37,6 +38,7 @@ const ContentWrap = styled.div`
   position: relative;
   z-index: 1;
   min-width: 257px;
+  transition: all 0.25s ease-in-out;
 `;
 
 const ProfilePic = styled.img`
@@ -51,6 +53,7 @@ const FullName = styled.h4`
   letter-spacing: 0px;
   color: #393939;
   margin-bottom: 9px;
+  transition: all 0.25s ease-in-out;
 `;
 
 const EmailText = styled.p`
@@ -59,19 +62,18 @@ const EmailText = styled.p`
   letter-spacing: 0px;
   color: #b2b2b2;
   margin-bottom: 16px;
+  transition: all 0.25s ease-in-out;
 `;
 
 const EditButton = styled.button`
-  background: #ebf1ef;
   border-radius: 8px;
   text-align: center;
   font: normal normal 600 14px/21px Poppins;
   letter-spacing: 0px;
-  color: #135846;
   width: 100%;
   min-height: 47px;
   border: none;
-  transition: all 250ms ease-out;
+  transition: all 250ms ease-in-out;
   &:hover {
     transform: scale(1.05);
     cursor: pointer;
@@ -83,6 +85,7 @@ const ProfileLabel = styled.label`
   font: normal normal 400 16px/27px Poppins;
   letter-spacing: 0px;
   margin-right: 15px;
+  transition: all 0.25s ease-in-out;
 `;
 
 const FormChange = styled.form`
@@ -91,6 +94,7 @@ const FormChange = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: all 0.25s ease-in-out;
 `;
 
 const InputChange = styled.input`
@@ -121,6 +125,7 @@ interface ModalInterface {
 export const UserCard: React.FC = () => {
   const { auth, authDispatch } = useContext(AuthContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {dark} = useContext(ThemeContext);
   const Modal: React.FC<ModalInterface> = ({ onClose }) => {
     const [newUser, setNewUser] = useState("");
     const [newEmail, setNewEmail] = useState("");
@@ -157,19 +162,21 @@ export const UserCard: React.FC = () => {
     return (
       <>
         <ModalBackground>
-          <ModalContainer style={{ maxWidth: "700px", minWidth: "600px" }}>
+          <ModalContainer style={{ maxWidth: "700px", minWidth: "600px", backgroundColor: dark.dark ? "#292828" : "#FFF"}}>
             <CrossIcon onClick={onClose} />
             <FormChange onSubmit={handleSubmit}>
-              <ProfileLabel htmlFor="photo">Profile Photo: </ProfileLabel>
+              <ProfileLabel style={{color: dark.dark ? "#FFF" : "#262626"}} htmlFor="photo">Profile Photo: </ProfileLabel>
               <InputChange
+               style={{ color: dark.dark ? "#FFEDEC" : "#393939", border: dark.dark ? "2px solid #FFF" : "2px solid black", backgroundColor: dark.dark ? "#000" : "#FFF" }}
                 type="file"
                 accept="image/*"
                 id="photo"
                 name="photo"
                 onChange={handleNewPhoto}
               />
-              <ProfileLabel htmlFor="usernamenew">Username: </ProfileLabel>
+              <ProfileLabel style={{color: dark.dark ? "#FFF" : "#262626"}} htmlFor="usernamenew">Username: </ProfileLabel>
               <InputChange
+               style={{ color: dark.dark ? "#FFEDEC" : "#393939", border: dark.dark ? "2px solid #FFF" : "2px solid black", backgroundColor: dark.dark ? "#000" : "#FFF" }}
                 autoComplete="off"
                 id="usernamenew"
                 name="username"
@@ -178,22 +185,23 @@ export const UserCard: React.FC = () => {
               />
               <br />
               {imageUrl && <NewProfilePhoto src={imageUrl} alt="Preview" />}
-              <ProfileLabel htmlFor="emailnew">Email: </ProfileLabel>
+              <ProfileLabel style={{color: dark.dark ? "#FFF" : "#262626"}} htmlFor="emailnew">Email: </ProfileLabel>
               <InputChange
+               style={{ color: dark.dark ? "#FFEDEC" : "#393939", border: dark.dark ? "2px solid #FFF" : "2px solid black", backgroundColor: dark.dark ? "#000" : "#FFF" }}
                 id="emailnew"
                 name="email"
                 autoComplete="off"
                 onChange={handleEmailChange}
                 placeholder="Type your personal e-mail"
               />
-              <ModalContent>
+              <ModalContent style={{color: dark.dark ? "#FFF" : "#262626"}}>
                 Last Username: <strong>{auth.username}</strong>
               </ModalContent>
-              <ModalContent>
+              <ModalContent style={{color: dark.dark ? "#FFF" : "#262626"}}>
                 Last Email: <strong>{auth.email}</strong>
               </ModalContent>
               <br />
-              <EditButton type="submit">Change it!</EditButton>
+              <EditButton style={{backgroundColor: dark.dark ? "#135846" : "#ebf1ef", color: dark.dark ? "#FFFFFF" : "#135846"}} type="submit">Change it!</EditButton>
             </FormChange>
           </ModalContainer>
         </ModalBackground>
@@ -203,14 +211,14 @@ export const UserCard: React.FC = () => {
 
   return (
     <>
-      <OuterWrap>
+      <OuterWrap> 
         <ImageWrap>
           <ProfilePic src={auth.photo || ""} />
         </ImageWrap>
-        <ContentWrap>
-          <FullName>{auth.username}</FullName>
+        <ContentWrap style={{backgroundColor: dark.dark ? "#292828" : "#FFF"}}>
+          <FullName style={{color: dark.dark ? "#FFF" : "#262626"}}>{auth.username}</FullName>
           <EmailText>{auth.email}</EmailText>
-          <EditButton onClick={() => setIsModalOpen(true)}>Edit</EditButton>
+          <EditButton style={{backgroundColor: dark.dark ? "#135846" : "#ebf1ef", color: dark.dark ? "#FFFFFF" : "#135846"}} onClick={() => setIsModalOpen(true)}>Edit</EditButton>
         </ContentWrap>
       </OuterWrap>
       {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
