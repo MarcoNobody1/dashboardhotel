@@ -6,6 +6,8 @@ import { ToggleContext } from "../../Context/ToggleSidebar";
 import Swal from "sweetalert2";
 import { MagnifyingGlass } from "react-loader-spinner";
 import searchIcon from "../../assets/iconSearchBar.png";
+import { ThemeContext } from "../../Context/ToggleTheme";
+import { dark } from "@mui/material/styles/createPalette";
 
 export const formatDate = (inputDate: Date | string) => {
   const months: string[] = [
@@ -85,12 +87,12 @@ export const DefaultIcon = styled.div<DefaultIconProps>`
 `;
 
 const PageWrap = styled.main`
-  background-color: #f8f8f8;
   padding: 50px;
   min-width: 1474px;
-  max-height: 810px;
+  height: 810px;
   overflow-y: scroll;
   overscroll-behavior: contain;
+  transition: all 0.25s ease-in-out;
 `;
 
 interface PageWrapperProps {
@@ -99,11 +101,13 @@ interface PageWrapperProps {
 
 export const PageWrapper: FC<PageWrapperProps> = ({ children }) => {
   const { toggle } = useContext(ToggleContext);
+  const { dark } = useContext(ThemeContext);
 
   return (
     <>
       <PageWrap
         style={{
+          backgroundColor: dark.dark ? "#171717" : "#f8f8f8",
           margin: toggle.toggle ? "0 auto" : undefined,
           width: toggle.toggle ? "100%" : undefined,
         }}
@@ -141,11 +145,10 @@ export const ModalBackground = styled.div`
 
 interface CommentContainerProps {
   archived?: boolean;
+  dark?: boolean;
 }
 
 export const CommentContainer = styled.div<CommentContainerProps>`
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border: 1px solid #ebebeb;
   border-radius: 20px;
   padding: 30px;
   position: relative;
@@ -154,7 +157,7 @@ export const CommentContainer = styled.div<CommentContainerProps>`
 
   &:hover {
     box-shadow: ${(props) =>
-    props.archived ? "0" : " 0px 16px 30px #00000014"};
+    props.archived ? "0" : props.dark ? "0px 10px 15px #ffffff28" : " 0px 16px 30px #00000014"};
   }
 `;
 
@@ -162,13 +165,13 @@ export const MessageContent = styled.p`
   text-align: left;
   font: normal normal 300 12px/18px Poppins;
   letter-spacing: 0px;
-  color: #6e6e6e;
   overflow: hidden;
   white-space: nowrap;
   max-width: 300px;
   max-height: 70px;
   display: inline-block;
   text-overflow: ellipsis;
+  transition: all 0.25s ease-in-out;
 `;
 
 export const ModalContent = styled(MessageContent)`
