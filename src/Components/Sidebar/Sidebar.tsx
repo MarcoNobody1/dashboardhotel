@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
-import logo from "../assets/LogoHotelHub.png";
+import logo from "../../assets/LogoHotelHub.png";
 import { DefaultIcon } from "../GeneralComponents/GeneralComponents";
 import {
   LuLayoutDashboard,
