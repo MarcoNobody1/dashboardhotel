@@ -8,14 +8,20 @@ import { useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../Context/Auth";
 import { ToggleContext } from "../../Context/ToggleSidebar";
 import { FC } from 'react';
-import { SwitchSunMoon } from "./SwitchSunMoon";
+import { SwitchSunMoon } from "./SwitchSunMoon"; "react";
+import { ThemeContext } from "../../Context/ToggleTheme";
 
-const OuterWrap = styled.nav`
-  background-color: #fff;
+interface ThemeProps {
+  dark?:Object
+}
+
+const OuterWrap = styled.nav<ThemeProps>`
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF" )};
   height: 120px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  transition: all 0.25s ease-in-out;
 `;
 
 const IconWrap = styled.div`
@@ -31,11 +37,12 @@ const BellIcon = () => <DefaultIcon as={BsBellFill} />;
 
 const LogOutIcon = () => <DefaultIcon as={FiLogOut} />;
 
-const Title = styled.h1`
+const Title = styled.h1<ThemeProps>`
   font: normal normal 600 28px/42px Poppins;
   text-align: left;
-  color: #262626;
+  color: ${(props) => (props.dark ? "#FFF" : "#262626" )};
   flex: 8;
+  transition: all 0.25s ease-in-out;
 `;
 
 export const Header: FC = () => {
@@ -44,6 +51,7 @@ export const Header: FC = () => {
   const { toggleDispatch } = useContext(ToggleContext);
   const [title, setTitle] = useState("Dashboard");
   const location = useLocation();
+  const { dark } = useContext(ThemeContext);
 
   useEffect(()=>{
     switch (location.pathname) {
@@ -85,11 +93,11 @@ export const Header: FC = () => {
 
   return (
     <>
-      <OuterWrap>
+      <OuterWrap dark={dark.dark}>
         <IconWrap onClick={handleToggle} >
           <MenuIcon />
         </IconWrap>
-        <Title>{title}</Title>
+        <Title dark={dark.dark}>{title}</Title>
         <SwitchSunMoon/>
         <IconWrap>
           <MessageIcon />
