@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import {
   AdNewContainer,
   AddRoomButton,
@@ -21,6 +21,7 @@ import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { RoomeEditorCreator } from "./RoomEditorCreator";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RoomInterface } from "../../features/Interfaces/Interfaces";
+import { ThemeContext } from "../../Context/ToggleTheme";
 
 export const Rooms: FC = () => {
   const dispatch = useAppDispatch();
@@ -33,7 +34,7 @@ export const Rooms: FC = () => {
   const statusInfo = useAppSelector(roomstatusinfo);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState("All Rooms");
-
+  const { dark } = useContext(ThemeContext);
   const [selected, setSelected] = useState("Roomnumber");
 
   const filtered = infoRooms.filter((room) => {
@@ -109,8 +110,8 @@ export const Rooms: FC = () => {
           <ButtonsContainer>
             <ButtonFilter
               style={filter === "All Rooms" ? {
-                color: "#135846",
-                borderBottom: "2px solid #135846",
+                color: dark.dark? "#41ebbd" : "#135846",
+                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
               } : {}}
               onClick={() => setFilter("All Rooms")}
             >
@@ -118,8 +119,8 @@ export const Rooms: FC = () => {
             </ButtonFilter>
             <ButtonFilter
               style={ filter === "Available" ? {
-                color:"#135846",
-                borderBottom:"2px solid #135846",
+                color: dark.dark? "#41ebbd" : "#135846",
+                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
               } : {}}
               onClick={() => setFilter("Available")}
             >
@@ -127,8 +128,8 @@ export const Rooms: FC = () => {
             </ButtonFilter>
             <ButtonFilter
               style={ filter === "Booked" ? {
-                color: "#135846",
-                borderBottom:"2px solid #135846",
+                color: dark.dark? "#41ebbd" : "#135846",
+                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
               }:{}}
               onClick={() => setFilter("Booked")}
             >
