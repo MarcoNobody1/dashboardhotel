@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { PageWrapper } from "../GeneralComponents/GeneralComponents";
 import { CommentsContainer } from "../Dashboard/Dashboard";
 import { Comments } from "./CommentsPreview";
@@ -8,12 +8,13 @@ import { getContactsData } from "../../features/Contact/contactThunks";
 import DynamicTable from "../GeneralComponents/DynamicTable";
 import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { ThemeContext } from "../../Context/ToggleTheme";
 
 export const Contact: FC = () => {
   const infoContacts = useAppSelector(contactsInfo);
   const statusInfo = useAppSelector(contactstatusinfo);
   const dispatch = useAppDispatch();
-
+  const { dark } = useContext(ThemeContext);
   const [filter, setFilter] = useState("All Contacts");
   const [selected, setSelected] = useState("Date");
 
@@ -55,7 +56,7 @@ export const Contact: FC = () => {
   return (
     <>
       <PageWrapper>
-      <CommentsContainer style={{marginBottom:"25px"}}>
+      <CommentsContainer style={{marginBottom:"25px", backgroundColor: dark.dark ? "#202020" : "#fff"}}>
           <Comments />
         </CommentsContainer>
         <OuterContainer>
@@ -63,8 +64,8 @@ export const Contact: FC = () => {
           <ButtonsContainer>
             <ButtonFilter
               style={filter === "All Contacts" ? {
-                color: "#135846",
-                borderBottom:"2px solid #135846",
+                color: dark.dark? "#41ebbd" : "#135846",
+                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
               }: {}}
               onClick={() => setFilter("All Contacts")}
             >
@@ -72,8 +73,8 @@ export const Contact: FC = () => {
             </ButtonFilter>
             <ButtonFilter
               style={filter === "Archived" ? {
-                color: "#135846",
-                borderBottom: "2px solid #135846",
+                color: dark.dark? "#41ebbd" : "#135846",
+                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
               }: {}}
               onClick={() => setFilter("Archived")}
             >
