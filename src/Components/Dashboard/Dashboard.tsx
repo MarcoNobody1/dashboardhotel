@@ -14,7 +14,6 @@ const NotifContainer = styled.div`
 `;
 
 export const CommentsContainer = styled(NotifContainer)`
-  background-color: #fff;
   margin-bottom: 0;
   flex-direction: column;
   padding: 30px;

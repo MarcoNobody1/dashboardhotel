@@ -393,7 +393,7 @@ export const UserSearchInput = styled(SearchInput)`
 export const SelectorFilter = styled.select`
   min-width: 150px;
   max-height: 60px;
-  background-color: #fff;
+  background-color: transparent;
   border: 1px solid #135846;
   color: #135846;
   border-radius: 12px;

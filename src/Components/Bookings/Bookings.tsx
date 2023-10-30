@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, PageWrapper, SearchInput, SelectorFilter, TableContainer } from "../GeneralComponents/GeneralComponents";
 import { info, statusinfo } from "../../features/Bookings/bookingSlice";
 import { getData } from "../../features/Bookings/bookingThunks";
@@ -6,6 +6,7 @@ import DynamicTable from "../GeneralComponents/DynamicTable";
 import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { BookingInterface } from "../../features/Interfaces/Interfaces";
+import { ThemeContext } from "../../Context/ToggleTheme";
 
 export const Bookings = () => {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ export const Bookings = () => {
 
   const infoBookings = useAppSelector(info);
   const statusInfo = useAppSelector(statusinfo);
-
+const {dark} = useContext(ThemeContext);
   const [currenBookings, setCurrentBookings] = useState<BookingInterface[]>([]);
   const [filter, setFilter] = useState("All Bookings");
   const [selected, setSelected] = useState("Orderdate");
@@ -102,39 +103,37 @@ export const Bookings = () => {
           <FilterContainer>
             <ButtonsContainer>
               <ButtonFilter
-                style={{
-                  color: filter === "All Bookings" ? "#135846" : undefined,
-                  borderBottom:
-                    filter === "All Bookings" ? "2px solid #135846" : undefined,
-                }}
+                style={ filter === "All Bookings" ? {
+                  color: dark.dark? "#41ebbd" : "#135846",
+                  borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                } : {}}
                 onClick={() => setFilter("All Bookings")}
               >
                 All Bookings
               </ButtonFilter>
               <ButtonFilter
-                style={{
-                  color: filter === "Checking In" ? "#135846" : undefined,
-                  borderBottom: filter === "Checking In" ? "2px solid #135846" : undefined,
-                }}
+                 style={ filter === "Checking In" ? {
+                  color: dark.dark? "#41ebbd" : "#135846",
+                  borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                } : {}}
                 onClick={() => setFilter("Checking In")}
               >
                 Checking In
               </ButtonFilter>
               <ButtonFilter
-                style={{
-                  color: filter === "Checking Out" ? "#135846" : undefined,
-                  borderBottom:
-                    filter === "Checking Out" ? "2px solid #135846" : undefined,
-                }}
+                style={ filter === "Checking Out" ? {
+                  color: dark.dark? "#41ebbd" : "#135846",
+                  borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                } : {}}
                 onClick={() => setFilter("Checking Out")}
               >
                 Checking Out
               </ButtonFilter>
               <ButtonFilter
-                style={{
-                  color: filter === "In Progress" ? "#135846" : undefined,
-                  borderBottom: filter === "In Progress" ? "2px solid #135846" : undefined,
-                }}
+                style={ filter === "In Progress" ? {
+                  color: dark.dark? "#41ebbd" : "#135846",
+                  borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                } : {}}
                 onClick={() => setFilter("In Progress")}
               >
                 In progress
@@ -145,6 +144,10 @@ export const Bookings = () => {
               onChange={(event) => handleSearch(event.target.value)}
               placeholder="Search booking by client name..."
               type="text"
+              style={{
+                backgroundColor: "transparent",
+                color:  dark.dark? "#FFF" : "#212121",
+              }}
             />
             <SelectorFilter
               name="filterBookingSelector"
