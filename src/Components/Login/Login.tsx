@@ -50,17 +50,15 @@ const Button = styled.button`
   text-align: center;
   padding: 5px 20px;
   width: 100%;
-  background-color: #135846;
   font-weight: 600;
   border-radius: 15px;
-  border: 1px solid #135846;
   text-transform: uppercase;
   color: #ffffff;
   margin-bottom: 15px;
   transition: all 0.3s ease-out;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
     cursor: pointer;
   }
 `;
@@ -142,6 +140,7 @@ export const Login = () => {
             autoComplete="on"
           />
           <Label style={{ color: dark.dark ? "#FFEDEC" : "#393939" }} htmlFor="password">Password:</Label>
+
           <Input
             style={{ color: dark.dark ? "#FFEDEC" : "#393939", border: dark.dark ? "2px solid #FFF" : "2px solid black", backgroundColor: dark.dark ? "#000" : "#FFF" }}
             data-cy="passwordInput"
@@ -151,7 +150,7 @@ export const Login = () => {
             placeholder="Type your password"
             autoComplete="on"
           />
-          <Button data-cy="loginButton" type="submit">Log In</Button>
+          <Button style={{border: dark.dark ? "1px solid #41ebbd" : "1px solid #135846", backgroundColor: dark.dark ? "#41ebbd" : "#135846", color: dark.dark ? "#171717" : "#FFF" }} data-cy="loginButton" type="submit">Log In</Button>
           <Advertice style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}>
             <strong>Hint:</strong>
           </Advertice>
