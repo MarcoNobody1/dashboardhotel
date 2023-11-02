@@ -81,7 +81,7 @@ export const Rooms: FC = () => {
 
   const RenderTable = () => {
     return (
-      <TableContainer>
+      <TableContainer dark={dark.dark}>
         <DynamicTable data={filtered} dataType={"rooms"} />
       </TableContainer>
     );
@@ -147,10 +147,7 @@ export const Rooms: FC = () => {
           <SelectorFilter
             name="filterRoomsSelector"
             defaultValue="Roomnumber"
-            style={{
-              color: dark.dark ? "#41ebbd" : "#135846",
-              border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
-            }}
+            dark={dark.dark}
             onChange={(event) => setSelected(event.target.value)}
           >
             <OptionSelect value="Roomnumber">Room Number</OptionSelect>

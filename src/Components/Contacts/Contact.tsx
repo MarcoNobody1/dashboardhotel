@@ -36,7 +36,7 @@ export const Contact: FC = () => {
 
   if (selected === "Date") {
     filtered.sort((a, b) => {
-      
+
       return new Date(b.date.send_date).getTime() - new Date(a.date.send_date).getTime()
     });
   } else if (selected === "Oldest") {
@@ -47,7 +47,7 @@ export const Contact: FC = () => {
 
   const RenderTable = () => {
     return (
-      <TableContainer>
+      <TableContainer dark={dark.dark}>
         <DynamicTable data={filtered} dataType={"contacts"} />
       </TableContainer>
     );
@@ -56,45 +56,45 @@ export const Contact: FC = () => {
   return (
     <>
       <PageWrapper>
-      <CommentsContainer style={{marginBottom:"25px", backgroundColor: dark.dark ? "#202020" : "#fff"}}>
+        <CommentsContainer style={{ marginBottom: "25px", backgroundColor: dark.dark ? "#202020" : "#fff" }}>
           <Comments />
         </CommentsContainer>
         <OuterContainer>
-        <FilterContainer style={{justifyContent: "space-between"}}>
-          <ButtonsContainer>
-            <ButtonFilter
-              style={filter === "All Contacts" ? {
-                color: dark.dark? "#41ebbd" : "#135846",
-                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
-              }: {}}
-              onClick={() => setFilter("All Contacts")}
+          <FilterContainer style={{ justifyContent: "space-between" }}>
+            <ButtonsContainer>
+              <ButtonFilter
+                style={filter === "All Contacts" ? {
+                  color: dark.dark ? "#41ebbd" : "#135846",
+                  borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
+                } : {}}
+                onClick={() => setFilter("All Contacts")}
+              >
+                All Contacts
+              </ButtonFilter>
+              <ButtonFilter
+                style={filter === "Archived" ? {
+                  color: dark.dark ? "#41ebbd" : "#135846",
+                  borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
+                } : {}}
+                onClick={() => setFilter("Archived")}
+              >
+                Archived
+              </ButtonFilter>
+            </ButtonsContainer>
+            <SelectorFilter
+              dark={dark.dark}
+              name="filterContactSelector"
+              defaultValue="Date"
+              onChange={(event) => setSelected(event.target.value)}
             >
-              All Contacts
-            </ButtonFilter>
-            <ButtonFilter
-              style={filter === "Archived" ? {
-                color: dark.dark? "#41ebbd" : "#135846",
-                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
-              }: {}}
-              onClick={() => setFilter("Archived")}
-            >
-              Archived
-            </ButtonFilter>
-          </ButtonsContainer>
-          <SelectorFilter
-           style={{ color: dark.dark ? "#41ebbd" : "#135846", border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846" }}
-          name="filterContactSelector"
-            defaultValue="Date"
-            onChange={(event) => setSelected(event.target.value)}
-          >
-            <OptionSelect value="Date">Date (newest)</OptionSelect>
-            <OptionSelect value="Oldest">
-            Date (oldest)
-            </OptionSelect>
-          </SelectorFilter>
-        </FilterContainer>
-        {renderStatus(statusInfo, RenderTable)}
-      </OuterContainer>
+              <OptionSelect value="Date">Date (newest)</OptionSelect>
+              <OptionSelect value="Oldest">
+                Date (oldest)
+              </OptionSelect>
+            </SelectorFilter>
+          </FilterContainer>
+          {renderStatus(statusInfo, RenderTable)}
+        </OuterContainer>
       </PageWrapper>
     </>
   );

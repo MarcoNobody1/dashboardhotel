@@ -7,8 +7,6 @@ import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { BookingInterface } from "../../features/Interfaces/Interfaces";
 import { ThemeContext } from "../../Context/ToggleTheme";
-import searchIcon from "../../assets/iconSearchBar.png";
-import searchIconDark from "../../assets/iconSearchBarDark.png";
 
 export const Bookings = () => {
   const dispatch = useAppDispatch();
@@ -92,7 +90,7 @@ export const Bookings = () => {
 
   const RenderTable = () => {
     return (
-      <TableContainer>
+      <TableContainer dark={dark.dark}>
         <DynamicTable data={filtered} dataType={"bookings"} />
       </TableContainer>
     );
@@ -142,14 +140,14 @@ export const Bookings = () => {
               </ButtonFilter>
             </ButtonsContainer>
             <SearchInput
+              dark={dark.dark}
               name="searchBookingInput"
               onChange={(event) => handleSearch(event.target.value)}
               placeholder="Search booking by client name..."
               type="text"
-              style={{ color: dark.dark ? "#41ebbd" : "#799283", border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846", backgroundImage:  dark.dark ? `url(${searchIconDark})` : `url(${searchIcon})`}}
             />
             <SelectorFilter
-              style={{ color: dark.dark ? "#41ebbd" : "#799283", border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846" }}
+              dark={dark.dark}
               name="filterBookingSelector"
               defaultValue="Orderdate"
               onInput={(event) => {

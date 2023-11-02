@@ -23,18 +23,16 @@ import {
 import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { FC } from 'react';
-import { UserInterface } from "../../features/Interfaces/Interfaces";
+import { DarkProp, UserInterface } from "../../features/Interfaces/Interfaces";
 import { UserEditorCreator } from "./UserEditorCreator";
 import { ThemeContext } from "../../Context/ToggleTheme";
-import searchIcon from "../../assets/iconSearchBar.png";
-import searchIconDark from "../../assets/iconSearchBarDark.png";
 
-
-const TableContainer = styled.div`
+const TableContainer = styled.div<DarkProp>`
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: ${(props) => (props.dark ? "#202020" : "#fff")};
   padding: 21px;
+  transition: all 250ms ease-in-out;
 `;
 
 export const Users = () => {
@@ -118,7 +116,7 @@ export const Users = () => {
 
   const RenderTable = () => {
     return (
-      <TableContainer>
+      <TableContainer dark={dark.dark}>
         <DynamicTable data={filtered} dataType={"users"} />
       </TableContainer>
     );
@@ -182,15 +180,14 @@ export const Users = () => {
           </AddUserButton>
           {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
           <UserSearchInput
+            dark={dark.dark}
             name="searchUsersInput"
             onChange={(event) => handleSearch(event.target.value)}
             placeholder="Search user by name..."
             type="text"
-            style={{ color: dark.dark ? "#41ebbd" : "#799283", border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846", backgroundImage: dark.dark ? `url(${searchIconDark})` : `url(${searchIcon})` }}
-
           />
           <SelectorFilter
-            style={{ color: dark.dark ? "#41ebbd" : "#135846", border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846" }}
+            dark={dark.dark}
             name="filterUsersSelector"
             defaultValue="Start Date"
             onInput={(event) => {

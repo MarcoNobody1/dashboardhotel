@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { deleteData, get1Data } from "../../features/Bookings/bookingThunks";
-import { AdNewContainer, CommentWrapper, CrossIcon, Floater, NewDataTitle, UpdatingTitle, formatDate } from "./GeneralComponents";
+import { AdNewContainer, CommentWrapper, CrossIcon, Floater, UpdatingTitle, formatDate } from "./GeneralComponents";
 import { BsPencilSquare, BsTrash3 } from "react-icons/bs";
 import { ColorRing, LineWave } from "react-loader-spinner";
 import { deleteRoomsData, get1RoomData } from "../../features/Rooms/roomThunks";
@@ -18,10 +18,13 @@ import Swal from "sweetalert2";
 import { userDeleteStatus, userUpdateStatus } from "../../features/Users/userSlice";
 import { deleteUsersData, updateUserData } from '../../features/Users/userThunks';
 import { BsTelephoneInbound } from "react-icons/bs";
-import { BookingInterface, ContactInterface, RoomInterface, UserInterface } from "../../features/Interfaces/Interfaces";
+import { BookingInterface, ContactInterface, DarkProp, RoomInterface, UserInterface } from "../../features/Interfaces/Interfaces";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { UserEditorCreator } from "../Users/UserEditorCreator";
 import { RoomeEditorCreator } from "../Rooms/RoomEditorCreator";
+import { ThemeContext } from "../../Context/ToggleTheme";
+import { useContext } from 'react';
+import { dark } from '@mui/material/styles/createPalette';
 
 const bookingTitles = [
   "Guest",
@@ -63,14 +66,17 @@ const Tbody = styled.tbody``;
 
 interface ThProps {
   header: string;
+  dark?: boolean;
 }
 
 const Th = styled.th<ThProps>`
-  background-color: #ffffff;
+  background-color:${(props) => props.dark ? "#202020" : "#FFF"};
+  color:${(props) => props.dark ? "#FFF" : "#202020"};
   text-align: left;
   padding: 8px;
   text-transform: capitalize;
   border-bottom: 2px solid #f5f5f5;
+  transition: all 250ms ease-in-out;
   width: ${(props) =>
     props.header === "amenities"
       ? "480px"
@@ -85,56 +91,60 @@ const Th = styled.th<ThProps>`
               : "130px"};
 `;
 
-const Tr = styled.tr`
-  transition: all 250ms ease-out;
-  background-color: #ffffff;
+const Tr = styled.tr<DarkProp>`
+  transition: all 250ms ease-in-out;
+  background-color: ${(props) => props.dark ? "#202020" : "#FFF"};
 
   &:hover {
     transform: scale(1.02);
-    box-shadow: 0px 4px 30px #0000001a;
+    box-shadow: ${(props) => props.dark ? "0px 4px 30px #8f89891a" : "0px 4px 30px #0000001a"};
   }
 `;
 
 const TrNotHover = styled.tr`
   background-color: #ffffff;
+  transition: all 250ms ease-in-out;
 `;
 
 const Td = styled.td`
   padding: 8px;
   position: relative;
+  transition: all 250ms ease-in-out;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(Link) <DarkProp>`
   font: normal normal normal 14px/21px Poppins;
   letter-spacing: 0px;
-  color: #799283;
+  color:${(props) => props.dark === "true" ? "#FFF" : "#799283"};
+  transition: all 250ms ease-in-out;
 `;
 
-const SpecialRequestButton = styled.button`
-  background: #eef9f2;
+const SpecialRequestButton = styled.button<DarkProp>`
+  background: ${(props) => props.dark ? "#144638" : "#eef9f2"} ;
   border-radius: 12px;
   font: normal normal 500 16px/25px Poppins;
   letter-spacing: 0px;
-  color: #135846;
+  color:${(props) => props.dark ? "#eef9f2" : "#144638"} ;
   padding: 13px 10px;
-  transition: all 150ms ease-out;
+  transition: all 150ms ease-in-out;
   border: none;
 
   &:hover {
     cursor: pointer;
     transform: scale(1.01);
-    background: #5ad07a;
-    color: #eef9f2;
+    background: ${(props) => props.dark ? "#41ebbd" : "#5ad07a"};
+    color: ${(props) => props.dark ? "#202020" : "#eef9f2"};
   }
 `;
 
-const NoteContainer = styled.td`
+const NoteContainer = styled.td<DarkProp>`
   min-height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border: 1px solid #135846;
+  background:  ${(props) => props.dark? "#202020" : "#fff"};
+  border: ${(props) => props.dark? "1px solid #41ebbd" : "1px solid #135846"} ;
+  color: ${(props) => props.dark? "#eef9f2" : "#202020"};
   border-radius: 20px;
   padding: 30px;
   transition: all 250ms ease-in-out;
@@ -145,9 +155,10 @@ const NoteContainer = styled.td`
 `;
 
 const SpecialRequest = styled.p`
-font-size: 14px;
+font-size: 18px;
 font-style: italic;
-max-width: 400px;
+max-width: 500px;
+line-height: 35px;
 `;
 
 const NoteBackground = styled.tr`
@@ -168,12 +179,13 @@ const FloatCross = styled(CrossIcon)`
   right: 10px;
 `;
 
-const EditIcon = styled(BsPencilSquare)`
+const EditIcon = styled(BsPencilSquare)<DarkProp>`
  font-size: 20px;
   position: absolute;
   top: 60%;
   right: 10px;
-  color:#517A6F;
+  color: ${(props) => props.dark === "true" ? "#41ebbd" : "#517A6F"};
+  transition: all 250ms ease-in-out;
 
   &:hover {
     cursor: pointer;
@@ -227,10 +239,10 @@ const DataSpecs = styled.div`
   justify-content: center;
 `;
 
-const DataId = styled(Link)`
+const DataId = styled(Link)<DarkProp>`
   font: normal normal 400 14px/21px Poppins;
   letter-spacing: 0px;
-  color: #799283;
+  color:${(props) => props.dark === "true" ? "#FFF" : "#799283"};
   text-transform: uppercase;
   &::before {
     font-size: 12px;
@@ -238,10 +250,11 @@ const DataId = styled(Link)`
   }
 `;
 
-const UserId = styled.p`
+const UserId = styled.p<DarkProp>`
   font: normal normal 400 14px/21px Poppins;
   letter-spacing: 0px;
-  color: #799283;
+  color: ${(props) => props.dark ? "#2e6e5d" : "#799283"};
+  transition: all 250ms ease-in-out;
   text-transform: uppercase;
   &::before {
     font-size: 12px;
@@ -256,10 +269,10 @@ font: normal normal 400 12px/21px Poppins;
   text-transform: uppercase;
 `;
 
-const PhotoRoomSpec = styled.p`
+const PhotoRoomSpec = styled.p<DarkProp>`
   font: normal normal 500 16px/25px Poppins;
   letter-spacing: 0px;
-  color: #393939;
+  color: ${(props) => props.dark ? "#41ebbd" : "#393939"};
   text-align: left;
   &::before {
     font-size: 12px;
@@ -267,25 +280,27 @@ const PhotoRoomSpec = styled.p`
   }
 `;
 
-const UserName = styled.p`
+const UserName = styled.p<DarkProp>`
   font-size: 16px;
   font-weight: 600;
-  color: #393939;
+  color: ${(props) => props.dark ? "#eef9f2" : "#393939"};
+  transition: all 250ms ease-in-out;
 `;
 
-const UserJob = styled.p`
+const UserJob = styled.p<DarkProp>`
   font-size: 14px;
   font-weight: 400;
-  color: #393939;
+  color: ${(props) => props.dark ? "#41ebbd" : "#393939"};
+  transition: all 250ms ease-in-out;
   font-style: italic;
 `;
 
-const UserLink = styled.a`
+const UserLink = styled.a<DarkProp>`
   font-size: 14px;
   font-weight: 500;
-  color: #393939;
+  color: ${(props) => props.dark ? "#41ebbd" : "#393939"};
+  transition: all 250ms ease-in-out;
   text-decoration: none;
-  transition: all 200ms ease-in-out;
 
   &:hover {
     transform: scale(1.02);
@@ -294,17 +309,19 @@ const UserLink = styled.a`
   }
 `;
 
-const InfoWrap = styled.div`
+const InfoWrap = styled.div<DarkProp>`
   width: 130px;
   text-align: left;
   font-weight: 600;
   font-size: 18px;
+  color: ${(props) => props.dark ? "#41ebbd" : "#393939"};
+  transition: all 250ms ease-in-out;
 `;
 
 const InfoLine = styled.p`
   font: normal normal 400 16px/25px Poppins;
   letter-spacing: 0px;
-  color: #393939;
+  color: inherit;
 `;
 
 const StatusButton = styled.button`
@@ -318,7 +335,7 @@ const StatusButton = styled.button`
   position: relative;
   min-height: 51px;
   min-width: 118px;
-  transition: all 150ms ease-out;
+  transition: all 250ms ease-in-out;
   &:hover {
     cursor: pointer;
     filter: invert(0.2);
@@ -333,8 +350,15 @@ const CenterDiv = styled.div`
   left: 0;
 `;
 
-const SimpleDiv = styled.div`
+const SimpleDiv = styled.div<DarkProp>`
+transition: all 250ms ease-in-out;
 font-weight: 600;
+color:  ${(props) => (props.dark ? "#41ebbd" : "#202020")} ;
+`;
+
+const SampleDiv = styled.div<DarkProp>`
+transition: all 250ms ease-in-out;
+color:  ${(props) => (props.dark ? "#41ebbd" : "#202020")} ;
 `;
 
 interface DynamicTableProps {
@@ -380,6 +404,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       ? userUpdateStatus
       : roomUpdateStatus
   );
+  const { dark } = useContext(ThemeContext);
 
   const headers =
     data.length > 0
@@ -469,7 +494,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     });
     return (
       <NoteBackground>
-        <NoteContainer>
+        <NoteContainer dark={dark.dark}>
           <FloatCross onClick={onCloseNote} />
           {selectedNote && dataType === "bookings" && 'special_request' in (selectedNote as BookingInterface) ? (
             <SpecialRequest>  {(selectedNote as BookingInterface).special_request}</SpecialRequest>
@@ -587,10 +612,11 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         const guest = rowData.guest;
         return (
           <>
-            <SimpleDiv>
+            <SimpleDiv dark={dark.dark}>
               {guest.nombre} {guest.apellidos}
             </SimpleDiv>
             <StyledLink
+              dark={dark.dark.toString()}
               onClick={() => handleGetDetails(guest.id_reserva)}
               to={`/bookings/${guest.id_reserva}`}
             >
@@ -602,6 +628,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "special_request":
         return (
           <SpecialRequestButton
+            dark={dark.dark}
             onClick={() => handleOpenNote(rowData.guest.id_reserva)}
           >
             Special Request
@@ -609,7 +636,10 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         );
 
       case "room":
-        return `${rowData.room.room_type} - ${rowData.room.room_number}`;
+        return (
+          <SampleDiv dark={dark.dark}>
+            {rowData.room.room_type} - {rowData.room.room_number}
+          </SampleDiv>);
 
       case "status":
         const trashIcon =
@@ -662,7 +692,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           );
         const EditRoomIcon =
           editStatus === "fulfilled" ? (
-            <EditIcon onClick={() => handleOpenModal(rowData.room_name.id, dataType)} />
+            <EditIcon dark={dark.dark.toString()} onClick={() => handleOpenModal(rowData.room_name.id, dataType)} />
           ) : editStatus === "rejected" ? (
             <EditIcon style={{ color: "#e9d7d7" }} />
           ) : (
@@ -691,6 +721,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "offer_price":
         return (
           <InfoWrap
+            dark={dark.dark}
             style={{
               fontWeight: 600,
               fontSize: "18px",
@@ -706,6 +737,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "price":
         return (
           <InfoWrap
+            dark={dark.dark}
             style={{
               color: rowData.offer_price.isOffer ? "#b2b2b2" : "",
               textDecoration: rowData.offer_price.isOffer ? "line-through" : "",
@@ -718,7 +750,11 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         );
 
       case "amenities":
-        return rowData.amenities.join(", ");
+        return (
+          <SampleDiv dark={dark.dark}>
+            {rowData.amenities.join(", ")}
+          </SampleDiv>
+        )
 
       case "room_name":
         return (
@@ -726,22 +762,23 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
             <ImageRoom src={rowData.room_name.room_photo} />
             <DataSpecs>
               <DataId
+                dark={dark.dark.toString()}
                 to={`/rooms/${rowData.room_name.id}`}
                 onClick={() => handleGetDetails(rowData.room_name.id)}
               >
                 {rowData.room_name.id}
               </DataId>
-              <PhotoRoomSpec>{rowData.room_name.room_number}</PhotoRoomSpec>
+              <PhotoRoomSpec dark={dark.dark}>{rowData.room_name.room_number}</PhotoRoomSpec>
             </DataSpecs>
           </RoomPhotoWrap>
         );
 
       case "date":
-        return <>{formatDate(rowData.date.send_date)}</>;
+        return <SampleDiv style={{ fontWeight: 600 }} dark={dark.dark}>{formatDate(rowData.date.send_date)}</SampleDiv>;
 
       case "customer":
         return (
-          <InfoWrap style={{ minWidth: "300px" }}>
+          <InfoWrap dark={dark.dark} style={{ minWidth: "300px" }}>
             <InfoLine>{rowData.customer.name}</InfoLine>
             <InfoLine>{rowData.customer.email}</InfoLine>
             <InfoLine>{rowData.customer.phone}</InfoLine>
@@ -750,7 +787,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
 
       case "subject":
         return (
-          <InfoWrap>{rowData.subject}</InfoWrap>
+          <InfoWrap dark={dark.dark}>{rowData.subject}</InfoWrap>
         );
 
       case "archived":
@@ -821,7 +858,11 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
               onClick={() =>
                 handleArchiveComment(rowData.date.id, rowData.archived)
               }
-              style={{
+              style={dark.dark ? {
+                backgroundColor: rowData.archived ? "#5ad07a" : "#E23428",
+                color: rowData.archived ? "#e8ffee" : "#FFEDEC",
+                maxWidth: "130px",
+              } : {
                 backgroundColor: rowData.archived ? "#e8ffee" : "#FFEDEC",
                 color: rowData.archived ? "#5ad07a" : "#E23428",
                 maxWidth: "130px",
@@ -838,9 +879,9 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <UserDataWrap>
             <UserImage src={rowData.name.photo} />
             <DataSpecs>
-              <UserName>{rowData.name.username}</UserName>
-              <UserId>{rowData.name.id}</UserId>
-              <UserLink href={`mailto:${rowData.name.email}`}>
+              <UserName dark={dark.dark}>{rowData.name.username}</UserName>
+              <UserId dark={dark.dark}>{rowData.name.id}</UserId>
+              <UserLink dark={dark.dark} href={`mailto:${rowData.name.email}`}>
                 {rowData.name.email}
               </UserLink>
               <UserEmployee>{rowData.name.employee_position}</UserEmployee>
@@ -872,7 +913,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
 
         const EditUserIcon =
           editStatus === "fulfilled" ? (
-            <EditIcon onClick={() => handleOpenModal(rowData.name.id, dataType)} />
+            <EditIcon dark={dark.dark.toString()} onClick={() => handleOpenModal(rowData.name.id, dataType)} />
           ) : editStatus === "rejected" ? (
             <EditIcon style={{ color: "#e9d7d7" }} />
           ) : (
@@ -900,25 +941,29 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         );
 
       case "job_description":
-        return <UserJob>{rowData.job_description}</UserJob>;
+        return <UserJob dark={dark.dark}>{rowData.job_description}</UserJob>;
       case "contact":
         return (
           <UserDataWrap>
-            <BsTelephoneInbound />
-            <UserLink href={`tel:${rowData.contact}`}>
+            <BsTelephoneInbound style={{color: dark.dark ? "#ffffff" : "#202020", transition: "all 250ms ease-in-out"}}/>
+            <UserLink dark={dark.dark} href={`tel:${rowData.contact}`}>
               {rowData.contact}
             </UserLink>
           </UserDataWrap>
         );
       case "comment":
         return (
-          <>
-            <CommentWrapper>{rowData.comment}</CommentWrapper>
-          </>
+          <SampleDiv dark={dark.dark}>
+            <CommentWrapper dark={dark.dark}>{rowData.comment}</CommentWrapper>
+          </SampleDiv>
         )
 
       default:
-        return rowData[header];
+        return (
+          <SampleDiv dark={dark.dark}>
+            {rowData[header]}
+          </SampleDiv>
+        )
     }
   };
 
@@ -927,7 +972,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       <Thead>
         <TrNotHover>
           {headers.map((header) => (
-            <Th key={header} header={header}>
+            <Th dark={dark.dark} key={header} header={header}>
               {header.replace(/_/g, " ")}
             </Th>
           ))}
@@ -935,7 +980,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       </Thead>
       <Tbody>
         {data.map((rowData, index) => (
-          <Tr key={index}>
+          <Tr dark={dark.dark} key={index}>
             {headers.map((header) => (
               <Td key={header as Header}>
                 {headers.includes(header as Header) && cellRenderer(header as Header, rowData as RowData)}
