@@ -5,8 +5,10 @@ import { BsTrash3 } from "react-icons/bs";
 import { ToggleContext } from "../../Context/ToggleSidebar";
 import Swal from "sweetalert2";
 import { MagnifyingGlass } from "react-loader-spinner";
-
+import searchIcon from "../../assets/iconSearchBar.png";
+import searchIconDark from "../../assets/iconSearchBarDark.png";
 import { ThemeContext } from "../../Context/ToggleTheme";
+import { DarkProp } from "../../features/Interfaces/Interfaces";
 
 export const formatDate = (inputDate: Date | string) => {
   const months: string[] = [
@@ -85,7 +87,7 @@ export const DefaultIcon = styled.div<DefaultIconProps>`
   }
 `;
 
-const PageWrap = styled.main`
+const PageWrap = styled.main<DarkProp>`
   padding: 50px;
   min-width: 1474px;
   height: 810px;
@@ -95,11 +97,13 @@ const PageWrap = styled.main`
 
 &::-webkit-scrollbar {
   width: 10px;
-  background-color: #f1f1f1;
+  transition: all 0.25s ease-in-out;
+  background-color:${(props) => (props.dark ? "#202020" : "#f1f1f1")} ;
 }
 
 &::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color:${(props) => (props.dark ? "#eef9f2" : "#888")} ;
+  transition: all 0.25s ease-in-out;
   border-radius: 15px;
 }
 
@@ -124,6 +128,7 @@ export const PageWrapper: FC<PageWrapperProps> = ({ children }) => {
   return (
     <>
       <PageWrap
+      dark={dark.dark}
         style={{
           backgroundColor: dark.dark ? "#171717" : "#f8f8f8",
           margin: toggle.toggle ? "0 auto" : undefined,
@@ -354,11 +359,14 @@ export const FilterContainer = styled.div`
   gap: 55px;
 `;
 
-export const TableContainer = styled.div`
+
+
+export const TableContainer = styled.div<DarkProp>`
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: ${(props) => (props.dark ? "#202020" : "#fff")} ;
   padding: 21px;
+  transition: all 250ms ease-in-out;
 `;
 
 interface ButtonsContainerProps {
@@ -391,11 +399,10 @@ export const ButtonFilter = styled.button`
   }
 `;
 
-export const SearchInput = styled.input`
+export const SearchInput = styled.input<DarkProp>`
   min-width: 427px;
   max-height: 60px;
   border-radius: 10px;
-  border: 1px solid #135846;
   text-align: right;
   font: normal normal 300 14px/25px Poppins;
   padding: 5px 42px 0px 0;
@@ -403,13 +410,20 @@ export const SearchInput = styled.input`
   background-position: right 10px center;
   background-color: transparent;
   transition: all 250ms ease-in-out;
+  color: ${(props) => (props.dark ? "#41ebbd" : "#799283")};
+  border: ${(props) => (props.dark ? "2px solid #41ebbd" : "2px solid #135846")};
+  background-image: ${(props) => (props.dark ? `url(${searchIconDark})` : `url(${searchIcon})`)};
 `;
 
-export const UserSearchInput = styled(SearchInput)`
+export const UserSearchInput = styled(SearchInput)<DarkProp>`
  min-width: 250px;
 `;
 
-export const SelectorFilter = styled.select`
+export const OptionSelect = styled.option<DarkProp>`
+  font: normal normal 400 16px/25px Poppins;
+`;
+
+export const SelectorFilter = styled.select<DarkProp>`
   min-width: 150px;
   max-height: 60px;
   background-color: transparent;
@@ -417,12 +431,16 @@ export const SelectorFilter = styled.select`
   padding-left: 5px;
   font: normal normal 500 16px/25px Poppins;
   letter-spacing: 0px;
+  color: ${(props) =>  props.dark ? "#41ebbd" : "#135846"};
+  border: ${(props) =>  props.dark ? "2px solid #41ebbd" : "2px solid #135846"};
   transition: all 250ms ease-in-out;
+
+  & ${OptionSelect}{
+    background-color: ${(props) => props.dark ? "#202020" : "#FFF"};
+  }
 `;
 
-export const OptionSelect = styled.option`
-  font: normal normal 400 16px/25px Poppins;
-`;
+
 
 export const AddRoomButton = styled.button`
   text-align: center;
@@ -484,7 +502,7 @@ font-size: 30px;
 font-style: italic;
 `;
 
-export const CommentWrapper = styled.div`
+export const CommentWrapper = styled.div<DarkProp>`
 height: 100px;
 max-width: 500px;
 overflow-x: hidden;
@@ -493,11 +511,13 @@ padding: 0 10px;
 
 &::-webkit-scrollbar {
   width: 6px;
-  background-color: #f1f1f1;
+  transition: all 0.25s ease-in-out;
+  background-color:${(props) => (props.dark ? "#202020" : "#f1f1f1")} ;
 }
 
 &::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color:${(props) => (props.dark ? "#eef9f2" : "#888")} ;
+  transition: all 0.25s ease-in-out;
   border-radius: 15px;
 }
 
