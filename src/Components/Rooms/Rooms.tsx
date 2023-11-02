@@ -50,7 +50,7 @@ export const Rooms: FC = () => {
     }
   });
 
-  const calculateRealPrice = (room:RoomInterface) => {
+  const calculateRealPrice = (room: RoomInterface) => {
     if (room.offer_price && room.offer_price.isOffer) {
       const discount = room.offer_price.discount;
       const discountedPrice = room.price * (1 - discount / 100);
@@ -88,10 +88,10 @@ export const Rooms: FC = () => {
   };
 
 
-  interface ModalProps{
+  interface ModalProps {
     onClose: () => void
   }
-  const Modal : FC<ModalProps> = ({ onClose }) => {
+  const Modal: FC<ModalProps> = ({ onClose }) => {
     return (
       <ModalBackground>
         <AdNewContainer>
@@ -110,39 +110,47 @@ export const Rooms: FC = () => {
           <ButtonsContainer>
             <ButtonFilter
               style={filter === "All Rooms" ? {
-                color: dark.dark? "#41ebbd" : "#135846",
-                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                color: dark.dark ? "#41ebbd" : "#135846",
+                borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
               } : {}}
               onClick={() => setFilter("All Rooms")}
             >
               All Rooms
             </ButtonFilter>
             <ButtonFilter
-              style={ filter === "Available" ? {
-                color: dark.dark? "#41ebbd" : "#135846",
-                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+              style={filter === "Available" ? {
+                color: dark.dark ? "#41ebbd" : "#135846",
+                borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
               } : {}}
               onClick={() => setFilter("Available")}
             >
               Available
             </ButtonFilter>
             <ButtonFilter
-              style={ filter === "Booked" ? {
-                color: dark.dark? "#41ebbd" : "#135846",
-                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
-              }:{}}
+              style={filter === "Booked" ? {
+                color: dark.dark ? "#41ebbd" : "#135846",
+                borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
+              } : {}}
               onClick={() => setFilter("Booked")}
             >
               Booked
             </ButtonFilter>
           </ButtonsContainer>
-          <AddRoomButton onClick={() => setIsModalOpen(true)}>
+          <AddRoomButton style={{
+            backgroundColor: dark.dark ? "#41ebbd" : "#135846",
+            color: dark.dark ? "#171717" : "#ffffff"
+          }}
+            onClick={() => setIsModalOpen(true)}>
             + New Room
           </AddRoomButton>
           {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
           <SelectorFilter
             name="filterRoomsSelector"
             defaultValue="Roomnumber"
+            style={{
+              color: dark.dark ? "#41ebbd" : "#135846",
+              border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
+            }}
             onChange={(event) => setSelected(event.target.value)}
           >
             <OptionSelect value="Roomnumber">Room Number</OptionSelect>
