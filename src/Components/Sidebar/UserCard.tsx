@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../../Context/Auth";
 import {
@@ -122,24 +122,24 @@ interface ModalInterface {
   onClose: () => void
 }
 
-export const UserCard: React.FC = () => {
+export const UserCard: FC = () => {
   const { auth, authDispatch } = useContext(AuthContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {dark} = useContext(ThemeContext);
-  const Modal: React.FC<ModalInterface> = ({ onClose }) => {
+  const Modal: FC<ModalInterface> = ({ onClose }) => {
     const [newUser, setNewUser] = useState("");
     const [newEmail, setNewEmail] = useState("");
     const [imageUrl, setImageUrl] = useState("");
 
-    const handleUserChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleUserChange = (event: ChangeEvent<HTMLInputElement>) => {
       setNewUser(event.target.value);
     };
 
-    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
       setNewEmail(event.target.value);
     };
 
-    const handleNewPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleNewPhoto = (event: ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       if (file && file.type.startsWith("image/")) {
         const imageUrl = URL.createObjectURL(file);
@@ -150,7 +150,7 @@ export const UserCard: React.FC = () => {
       }
     };
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = (event: FormEvent) => {
       event.preventDefault();
       authDispatch({
         type: "update",

@@ -7,6 +7,8 @@ import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { BookingInterface } from "../../features/Interfaces/Interfaces";
 import { ThemeContext } from "../../Context/ToggleTheme";
+import searchIcon from "../../assets/iconSearchBar.png";
+import searchIconDark from "../../assets/iconSearchBarDark.png";
 
 export const Bookings = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +19,7 @@ export const Bookings = () => {
 
   const infoBookings = useAppSelector(info);
   const statusInfo = useAppSelector(statusinfo);
-const {dark} = useContext(ThemeContext);
+  const { dark } = useContext(ThemeContext);
   const [currenBookings, setCurrentBookings] = useState<BookingInterface[]>([]);
   const [filter, setFilter] = useState("All Bookings");
   const [selected, setSelected] = useState("Orderdate");
@@ -103,36 +105,36 @@ const {dark} = useContext(ThemeContext);
           <FilterContainer>
             <ButtonsContainer>
               <ButtonFilter
-                style={ filter === "All Bookings" ? {
-                  color: dark.dark? "#41ebbd" : "#135846",
-                  borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                style={filter === "All Bookings" ? {
+                  color: dark.dark ? "#41ebbd" : "#135846",
+                  borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
                 } : {}}
                 onClick={() => setFilter("All Bookings")}
               >
                 All Bookings
               </ButtonFilter>
               <ButtonFilter
-                 style={ filter === "Checking In" ? {
-                  color: dark.dark? "#41ebbd" : "#135846",
-                  borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                style={filter === "Checking In" ? {
+                  color: dark.dark ? "#41ebbd" : "#135846",
+                  borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
                 } : {}}
                 onClick={() => setFilter("Checking In")}
               >
                 Checking In
               </ButtonFilter>
               <ButtonFilter
-                style={ filter === "Checking Out" ? {
-                  color: dark.dark? "#41ebbd" : "#135846",
-                  borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                style={filter === "Checking Out" ? {
+                  color: dark.dark ? "#41ebbd" : "#135846",
+                  borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
                 } : {}}
                 onClick={() => setFilter("Checking Out")}
               >
                 Checking Out
               </ButtonFilter>
               <ButtonFilter
-                style={ filter === "In Progress" ? {
-                  color: dark.dark? "#41ebbd" : "#135846",
-                  borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                style={filter === "In Progress" ? {
+                  color: dark.dark ? "#41ebbd" : "#135846",
+                  borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
                 } : {}}
                 onClick={() => setFilter("In Progress")}
               >
@@ -144,12 +146,10 @@ const {dark} = useContext(ThemeContext);
               onChange={(event) => handleSearch(event.target.value)}
               placeholder="Search booking by client name..."
               type="text"
-              style={{
-                backgroundColor: "transparent",
-                color:  dark.dark? "#FFF" : "#212121",
-              }}
+              style={{ color: dark.dark ? "#41ebbd" : "#799283", border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846", backgroundImage:  dark.dark ? `url(${searchIconDark})` : `url(${searchIcon})`}}
             />
             <SelectorFilter
+              style={{ color: dark.dark ? "#41ebbd" : "#799283", border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846" }}
               name="filterBookingSelector"
               defaultValue="Orderdate"
               onInput={(event) => {

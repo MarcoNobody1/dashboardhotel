@@ -41,7 +41,6 @@ const ReadIcon = styled(BsFillBookmarkCheckFill)<ReadIconProps>`
 `;
 
 const FullscreenIcon = styled(BsArrowsFullscreen)`
-  color: #135846;
   transition: all 250ms ease-in;
 
   &:hover {
@@ -61,7 +60,6 @@ const EmailAddress = styled.p`
   text-align: left;
   font: normal normal normal 14px/21px Poppins;
   letter-spacing: 0px;
-  color: #799283;
 `;
 
 const PhoneNumber = styled(EmailAddress)`
@@ -121,13 +119,14 @@ export const Comments: FC = () => {
               <IconWrapper>
                 <ReadIcon archived={contact.archived.toString()} /> 
                 <FullscreenIcon
+                style={{ color: dark.dark? "#41ebbd" : "#135846"}}
                   onClick={() =>
                     handleOpenModal(contact.date.id, contact.archived)
                   }
                 />
               </IconWrapper>
-              <EmailAddress>{contact.customer.email}</EmailAddress>
-              <PhoneNumber>{contact.customer.phone}</PhoneNumber>
+              <EmailAddress  style={{ color: dark.dark? "#41ebbd" : "#799283"}}>{contact.customer.email}</EmailAddress>
+              <PhoneNumber  style={{ color: dark.dark? "#41ebbd" : "#799283"}}>{contact.customer.phone}</PhoneNumber>
               <Subject style={{color: dark.dark ? "#FFF" : "#262626"}}>{contact.subject}</Subject>
               <MessageContent style={{color: dark.dark ? "#FFF" : "#6e6e6e"}}>{contact.comment}</MessageContent>
             </>

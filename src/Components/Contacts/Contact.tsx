@@ -82,6 +82,7 @@ export const Contact: FC = () => {
             </ButtonFilter>
           </ButtonsContainer>
           <SelectorFilter
+           style={{ color: dark.dark ? "#41ebbd" : "#135846", border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846" }}
           name="filterContactSelector"
             defaultValue="Date"
             onChange={(event) => setSelected(event.target.value)}

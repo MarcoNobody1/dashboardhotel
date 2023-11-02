@@ -5,9 +5,8 @@ import { BsTrash3 } from "react-icons/bs";
 import { ToggleContext } from "../../Context/ToggleSidebar";
 import Swal from "sweetalert2";
 import { MagnifyingGlass } from "react-loader-spinner";
-import searchIcon from "../../assets/iconSearchBar.png";
+
 import { ThemeContext } from "../../Context/ToggleTheme";
-import { dark } from "@mui/material/styles/createPalette";
 
 export const formatDate = (inputDate: Date | string) => {
   const months: string[] = [
@@ -93,6 +92,25 @@ const PageWrap = styled.main`
   overflow-y: scroll;
   overscroll-behavior: contain;
   transition: all 0.25s ease-in-out;
+
+&::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f1f1f1;
+}
+
+&::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 15px;
+}
+
+&::-webkit-scrollbar-button {
+  display: none;
+
+}
+
+&::-webkit-scrollbar-corner {
+  border-radius: 15px;
+}
 `;
 
 interface PageWrapperProps {
@@ -381,9 +399,10 @@ export const SearchInput = styled.input`
   text-align: right;
   font: normal normal 300 14px/25px Poppins;
   padding: 5px 42px 0px 0;
-  background-image: url(${searchIcon});
   background-repeat: no-repeat;
   background-position: right 10px center;
+  background-color: transparent;
+  transition: all 250ms ease-in-out;
 `;
 
 export const UserSearchInput = styled(SearchInput)`
@@ -394,12 +413,11 @@ export const SelectorFilter = styled.select`
   min-width: 150px;
   max-height: 60px;
   background-color: transparent;
-  border: 1px solid #135846;
-  color: #135846;
   border-radius: 12px;
   padding-left: 5px;
   font: normal normal 500 16px/25px Poppins;
   letter-spacing: 0px;
+  transition: all 250ms ease-in-out;
 `;
 
 export const OptionSelect = styled.option`
@@ -407,7 +425,6 @@ export const OptionSelect = styled.option`
 `;
 
 export const AddRoomButton = styled.button`
-  background-color: #135846;
   text-align: center;
   font: normal normal 500 16px/10px Poppins;
   letter-spacing: 0px;
