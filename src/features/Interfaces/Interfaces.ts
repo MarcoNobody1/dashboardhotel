@@ -64,3 +64,7 @@ export interface UserInterface {
   contact: string;
   activity: string;
 }
+
+export interface DarkProp {
+  dark?:boolean | string
+}
