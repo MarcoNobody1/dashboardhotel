@@ -26,6 +26,9 @@ import { FC } from 'react';
 import { UserInterface } from "../../features/Interfaces/Interfaces";
 import { UserEditorCreator } from "./UserEditorCreator";
 import { ThemeContext } from "../../Context/ToggleTheme";
+import searchIcon from "../../assets/iconSearchBar.png";
+import searchIconDark from "../../assets/iconSearchBarDark.png";
+
 
 const TableContainer = styled.div`
   display: flex;
@@ -47,7 +50,7 @@ export const Users = () => {
   const [currentUsers, setCurrentUsers] = useState<UserInterface[]>([]);
   const [filter, setFilter] = useState("All Users");
   const [selected, setSelected] = useState("Start Date");
-  const {dark} = useContext(ThemeContext);
+  const { dark } = useContext(ThemeContext);
 
   useEffect(() => {
     setCurrentUsers(usersData);
@@ -145,8 +148,8 @@ export const Users = () => {
           <ButtonsContainer user>
             <ButtonFilter
               style={filter === "All Users" ? {
-                color: dark.dark? "#41ebbd" : "#135846",
-                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                color: dark.dark ? "#41ebbd" : "#135846",
+                borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
               } : {}}
               onClick={() => setFilter("All Users")}
             >
@@ -154,8 +157,8 @@ export const Users = () => {
             </ButtonFilter>
             <ButtonFilter
               style={filter === "Active Users" ? {
-                color: dark.dark? "#41ebbd" : "#135846",
-                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                color: dark.dark ? "#41ebbd" : "#135846",
+                borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
               } : {}}
               onClick={() => setFilter("Active Users")}
             >
@@ -163,15 +166,18 @@ export const Users = () => {
             </ButtonFilter>
             <ButtonFilter
               style={filter === "Inactive Users" ? {
-                color: dark.dark? "#41ebbd" : "#135846",
-                borderBottom: dark.dark? "2px solid #41ebbd" : "2px solid #135846",
+                color: dark.dark ? "#41ebbd" : "#135846",
+                borderBottom: dark.dark ? "2px solid #41ebbd" : "2px solid #135846",
               } : {}}
               onClick={() => setFilter("Inactive Users")}
             >
               Inactive Users
             </ButtonFilter>
           </ButtonsContainer>
-          <AddUserButton onClick={() => setIsModalOpen(true)}>
+          <AddUserButton style={{
+            backgroundColor: dark.dark ? "#41ebbd" : "#135846",
+            color: dark.dark ? "#171717" : "#ffffff",
+          }} onClick={() => setIsModalOpen(true)}>
             + New User
           </AddUserButton>
           {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
@@ -180,12 +186,11 @@ export const Users = () => {
             onChange={(event) => handleSearch(event.target.value)}
             placeholder="Search user by name..."
             type="text"
-            style={{
-              backgroundColor: "transparent",
-              color:  dark.dark? "#FFF" : "#212121",
-            }}
+            style={{ color: dark.dark ? "#41ebbd" : "#799283", border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846", backgroundImage: dark.dark ? `url(${searchIconDark})` : `url(${searchIcon})` }}
+
           />
           <SelectorFilter
+            style={{ color: dark.dark ? "#41ebbd" : "#135846", border: dark.dark ? "2px solid #41ebbd" : "2px solid #135846" }}
             name="filterUsersSelector"
             defaultValue="Start Date"
             onInput={(event) => {
