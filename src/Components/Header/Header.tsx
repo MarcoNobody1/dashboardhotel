@@ -12,11 +12,11 @@ import { SwitchSunMoon } from "./SwitchSunMoon"; "react";
 import { ThemeContext } from "../../Context/ToggleTheme";
 
 interface ThemeProps {
-  dark?:Object
+  dark?: Object
 }
 
 const OuterWrap = styled.nav<ThemeProps>`
-  background-color: ${(props) => (props.dark ? "#202020" : "#FFF" )};
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
   height: 120px;
   display: flex;
   align-items: center;
@@ -30,18 +30,30 @@ const IconWrap = styled.div`
   text-align: center;
 `;
 
-const MenuIcon = () => <DefaultIcon as={PiArrowsLeftRightBold} />;
+const MenuIcon = () => {
+  const { dark } = useContext(ThemeContext);
+return <DefaultIcon style={{  color: dark.dark? "#41ebbd" : "#135846" }} as={PiArrowsLeftRightBold} />
+};
 
-const MessageIcon = () => <DefaultIcon as={BsMailbox2} />;
+const MessageIcon = () => {
+  const { dark } = useContext(ThemeContext);
+  return <DefaultIcon style={{  color: dark.dark? "#41ebbd" : "#135846" }} as={BsMailbox2} /> 
+};
 
-const BellIcon = () => <DefaultIcon as={BsBellFill} />;
+const BellIcon = () => {
+  const { dark } = useContext(ThemeContext);
+return <DefaultIcon style={{  color: dark.dark? "#41ebbd" : "#135846" }} as={BsBellFill} />
+};
 
-const LogOutIcon = () => <DefaultIcon as={FiLogOut} />;
+const LogOutIcon = () => {
+  const { dark } = useContext(ThemeContext);
+return <DefaultIcon style={{  color: dark.dark? "#41ebbd" : "#135846" }} as={FiLogOut} />
+};
 
 const Title = styled.h1<ThemeProps>`
   font: normal normal 600 28px/42px Poppins;
   text-align: left;
-  color: ${(props) => (props.dark ? "#FFF" : "#262626" )};
+  color: ${(props) => (props.dark ? "#FFF" : "#262626")};
   flex: 8;
   transition: all 0.25s ease-in-out;
 `;
@@ -54,7 +66,7 @@ export const Header: FC = () => {
   const location = useLocation();
   const { dark } = useContext(ThemeContext);
 
-  useEffect(()=>{
+  useEffect(() => {
     switch (location.pathname) {
       case "/contact":
         setTitle("Contact");
@@ -68,19 +80,19 @@ export const Header: FC = () => {
       case "/rooms":
         setTitle("Rooms");
         break;
-        default:
-      if (location.pathname.startsWith("/bookings/")) {
-        setTitle("Booking Details");
-      } else if (location.pathname.startsWith("/rooms/")){
-        setTitle("Room Type");
-      }else {
-        setTitle("Dashboard");
-      }
+      default:
+        if (location.pathname.startsWith("/bookings/")) {
+          setTitle("Booking Details");
+        } else if (location.pathname.startsWith("/rooms/")) {
+          setTitle("Room Type");
+        } else {
+          setTitle("Dashboard");
+        }
     }
-  },[location.pathname])
+  }, [location.pathname])
 
   if (!auth.authenticated) {
-    return <SwitchSunMoon absolute={true}/>;
+    return <SwitchSunMoon absolute={true} />;
   }
 
   const handleLogOut = () => {
@@ -89,7 +101,7 @@ export const Header: FC = () => {
   };
 
   const handleToggle = () => {
-    toggleDispatch({type: 'toggle'});
+    toggleDispatch({ type: 'toggle' });
   }
 
   return (
@@ -99,7 +111,7 @@ export const Header: FC = () => {
           <MenuIcon />
         </IconWrap>
         <Title dark={dark.dark}>{title}</Title>
-        <SwitchSunMoon absolute={false}/>
+        <SwitchSunMoon absolute={false} />
         <IconWrap>
           <MessageIcon />
         </IconWrap>
@@ -109,7 +121,7 @@ export const Header: FC = () => {
         <IconWrap onClick={handleLogOut}>
           <LogOutIcon />
         </IconWrap>
-      
+
       </OuterWrap>
     </>
   );
