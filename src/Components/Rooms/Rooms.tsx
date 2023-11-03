@@ -94,7 +94,7 @@ export const Rooms: FC = () => {
   const Modal: FC<ModalProps> = ({ onClose }) => {
     return (
       <ModalBackground>
-        <AdNewContainer>
+        <AdNewContainer dark={dark.dark}>
           <CrossIcon onClick={onClose} />
           <NewDataTitle>Create a New Room</NewDataTitle>
           <RoomeEditorCreator closeModal={onClose} />
