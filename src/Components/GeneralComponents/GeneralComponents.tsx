@@ -471,8 +471,8 @@ export const ButtonAdNew = styled(AddRoomButton)`
   left: 35%;
 `;
 
-export const AdNewContainer = styled.td`
-  background-color: #ffffff;
+export const AdNewContainer = styled.td<DarkProp>`
+  background-color: ${(props) => props.dark ? "#202020" : "#FFF"};
   min-width: 1300px;
   min-height: 700px;
   border: 1px solid #135846;
@@ -496,10 +496,11 @@ export const NewDataTitle = styled.p`
   flex: 1;
 `;
 
-export const UpdatingTitle = styled(NewDataTitle)`
+export const UpdatingTitle = styled(NewDataTitle)<DarkProp>`
 font-weight: 400;
 font-size: 30px;
 font-style: italic;
+ color: ${(props) =>  props.dark ? "#41ebbd" : "#202020"}
 `;
 
 export const CommentWrapper = styled.div<DarkProp>`

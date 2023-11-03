@@ -1,23 +1,29 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
 import { ButtonAdNew } from "../GeneralComponents/GeneralComponents";
-import { roomAmenities, roomAmenitiesInterface } from "../../data/roomAmenities";
+import {
+  roomAmenities,
+  roomAmenitiesInterface,
+} from "../../data/roomAmenities";
 import { roomPhotos } from "../../data/createNewPhotos";
 import { addRoomData, updateRoomData } from "../../features/Rooms/roomThunks";
 import Swal from "sweetalert2";
 import { useAppDispatch } from "../../app/hooks";
-import { RoomInterface } from "../../features/Interfaces/Interfaces";
+import { DarkProp, RoomInterface } from "../../features/Interfaces/Interfaces";
+import { ThemeContext } from "../../Context/ToggleTheme";
+import { useContext } from "react";
 
 const Form = styled.form`
   display: flex;
   flex: 30;
 `;
 
-const Instructions = styled.div`
+const Instructions = styled.div<DarkProp>`
   display: flex;
   flex-direction: column;
   flex: 1;
   padding-bottom: 51px;
+  color: ${(props) => (props.dark ? "#eef9f2" : "#202020")};
 `;
 
 const Instruction = styled.div`
@@ -32,7 +38,7 @@ const InstructionTitle = styled.p`
   padding-left: 40px;
   font-weight: 600;
   font-size: 28px;
-  color: rgb(38, 38, 38);
+  color: inherit;
   transition: all 250ms ease-out;
 `;
 
@@ -70,10 +76,11 @@ const Checker = styled.input`
   cursor: pointer;
 `;
 
-const ActionGroup = styled.div`
+const ActionGroup = styled.div<DarkProp>`
   flex: 1;
   display: flex;
   flex-direction: column;
+  color: ${(props) => (props.dark ? "#41ebbd" : "#202020")};
 `;
 
 const Action = styled.div`
@@ -89,40 +96,48 @@ const ActionTitle = styled.p`
   font-weight: 600;
   font-size: 16px;
   text-transform: capitalize;
-  color: rgb(57, 57, 57);
+  color:inherit;
 `;
 
-const Selector = styled.select`
+const Selector = styled.select<DarkProp>`
   width: 90%;
   padding: 5px 10px;
   border-radius: 12px;
   font-size: 16px;
   border: 1px solid #135846;
-  color: #135846;
+  color: ${(props) => (props.dark ? "#41ebbd" : "#135846")};
+  background-color: transparent;
   font-weight: 500;
   cursor: pointer;
 `;
 
-const Option = styled.option`
+const Option = styled.option<DarkProp>`
   font-weight: 500;
   cursor: pointer;
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
 `;
 
-const TextArea = styled.textarea`
-  color: #135846;
+const TextArea = styled.textarea<DarkProp>`
+  color: ${(props) => (props.dark ? "#41ebbd" : "#135846")};
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
+  border: 1px solid #135846;
   width: 80%;
   padding: 5px;
 `;
 
-const NumberInput = styled.input`
+const NumberInput = styled.input<DarkProp>`
   width: 80%;
   text-align: center;
   font-size: 16px;
   font-weight: 500;
+  border: 1px solid #135846;
+  color: ${(props) => (props.dark ? "#41ebbd" : "#135846")};
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
 `;
 
 const RangeInput = styled.input`
   cursor: pointer;
+  transition: all 250ms ease-in-out;
 `;
 
 const InfoParagraph = styled.p`
@@ -130,6 +145,7 @@ const InfoParagraph = styled.p`
   font-size: 14px;
   width: 100%;
   text-align: center;
+  transition: all 250ms ease-in-out;
 `;
 
 interface PhotoGroupProps {
@@ -139,9 +155,10 @@ interface PhotoGroupProps {
 }
 
 const PhotoGroup: FC<PhotoGroupProps> = ({ src, checked, onChange }) => {
+  const { dark } = useContext(ThemeContext);
   return (
     <PhotoWrapper>
-      <Photo src={src} style={checked ? { border: "5px solid #135846" } : {}} />
+      <Photo src={src} style={checked ? { border: dark.dark ? "5px solid #41ebbd" : "5px solid #135846" } : {}} />
       <Checker
         name="checker"
         value={src}
@@ -160,8 +177,12 @@ interface RoomeEditorCreatorProps {
 
 type AmenityOptions = "Standard" | "Advanced" | "Premium" | "FullRoom";
 
-export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeModal }) => {
+export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
+  select,
+  closeModal,
+}) => {
   const dispatch = useAppDispatch();
+  const { dark } = useContext(ThemeContext);
   const [checkedStates, setCheckedStates] = useState<boolean[]>([
     roomPhotos[0] === select?.room_name.room_photo,
     roomPhotos[1] === select?.room_name.room_photo,
@@ -171,13 +192,19 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
   ]);
 
   const [price, setPrice] = useState(select ? select.price : 150);
-  const [discount, setDiscount] = useState(select ? select.offer_price.discount : 15);
+  const [discount, setDiscount] = useState(
+    select ? select.offer_price.discount : 15
+  );
   const [roomType, setRoomType] = useState("Single Room");
   const [roomNumber, setRoomNumber] = useState(111);
   const [description, setDescription] = useState("");
   const [amenities, setAmenities] = useState<AmenityOptions>("Standard");
-  const [allowDiscount, setAllowDiscount] = useState(select ? select.offer_price.isOffer : false);
-  const hasTrueValue = select ? checkedStates.some((isChecked) => isChecked) : checkedStates.filter((value) => value).length >= 3;
+  const [allowDiscount, setAllowDiscount] = useState(
+    select ? select.offer_price.isOffer : false
+  );
+  const hasTrueValue = select
+    ? checkedStates.some((isChecked) => isChecked)
+    : checkedStates.filter((value) => value).length >= 3;
 
   const handleCheckboxChange = (index: number) => {
     const newCheckedStates = [...checkedStates];
@@ -185,24 +212,43 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
     setCheckedStates(newCheckedStates);
   };
 
-  const getAmenityType = (select: RoomInterface, roomAmenities: roomAmenitiesInterface) => {
+  const getAmenityType = (
+    select: RoomInterface,
+    roomAmenities: roomAmenitiesInterface
+  ) => {
     const selectAmenities = select.amenities;
 
-    if (roomAmenities.FullRoom.every(amenity => selectAmenities.includes(amenity))) {
+    if (
+      roomAmenities.FullRoom.every((amenity) =>
+        selectAmenities.includes(amenity)
+      )
+    ) {
       return "FullRoom";
     }
-    if (roomAmenities.Premium.every(amenity => selectAmenities.includes(amenity))) {
+    if (
+      roomAmenities.Premium.every((amenity) =>
+        selectAmenities.includes(amenity)
+      )
+    ) {
       return "Premium";
     }
-    if (roomAmenities.Advanced.every(amenity => selectAmenities.includes(amenity))) {
+    if (
+      roomAmenities.Advanced.every((amenity) =>
+        selectAmenities.includes(amenity)
+      )
+    ) {
       return "Advanced";
     }
-    if (roomAmenities.Standard.every(amenity => selectAmenities.includes(amenity))) {
+    if (
+      roomAmenities.Standard.every((amenity) =>
+        selectAmenities.includes(amenity)
+      )
+    ) {
       return "Standard";
     }
 
     return "No Match";
-  }
+  };
 
   const calcTotalFee = () => {
     const percentage = discount / 100;
@@ -224,11 +270,16 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
 
     const newRoom = {
       room_name: {
-        id: select ? select.room_name.id : (Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345).toString(),
-        room_photo: finalPhotos[Math.floor(Math.random() * finalPhotos.length)] || "",
+        id: select
+          ? select.room_name.id
+          : (
+              Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345
+            ).toString(),
+        room_photo:
+          finalPhotos[Math.floor(Math.random() * finalPhotos.length)] || "",
         room_number: roomNumber === null ? 111 : roomNumber,
         room_description:
-          (description.replace(/\s/g, "") === "") || (description === null)
+          description.replace(/\s/g, "") === "" || description === null
             ? "This is a sample description text."
             : description,
       },
@@ -237,10 +288,10 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
         amenities === "Standard"
           ? roomAmenities.Standard
           : amenities === "Advanced"
-            ? roomAmenities.Advanced
-            : amenities === "Premium"
-              ? roomAmenities.Premium
-              : roomAmenities.FullRoom,
+          ? roomAmenities.Advanced
+          : amenities === "Premium"
+          ? roomAmenities.Premium
+          : roomAmenities.FullRoom,
       price: price,
       offer_price: {
         isOffer: allowDiscount,
@@ -285,7 +336,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
         handleUpdateCreateRoom();
       }}
     >
-      <Instructions>
+      <Instructions dark={dark.dark}>
         <Instruction>
           <InstructionTitle>1. Select Photos:</InstructionTitle>
         </Instruction>
@@ -302,8 +353,22 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
         <Instruction>
           <InstructionTitle
             style={{
-              opacity: hasTrueValue && (select && select.room_name.room_description.length > 0) ? 1 : description.length > 0 ? 1 : 0,
-              fontSize: hasTrueValue && (select && select.room_name.room_description.length > 0) ? "28px" : description.length > 0 ? "28px" : "0px",
+              opacity:
+                hasTrueValue &&
+                select &&
+                select.room_name.room_description.length > 0
+                  ? 1
+                  : description.length > 0
+                  ? 1
+                  : 0,
+              fontSize:
+                hasTrueValue &&
+                select &&
+                select.room_name.room_description.length > 0
+                  ? "28px"
+                  : description.length > 0
+                  ? "28px"
+                  : "0px",
             }}
           >
             3. Set Pricing:
@@ -344,85 +409,94 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
             pointerEvents: hasTrueValue ? "all" : "none",
           }}
         >
-          <ActionGroup>
+          <ActionGroup dark={dark.dark}>
             <Action>
               <ActionTitle>room type:</ActionTitle>
               <Selector
+              dark={dark.dark}
                 name="typeSelector"
                 onChange={(event) => {
                   setRoomType(event.target.value);
                 }}
                 defaultValue={select ? select.room_type : roomType}
               >
-                <Option value="Single Room">
-                  Single Room
-                </Option>
-                <Option value="Double Room">
-                  Double Room
-                </Option>
-                <Option value="Double Superior">
-                  Double Superior
-                </Option>
-                <Option value="Suite">
-                  Suite
-                </Option>
+                <Option dark={dark.dark} value="Single Room">Single Room</Option>
+                <Option dark={dark.dark} value="Double Room">Double Room</Option>
+                <Option dark={dark.dark} value="Double Superior">Double Superior</Option>
+                <Option dark={dark.dark} value="Suite">Suite</Option>
               </Selector>
             </Action>
             <Action>
               <ActionTitle>amenities:</ActionTitle>
               <Selector
+              dark={dark.dark}
                 name="amenitiesSelector"
                 onChange={(event) => {
                   setAmenities(event.target.value as AmenityOptions);
                 }}
-                defaultValue={select ? getAmenityType(select, roomAmenities) : "Standard"}
+                defaultValue={
+                  select ? getAmenityType(select, roomAmenities) : "Standard"
+                }
               >
-                <Option value="Standard">
-                  Standard Pack
-                </Option>
-                <Option value="Advanced">
-                  Advanced Pack
-                </Option>
-                <Option value="Premium">
-                  Premium Pack
-                </Option>
-                <Option value="FullRoom">
-                  'Full-Room' Pack
-                </Option>
+                <Option dark={dark.dark} value="Standard">Standard Pack</Option>
+                <Option dark={dark.dark} value="Advanced">Advanced Pack</Option>
+                <Option dark={dark.dark} value="Premium">Premium Pack</Option>
+                <Option dark={dark.dark} value="FullRoom">'Full-Room' Pack</Option>
               </Selector>
             </Action>
           </ActionGroup>
-          <ActionGroup>
+          <ActionGroup dark={dark.dark}>
             <Action>
               <ActionTitle>room number:</ActionTitle>
               <NumberInput
+              dark={dark.dark}
                 name="roomNumberInput"
                 type="number"
-                defaultValue={select ? select.room_name.room_number : roomNumber}
+                defaultValue={
+                  select ? select.room_name.room_number : roomNumber
+                }
                 min="100"
                 max="9999"
-                onChange={(event) => setRoomNumber(parseInt(event.target.value))}
+                onChange={(event) =>
+                  setRoomNumber(parseInt(event.target.value))
+                }
               />
             </Action>
             <Action>
               <ActionTitle>description:</ActionTitle>
               <TextArea
+              dark={dark.dark}
                 name="descriptionInput"
                 placeholder="Add a brief description for the room..."
                 onChange={(event) => setDescription(event.target.value)}
-                defaultValue={select ? select.room_name.room_description : undefined}
+                defaultValue={
+                  select ? select.room_name.room_description : undefined
+                }
               ></TextArea>
             </Action>
           </ActionGroup>
         </ActionRow>
         <ActionRow
           style={{
-            opacity: hasTrueValue && (select && select.room_name.room_description.length > 0) ? 1 : description.length > 0 ? 1 : 0,
+            opacity:
+              hasTrueValue &&
+              select &&
+              select.room_name.room_description.length > 0
+                ? 1
+                : description.length > 0
+                ? 1
+                : 0,
             pointerEvents:
-              hasTrueValue && (select && select.room_name.room_description.length > 0) ? "all" : description.length > 0 ? "all" : "none",
+              hasTrueValue &&
+              select &&
+              select.room_name.room_description.length > 0
+                ? "all"
+                : description.length > 0
+                ? "all"
+                : "none",
           }}
         >
-          <ActionGroup>
+          <ActionGroup dark={dark.dark}>
             <Action>
               <ActionTitle>price:</ActionTitle>
               <RangeInput
@@ -448,7 +522,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
                 justifyContent: "flex-start",
               }}
             >
-              <ActionTitle>allow discount?</ActionTitle>
+              <ActionTitle style={{color: dark.dark ? "#41ebbd":"#202020" }}>allow discount?</ActionTitle>
               <Checker
                 name="offerInput"
                 onChange={(event) => setAllowDiscount(event.target.checked)}
@@ -457,7 +531,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
               />
             </Action>
             <Action style={{ flex: "20" }}>
-              <ActionTitle>discount:</ActionTitle>
+              <ActionTitle  style={{color: dark.dark ? "#41ebbd":"#202020" }}>discount:</ActionTitle>
               <RangeInput
                 disabled={allowDiscount ? false : true}
                 name="discountInput"
@@ -468,7 +542,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
                 step="5"
                 defaultValue={select ? select.offer_price.discount : discount}
               />
-              <InfoParagraph style={{ opacity: allowDiscount ? "100" : "0" }}>
+              <InfoParagraph style={{ opacity: allowDiscount ? "100" : "0", color: dark.dark ? "#41ebbd":"#202020" }}>
                 Your current discount is {discount}%.
               </InfoParagraph>
               <InfoParagraph
@@ -479,6 +553,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
                   bottom: "-10px",
                   left: "0px",
                   opacity: allowDiscount ? "100" : "0",
+                  color: dark.dark ? "#41ebbd":"#202020" 
                 }}
               >
                 The final price will be ${calcTotalFee()}
@@ -489,9 +564,24 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({ select, closeM
       </Actions>
       <ButtonAdNew
         style={{
-          opacity: hasTrueValue && (select && select.room_name.room_description.length > 0) ? 1 : description.length > 0 ? 1 : 0,
+          opacity:
+            hasTrueValue &&
+            select &&
+            select.room_name.room_description.length > 0
+              ? 1
+              : description.length > 0
+              ? 1
+              : 0,
           pointerEvents:
-            hasTrueValue && (select && select.room_name.room_description.length > 0) ? "all" : description.length > 0 ? "all" : "none",
+            hasTrueValue &&
+            select &&
+            select.room_name.room_description.length > 0
+              ? "all"
+              : description.length > 0
+              ? "all"
+              : "none",
+              color: dark.dark ? "#202020" : "#eef9f2",
+              backgroundColor: dark.dark ? "#41ebbd" : "#135846"
         }}
       >
         {select ? "Save Changes" : "Add Room"}

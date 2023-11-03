@@ -129,7 +129,7 @@ export const Users = () => {
   const Modal: FC<ModalParams> = ({ onClose }) => {
     return (
       <ModalBackground>
-        <AdNewContainer>
+        <AdNewContainer dark={dark.dark}>
           <CrossIcon onClick={onClose} />
           <NewDataTitle>Create a New User</NewDataTitle>
           <UserEditorCreator closeModal={onClose} />
