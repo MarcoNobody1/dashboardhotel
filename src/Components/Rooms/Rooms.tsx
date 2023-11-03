@@ -96,7 +96,7 @@ export const Rooms: FC = () => {
       <ModalBackground>
         <AdNewContainer dark={dark.dark}>
           <CrossIcon onClick={onClose} />
-          <NewDataTitle>Create a New Room</NewDataTitle>
+          <NewDataTitle dark={dark.dark}>Create a New Room</NewDataTitle>
           <RoomeEditorCreator closeModal={onClose} />
         </AdNewContainer>
       </ModalBackground>
