@@ -486,13 +486,13 @@ export const AdNewContainer = styled.td<DarkProp>`
   z-index: 100;
 `;
 
-export const NewDataTitle = styled.p`
+export const NewDataTitle = styled.p<DarkProp>`
   text-align: center;
   display: inline-block;
   font-weight: 500;
   font-size: 36px;
   letter-spacing: 0px;
-  color: rgb(38, 38, 38);
+  color: ${(props) => props.dark ? "#FFF" : "rgb(38, 38, 38)"};
   flex: 1;
 `;
 
