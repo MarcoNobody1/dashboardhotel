@@ -5,19 +5,22 @@ import { userPhotos } from "../../data/createNewPhotos";
 import { addUserData, updateUserData } from "../../features/Users/userThunks";
 import Swal from "sweetalert2";
 import { useAppDispatch } from "../../app/hooks";
-import { UserInterface } from "../../features/Interfaces/Interfaces";
+import { DarkProp, UserInterface } from "../../features/Interfaces/Interfaces";
+import { useContext } from "react";
+import { ThemeContext } from "../../Context/ToggleTheme";
 
 const Form = styled.form`
   display: flex;
   flex: 30;
 `;
 
-const Instructions = styled.div`
+const Instructions = styled.div<DarkProp>`
   display: flex;
   flex-direction: column;
   flex: 1;
   padding-bottom: 51px;
   gap: 35px;
+  color: ${(props) => (props.dark ? "#eef9f2" : "#202020")};
 `;
 
 const Instruction = styled.div`
@@ -33,7 +36,7 @@ const InstructionTitle = styled.p`
   padding-left: 40px;
   font-weight: 600;
   font-size: 28px;
-  color: rgb(38, 38, 38);
+  color: inherit;
   transition: all 250ms ease-out;
 `;
 
@@ -74,11 +77,12 @@ const Checker = styled.input`
   display: none;
 `;
 
-const ActionGroup = styled.div`
+const ActionGroup = styled.div<DarkProp>`
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  color: ${(props) => (props.dark ? "#41ebbd" : "#202020")};
 `;
 
 const Action = styled.div`
@@ -95,43 +99,48 @@ const ActionTitle = styled.p`
   font-weight: 600;
   font-size: 16px;
   text-transform: capitalize;
-  color: rgb(57, 57, 57);
+  color: inherit;
 `;
 
-const Selector = styled.select`
+const Selector = styled.select<DarkProp>`
   width: 80%;
   padding: 5px 10px;
   border-radius: 12px;
   font-size: 16px;
   border: 1px solid #135846;
-  color: #135846;
+  color: ${(props) => (props.dark ? "#41ebbd" : "#135846")};
+  background-color: transparent;
   font-weight: 500;
   cursor: pointer;
 `;
 
-const Option = styled.option`
+const Option = styled.option<DarkProp>`
   font-weight: 500;
   cursor: pointer;
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
 `;
 
-const TextArea = styled.textarea`
-  color: #135846;
+const TextArea = styled.textarea<DarkProp>`
+  color: ${(props) => (props.dark ? "#41ebbd" : "#135846")};
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
   width: 80%;
   padding: 5px;
 `;
 
-const TextInput = styled.input`
+const TextInput = styled.input<DarkProp>`
   width: 80%;
   text-align: left;
   font-size: 16px;
   font-weight: 500;
   border-radius: 12px;
-  padding: 5px;
 
-  &:hover{
+  padding: 5px;
+  color: ${(props) => (props.dark ? "#41ebbd" : "#135846")};
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
+
+  &:hover {
     cursor: text;
   }
-  
 `;
 
 interface InfoParagraphProps {
@@ -241,20 +250,32 @@ interface UserEditorCreatorProps {
   closeModal: () => void;
 }
 
-
-export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeModal }) => {
+export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
+  select,
+  closeModal,
+}) => {
   const dispatch = useAppDispatch();
-  const [active, setActive] = useState(select && select.activity === "active" ? true : false);
-  const [selectedPhoto, setSelectedPhoto] = useState(select ? select.name.photo : "");
+  const { dark } = useContext(ThemeContext);
+  const [active, setActive] = useState(
+    select && select.activity === "active" ? true : false
+  );
+  const [selectedPhoto, setSelectedPhoto] = useState(
+    select ? select.name.photo : ""
+  );
   const [phone, setPhone] = useState(select ? select.contact : "");
-  const [password, setPassword] = useState(select ? select.name.password_hash : "");
+  const [password, setPassword] = useState(
+    select ? select.name.password_hash : ""
+  );
   const [username, setUsername] = useState(select ? select.name.username : "");
   const [email, setEmail] = useState(select ? select.name.email : "");
   const [date, setDate] = useState(select ? select.start_date : "");
-  const [position, setPosition] = useState(select ? select.name.employee_position : "Room Service");
-  const [description, setDescription] = useState(select ? select.job_description : "");
+  const [position, setPosition] = useState(
+    select ? select.name.employee_position : "Room Service"
+  );
+  const [description, setDescription] = useState(
+    select ? select.job_description : ""
+  );
   const [minDate, setMinDate] = useState(getFormattedDate());
-
 
   const handleUpdateCreateUser = () => {
     const Toast = Swal.mixin({
@@ -301,7 +322,11 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
       name: {
         photo: selectedPhoto || "",
         username: username,
-        id: select ? select.name.id : (Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345).toString(),
+        id: select
+          ? select.name.id
+          : (
+              Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345
+            ).toString(),
         employee_position: position,
         email: email,
         password_hash: password,
@@ -315,15 +340,15 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
     if (selectedPhoto) {
       const action = select ? updateUserData : addUserData;
       dispatch(action(dataUser));
-      setActive(false)
-      setSelectedPhoto("")
-      setPhone("")
-      setPassword("")
-      setUsername("")
-      setEmail("")
-      setDate("")
-      setPosition("Room Service")
-      setDescription("")
+      setActive(false);
+      setSelectedPhoto("");
+      setPhone("");
+      setPassword("");
+      setUsername("");
+      setEmail("");
+      setDate("");
+      setPosition("Room Service");
+      setDescription("");
 
       Toast.fire({
         icon: "success",
@@ -350,7 +375,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
         handleUpdateCreateUser();
       }}
     >
-      <Instructions>
+      <Instructions dark={dark.dark}>
         <Instruction>
           <InstructionTitle>1. Select Photo:</InstructionTitle>
         </Instruction>
@@ -383,29 +408,46 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
       </Instructions>
       <Actions>
         <ActionRow>
-          {select ? (<PhotoWrapper style={{ position: "absolute", top:"0px", left:"-40px" }}>
-            <Photo
-              src={select.name.photo}
-              style={selectedPhoto === select.name.photo ? {
-                border: "5px solid #135846",
-                width: "60px", height: "60px"
-              } : { width: "40px", height: "40px" }}
-              onClick={() => setSelectedPhoto(select.name.photo)}
-            />
-            <Checker
-              name="checker"
-              value={select.name.photo}
-              type="radio"
-              checked={selectedPhoto === select.name.photo}
-              onChange={() => setSelectedPhoto(select.name.photo)}
-            />
-          </PhotoWrapper>) : null}
+          {select ? (
+            <PhotoWrapper
+              style={{ position: "absolute", top: "0px", left: "-40px" }}
+            >
+              <Photo
+                src={select.name.photo}
+                style={
+                  selectedPhoto === select.name.photo
+                    ? {
+                        border: dark.dark
+                          ? "5px solid #41ebbd"
+                          : "5px solid #135846",
+                        width: "60px",
+                        height: "60px",
+                      }
+                    : { width: "40px", height: "40px" }
+                }
+                onClick={() => setSelectedPhoto(select.name.photo)}
+              />
+              <Checker
+                name="checker"
+                value={select.name.photo}
+                type="radio"
+                checked={selectedPhoto === select.name.photo}
+                onChange={() => setSelectedPhoto(select.name.photo)}
+              />
+            </PhotoWrapper>
+          ) : null}
           <PhotoWrapper>
             <Photo
               src={userPhotos[0]}
-              style={selectedPhoto === userPhotos[0] ? {
-                border: "5px solid #135846",
-              } : {}}
+              style={
+                selectedPhoto === userPhotos[0]
+                  ? {
+                      border: dark.dark
+                        ? "5px solid #41ebbd"
+                        : "5px solid #135846",
+                    }
+                  : {}
+              }
               onClick={() => setSelectedPhoto(userPhotos[0])}
             />
             <Checker
@@ -419,9 +461,15 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
           <PhotoWrapper>
             <Photo
               src={userPhotos[1]}
-              style={selectedPhoto === userPhotos[1] ? {
-                border: "5px solid #135846",
-              } : {}}
+              style={
+                selectedPhoto === userPhotos[1]
+                  ? {
+                      border: dark.dark
+                        ? "5px solid #41ebbd"
+                        : "5px solid #135846",
+                    }
+                  : {}
+              }
               onClick={() => setSelectedPhoto(userPhotos[1])}
             />
             <Checker
@@ -435,9 +483,15 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
           <PhotoWrapper>
             <Photo
               src={userPhotos[2]}
-              style={selectedPhoto === userPhotos[2] ? {
-                border: "5px solid #135846",
-              } : {}}
+              style={
+                selectedPhoto === userPhotos[2]
+                  ? {
+                      border: dark.dark
+                        ? "5px solid #41ebbd"
+                        : "5px solid #135846",
+                    }
+                  : {}
+              }
               onClick={() => setSelectedPhoto(userPhotos[2])}
             />
             <Checker
@@ -451,9 +505,15 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
           <PhotoWrapper>
             <Photo
               src={userPhotos[3]}
-              style={selectedPhoto === userPhotos[3] ? {
-                border: "5px solid #135846",
-              } : {}}
+              style={
+                selectedPhoto === userPhotos[3]
+                  ? {
+                      border: dark.dark
+                        ? "5px solid #41ebbd"
+                        : "5px solid #135846",
+                    }
+                  : {}
+              }
               onClick={() => setSelectedPhoto(userPhotos[3])}
             />
             <Checker
@@ -467,9 +527,15 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
           <PhotoWrapper>
             <Photo
               src={userPhotos[4]}
-              style={selectedPhoto === userPhotos[4] ? {
-                border: "5px solid #135846",
-              } : {}}
+              style={
+                selectedPhoto === userPhotos[4]
+                  ? {
+                      border: dark.dark
+                        ? "5px solid #41ebbd"
+                        : "5px solid #135846",
+                    }
+                  : {}
+              }
               onClick={() => setSelectedPhoto(userPhotos[4])}
             />
             <Checker
@@ -487,10 +553,11 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
             pointerEvents: selectedPhoto ? "all" : "none",
           }}
         >
-          <ActionGroup>
+          <ActionGroup dark={dark.dark}>
             <Action>
               <ActionTitle>Full Name:</ActionTitle>
               <TextInput
+                dark={dark.dark}
                 name="typeSelector"
                 onChange={(event) => {
                   setUsername(event.target.value);
@@ -503,6 +570,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
             <Action>
               <ActionTitle>Password:</ActionTitle>
               <TextInput
+                dark={dark.dark}
                 name="userPasswordInput"
                 type="password"
                 placeholder={`e.g. : ILoveMyBankAccount@99`}
@@ -516,10 +584,11 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
               </InfoParagraph>
             </Action>
           </ActionGroup>
-          <ActionGroup>
+          <ActionGroup dark={dark.dark}>
             <Action>
               <ActionTitle>Email:</ActionTitle>
               <TextInput
+                dark={dark.dark}
                 name="userEmailInput"
                 type="email"
                 placeholder={`e.g. :  mrkrabs@iwantmymoney.com`}
@@ -530,6 +599,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
             <Action>
               <ActionTitle>Phone Number:</ActionTitle>
               <TextInput
+                dark={dark.dark}
                 name="userPhoneInput"
                 type="tel"
                 placeholder={`e.g. : 878888523`}
@@ -552,10 +622,11 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
                 : "none",
           }}
         >
-          <ActionGroup>
+          <ActionGroup dark={dark.dark}>
             <Action>
               <ActionTitle>Start Date:</ActionTitle>
               <TextInput
+                dark={dark.dark}
                 name="typeSelector"
                 type="date"
                 min={select ? select.start_date : minDate}
@@ -568,25 +639,28 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
             <Action>
               <ActionTitle>Employee Position:</ActionTitle>
               <Selector
+                dark={dark.dark}
                 name="positionSelector"
                 onChange={(event) => {
                   setPosition(event.target.value);
                 }}
-                defaultValue={select ? select.name.employee_position : "Room Service"}
+                defaultValue={
+                  select ? select.name.employee_position : "Room Service"
+                }
               >
-                <Option value="Room Service">
+                <Option dark={dark.dark} value="Room Service">
                   Room Service
                 </Option>
-                <Option value="Recepcionist">
+                <Option dark={dark.dark} value="Recepcionist">
                   Recepcionist
                 </Option>
-                <Option value="Manager">
+                <Option dark={dark.dark} value="Manager">
                   Manager
                 </Option>
               </Selector>
             </Action>
           </ActionGroup>
-          <ActionGroup>
+          <ActionGroup dark={dark.dark}>
             <Action>
               <ActionTitle>Activy:</ActionTitle>
               <InputLabel>
@@ -594,7 +668,9 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
                   name="userActiveCheckbox"
                   type="checkbox"
                   onChange={(event) => setActive(event.target.checked)}
-                  defaultChecked={select && select.activity === "active" ? true : false}
+                  defaultChecked={
+                    select && select.activity === "active" ? true : false
+                  }
                 />
                 <SliderSpan></SliderSpan>
               </InputLabel>
@@ -604,6 +680,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
             <Action>
               <ActionTitle>description:</ActionTitle>
               <TextArea
+                dark={dark.dark}
                 name="descriptionInput"
                 placeholder="Add a brief description for the job..."
                 onChange={(event) => setDescription(event.target.value)}
@@ -623,9 +700,12 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({ select, closeMod
             selectedPhoto && username.length > 0 && password.length >= 1
               ? "all"
               : "none",
+          color: dark.dark ? "#202020" : "#eef9f2",
+          backgroundColor: dark.dark ? "#41ebbd" : "#135846",
         }}
-      > {select ? "Save Changes" : "Add Room"}
-
+      >
+        {" "}
+        {select ? "Save Changes" : "Add Room"}
       </ButtonAdNew>
     </Form>
   );
