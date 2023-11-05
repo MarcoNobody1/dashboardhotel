@@ -10,8 +10,8 @@ import { DarkProp } from '../../features/Interfaces/Interfaces';
 import {useContext} from 'react';
 import { ThemeContext } from "../../Context/ToggleTheme";
 
-const BookingWrapper = styled.div`
-  background-color: #fff;
+const BookingWrapper = styled.div<DarkProp>`
+  background-color: ${(props) => props.dark ? "#202020" : "#FFF"};
   max-width: 1475px;
   min-height: 700px;
   border: 1px solid black;
@@ -217,7 +217,7 @@ const {dark} = useContext(ThemeContext)
   return (
     <>
       <PageWrapper>
-        <BookingWrapper>
+        <BookingWrapper dark={dark.dark}>
           <ButtonReturn to="/rooms">
             <IoArrowBackOutline />
           </ButtonReturn>
