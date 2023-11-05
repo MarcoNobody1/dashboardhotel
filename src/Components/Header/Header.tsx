@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { PiArrowsLeftRightBold } from "react-icons/pi";
 import { BsMailbox2, BsBellFill } from "react-icons/bs";
@@ -7,12 +7,18 @@ import { DefaultIcon } from "../GeneralComponents/GeneralComponents";
 import { useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../Context/Auth";
 import { ToggleContext } from "../../Context/ToggleSidebar";
-import { FC } from 'react';
-import { SwitchSunMoon } from "./SwitchSunMoon"; "react";
+import { FC } from "react";
+import { SwitchSunMoon } from "./SwitchSunMoon";
+("react");
 import { ThemeContext } from "../../Context/ToggleTheme";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { contactsInfo } from "../../features/Contact/contactSlice";
+import { getContactsData } from "../../features/Contact/contactThunks";
+import { getData } from "../../features/Bookings/bookingThunks";
+import { info } from "../../features/Bookings/bookingSlice";
 
 interface ThemeProps {
-  dark?: Object
+  dark?: Object;
 }
 
 const OuterWrap = styled.nav<ThemeProps>`
@@ -28,26 +34,48 @@ const OuterWrap = styled.nav<ThemeProps>`
 const IconWrap = styled.div`
   flex: 1;
   text-align: center;
+  position: relative;
+  transition: all 250ms ease-out;
 `;
 
 const MenuIcon = () => {
   const { dark } = useContext(ThemeContext);
-return <DefaultIcon style={{  color: dark.dark? "#41ebbd" : "#135846" }} as={PiArrowsLeftRightBold} />
+  return (
+    <DefaultIcon
+      style={{ color: dark.dark ? "#41ebbd" : "#135846" }}
+      as={PiArrowsLeftRightBold}
+    />
+  );
 };
 
 const MessageIcon = () => {
   const { dark } = useContext(ThemeContext);
-  return <DefaultIcon style={{  color: dark.dark? "#41ebbd" : "#135846" }} as={BsMailbox2} /> 
+  return (
+    <DefaultIcon
+      style={{ color: dark.dark ? "#41ebbd" : "#135846" }}
+      as={BsMailbox2}
+    />
+  );
 };
 
 const BellIcon = () => {
   const { dark } = useContext(ThemeContext);
-return <DefaultIcon style={{  color: dark.dark? "#41ebbd" : "#135846" }} as={BsBellFill} />
+  return (
+    <DefaultIcon
+      style={{ color: dark.dark ? "#41ebbd" : "#135846" }}
+      as={BsBellFill}
+    />
+  );
 };
 
 const LogOutIcon = () => {
   const { dark } = useContext(ThemeContext);
-return <DefaultIcon style={{  color: dark.dark? "#41ebbd" : "#135846" }} as={FiLogOut} />
+  return (
+    <DefaultIcon
+      style={{ color: dark.dark ? "#41ebbd" : "#135846" }}
+      as={FiLogOut}
+    />
+  );
 };
 
 const Title = styled.h1<ThemeProps>`
@@ -58,13 +86,41 @@ const Title = styled.h1<ThemeProps>`
   transition: all 0.25s ease-in-out;
 `;
 
+const Notification = styled.div`
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-color: red;
+  top: -5px;
+  right: 38px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  transition: all 250ms ease-out;
+`;
+
 export const Header: FC = () => {
   const navigate = useNavigate();
   const { auth, authDispatch } = useContext(AuthContext);
   const { toggleDispatch } = useContext(ToggleContext);
   const [title, setTitle] = useState("Dashboard");
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const { dark } = useContext(ThemeContext);
+  const contacts = useAppSelector(contactsInfo);
+  const bookings = useAppSelector(info);
+  const pendingMessages = contacts.filter((contact) => {
+    return !contact.archived;
+  });
+  const messageNotification = pendingMessages.length;
+  const bookingNotification = bookings.length;
+  useEffect(() => {
+    dispatch(getContactsData());
+  }, [getContactsData]);
+
+  useEffect(() => {
+    dispatch(getData());
+  }, [getData]);
 
   useEffect(() => {
     switch (location.pathname) {
@@ -89,7 +145,7 @@ export const Header: FC = () => {
           setTitle("Dashboard");
         }
     }
-  }, [location.pathname])
+  }, [location.pathname]);
 
   if (!auth.authenticated) {
     return <SwitchSunMoon absolute={true} />;
@@ -101,27 +157,30 @@ export const Header: FC = () => {
   };
 
   const handleToggle = () => {
-    toggleDispatch({ type: 'toggle' });
-  }
+    toggleDispatch({ type: "toggle" });
+  };
 
   return (
     <>
       <OuterWrap dark={dark.dark}>
-        <IconWrap onClick={handleToggle} >
+        <IconWrap onClick={handleToggle}>
           <MenuIcon />
         </IconWrap>
         <Title dark={dark.dark}>{title}</Title>
         <SwitchSunMoon absolute={false} />
-        <IconWrap>
+        <IconWrap onClick={() => {navigate("/contact")}}>
           <MessageIcon />
+          {messageNotification !== 0 && (
+            <Notification>{messageNotification}</Notification>
+          )}
         </IconWrap>
-        <IconWrap>
+        <IconWrap onClick={() => {navigate("/bookings")}}>
           <BellIcon />
+        {bookingNotification !== 0 && <Notification>{bookingNotification}</Notification>}
         </IconWrap>
         <IconWrap onClick={handleLogOut}>
           <LogOutIcon />
         </IconWrap>
-
       </OuterWrap>
     </>
   );
