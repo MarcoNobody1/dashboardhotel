@@ -6,6 +6,9 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { roomIdStatus, roomdetailData } from "../../features/Rooms/roomSlice";
 import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppSelector } from "../../app/hooks";
+import { DarkProp } from '../../features/Interfaces/Interfaces';
+import {useContext} from 'react';
+import { ThemeContext } from "../../Context/ToggleTheme";
 
 const BookingWrapper = styled.div`
   background-color: #fff;
@@ -16,6 +19,7 @@ const BookingWrapper = styled.div`
   border-radius: 20px;
   position: relative;
   display: flex;
+  margin: auto;
 `;
 
 const ButtonReturn = styled(NavLink)`
@@ -26,9 +30,12 @@ const ButtonReturn = styled(NavLink)`
   color: #799283;
 `;
 
-const DetailsWrapper = styled.div`
+const DetailsWrapper = styled.div<DarkProp>`
   flex: 1;
   padding: 40px;
+  background-color: ${(props) =>props.dark ? "#202020" : "#FFF"};
+  transition: all 250ms ease-in-out;
+  border-radius: 20px 0 0 20px;
 `;
 
 const ImageWrapper = styled.div`
@@ -84,20 +91,20 @@ const InfoWrap = styled.div`
 const InfoTitle = styled.p`
   font: normal normal 400 14px/21px Poppins;
   letter-spacing: 0px;
-  color: #6e6e6e;
   margin-bottom: 15px;
+  
 `;
 
-const InfoContentUpperRow = styled.p`
+const InfoContentUpperRow = styled.p<DarkProp>`
   font: normal normal 500 16px/25px Poppins;
   letter-spacing: 0px;
-  color: #212121;
+  color: ${(props) =>props.dark ? "#eef9f2" : "#212121"};
   margin-bottom: 30px;
+  transition: all 250ms ease-in-out;
 `;
 
-const InfoContentBelowRow = styled(InfoContentUpperRow)`
+const InfoContentBelowRow = styled(InfoContentUpperRow)<DarkProp>`
   font: normal normal 500 24px/35px Poppins;
-
   &:nth-child(2) {
     display: inline-block;
   }
@@ -143,24 +150,24 @@ const Image = styled.img`
 export const RoomDetails: FC = () => {
   const selectedRoom = useAppSelector(roomdetailData);
   const oneRoomStatus = useAppSelector(roomIdStatus);
-
+const {dark} = useContext(ThemeContext)
   const data = () => {
     return (
       <>
-        <DetailsWrapper>
+        <DetailsWrapper dark={dark.dark}>
           <GuestName></GuestName>
           <BookingId>ID {selectedRoom.room_name.id}</BookingId>
           <InfoContainer>
             <InfoWrap>
               <InfoTitle>Room Type</InfoTitle>
-              <InfoContentBelowRow>
+              <InfoContentBelowRow dark={dark.dark}>
                 {selectedRoom.room_type}
               </InfoContentBelowRow>
             </InfoWrap>
             <Gap />
             <InfoWrap>
               <InfoTitle>Room Info</InfoTitle>
-              <InfoContentUpperRow>
+              <InfoContentUpperRow dark={dark.dark}>
                 {selectedRoom.room_name.room_description}
               </InfoContentUpperRow>
             </InfoWrap>
