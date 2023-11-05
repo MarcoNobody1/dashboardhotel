@@ -11,8 +11,10 @@ import {
   detailData,
 } from "../../features/Bookings/bookingSlice";
 import { renderStatus } from "../GeneralComponents/RenderStatus";
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { useAppSelector } from "../../app/hooks";
+import { ThemeContext } from "../../Context/ToggleTheme";
+import { DarkProp } from "../../features/Interfaces/Interfaces";
 
 const BookingWrapper = styled.div`
   background-color: #fff;
@@ -23,6 +25,7 @@ const BookingWrapper = styled.div`
   border-radius: 20px;
   position: relative;
   display: flex;
+  margin: auto;
 `;
 
 const ButtonReturn = styled(NavLink)`
@@ -33,9 +36,12 @@ const ButtonReturn = styled(NavLink)`
   color: #799283;
 `;
 
-const DetailsWrapper = styled.div`
+const DetailsWrapper = styled.div<DarkProp>`
   flex: 1;
   padding: 40px;
+  background-color: ${(props) =>props.dark ? "#202020" : "#FFF"};
+  transition: all 250ms ease-in-out;
+  border-radius: 20px 0 0 20px;
 `;
 
 const ImageWrapper = styled.div`
@@ -47,12 +53,13 @@ const ImageWrapper = styled.div`
   overflow: hidden;
 `;
 
-const GuestName = styled.p`
+const GuestName = styled.p<DarkProp>`
   font: normal normal 600 30px/46px Poppins;
   letter-spacing: 0px;
-  color: #212121;
+  color: ${(props) =>props.dark ? "#41ebbd" : "#212121"};
   margin-top: 20px;
   margin-bottom: 16px;
+  transition: all 250ms ease-in-out;
 `;
 
 const BookingId = styled.span`
@@ -95,11 +102,12 @@ const InfoTitle = styled.p`
   margin-bottom: 15px;
 `;
 
-const InfoContentUpperRow = styled.p`
+const InfoContentUpperRow = styled.p<DarkProp>`
   font: normal normal 500 16px/25px Poppins;
   letter-spacing: 0px;
-  color: #212121;
+  color: ${(props) =>props.dark ? "#41ebbd" : "#212121"};
   margin-bottom: 30px;
+  transition: all 250ms ease-in-out;
 `;
 
 const InfoContentBelowRow = styled(InfoContentUpperRow)`
@@ -117,12 +125,13 @@ const PriceSpan = styled.span`
   margin-left: 10px;
 `;
 
-const RequestWrapper = styled.div`
+const RequestWrapper = styled.div<DarkProp>`
   font: normal normal 400 14px/21px Poppins;
   letter-spacing: 0px;
-  color: #363636;
+  color: ${(props) =>props.dark ? "#eef9f2" : "#363636"};
   font-style: italic;
   margin-bottom: 50px;
+  transition: all 250ms ease-in-out;
 `;
 
 const AmenityWrapper = styled.div`
@@ -191,45 +200,45 @@ const Image = styled.img`
 export const BookingDetails : FC = () => {
   const selectedBooking = useAppSelector(detailData);
   const oneBookingStatus = useAppSelector(bookingIdStatus);
-
+  const {dark} = useContext(ThemeContext);
   const data = () =>{
     return (
       <>
-      <DetailsWrapper>
-        <GuestName>
+      <DetailsWrapper dark={dark.dark}>
+        <GuestName dark={dark.dark}>
           {selectedBooking.guest.nombre} {selectedBooking.guest.apellidos}
         </GuestName>
         <BookingId>ID {selectedBooking.guest.id_reserva}</BookingId>
         <InfoContainer>
           <InfoWrap>
             <InfoTitle>Check In</InfoTitle>
-            <InfoContentUpperRow>
+            <InfoContentUpperRow dark={dark.dark}>
               {formatDate(selectedBooking.check_in)}
             </InfoContentUpperRow>
           </InfoWrap>
           <InfoWrap>
             <InfoTitle>Check Out</InfoTitle>
-            <InfoContentUpperRow>
+            <InfoContentUpperRow dark={dark.dark}>
               {formatDate(selectedBooking.check_out)}
             </InfoContentUpperRow>
           </InfoWrap>
           <Gap />
           <InfoWrap>
             <InfoTitle>Room Info</InfoTitle>
-            <InfoContentBelowRow>
+            <InfoContentBelowRow dark={dark.dark}>
               {selectedBooking.room.room_type} -{" "}
               {selectedBooking.room.room_number}
             </InfoContentBelowRow>
           </InfoWrap>
           <InfoWrap>
             <InfoTitle>Price</InfoTitle>
-            <InfoContentBelowRow>
+            <InfoContentBelowRow dark={dark.dark}>
               {selectedBooking.room.price}
             </InfoContentBelowRow>
             <PriceSpan>/night</PriceSpan>
           </InfoWrap>
         </InfoContainer>
-        <RequestWrapper>"{selectedBooking.special_request}"</RequestWrapper>
+        <RequestWrapper dark={dark.dark}>"{selectedBooking.special_request}"</RequestWrapper>
         <InfoWrap>
           <InfoTitle>Amenities</InfoTitle>
           <AmenitiesContainer>
