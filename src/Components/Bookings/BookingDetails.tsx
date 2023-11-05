@@ -11,13 +11,13 @@ import {
   detailData,
 } from "../../features/Bookings/bookingSlice";
 import { renderStatus } from "../GeneralComponents/RenderStatus";
-import { FC, useContext } from 'react';
+import { FC, useContext } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { ThemeContext } from "../../Context/ToggleTheme";
 import { DarkProp } from "../../features/Interfaces/Interfaces";
 
-const BookingWrapper = styled.div`
-  background-color: #fff;
+const BookingWrapper = styled.div<DarkProp>`
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
   max-width: 1475px;
   min-height: 700px;
   border: 1px solid black;
@@ -39,7 +39,7 @@ const ButtonReturn = styled(NavLink)`
 const DetailsWrapper = styled.div<DarkProp>`
   flex: 1;
   padding: 40px;
-  background-color: ${(props) =>props.dark ? "#202020" : "#FFF"};
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
   transition: all 250ms ease-in-out;
   border-radius: 20px 0 0 20px;
 `;
@@ -56,7 +56,7 @@ const ImageWrapper = styled.div`
 const GuestName = styled.p<DarkProp>`
   font: normal normal 600 30px/46px Poppins;
   letter-spacing: 0px;
-  color: ${(props) =>props.dark ? "#41ebbd" : "#212121"};
+  color: ${(props) => (props.dark ? "#41ebbd" : "#212121")};
   margin-top: 20px;
   margin-bottom: 16px;
   transition: all 250ms ease-in-out;
@@ -105,7 +105,7 @@ const InfoTitle = styled.p`
 const InfoContentUpperRow = styled.p<DarkProp>`
   font: normal normal 500 16px/25px Poppins;
   letter-spacing: 0px;
-  color: ${(props) =>props.dark ? "#41ebbd" : "#212121"};
+  color: ${(props) => (props.dark ? "#41ebbd" : "#212121")};
   margin-bottom: 30px;
   transition: all 250ms ease-in-out;
 `;
@@ -128,7 +128,7 @@ const PriceSpan = styled.span`
 const RequestWrapper = styled.div<DarkProp>`
   font: normal normal 400 14px/21px Poppins;
   letter-spacing: 0px;
-  color: ${(props) =>props.dark ? "#eef9f2" : "#363636"};
+  color: ${(props) => (props.dark ? "#eef9f2" : "#363636")};
   font-style: italic;
   margin-bottom: 50px;
   transition: all 250ms ease-in-out;
@@ -197,100 +197,102 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-export const BookingDetails : FC = () => {
+export const BookingDetails: FC = () => {
   const selectedBooking = useAppSelector(detailData);
   const oneBookingStatus = useAppSelector(bookingIdStatus);
-  const {dark} = useContext(ThemeContext);
-  const data = () =>{
+  const { dark } = useContext(ThemeContext);
+  const data = () => {
     return (
       <>
-      <DetailsWrapper dark={dark.dark}>
-        <GuestName dark={dark.dark}>
-          {selectedBooking.guest.nombre} {selectedBooking.guest.apellidos}
-        </GuestName>
-        <BookingId>ID {selectedBooking.guest.id_reserva}</BookingId>
-        <InfoContainer>
+        <DetailsWrapper dark={dark.dark}>
+          <GuestName dark={dark.dark}>
+            {selectedBooking.guest.nombre} {selectedBooking.guest.apellidos}
+          </GuestName>
+          <BookingId>ID {selectedBooking.guest.id_reserva}</BookingId>
+          <InfoContainer>
+            <InfoWrap>
+              <InfoTitle>Check In</InfoTitle>
+              <InfoContentUpperRow dark={dark.dark}>
+                {formatDate(selectedBooking.check_in)}
+              </InfoContentUpperRow>
+            </InfoWrap>
+            <InfoWrap>
+              <InfoTitle>Check Out</InfoTitle>
+              <InfoContentUpperRow dark={dark.dark}>
+                {formatDate(selectedBooking.check_out)}
+              </InfoContentUpperRow>
+            </InfoWrap>
+            <Gap />
+            <InfoWrap>
+              <InfoTitle>Room Info</InfoTitle>
+              <InfoContentBelowRow dark={dark.dark}>
+                {selectedBooking.room.room_type} -{" "}
+                {selectedBooking.room.room_number}
+              </InfoContentBelowRow>
+            </InfoWrap>
+            <InfoWrap>
+              <InfoTitle>Price</InfoTitle>
+              <InfoContentBelowRow dark={dark.dark}>
+                {selectedBooking.room.price}
+              </InfoContentBelowRow>
+              <PriceSpan>/night</PriceSpan>
+            </InfoWrap>
+          </InfoContainer>
+          <RequestWrapper dark={dark.dark}>
+            "{selectedBooking.special_request}"
+          </RequestWrapper>
           <InfoWrap>
-            <InfoTitle>Check In</InfoTitle>
-            <InfoContentUpperRow dark={dark.dark}>
-              {formatDate(selectedBooking.check_in)}
-            </InfoContentUpperRow>
+            <InfoTitle>Amenities</InfoTitle>
+            <AmenitiesContainer>
+              {selectedBooking.room.amenities.map((amenity, index) => (
+                <AmenityWrapper key={index}>
+                  <AmenityContent>{amenity}</AmenityContent>
+                </AmenityWrapper>
+              ))}
+            </AmenitiesContainer>
           </InfoWrap>
-          <InfoWrap>
-            <InfoTitle>Check Out</InfoTitle>
-            <InfoContentUpperRow dark={dark.dark}>
-              {formatDate(selectedBooking.check_out)}
-            </InfoContentUpperRow>
-          </InfoWrap>
-          <Gap />
-          <InfoWrap>
-            <InfoTitle>Room Info</InfoTitle>
-            <InfoContentBelowRow dark={dark.dark}>
-              {selectedBooking.room.room_type} -{" "}
-              {selectedBooking.room.room_number}
-            </InfoContentBelowRow>
-          </InfoWrap>
-          <InfoWrap>
-            <InfoTitle>Price</InfoTitle>
-            <InfoContentBelowRow dark={dark.dark}>
-              {selectedBooking.room.price}
-            </InfoContentBelowRow>
-            <PriceSpan>/night</PriceSpan>
-          </InfoWrap>
-        </InfoContainer>
-        <RequestWrapper dark={dark.dark}>"{selectedBooking.special_request}"</RequestWrapper>
-        <InfoWrap>
-          <InfoTitle>Amenities</InfoTitle>
-          <AmenitiesContainer>
-            {selectedBooking.room.amenities.map((amenity, index) => (
-              <AmenityWrapper key={index}>
-                <AmenityContent>{amenity}</AmenityContent>
-              </AmenityWrapper>
-            ))}
-          </AmenitiesContainer>
-        </InfoWrap>
-      </DetailsWrapper>
-      <ImageWrapper>
-        <Image src={room} />
-        <StatusWrapper
-          style={{
-            backgroundColor:
-              selectedBooking.status === "Check In"
-                ? "#e8ffee"
-                : selectedBooking.status === "Check Out"
-                ? "#FFEDEC"
-                : "#FEFFC2",
-            color:
-              selectedBooking.status === "Check In"
-                ? "#5ad07a"
-                : selectedBooking.status === "Check Out"
-                ? "#E23428"
-                : "#E2B308",
-            border:
-              selectedBooking.status === "Check In"
-                ? "3px solid #5ad07a"
-                : selectedBooking.status === "Check Out"
-                ? "3px solid #E23428"
-                : "3px solid #E2B308",
-          }}
-        >
-          {selectedBooking.status}
-        </StatusWrapper>
-        <ImageRoomInfo>
-          <ImageRoomTitle>{selectedBooking.room.room_type}</ImageRoomTitle>
-          <ImageRoomDescription>
-            {selectedBooking.room.room_description}
-          </ImageRoomDescription>
-        </ImageRoomInfo>
-      </ImageWrapper>
-    </>
-    )
-  }
+        </DetailsWrapper>
+        <ImageWrapper>
+          <Image src={room} />
+          <StatusWrapper
+            style={{
+              backgroundColor:
+                selectedBooking.status === "Check In"
+                  ? "#e8ffee"
+                  : selectedBooking.status === "Check Out"
+                  ? "#FFEDEC"
+                  : "#FEFFC2",
+              color:
+                selectedBooking.status === "Check In"
+                  ? "#5ad07a"
+                  : selectedBooking.status === "Check Out"
+                  ? "#E23428"
+                  : "#E2B308",
+              border:
+                selectedBooking.status === "Check In"
+                  ? "3px solid #5ad07a"
+                  : selectedBooking.status === "Check Out"
+                  ? "3px solid #E23428"
+                  : "3px solid #E2B308",
+            }}
+          >
+            {selectedBooking.status}
+          </StatusWrapper>
+          <ImageRoomInfo>
+            <ImageRoomTitle>{selectedBooking.room.room_type}</ImageRoomTitle>
+            <ImageRoomDescription>
+              {selectedBooking.room.room_description}
+            </ImageRoomDescription>
+          </ImageRoomInfo>
+        </ImageWrapper>
+      </>
+    );
+  };
 
   return (
     <>
       <PageWrapper>
-        <BookingWrapper>
+        <BookingWrapper dark={dark.dark}>
           <ButtonReturn to="/bookings">
             <IoArrowBackOutline />
           </ButtonReturn>
