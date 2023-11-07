@@ -6,12 +6,12 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { roomIdStatus, roomdetailData } from "../../features/Rooms/roomSlice";
 import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppSelector } from "../../app/hooks";
-import { DarkProp } from '../../features/Interfaces/Interfaces';
-import {useContext} from 'react';
+import { DarkProp } from "../../features/Interfaces/Interfaces";
+import { useContext } from "react";
 import { ThemeContext } from "../../Context/ToggleTheme";
 
 const BookingWrapper = styled.div<DarkProp>`
-  background-color: ${(props) => props.dark ? "#202020" : "#FFF"};
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
   max-width: 1475px;
   min-height: 700px;
   border: 1px solid black;
@@ -33,7 +33,7 @@ const ButtonReturn = styled(NavLink)`
 const DetailsWrapper = styled.div<DarkProp>`
   flex: 1;
   padding: 40px;
-  background-color: ${(props) =>props.dark ? "#202020" : "#FFF"};
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
   transition: all 250ms ease-in-out;
   border-radius: 20px 0 0 20px;
 `;
@@ -62,7 +62,6 @@ const BookingId = styled.span`
   text-align: right;
   display: block;
   margin-bottom: 10px;
-  color: #799283;
 `;
 
 const InfoContainer = styled.div`
@@ -92,22 +91,24 @@ const InfoTitle = styled.p`
   font: normal normal 400 14px/21px Poppins;
   letter-spacing: 0px;
   margin-bottom: 15px;
-  
+  color: #799283;
 `;
 
 const InfoContentUpperRow = styled.p<DarkProp>`
   font: normal normal 500 16px/25px Poppins;
   letter-spacing: 0px;
-  color: ${(props) =>props.dark ? "#eef9f2" : "#212121"};
+  color: ${(props) => (props.dark ? "#41ebbd" : "#212121")};
   margin-bottom: 30px;
   transition: all 250ms ease-in-out;
 `;
 
 const InfoContentBelowRow = styled(InfoContentUpperRow)<DarkProp>`
   font: normal normal 500 24px/35px Poppins;
+  color: ${(props) => (props.dark ? "#41ebbd" : "#212121")};
   &:nth-child(2) {
     display: inline-block;
   }
+
 `;
 
 const AmenityWrapper = styled.div`
@@ -150,7 +151,7 @@ const Image = styled.img`
 export const RoomDetails: FC = () => {
   const selectedRoom = useAppSelector(roomdetailData);
   const oneRoomStatus = useAppSelector(roomIdStatus);
-const {dark} = useContext(ThemeContext)
+  const { dark } = useContext(ThemeContext);
   const data = () => {
     return (
       <>
