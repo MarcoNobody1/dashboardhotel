@@ -23,7 +23,6 @@ const ImageWrap = styled.div`
   width: 70px;
   height: 70px;
   border-radius: 8px;
-  background: #c5c5c5;
   overflow: hidden;
   position: relative;
   z-index: 2;
