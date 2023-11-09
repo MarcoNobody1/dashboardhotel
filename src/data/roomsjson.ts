@@ -5,7 +5,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "1ABCD123",
       room_photo:
-        "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg",
+        "https://tinyurl.com/PhotoNumberOne",
       room_number: 1234,
       room_description:
         "Enjoy a higher level of comfort in our superior double rooms. These rooms offer extra space and exclusive amenities, making them the perfect choice for a luxurious experience.",
@@ -33,7 +33,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "2EFGH456",
       room_photo:
-        "https://ywcavan.org/sites/default/files/styles/scale_width_1440/public/assets/room/room_image/Single-bed-room-YWCA_Hotel_Vancouver.jpg",
+        "https://tinyurl.com/PhotoNumberTwo",
       room_number: 5678,
       room_description: "This cozy room is designed for solo travelers seeking comfort and privacy. It features a single bed and all the necessary amenities for a relaxing stay.",
 
@@ -58,7 +58,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "3IJKL789",
       room_photo:
-        "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg",
+        "https://tinyurl.com/PhotoNumberThreee",
       room_number: 9876,
       room_description: "Our suites are the epitome of luxury and elegance. They provide ample space, a separate living area, and first-class amenities. Suites are ideal for those seeking an unforgettable lodging experience.",
 
@@ -88,7 +88,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "4MNOPQ101",
       room_photo:
-        "https://image-tc.galaxy.tf/wijpeg-clozx94odvn436foy8vjci4wz/empire-hotel-superior-double-room_standard.jpg",
+        "https://tinyurl.com/PhotoNumberFour",
       room_number: 2468,
       room_description: "Perfect for couples or friends traveling together, the double room comes with a comfortable double bed and a welcoming ambiance. It's ideal for a quiet and relaxing stay.",
 
@@ -114,7 +114,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "5RSTU111",
       room_photo:
-        "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg",
+        "https://tinyurl.com/PhotoNumberOne",
       room_number: 1357,
       room_description:
         "Enjoy a higher level of comfort in our superior double rooms. These rooms offer extra space and exclusive amenities, making them the perfect choice for a luxurious experience.",
@@ -142,7 +142,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "6VWXYZ222",
       room_photo:
-        "https://image-tc.galaxy.tf/wijpeg-clozx94odvn436foy8vjci4wz/empire-hotel-superior-double-room_standard.jpg",
+        "https://tinyurl.com/PhotoNumberFour",
       room_number: 3691,
       room_description: "Perfect for couples or friends traveling together, the double room comes with a comfortable double bed and a welcoming ambiance. It's ideal for a quiet and relaxing stay.",
 
@@ -168,7 +168,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "7ABCDEF333",
       room_photo:
-        "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg",
+        "https://tinyurl.com/PhotoNumberThreee",
       room_number: 7777,
       room_description: "Our suites are the epitome of luxury and elegance. They provide ample space, a separate living area, and first-class amenities. Suites are ideal for those seeking an unforgettable lodging experience.",
 
@@ -198,7 +198,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "8GHIJK444",
       room_photo:
-        "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg",
+        "https://tinyurl.com/PhotoNumberOne",
       room_number: 8888,
       room_description:
         "Enjoy a higher level of comfort in our superior double rooms. These rooms offer extra space and exclusive amenities, making them the perfect choice for a luxurious experience.",
@@ -226,7 +226,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "9LMNOP555",
       room_photo:
-        "https://ywcavan.org/sites/default/files/styles/scale_width_1440/public/assets/room/room_image/Single-bed-room-YWCA_Hotel_Vancouver.jpg",
+        "https://tinyurl.com/PhotoNumberTwo",
       room_number: 9999,
       room_description: "This cozy room is designed for solo travelers seeking comfort and privacy. It features a single bed and all the necessary amenities for a relaxing stay.",
 
@@ -250,7 +250,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "10QRSTU666",
       room_photo:
-        "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg",
+        "https://tinyurl.com/PhotoNumberOne",
       room_number: 4321,
       room_description: "Enjoy a higher level of comfort in our superior double rooms. These rooms offer extra space and exclusive amenities, making them the perfect choice for a luxurious experience.",
 
@@ -278,7 +278,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "11VWXYZ777",
       room_photo:
-        "https://image-tc.galaxy.tf/wijpeg-clozx94odvn436foy8vjci4wz/empire-hotel-superior-double-room_standard.jpg",
+        "https://tinyurl.com/PhotoNumberFour",
       room_number: 5678,
       room_description: "Perfect for couples or friends traveling together, the double room comes with a comfortable double bed and a welcoming ambiance. It's ideal for a quiet and relaxing stay.",
 
@@ -304,7 +304,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "12XYZ123",
       room_photo:
-        "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg",
+        "https://tinyurl.com/PhotoNumberThreee",
       room_number: 9876,
       room_description: "Our suites are the epitome of luxury and elegance. They provide ample space, a separate living area, and first-class amenities. Suites are ideal for those seeking an unforgettable lodging experience.",
 
@@ -334,7 +334,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "13ABC456",
       room_photo:
-        "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg",
+        "https://tinyurl.com/PhotoNumberOne",
       room_number: 1111,
       room_description: "Enjoy a higher level of comfort in our superior double rooms. These rooms offer extra space and exclusive amenities, making them the perfect choice for a luxurious experience.",
 
@@ -362,7 +362,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "14DEFGH789",
       room_photo:
-        "https://ywcavan.org/sites/default/files/styles/scale_width_1440/public/assets/room/room_image/Single-bed-room-YWCA_Hotel_Vancouver.jpg",
+        "https://tinyurl.com/PhotoNumberTwo",
       room_number: 2222,
       room_description: "This cozy room is designed for solo travelers seeking comfort and privacy. It features a single bed and all the necessary amenities for a relaxing stay.",
 
@@ -386,7 +386,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "15IJKLM101",
       room_photo:
-        "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg",
+        "https://tinyurl.com/PhotoNumberOne",
       room_number: 3333,
       room_description: "Enjoy a higher level of comfort in our superior double rooms. These rooms offer extra space and exclusive amenities, making them the perfect choice for a luxurious experience.",
 
@@ -414,7 +414,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "16NOPQR111",
       room_photo:
-        "https://image-tc.galaxy.tf/wijpeg-clozx94odvn436foy8vjci4wz/empire-hotel-superior-double-room_standard.jpg",
+        "https://tinyurl.com/PhotoNumberFour",
       room_number: 4444,
       room_description: "Perfect for couples or friends traveling together, the double room comes with a comfortable double bed and a welcoming ambiance. It's ideal for a quiet and relaxing stay.",
 
@@ -440,7 +440,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "17STUV123",
       room_photo:
-        "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg",
+        "https://tinyurl.com/PhotoNumberThreee",
       room_number: 5555,
       room_description: "Our suites are the epitome of luxury and elegance. They provide ample space, a separate living area, and first-class amenities. Suites are ideal for those seeking an unforgettable lodging experience.",
 
@@ -470,7 +470,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "18UVWX456",
       room_photo:
-        "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg",
+        "https://tinyurl.com/PhotoNumberOne",
       room_number: 6666,
       room_description: "Enjoy a higher level of comfort in our superior double rooms. These rooms offer extra space and exclusive amenities, making them the perfect choice for a luxurious experience.",
 
@@ -498,7 +498,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "19WXYZ789",
       room_photo:
-        "https://ywcavan.org/sites/default/files/styles/scale_width_1440/public/assets/room/room_image/Single-bed-room-YWCA_Hotel_Vancouver.jpg",
+        "https://tinyurl.com/PhotoNumberTwo",
       room_number: 7777,
       room_description: "This cozy room is designed for solo travelers seeking comfort and privacy. It features a single bed and all the necessary amenities for a relaxing stay.",
 
@@ -522,7 +522,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "20XYZABC101",
       room_photo:
-        "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg",
+        "https://tinyurl.com/PhotoNumberOne",
       room_number: 8888,
       room_description: "Enjoy a higher level of comfort in our superior double rooms. These rooms offer extra space and exclusive amenities, making them the perfect choice for a luxurious experience.",
 
@@ -550,7 +550,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "21ABCDEF111",
       room_photo:
-        "https://image-tc.galaxy.tf/wijpeg-clozx94odvn436foy8vjci4wz/empire-hotel-superior-double-room_standard.jpg",
+        "https://tinyurl.com/PhotoNumberFour",
       room_number: 9999,
       room_description: "Perfect for couples or friends traveling together, the double room comes with a comfortable double bed and a welcoming ambiance. It's ideal for a quiet and relaxing stay.",
 
@@ -576,7 +576,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "22DEFGHI222",
       room_photo:
-        "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg",
+        "https://tinyurl.com/PhotoNumberThreee",
       room_number: 1234,
       room_description: "Our suites are the epitome of luxury and elegance. They provide ample space, a separate living area, and first-class amenities. Suites are ideal for those seeking an unforgettable lodging experience.",
 
@@ -606,7 +606,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "23GHIJKL333",
       room_photo:
-        "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg",
+        "https://tinyurl.com/PhotoNumberOne",
       room_number: 5678,
       room_description: "Enjoy a higher level of comfort in our superior double rooms. These rooms offer extra space and exclusive amenities, making them the perfect choice for a luxurious experience.",
 
@@ -634,7 +634,7 @@ export const roomsData:RoomInterface[] = [
     room_name: {
       id: "24JKLMNO444",
       room_photo:
-        "https://ywcavan.org/sites/default/files/styles/scale_width_1440/public/assets/room/room_image/Single-bed-room-YWCA_Hotel_Vancouver.jpg",
+        "https://tinyurl.com/PhotoNumberTwo",
       room_number: 9876,
       room_description: "This cozy room is designed for solo travelers seeking comfort and privacy. It features a single bed and all the necessary amenities for a relaxing stay.",
 
