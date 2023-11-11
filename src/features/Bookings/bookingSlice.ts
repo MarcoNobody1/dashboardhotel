@@ -42,7 +42,7 @@ const initialState: BookingInitialState = {
         })
         .addCase(deleteData.fulfilled, (state, action) => {
           state.deleteStatus = "fulfilled";
-          state.bookings = state.bookings.filter((booking) => {return booking.guest.id_reserva !== action.payload});
+          state.bookings = state.bookings.filter((booking) => {return booking._id.$oid !== action.payload});
         })
         .addCase(deleteData.pending, (state) => {
           state.deleteStatus = "pending";
@@ -53,7 +53,7 @@ const initialState: BookingInitialState = {
         })
         .addCase(get1Data.fulfilled, (state, action) => {
           state.getBookingStatus = "fulfilled";
-          state.bookingDetail = state.bookings.filter((booking) => {return booking.guest.id_reserva === action.payload});
+          state.bookingDetail = state.bookings.filter((booking) => {return booking._id.$oid === action.payload});
         })
         .addCase(get1Data.pending, (state) => {
           state.getBookingStatus = "pending";
