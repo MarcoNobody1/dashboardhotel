@@ -61,8 +61,8 @@ export const Bookings = () => {
     });
   } else if (selected === "Guest") {
     filtered.sort((a, b) => {
-      const nombreA = a.guest.nombre.toUpperCase();
-      const nombreB = b.guest.nombre.toUpperCase();
+      const nombreA = a.name.toUpperCase();
+      const nombreB = b.name.toUpperCase();
       if (nombreA < nombreB) {
         return -1;
       }
@@ -80,7 +80,7 @@ export const Bookings = () => {
     } else {
       const filteredData = infoBookings.filter((booking) => {
         const fullName =
-          `${booking.guest.nombre} ${booking.guest.apellidos}`.toLowerCase();
+          `${booking.name} ${booking.surname}`.toLowerCase();
         return fullName.includes(searchTerm);
       });
 
