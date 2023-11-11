@@ -157,19 +157,19 @@ export const RoomDetails: FC = () => {
       <>
         <DetailsWrapper dark={dark.dark}>
           <GuestName></GuestName>
-          <BookingId>ID {selectedRoom.room_name.id}</BookingId>
+          <BookingId>ID {selectedRoom._id.$oid}</BookingId>
           <InfoContainer>
             <InfoWrap>
               <InfoTitle>Room Type</InfoTitle>
               <InfoContentBelowRow dark={dark.dark}>
-                {selectedRoom.room_type}
+                {selectedRoom.type}
               </InfoContentBelowRow>
             </InfoWrap>
             <Gap />
             <InfoWrap>
               <InfoTitle>Room Info</InfoTitle>
               <InfoContentUpperRow dark={dark.dark}>
-                {selectedRoom.room_name.room_description}
+                {selectedRoom.description}
               </InfoContentUpperRow>
             </InfoWrap>
           </InfoContainer>
@@ -185,7 +185,7 @@ export const RoomDetails: FC = () => {
           </InfoWrap>
         </DetailsWrapper>
         <ImageWrapper>
-          <Image src={selectedRoom.room_name.room_photo} />
+          <Image src={selectedRoom.photos} />
           <StatusWrapper
             style={{
               backgroundColor:
