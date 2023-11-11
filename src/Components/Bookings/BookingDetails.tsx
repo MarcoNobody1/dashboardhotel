@@ -206,9 +206,9 @@ export const BookingDetails: FC = () => {
       <>
         <DetailsWrapper dark={dark.dark}>
           <GuestName dark={dark.dark}>
-            {selectedBooking.guest.nombre} {selectedBooking.guest.apellidos}
+            {selectedBooking.name} {selectedBooking.surname}
           </GuestName>
-          <BookingId>ID {selectedBooking.guest.id_reserva}</BookingId>
+          <BookingId>ID {selectedBooking._id.$oid}</BookingId>
           <InfoContainer>
             <InfoWrap>
               <InfoTitle>Check In</InfoTitle>
@@ -226,14 +226,14 @@ export const BookingDetails: FC = () => {
             <InfoWrap>
               <InfoTitle>Room Info</InfoTitle>
               <InfoContentBelowRow dark={dark.dark}>
-                {selectedBooking.room.room_type} -{" "}
-                {selectedBooking.room.room_number}
+                {selectedBooking.room_type} -
+                {selectedBooking.room_number}
               </InfoContentBelowRow>
             </InfoWrap>
             <InfoWrap>
               <InfoTitle>Price</InfoTitle>
               <InfoContentBelowRow dark={dark.dark}>
-                {selectedBooking.room.price}
+                {selectedBooking.price}
               </InfoContentBelowRow>
               <PriceSpan>/night</PriceSpan>
             </InfoWrap>
@@ -244,7 +244,7 @@ export const BookingDetails: FC = () => {
           <InfoWrap>
             <InfoTitle>Amenities</InfoTitle>
             <AmenitiesContainer>
-              {selectedBooking.room.amenities.map((amenity, index) => (
+              {selectedBooking.room_amenities.map((amenity, index) => (
                 <AmenityWrapper key={index}>
                   <AmenityContent>{amenity}</AmenityContent>
                 </AmenityWrapper>
@@ -279,9 +279,9 @@ export const BookingDetails: FC = () => {
             {selectedBooking.status}
           </StatusWrapper>
           <ImageRoomInfo>
-            <ImageRoomTitle>{selectedBooking.room.room_type}</ImageRoomTitle>
+            <ImageRoomTitle>{selectedBooking.room_type}</ImageRoomTitle>
             <ImageRoomDescription>
-              {selectedBooking.room.room_description}
+              {selectedBooking.room_description}
             </ImageRoomDescription>
           </ImageRoomInfo>
         </ImageWrapper>
