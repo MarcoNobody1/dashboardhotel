@@ -28,12 +28,12 @@ export const formatDate = (inputDate: Date | string) => {
 
   let date: Date;
 
-  if (typeof inputDate === 'string') {
+  if (typeof inputDate === "string") {
     date = new Date(inputDate);
   } else if (inputDate instanceof Date) {
     date = inputDate;
   } else {
-    throw new Error('Invalid input date format');
+    throw new Error("Invalid input date format");
   }
 
   const year = date.getFullYear();
@@ -79,7 +79,7 @@ interface DefaultIconProps {
 
 export const DefaultIcon = styled.div<DefaultIconProps>`
   font-size: 30px;
-  color: ${(props) => props.$color || '#135846'};
+  color: ${(props) => props.$color || "#135846"};
   cursor: pointer;
   transition: all 0.3s ease-out;
   &:hover {
@@ -95,26 +95,25 @@ const PageWrap = styled.main<DarkProp>`
   overscroll-behavior: contain;
   transition: all 0.25s ease-in-out;
 
-&::-webkit-scrollbar {
-  width: 10px;
-  transition: all 0.25s ease-in-out;
-  background-color:${(props) => (props.dark ? "#202020" : "#f1f1f1")} ;
-}
+  &::-webkit-scrollbar {
+    width: 10px;
+    transition: all 0.25s ease-in-out;
+    background-color: ${(props) => (props.dark ? "#202020" : "#f1f1f1")};
+  }
 
-&::-webkit-scrollbar-thumb {
-  background-color:${(props) => (props.dark ? "#eef9f2" : "#888")} ;
-  transition: all 0.25s ease-in-out;
-  border-radius: 15px;
-}
+  &::-webkit-scrollbar-thumb {
+    background-color: ${(props) => (props.dark ? "#eef9f2" : "#888")};
+    transition: all 0.25s ease-in-out;
+    border-radius: 15px;
+  }
 
-&::-webkit-scrollbar-button {
-  display: none;
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
 
-}
-
-&::-webkit-scrollbar-corner {
-  border-radius: 15px;
-}
+  &::-webkit-scrollbar-corner {
+    border-radius: 15px;
+  }
 `;
 
 interface PageWrapperProps {
@@ -128,7 +127,7 @@ export const PageWrapper: FC<PageWrapperProps> = ({ children }) => {
   return (
     <>
       <PageWrap
-      dark={dark.dark}
+        dark={dark.dark}
         style={{
           backgroundColor: dark.dark ? "#171717" : "#f8f8f8",
           margin: toggle.toggle ? "0 auto" : undefined,
@@ -180,7 +179,11 @@ export const CommentContainer = styled.div<CommentContainerProps>`
 
   &:hover {
     box-shadow: ${(props) =>
-    props.archived ? "0" : props.dark ? "0px 10px 15px #ffffff28" : " 0px 16px 30px #00000014"};
+      props.archived
+        ? "0"
+        : props.dark
+        ? "0px 10px 15px #ffffff28"
+        : " 0px 16px 30px #00000014"};
   }
 `;
 
@@ -294,9 +297,24 @@ export const TrashIcon = styled(BsTrash3)`
 
 export const Floater = styled.div`
   position: absolute;
-  top:  ${(props) => (props.datatype === "contacts" ? "5%" : props.datatype === "bookings" ? "-30%" : props.datatype === "users" ? "-12%" : props.datatype === "roomtrash" ? "-10%" : "25%")};
-  right: ${(props) => (props.datatype === "contacts" ? "-17%" : props.datatype === "rooms" ? "-11%" : props.datatype === "roomtrash" ? "-10%" : "-15%")};
-  
+  top: ${(props) =>
+    props.datatype === "contacts"
+      ? "5%"
+      : props.datatype === "bookings"
+      ? "-30%"
+      : props.datatype === "users"
+      ? "-12%"
+      : props.datatype === "roomtrash"
+      ? "-10%"
+      : "25%"};
+  right: ${(props) =>
+    props.datatype === "contacts"
+      ? "-17%"
+      : props.datatype === "rooms"
+      ? "-11%"
+      : props.datatype === "roomtrash"
+      ? "-10%"
+      : "-15%"};
 `;
 
 const PendingWrapper = styled.div`
@@ -308,8 +326,8 @@ const PendingWrapper = styled.div`
 `;
 
 const SimpleMessage = styled.p`
-font-size: 14px;
-font-weight: 600;
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 export const RenderError: FC = () => {
@@ -323,11 +341,7 @@ export const RenderError: FC = () => {
     timerProgressBar: true,
   });
 
-  return (
-    <SimpleMessage>Please refresh the page</SimpleMessage>
-  );
-
-
+  return <SimpleMessage>Please refresh the page</SimpleMessage>;
 };
 
 export const RenderGlassLoading: FC = () => {
@@ -359,25 +373,23 @@ export const FilterContainer = styled.div`
   gap: 55px;
 `;
 
-
-
 export const TableContainer = styled.div<DarkProp>`
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => (props.dark ? "#202020" : "#fff")} ;
+  background-color: ${(props) => (props.dark ? "#202020" : "#fff")};
   padding: 21px;
   transition: all 250ms ease-in-out;
 `;
 
 interface ButtonsContainerProps {
-  user?: boolean
+  user?: boolean;
 }
 
-export const ButtonsContainer = styled(FilterContainer) <ButtonsContainerProps>`
+export const ButtonsContainer = styled(FilterContainer)<ButtonsContainerProps>`
   gap: 10px;
   padding: 5px;
   padding-bottom: 0;
-  margin-right:  ${(props) => (props.user ? 0 : "250px")};
+  margin-right: ${(props) => (props.user ? 0 : "250px")};
   border-bottom: 1px solid #d4d4d4;
 `;
 
@@ -411,12 +423,14 @@ export const SearchInput = styled.input<DarkProp>`
   background-color: transparent;
   transition: all 250ms ease-in-out;
   color: ${(props) => (props.dark ? "#41ebbd" : "#799283")};
-  border: ${(props) => (props.dark ? "2px solid #41ebbd" : "2px solid #135846")};
-  background-image: ${(props) => (props.dark ? `url(${searchIconDark})` : `url(${searchIcon})`)};
+  border: ${(props) =>
+    props.dark ? "2px solid #41ebbd" : "2px solid #135846"};
+  background-image: ${(props) =>
+    props.dark ? `url(${searchIconDark})` : `url(${searchIcon})`};
 `;
 
 export const UserSearchInput = styled(SearchInput)<DarkProp>`
- min-width: 250px;
+  min-width: 250px;
 `;
 
 export const OptionSelect = styled.option<DarkProp>`
@@ -431,16 +445,15 @@ export const SelectorFilter = styled.select<DarkProp>`
   padding-left: 5px;
   font: normal normal 500 16px/25px Poppins;
   letter-spacing: 0px;
-  color: ${(props) =>  props.dark ? "#41ebbd" : "#135846"};
-  border: ${(props) =>  props.dark ? "2px solid #41ebbd" : "2px solid #135846"};
+  color: ${(props) => (props.dark ? "#41ebbd" : "#135846")};
+  border: ${(props) =>
+    props.dark ? "2px solid #41ebbd" : "2px solid #135846"};
   transition: all 250ms ease-in-out;
 
-  & ${OptionSelect}{
-    background-color: ${(props) => props.dark ? "#202020" : "#FFF"};
+  & ${OptionSelect} {
+    background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
   }
 `;
-
-
 
 export const AddRoomButton = styled.button`
   text-align: center;
@@ -472,7 +485,7 @@ export const ButtonAdNew = styled(AddRoomButton)`
 `;
 
 export const AdNewContainer = styled.td<DarkProp>`
-  background-color: ${(props) => props.dark ? "#202020" : "#FFF"};
+  background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
   min-width: 1300px;
   min-height: 700px;
   border: 1px solid #135846;
@@ -492,42 +505,42 @@ export const NewDataTitle = styled.p<DarkProp>`
   font-weight: 500;
   font-size: 36px;
   letter-spacing: 0px;
-  color: ${(props) => props.dark ? "#FFF" : "rgb(38, 38, 38)"};
+  color: ${(props) => (props.dark ? "#FFF" : "rgb(38, 38, 38)")};
   flex: 1;
 `;
 
 export const UpdatingTitle = styled(NewDataTitle)<DarkProp>`
-font-weight: 400;
-font-size: 30px;
-font-style: italic;
- color: ${(props) =>  props.dark ? "#41ebbd" : "#202020"}
+  font-weight: 400;
+  font-size: 30px;
+  font-style: italic;
+  color: ${(props) => (props.dark ? "#41ebbd" : "#202020")};
 `;
 
 export const CommentWrapper = styled.div<DarkProp>`
-height: 100px;
-max-width: 500px;
-overflow-x: hidden;
-overflow-y: scroll;
-padding: 0 10px;
+  height: 100px;
+  max-width: 500px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0 10px;
 
-&::-webkit-scrollbar {
-  width: 6px;
-  transition: all 0.25s ease-in-out;
-  background-color:${(props) => (props.dark ? "#202020" : "#f1f1f1")} ;
-}
+  &::-webkit-scrollbar {
+    width: 6px;
+    transition: all 0.25s ease-in-out;
+    background-color: ${(props) => (props.dark ? "#202020" : "#f1f1f1")};
+  }
 
-&::-webkit-scrollbar-thumb {
-  background-color:${(props) => (props.dark ? "#eef9f2" : "#888")} ;
-  transition: all 0.25s ease-in-out;
-  border-radius: 15px;
-}
+  &::-webkit-scrollbar-thumb {
+    background-color: ${(props) => (props.dark ? "#eef9f2" : "#888")};
+    transition: all 0.25s ease-in-out;
+    border-radius: 15px;
+  }
 
-&::-webkit-scrollbar-button {
-  display: none;
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
 
-}
-
-&::-webkit-scrollbar-corner {
-  border-radius: 15px;
-}
+  &::-webkit-scrollbar-corner {
+    border-radius: 15px;
+  }
 `;
+

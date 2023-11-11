@@ -17,25 +17,25 @@ const GeneralStatusDiv = styled.div<StatusDivProps>`
   transition: all 250ms ease-in-out;
   width: 80%;
   background-color: ${(props) =>
-    (props.status === "Check In" || props.status === "available" || props.status === "active") && props.dark
+    (props.status === "Check In" || props.status === "Available" || props.status === "active") && props.dark
       ? "#5ad07a"
-      : props.status === "Check In" || props.status === "available" || props.status === "active"
+      : props.status === "Check In" || props.status === "Available" || props.status === "active"
       ? "#e8ffee"
-      : (props.status === "Check Out" || props.status === "booked" || props.status === "inactive") && props.dark
+      : (props.status === "Check Out" || props.status === "Booked" || props.status === "inactive") && props.dark
       ? "#E23428"
-      : props.status === "Check Out" || props.status === "booked" || props.status === "inactive"
+      : props.status === "Check Out" || props.status === "Booked" || props.status === "inactive"
       ? "#FFEDEC"
       : props.dark
       ? "#E2B308"
       : "#FEFFC2"};
   color: ${(props) =>
-    (props.status === "Check In" || props.status === "available" || props.status === "active") && props.dark
+    (props.status === "Check In" || props.status === "Available" || props.status === "active") && props.dark
       ? "#e8ffee"
-      : props.status === "Check In" || props.status === "available" || props.status === "active"
+      : props.status === "Check In" || props.status === "Available" || props.status === "active"
       ? "#5ad07a"
-      : (props.status === "Check Out" || props.status === "booked" || props.status === "inactive") && props.dark
+      : (props.status === "Check Out" || props.status === "Booked" || props.status === "inactive") && props.dark
       ? "#FFEDEC"
-      : props.status === "Check Out" || props.status === "booked" || props.status === "inactive"
+      : props.status === "Check Out" || props.status === "Booked" || props.status === "inactive"
       ? "#E23428"
       : props.dark
       ? "#FEFFC2"

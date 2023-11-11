@@ -42,18 +42,17 @@ export const Rooms: FC = () => {
       case "All Rooms":
         return true;
       case "Available":
-        return room.availability === "available";
+        return room.availability === "Available";
       case "Booked":
-        return room.availability === "booked";
+        return room.availability === "Booked";
       default:
         return false;
     }
   });
 
   const calculateRealPrice = (room: RoomInterface) => {
-    if (room.offer_price && room.offer_price.isOffer) {
-      const discount = room.offer_price.discount;
-      const discountedPrice = room.price * (1 - discount / 100);
+    if (room.discount && room.discount > 0) {
+      const discountedPrice = room.price * (1 - room.discount / 100);
       return discountedPrice;
     }
     return room.price;
@@ -61,8 +60,8 @@ export const Rooms: FC = () => {
 
   if (selected === "Roomnumber") {
     filtered.sort((a, b) => {
-      const numberA = a.room_name.room_number;
-      const numberB = b.room_name.room_number;
+      const numberA = a.number;
+      const numberB = b.number;
       return numberA - numberB;
     });
   } else if (selected === "Priceminmax") {

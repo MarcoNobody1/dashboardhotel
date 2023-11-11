@@ -33,19 +33,16 @@ export interface ContactInterface {
 }
 
 export interface RoomInterface {
-  room_name: {
-    id: string;
-    room_photo: string;
-    room_number: number;
-    room_description: string;
+  _id: {
+    $oid: String;
   };
-  room_type: string;
+  photos: string;
+  number: number;
+  description: string;
+  type: string;
   amenities: string[];
   price: number;
-  offer_price: {
-    isOffer: boolean;
-    discount: number;
-  };
+  discount: number;
   availability: string;
 }
 

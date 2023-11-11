@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { roomsData } from "../../data/roomsjson";
 import { RoomInterface } from "../Interfaces/Interfaces";
+import rooms from "../../data/MirandaDashboard.rooms.json";
 
 const delay = (data:RoomInterface[] | string | RoomInterface, time:number = 400) => {
   return new Promise((resolve) => {
@@ -12,7 +13,7 @@ const delay = (data:RoomInterface[] | string | RoomInterface, time:number = 400)
 
 export const getRoomsData = createAsyncThunk<RoomInterface[]>("rooms/getRoomsData", async () => {
 
-  return (await delay(roomsData)) as RoomInterface[];
+  return (await delay(rooms)) as RoomInterface[];
 });
 
 export const deleteRoomsData = createAsyncThunk("rooms/deleteRoomsData", async (id:string) => {
