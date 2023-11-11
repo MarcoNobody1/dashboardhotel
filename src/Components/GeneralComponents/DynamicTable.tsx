@@ -83,11 +83,16 @@ const userTitles = [
 const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
+  transition: all 250ms ease-in-out;
 `;
 
-const Thead = styled.thead``;
+const Thead = styled.thead`
+  transition: all 250ms ease-in-out;
+`;
 
-const Tbody = styled.tbody``;
+const Tbody = styled.tbody`
+  transition: all 250ms ease-in-out;
+`;
 
 interface ThProps {
   header: string;
@@ -105,7 +110,9 @@ const Th = styled.th<ThProps>`
   width: ${(props) =>
     props.header === "amenities"
       ? "480px"
-      : props.header === "availability" || props.header === "activity"
+      : props.header === "availability" ||
+        props.header === "activity" ||
+        props.header === "room_type"
       ? "200px"
       : props.header === "customer"
       ? "300px"
@@ -272,13 +279,27 @@ const DataSpecs = styled.div`
 `;
 
 const DataId = styled(Link)<DarkProp>`
-  font: normal normal 400 14px/21px Poppins;
+  font: normal normal 600 10px/16px Poppins;
   letter-spacing: 0px;
-  color: ${(props) => (props.dark === "true" ? "#FFF" : "#799283")};
-  text-transform: uppercase;
+  color: ${(props) => (props.dark === "true" ? "#202020" : "#fff")};
+  text-decoration: none;
+  background-color: ${(props) =>
+    props.dark === "true" ? "#41ebbd" : "#135846"};
+  border-radius: 5px;
+  max-width: 65px;
+  padding: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all 500ms ease-in-out;
+
+  &:hover {
+    max-width: 120px;
+  }
+
   &::before {
     font-size: 12px;
-    content: "#";
+    content: "⤷ Go to #";
   }
 `;
 
@@ -306,6 +327,7 @@ const PhotoRoomSpec = styled.p<DarkProp>`
   letter-spacing: 0px;
   color: ${(props) => (props.dark ? "#41ebbd" : "#393939")};
   text-align: left;
+  transition: all 250ms ease-in-out;
   &::before {
     font-size: 12px;
     content: "Nº ";
@@ -393,10 +415,79 @@ const SampleDiv = styled.div<DarkProp>`
   color: ${(props) => (props.dark ? "#41ebbd" : "#202020")};
 `;
 
+const AmenitiesDiv = styled(SampleDiv)<DarkProp>`
+  overflow-x: scroll;
+  max-width: 300px;
+  display: flex;
+  padding: 10px;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+    transition: all 0.25s ease-in-out;
+    background-color: ${(props) => (props.dark ? "#202020" : "#f1f1f1")};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${(props) => (props.dark ? "#eef9f2" : "#888")};
+    transition: all 0.25s ease-in-out;
+    border-radius: 15px;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-corner {
+    border-radius: 15px;
+  }
+`;
+
+interface FadeProps {
+  dark?: boolean | string;
+  right?: boolean;
+}
+
+const FadeDiv = styled.div<FadeProps>`
+  position: absolute;
+  border-radius: 15px;
+  right: ${(props) => (props.right ? "130px" : undefined)};
+  left: ${(props) => (props.right ? undefined : "0px")};
+  top: 10px;
+  width: 40px;
+  height: 55px;
+  transition: all 250ms ease-in-out;
+  background: ${(props) =>
+    props.dark
+      ? props.right
+        ? "linear-gradient(90deg,rgba(255, 255, 255, 0) 0%,rgba(32, 32, 32, 1) 70%)"
+        : "linear-gradient(90deg, rgba(32,32,32,1) 30%, rgba(255,255,255,0) 60%)"
+      : props.right
+      ? "linear-gradient(90deg,rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 1) 70%)"
+      : "linear-gradient(90deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 60%)"};
+`;
+
 const DateDiv = styled(SampleDiv)`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const AmenityWrapper = styled.div`
+  background: #e8f2ef;
+  border-radius: 8px;
+  padding: 5px;
+  margin: 3px;
+  color: #135846;
+  text-align: center;
+  display: flex;
+  align-items: center;
+`;
+
+const AmenityContent = styled.p`
+  font: normal normal 500 12px/21px Poppins;
+  letter-spacing: 0px;
+  color: inherit;
+  width: max-content;
 `;
 
 interface DynamicTableProps {
@@ -580,8 +671,8 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
 
   const RoomEditor: FC<RoomEditorProps> = ({ roomId, onCloseRoomEditor }) => {
     const selectedRoom = (data as DataArray).find((room: TableRow) => {
-      if (dataType === "rooms" && (room as RoomInterface).room_name) {
-        return (room as RoomInterface).room_name.id === roomId;
+      if (dataType === "rooms" && (room as RoomInterface)) {
+        return (room as RoomInterface)._id.$oid === roomId;
       } else {
         return false;
       }
@@ -593,7 +684,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           {selectedRoom && dataType === "rooms" ? (
             <>
               <UpdatingTitle dark={dark.dark}>
-                Updating #{(selectedRoom as RoomInterface).room_name.id} Room:
+                Updating #{(selectedRoom as RoomInterface)._id.$oid} Room:
               </UpdatingTitle>
               <RoomeEditorCreator
                 select={selectedRoom as RoomInterface}
@@ -629,7 +720,8 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     | "comment"
     | "order_date"
     | "check_in"
-    | "check_out";
+    | "check_out"
+    | "room_type";
 
   type RowData = {
     _id: {
@@ -638,15 +730,13 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     name: string;
     surname: string;
     room_type: string;
+    type: string;
     room_number: string;
     status: string;
     availability: string;
-    offer_price: {
-      isOffer: boolean;
-      discount: number;
-    };
+    discount: number;
     price: number;
-    room_amenities: string[];
+    amenities: string[];
     room_name: {
       room_photo: string;
       id: string;
@@ -676,6 +766,8 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     check_out: string;
     order_date: string;
     room_description: string;
+    photos: string;
+    number: number;
   };
 
   const cellRenderer = (header: Header, rowData: RowData) => {
@@ -712,6 +804,8 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
             {rowData.room_type} - {rowData.room_number}
           </SampleDiv>
         );
+      case "room_type":
+        return <SampleDiv dark={dark.dark}>{rowData.type}</SampleDiv>;
 
       case "status":
         const trashIcon =
@@ -747,7 +841,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "availability":
         const availabilityTrashIcon =
           statusInfo === "fulfilled" ? (
-            <TrashIcon onClick={() => handleDelete(rowData.room_name.id)} />
+            <TrashIcon onClick={() => handleDelete(rowData._id.$oid)} />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
@@ -769,7 +863,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           editStatus === "fulfilled" ? (
             <EditIcon
               dark={dark.dark.toString()}
-              onClick={() => handleOpenModal(rowData.room_name.id, dataType)}
+              onClick={() => handleOpenModal(rowData._id.$oid, dataType)}
             />
           ) : editStatus === "rejected" ? (
             <EditIcon style={{ color: "#e9d7d7" }} />
@@ -805,10 +899,8 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
               fontSize: "18px",
             }}
           >
-            {rowData.offer_price.isOffer &&
-              "$" +
-                (rowData.price -
-                  (rowData.price * rowData.offer_price.discount) / 100)}
+            {rowData.discount > 0 &&
+              "$" + (rowData.price - (rowData.price * rowData.discount) / 100)}
           </InfoWrap>
         );
 
@@ -817,8 +909,8 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <InfoWrap
             dark={dark.dark}
             style={{
-              color: rowData.offer_price.isOffer ? "#b2b2b2" : "",
-              textDecoration: rowData.offer_price.isOffer ? "line-through" : "",
+              color: rowData.discount > 0 ? "#b2b2b2" : "",
+              textDecoration: rowData.discount > 0 ? "line-through" : "",
               fontWeight: 600,
               fontSize: "18px",
             }}
@@ -829,26 +921,32 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
 
       case "amenities":
         return (
-          <SampleDiv dark={dark.dark}>
-            {rowData.room_amenities.join(", ")}
-          </SampleDiv>
+          <>
+            <AmenitiesDiv dark={dark.dark}>
+              {rowData.amenities.map((amenity, index) => (
+                <AmenityWrapper key={index}>
+                  <AmenityContent>{amenity}</AmenityContent>
+                </AmenityWrapper>
+              ))}
+            </AmenitiesDiv>
+            <FadeDiv right={true} dark={dark.dark} />
+            <FadeDiv dark={dark.dark} />
+          </>
         );
 
       case "room_name":
         return (
           <RoomPhotoWrap>
-            <ImageRoom src={rowData.room_name.room_photo} />
+            <ImageRoom src={rowData.photos} />
             <DataSpecs>
               <DataId
                 dark={dark.dark.toString()}
-                to={`/rooms/${rowData.room_name.id}`}
-                onClick={() => handleGetDetails(rowData.room_name.id)}
+                to={`/rooms/${rowData._id.$oid}`}
+                onClick={() => handleGetDetails(rowData._id.$oid)}
               >
-                {rowData.room_name.id}
+                {rowData._id.$oid}
               </DataId>
-              <PhotoRoomSpec dark={dark.dark}>
-                {rowData.room_name.room_number}
-              </PhotoRoomSpec>
+              <PhotoRoomSpec dark={dark.dark}>{rowData.number}</PhotoRoomSpec>
             </DataSpecs>
           </RoomPhotoWrap>
         );
