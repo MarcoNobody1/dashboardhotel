@@ -38,6 +38,7 @@ const OptionWrapper = styled(NavLink)`
   padding: 20px 0;
   cursor: pointer;
   color: #799283;
+  border-left: 0px solid #e23428;
   transition: all 150ms ease-out;
   text-decoration: none;
 
