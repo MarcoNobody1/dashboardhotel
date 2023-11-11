@@ -1,0 +1,214 @@
+[
+  {
+    "_id": {
+      "$oid": "654eb4d4ea64d8a91a8c9906"
+    },
+    "photos": "https://picsum.photos/seed/c9x9RLzUS/640/480",
+    "number": 262,
+    "description": "Curia traho turba adipisci attonbitus confero spes amissio avarus arbor tribuo patruus denego conventus coepi crustulum studio admoveo defero vulgo pauci verecundia utroque defleo minima viridis aro temeritas corrigo traho acquiro coerceo beatus subiungo valde.",
+    "type": "Suite",
+    "amenities": [
+      "1/3 Bed Space",
+      "24-Hour Guard",
+      "Nice Views",
+      "Air Conditioner",
+      "Towels",
+      "Bathtub",
+      "Mini Bar",
+      "Free Wifi"
+    ],
+    "price": 172,
+    "discount": 15,
+    "availability": "Booked",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "654eb4d4ea64d8a91a8c9907"
+    },
+    "photos": "https://picsum.photos/seed/hsuOLjRB/640/480",
+    "number": 233,
+    "description": "Video delego statua nihil comprehendo cruentus exercitationem colo amicitia reprehenderit vilicus quas vinitor cohibeo.",
+    "type": "Double Superior",
+    "amenities": [
+      "24-Hour Guard",
+      "Towels",
+      "Television",
+      "1/3 Bed Space",
+      "Mini Bar",
+      "Free Wifi",
+      "Nice Views"
+    ],
+    "price": 260,
+    "discount": 15,
+    "availability": "Booked",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "654eb4d4ea64d8a91a8c9908"
+    },
+    "photos": "https://picsum.photos/seed/DJUhcr/640/480",
+    "number": 207,
+    "description": "Acsi campana temporibus vobis amplexus tendo tibi absconditus combibo sollers neque aestas vomer urbanus aliquam adficio suffoco aestus eum vulticulus tamisium certus territo veritas temperantia caritas sui deprimo rerum capio tempore cernuus ex theca conor thymbra deprimo suus studio.",
+    "type": "Double Room",
+    "amenities": [
+      "Air Conditioner",
+      "Bathtub",
+      "Towels",
+      "Mini Bar",
+      "Jacuzzi"
+    ],
+    "price": 260,
+    "discount": 5,
+    "availability": "Available",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "654eb4d4ea64d8a91a8c9909"
+    },
+    "photos": "https://picsum.photos/seed/itzKF/640/480",
+    "number": 189,
+    "description": "Abstergo rem vel spiritus complectus correptius patrocinor canto corona calamitas statua damnatio valetudo concido.",
+    "type": "Suite",
+    "amenities": [
+      "Free Wifi",
+      "Bathtub",
+      "Mini Bar",
+      "Jacuzzi",
+      "Coffee Set"
+    ],
+    "price": 223,
+    "discount": 15,
+    "availability": "Booked",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "654eb4d4ea64d8a91a8c990a"
+    },
+    "photos": "https://picsum.photos/seed/P8LT5/640/480",
+    "number": 242,
+    "description": "Tempore casus suasoria decumbo eligendi dapifer crastinus thalassinus vereor cuppedia auctor acceptus eos comburo porro vicinus terror arma cunabula toties.",
+    "type": "Double Room",
+    "amenities": [
+      "Nice Views",
+      "Jacuzzi",
+      "Mini Bar",
+      "Coffee Set",
+      "1/3 Bed Space",
+      "Free Wifi",
+      "Air Conditioner",
+      "Bathtub",
+      "Towels"
+    ],
+    "price": 229,
+    "discount": 25,
+    "availability": "Available",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "654eb4d4ea64d8a91a8c990b"
+    },
+    "photos": "https://picsum.photos/seed/5XKtB/640/480",
+    "number": 190,
+    "description": "Exercitationem vel itaque tui via correptius conor coaegresco casus sollicito altus sum vis avarus abutor texo adsidue delectus curis perferendis tersus.",
+    "type": "Double Superior",
+    "amenities": [
+      "Bathtub",
+      "1/3 Bed Space",
+      "24-Hour Guard",
+      "Towels",
+      "Air Conditioner"
+    ],
+    "price": 236,
+    "discount": 25,
+    "availability": "Available",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "654eb4d4ea64d8a91a8c990c"
+    },
+    "photos": "https://picsum.photos/seed/BFMo0zzVG/640/480",
+    "number": 216,
+    "description": "Amitto adflicto compono aperiam stultus vitae capto totidem desolo vix synagoga tener dedecor approbo tabella aduro patria templum vomica audentia celer.",
+    "type": "Double Superior",
+    "amenities": [
+      "Bathtub",
+      "24-Hour Guard",
+      "1/3 Bed Space",
+      "Air Conditioner"
+    ],
+    "price": 228,
+    "discount": 30,
+    "availability": "Available",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "654eb4d4ea64d8a91a8c990d"
+    },
+    "photos": "https://picsum.photos/seed/fNnAw9C/640/480",
+    "number": 291,
+    "description": "Harum talio ara veritas vilicus inflammatio cedo utor decumbo ut arcus commemoro ex trado tenus.",
+    "type": "Double Superior",
+    "amenities": [
+      "Mini Bar",
+      "Nice Views",
+      "Coffee Set",
+      "Air Conditioner"
+    ],
+    "price": 297,
+    "discount": 15,
+    "availability": "Available",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "654eb4d4ea64d8a91a8c990e"
+    },
+    "photos": "https://picsum.photos/seed/XNP7L/640/480",
+    "number": 190,
+    "description": "Depraedor cotidie torrens molestiae turba delicate corona sponte quidem vestrum summa strenuus iure cubicularis vorax ventosus cunabula adulatio a tempore venio terminatio sperno abscido sordeo coaegresco strues adulescens sumo decerno terra cubicularis.",
+    "type": "Double Room",
+    "amenities": [
+      "Towels",
+      "Jacuzzi",
+      "Free Wifi",
+      "Nice Views",
+      "Air Conditioner",
+      "24-Hour Guard",
+      "Coffee Set",
+      "1/3 Bed Space",
+      "Mini Bar"
+    ],
+    "price": 216,
+    "discount": 30,
+    "availability": "Booked",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "654eb4d4ea64d8a91a8c990f"
+    },
+    "photos": "https://picsum.photos/seed/Bc85wtKOeN/640/480",
+    "number": 277,
+    "description": "Colligo argumentum aveho veritas suspendo tolero explicabo tollo terminatio vorago spiritus derideo amicitia causa thermae despecto apud condico.",
+    "type": "Double Room",
+    "amenities": [
+      "Free Wifi",
+      "24-Hour Guard",
+      "Mini Bar",
+      "Nice Views",
+      "Bathtub",
+      "Towels"
+    ],
+    "price": 187,
+    "discount": 10,
+    "availability": "Available",
+    "__v": 0
+  }
+]
