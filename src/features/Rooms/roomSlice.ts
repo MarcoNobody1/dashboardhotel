@@ -51,7 +51,7 @@ export const roomSlice = createSlice({
       .addCase(deleteRoomsData.fulfilled, (state, action) => {
         state.deleteStatus = "fulfilled";
         state.rooms = state.rooms.filter((room) => {
-          return room.room_name.id !== action.payload;
+          return room._id.$oid !== action.payload;
         });
       })
       .addCase(deleteRoomsData.pending, (state) => {
@@ -64,7 +64,7 @@ export const roomSlice = createSlice({
       .addCase(get1RoomData.fulfilled, (state, action) => {
         state.roomIdStatus = "fulfilled";
         state.roomDetail = state.rooms.filter((room) => {
-          return room.room_name.id === action.payload;
+          return room._id.$oid === action.payload;
         });
       })
       .addCase(get1RoomData.pending, (state) => {
@@ -88,7 +88,7 @@ export const roomSlice = createSlice({
       .addCase(updateRoomData.fulfilled, (state, action) => {
         state.updateRoomStatus = "fulfilled";
         const roomIndex = state.rooms.findIndex(
-          (room) => room.room_name.id === action.payload.room_name.id
+          (room) => room._id.$oid === action.payload._id.$oid
         );
 
         state.rooms[roomIndex] = {...state.rooms[roomIndex], ...action.payload};
