@@ -49,27 +49,28 @@ import { UserEditorCreator } from "../Users/UserEditorCreator";
 import { RoomeEditorCreator } from "../Rooms/RoomEditorCreator";
 import { ThemeContext } from "../../Context/ToggleTheme";
 import { useContext } from "react";
+import { format } from "date-fns";
 
 const bookingTitles = [
-  "Guest",
-  "Order Date",
-  "Check In",
-  "Check Out",
-  "Special Request",
-  "Room",
-  "Status",
+  "guest",
+  "order_date",
+  "check_in",
+  "check_out",
+  "special_request",
+  "room",
+  "status",
 ];
 
 const roomTitles = [
-  "Room Name",
-  "Room Type",
-  "Amenities",
-  "Price",
-  "Offer Price",
-  "Availability",
+  "room_name",
+  "room_type",
+  "amenities",
+  "price",
+  "offer_price",
+  "availability",
 ];
 
-const contactTitles = ["Date", "Customer", "Subject", "Comment", "Archived"];
+const contactTitles = ["date", "customer", "subject", "comment", "archived"];
 
 const userTitles = [
   "name",
@@ -392,6 +393,12 @@ const SampleDiv = styled.div<DarkProp>`
   color: ${(props) => (props.dark ? "#41ebbd" : "#202020")};
 `;
 
+const DateDiv = styled(SampleDiv)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 interface DynamicTableProps {
   data:
     | Object[]
@@ -441,9 +448,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
   const { dark } = useContext(ThemeContext);
 
   const headers =
-    data.length > 0
-      ? Object.keys(data[0])
-      : dataType === "bookings"
+    dataType === "bookings"
       ? bookingTitles
       : dataType === "rooms"
       ? roomTitles
@@ -519,8 +524,8 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
 
   const Modal: FC<ModalProps> = ({ commentId, onCloseNote }) => {
     const selectedNote = (data as DataArray).find((booking: TableRow) => {
-      if (dataType === "bookings" && (booking as BookingInterface).guest) {
-        return (booking as BookingInterface).guest.id_reserva === commentId;
+      if (dataType === "bookings" && (booking as BookingInterface)) {
+        return (booking as BookingInterface)._id.$oid === commentId;
       } else {
         return false;
       }
@@ -533,7 +538,6 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           dataType === "bookings" &&
           "special_request" in (selectedNote as BookingInterface) ? (
             <SpecialRequest>
-              {" "}
               {(selectedNote as BookingInterface).special_request}
             </SpecialRequest>
           ) : (
@@ -588,7 +592,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <FloatCross onClick={onCloseRoomEditor} />
           {selectedRoom && dataType === "rooms" ? (
             <>
-              <UpdatingTitle  dark={dark.dark}>
+              <UpdatingTitle dark={dark.dark}>
                 Updating #{(selectedRoom as RoomInterface).room_name.id} Room:
               </UpdatingTitle>
               <RoomeEditorCreator
@@ -622,18 +626,19 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     | "activity"
     | "job_description"
     | "contact"
-    | "comment";
+    | "comment"
+    | "order_date"
+    | "check_in"
+    | "check_out";
 
   type RowData = {
-    guest: {
-      nombre: string;
-      apellidos: string;
-      id_reserva: string;
+    _id: {
+      $oid: string;
     };
-    room: {
-      room_type: string;
-      room_number: string;
-    };
+    name: string;
+    surname: string;
+    room_type: string;
+    room_number: string;
     status: string;
     availability: string;
     offer_price: {
@@ -641,7 +646,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       discount: number;
     };
     price: number;
-    amenities: string[];
+    room_amenities: string[];
     room_name: {
       room_photo: string;
       id: string;
@@ -658,34 +663,35 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     };
     subject: string;
     archived: boolean;
-    name: {
-      username: string;
-      id: string;
-      email: string;
-      employee_position: string;
-      photo: string;
-    };
+    avatar: string;
+    username: string;
+    email: string;
+    position: string;
+    photo: string;
     activity: string;
     job_description: string;
     contact: string;
     comment: string;
+    check_in: string;
+    check_out: string;
+    order_date: string;
+    room_description: string;
   };
 
   const cellRenderer = (header: Header, rowData: RowData) => {
     switch (header) {
       case "guest":
-        const guest = rowData.guest;
         return (
           <>
             <SimpleDiv dark={dark.dark}>
-              {guest.nombre} {guest.apellidos}
+              {rowData.name} {rowData.surname}
             </SimpleDiv>
             <StyledLink
               dark={dark.dark.toString()}
-              onClick={() => handleGetDetails(guest.id_reserva)}
-              to={`/bookings/${guest.id_reserva}`}
+              onClick={() => handleGetDetails(rowData._id.$oid)}
+              to={`/bookings/${rowData._id.$oid}`}
             >
-              {guest.id_reserva}
+              {rowData._id.$oid}
             </StyledLink>
           </>
         );
@@ -694,7 +700,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         return (
           <SpecialRequestButton
             dark={dark.dark}
-            onClick={() => handleOpenNote(rowData.guest.id_reserva)}
+            onClick={() => handleOpenNote(rowData._id.$oid)}
           >
             Special Request
           </SpecialRequestButton>
@@ -703,7 +709,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "room":
         return (
           <SampleDiv dark={dark.dark}>
-            {rowData.room.room_type} - {rowData.room.room_number}
+            {rowData.room_type} - {rowData.room_number}
           </SampleDiv>
         );
 
@@ -712,7 +718,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           statusInfo === "fulfilled" ? (
             <TrashIcon
               datatype="bookings"
-              onClick={() => handleDelete(rowData.guest.id_reserva)}
+              onClick={() => handleDelete(rowData._id.$oid)}
             />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
@@ -823,7 +829,9 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
 
       case "amenities":
         return (
-          <SampleDiv dark={dark.dark}>{rowData.amenities.join(", ")}</SampleDiv>
+          <SampleDiv dark={dark.dark}>
+            {rowData.room_amenities.join(", ")}
+          </SampleDiv>
         );
 
       case "room_name":
@@ -957,14 +965,14 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "name":
         return (
           <UserDataWrap>
-            <UserImage src={rowData.name.photo} />
+            <UserImage src={rowData.avatar} />
             <DataSpecs>
-              <UserName dark={dark.dark}>{rowData.name.username}</UserName>
-              <UserId dark={dark.dark}>{rowData.name.id}</UserId>
-              <UserLink dark={dark.dark} href={`mailto:${rowData.name.email}`}>
-                {rowData.name.email}
+              <UserName dark={dark.dark}>{rowData.username}</UserName>
+              <UserId dark={dark.dark}>{rowData._id.$oid}</UserId>
+              <UserLink dark={dark.dark} href={`mailto:${rowData.email}`}>
+                {rowData.email}
               </UserLink>
-              <UserEmployee>{rowData.name.employee_position}</UserEmployee>
+              <UserEmployee>{rowData.position}</UserEmployee>
             </DataSpecs>
           </UserDataWrap>
         );
@@ -972,7 +980,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "activity":
         const trashUserIcon =
           statusInfo === "fulfilled" ? (
-            <TrashIcon onClick={() => handleDelete(rowData.name.id)} />
+            <TrashIcon onClick={() => handleDelete(rowData._id.$oid)} />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
@@ -995,7 +1003,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           editStatus === "fulfilled" ? (
             <EditIcon
               dark={dark.dark.toString()}
-              onClick={() => handleOpenModal(rowData.name.id, dataType)}
+              onClick={() => handleOpenModal(rowData._id.$oid, dataType)}
             />
           ) : editStatus === "rejected" ? (
             <EditIcon style={{ color: "#e9d7d7" }} />
@@ -1044,6 +1052,33 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <SampleDiv dark={dark.dark}>
             <CommentWrapper dark={dark.dark}>{rowData.comment}</CommentWrapper>
           </SampleDiv>
+        );
+      case "check_in":
+        const checkIn = new Date(rowData.check_in);
+        return (
+          <DateDiv>
+            <SampleDiv dark={dark.dark}>
+              {format(checkIn, "yyyy MMMM do")}
+            </SampleDiv>
+            <SampleDiv dark={dark.dark}> {format(checkIn, "HH:mm")} </SampleDiv>
+          </DateDiv>
+        );
+      case "order_date":
+        const orderDate = new Date(rowData.order_date);
+        return (
+          <SampleDiv dark={dark.dark}>
+            {format(orderDate, "yyyy/MM/dd HH:mm")}
+          </SampleDiv>
+        );
+      case "check_out":
+        const checkOut = new Date(rowData.check_in);
+        return (
+          <DateDiv>
+            <SampleDiv dark={dark.dark}>
+              {format(checkOut, "yyyy MMMM do")}
+            </SampleDiv>
+            <SampleDiv dark={dark.dark}>{format(checkOut, "HH:mm")}</SampleDiv>
+          </DateDiv>
         );
 
       default:
