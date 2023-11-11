@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { bookingsData } from "../../data/bookingsjson";
+import bookings from "../../data/MirandaDashboard.bookings.json";
 import { BookingInterface } from "../Interfaces/Interfaces";
 
 const delay = (data:BookingInterface[] | string | BookingInterface, time:number = 400) => {
@@ -11,7 +12,7 @@ const delay = (data:BookingInterface[] | string | BookingInterface, time:number 
 };
 
 export const getData = createAsyncThunk<BookingInterface[]>("bookings/getData", async () => {
-  return( await delay(bookingsData)) as BookingInterface[];
+  return( await delay(bookings)) as BookingInterface[];
 });
 
 export const deleteData = createAsyncThunk("bookings/deleteData", async (id:string) => {
