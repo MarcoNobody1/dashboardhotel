@@ -19,7 +19,6 @@ export const CommentsContainer = styled(NotifContainer)`
   padding: 30px;
   box-shadow: 0px 4px 4px #00000005;
   border-radius: 20px;
-  overflow: hidden;
   transition: all 0.25s ease-in-out;
 `;
 
