@@ -58,9 +58,9 @@ export const CommentModal: FC<CommentModalProps>= ({ idContact, onClose }) => {
 
   const data = () => {
     return ( <>
-      <FullName style={{color: dark.dark ? "#FFF" : "#262626"}}>{selectedContact.customer.name}</FullName>
-      <EmailAddress style={{ color: dark.dark? "#41ebbd" : "#799283"}}>{selectedContact.customer.email}</EmailAddress>
-      <PhoneNumber style={{ color: dark.dark? "#41ebbd" : "#799283"}}>{selectedContact.customer.phone}</PhoneNumber>
+      <FullName style={{color: dark.dark ? "#FFF" : "#262626"}}>{selectedContact.name}</FullName>
+      <EmailAddress style={{ color: dark.dark? "#41ebbd" : "#799283"}}>{selectedContact.email}</EmailAddress>
+      <PhoneNumber style={{ color: dark.dark? "#41ebbd" : "#799283"}}>{selectedContact.phone}</PhoneNumber>
       <Subject style={{color: dark.dark ? "#FFF" : "#262626"}}>{selectedContact.subject}</Subject>
       <ModalContent style={{color: dark.dark ? "#FFF" : "#262626"}}>{selectedContact.comment}</ModalContent>
     </>);
