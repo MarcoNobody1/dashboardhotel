@@ -189,21 +189,21 @@ export const RoomDetails: FC = () => {
           <StatusWrapper
             style={{
               backgroundColor:
-                selectedRoom.availability === "available"
+                selectedRoom.availability === "Available"
                   ? "#e8ffee"
-                  : selectedRoom.availability === "booked"
+                  : selectedRoom.availability === "Booked"
                   ? "#FFEDEC"
                   : "#FEFFC2",
               color:
-                selectedRoom.availability === "available"
+                selectedRoom.availability === "Available"
                   ? "#5ad07a"
-                  : selectedRoom.availability === "booked"
+                  : selectedRoom.availability === "Booked"
                   ? "#E23428"
                   : "#E2B308",
               border:
-                selectedRoom.availability === "available"
+                selectedRoom.availability === "Available"
                   ? "3px solid #5ad07a"
-                  : selectedRoom.availability === "booked"
+                  : selectedRoom.availability === "Booked"
                   ? "3px solid #E23428"
                   : "3px solid #E2B308",
             }}

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { usersData } from "../../data/usersjson";
 import { UserInterface } from "../Interfaces/Interfaces";
+import users from "../../data/MirandaDashboard.users.json";
 const delay = (data:UserInterface[] | string | UserInterface, time = 400) => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -11,7 +12,7 @@ const delay = (data:UserInterface[] | string | UserInterface, time = 400) => {
 
 export const getUsersData = createAsyncThunk<UserInterface[]>("users/getUsersData", async () => {
 
-  return (await delay(usersData))as UserInterface[];
+  return (await delay(users))as UserInterface[];
 });
 
 export const deleteUsersData = createAsyncThunk("users/deleteUsersData", async (id:string) => {

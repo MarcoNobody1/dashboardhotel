@@ -18,15 +18,13 @@ export interface BookingInterface {
 }
 
 export interface ContactInterface {
-  date: {
-    id: string;
-    send_date: string;
+  _id: {
+    $oid: string;
   };
-  customer: {
-    name: string;
-    email: string;
-    phone: string;
-  };
+  date: string;
+  name: string;
+  email: string;
+  phone: string;
   subject: string;
   comment: string;
   archived: boolean;
@@ -47,14 +45,14 @@ export interface RoomInterface {
 }
 
 export interface UserInterface {
-  name: {
-    photo: string;
-    username: string;
-    id: string;
-    employee_position: string;
-    email: string;
-    password_hash: string;
+  _id: {
+    $oid: string;
   };
+  avatar: string;
+  username: string;
+  position: string;
+  email: string;
+  password: string;
   start_date: string;
   job_description: string;
   contact: string;

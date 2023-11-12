@@ -49,7 +49,7 @@ export const userSlice = createSlice({
       .addCase(deleteUsersData.fulfilled, (state, action) => {
         state.deleteStatus = "fulfilled";
         state.users = state.users.filter((user) => {
-          return user.name.id !== action.payload;
+          return user._id.$oid !== action.payload;
         });
       })
       .addCase(deleteUsersData.pending, (state) => {
@@ -62,7 +62,7 @@ export const userSlice = createSlice({
       .addCase(get1UserData.fulfilled, (state, action) => {
         state.status = "fulfilled";
         state.userDetails = state.users.filter((user) => {
-          return user.name.id === action.payload;
+          return user._id.$oid === action.payload;
         });
       })
       .addCase(get1UserData.pending, (state) => {
@@ -86,7 +86,7 @@ export const userSlice = createSlice({
       .addCase(updateUserData.fulfilled, (state, action) => {
         state.updateUserStatus = "fulfilled";
         const userIndex = state.users.findIndex(
-          (user) => user.name.id === action.payload.name.id
+          (user) => user._id.$oid === action.payload._id.$oid
         );
 
         state.users[userIndex] = {

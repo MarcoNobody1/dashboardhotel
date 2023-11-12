@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { contactMessages } from "../../data/contactjson";
 import { ContactInterface } from "../Interfaces/Interfaces";
+import contacts from "../../data/MirandaDashboard.contacts.json";
 
 const delay = (data:ContactInterface[] | string | ContactInterface, time:number = 400) => {
   return new Promise((resolve) => {
@@ -12,7 +13,7 @@ const delay = (data:ContactInterface[] | string | ContactInterface, time:number 
 
 export const getContactsData = createAsyncThunk<ContactInterface[]>("contacts/getContactData", async () => {
 
-  return (await delay(contactMessages)) as ContactInterface[];
+  return (await delay(contacts)) as ContactInterface[];
 });
 
 export const deleteContactsData = createAsyncThunk("contacts/deleteContactsData", async (id:string) => {

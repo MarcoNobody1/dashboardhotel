@@ -112,12 +112,12 @@ const Th = styled.th<ThProps>`
       ? "480px"
       : props.header === "availability" ||
         props.header === "activity" ||
-        props.header === "room_type"
+        props.header === "room_type" ||
+        props.header === "subject" ||
+        props.header === "start_date"
       ? "200px"
-      : props.header === "customer"
+      : props.header === "customer" || props.header === "job_description"
       ? "300px"
-      : props.header === "job_description"
-      ? "500px"
       : props.header === "comment"
       ? "350px"
       : "130px"};
@@ -258,6 +258,7 @@ const UserDataWrap = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
+  max-width: 400px;
 `;
 
 const ImageRoom = styled.img`
@@ -368,6 +369,14 @@ const InfoWrap = styled.div<DarkProp>`
   text-align: left;
   font-weight: 600;
   font-size: 18px;
+  color: ${(props) => (props.dark ? "#41ebbd" : "#393939")};
+  transition: all 250ms ease-in-out;
+`;
+
+const SubjectWrapper = styled.div<DarkProp>`
+  text-align: left;
+  font-weight: 500;
+  font-size: 14px;
   color: ${(props) => (props.dark ? "#41ebbd" : "#393939")};
   transition: all 250ms ease-in-out;
 `;
@@ -641,8 +650,8 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
 
   const UserEditor: FC<UserEditorProps> = ({ userId, onCloseUserEditor }) => {
     const selectedUser = (data as DataArray).find((user: TableRow) => {
-      if (dataType === "users" && (user as UserInterface).name) {
-        return (user as UserInterface).name.id === userId;
+      if (dataType === "users" && (user as UserInterface)) {
+        return (user as UserInterface)._id.$oid === userId;
       } else {
         return false;
       }
@@ -654,7 +663,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           {selectedUser && dataType === "users" ? (
             <>
               <UpdatingTitle dark={dark.dark}>
-                Updating #{(selectedUser as UserInterface).name.id} User:
+                Updating #{(selectedUser as UserInterface)._id.$oid} User:
               </UpdatingTitle>
               <UserEditorCreator
                 select={selectedUser as UserInterface}
@@ -721,13 +730,13 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     | "order_date"
     | "check_in"
     | "check_out"
-    | "room_type";
+    | "room_type"
+    | "start_date";
 
   type RowData = {
     _id: {
       $oid: string;
     };
-    name: string;
     surname: string;
     room_type: string;
     type: string;
@@ -737,20 +746,9 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     discount: number;
     price: number;
     amenities: string[];
-    room_name: {
-      room_photo: string;
-      id: string;
-      room_number: string;
-    };
-    date: {
-      send_date: string;
-      id: string;
-    };
-    customer: {
-      name: string;
-      email: string;
-      phone: string;
-    };
+    date: string;
+    name: string;
+    phone: string;
     subject: string;
     archived: boolean;
     avatar: string;
@@ -768,6 +766,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     room_description: string;
     photos: string;
     number: number;
+    start_date: string;
   };
 
   const cellRenderer = (header: Header, rowData: RowData) => {
@@ -954,28 +953,30 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "date":
         return (
           <SampleDiv style={{ fontWeight: 600 }} dark={dark.dark}>
-            {formatDate(rowData.date.send_date)}
+            {formatDate(rowData.date)}
           </SampleDiv>
         );
 
       case "customer":
         return (
           <InfoWrap dark={dark.dark} style={{ minWidth: "300px" }}>
-            <InfoLine>{rowData.customer.name}</InfoLine>
-            <InfoLine>{rowData.customer.email}</InfoLine>
-            <InfoLine>{rowData.customer.phone}</InfoLine>
+            <InfoLine>{rowData.name}</InfoLine>
+            <InfoLine>{rowData.email}</InfoLine>
+            <InfoLine>{rowData.phone}</InfoLine>
           </InfoWrap>
         );
 
       case "subject":
-        return <InfoWrap dark={dark.dark}>{rowData.subject}</InfoWrap>;
+        return (
+          <SubjectWrapper dark={dark.dark}>{rowData.subject}</SubjectWrapper>
+        );
 
       case "archived":
         const trashContactIcon =
           statusInfo === "fulfilled" ? (
             <TrashIcon
               datatype="contact"
-              onClick={() => handleDelete(rowData.date.id)}
+              onClick={() => handleDelete(rowData._id.$oid)}
             />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
@@ -1038,7 +1039,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <>
             <StatusButton
               onClick={() =>
-                handleArchiveComment(rowData.date.id, rowData.archived)
+                handleArchiveComment(rowData._id.$oid, rowData.archived)
               }
               style={
                 dark.dark
@@ -1176,6 +1177,16 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
               {format(checkOut, "yyyy MMMM do")}
             </SampleDiv>
             <SampleDiv dark={dark.dark}>{format(checkOut, "HH:mm")}</SampleDiv>
+          </DateDiv>
+        );
+      case "start_date":
+        const startDate = new Date(rowData.start_date);
+        return (
+          <DateDiv>
+            <SampleDiv dark={dark.dark}>
+              {format(startDate, "yyyy MMMM do")}
+            </SampleDiv>
+            <SampleDiv dark={dark.dark}>{format(startDate, "HH:mm")}</SampleDiv>
           </DateDiv>
         );
 

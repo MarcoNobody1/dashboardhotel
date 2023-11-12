@@ -37,11 +37,11 @@ export const Contact: FC = () => {
   if (selected === "Date") {
     filtered.sort((a, b) => {
 
-      return new Date(b.date.send_date).getTime() - new Date(a.date.send_date).getTime()
+      return new Date(b.date).getTime() - new Date(a.date).getTime()
     });
   } else if (selected === "Oldest") {
     filtered.sort((a, b) => {
-      return new Date(a.date.send_date).getTime() - new Date(b.date.send_date).getTime()
+      return new Date(a.date).getTime() - new Date(b.date).getTime()
     });
   }
 
