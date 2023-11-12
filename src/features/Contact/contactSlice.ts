@@ -43,7 +43,7 @@ const initialState: RoomInitialState = {
         })
         .addCase(deleteContactsData.fulfilled, (state, action) => {
           state.deleteStatus = "fulfilled";
-          state.contacts = state.contacts.filter((contact) => {return contact.date.id !== action.payload});
+          state.contacts = state.contacts.filter((contact) => {return contact._id.$oid !== action.payload});
         })
         .addCase(deleteContactsData.pending, (state) => {
           state.deleteStatus = "pending";
@@ -54,7 +54,7 @@ const initialState: RoomInitialState = {
         })
         .addCase(get1ContactData.fulfilled, (state, action) => {
           state.detailStatus = "fulfilled";
-          state.contactDetail = state.contacts.filter((contact) => {return contact.date.id === action.payload});
+          state.contactDetail = state.contacts.filter((contact) => {return contact._id.$oid === action.payload});
         })
         .addCase(get1ContactData.pending, (state) => {
           state.detailStatus = "pending";
@@ -65,7 +65,7 @@ const initialState: RoomInitialState = {
         })
         .addCase(archiveData.fulfilled, (state, action) => {
           state.archiveStatus = "fulfilled";
-          const contactIndex = state.contacts.findIndex((contact) => contact.date.id === action.payload);
+          const contactIndex = state.contacts.findIndex((contact) => contact._id.$oid === action.payload);
           if (contactIndex !== -1) {
            state.contacts[contactIndex].archived = !state.contacts[contactIndex].archived;
            }
