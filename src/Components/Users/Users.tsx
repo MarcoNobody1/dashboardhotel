@@ -75,8 +75,8 @@ export const Users = () => {
     });
   } else if (selected === "Name(A-Z)") {
     filtered.sort((a, b) => {
-      const nombreA = a.name.username.toUpperCase();
-      const nombreB = b.name.username.toUpperCase();
+      const nombreA = a.username.toUpperCase();
+      const nombreB = b.username.toUpperCase();
       if (nombreA < nombreB) {
         return -1;
       }
@@ -87,8 +87,8 @@ export const Users = () => {
     });
   } else if (selected === "Name(Z-A)") {
     filtered.sort((a, b) => {
-      const nombreA = a.name.username.toUpperCase();
-      const nombreB = b.name.username.toUpperCase();
+      const nombreA = a.username.toUpperCase();
+      const nombreB = b.username.toUpperCase();
       if (nombreA < nombreB) {
         return 1;
       }
@@ -105,7 +105,7 @@ export const Users = () => {
       setCurrentUsers(usersData);
     } else {
       const filteredData = usersData.filter((user) => {
-        const name = user.name.username.toLowerCase();
+        const name = user.username.toLowerCase();
 
         return name.includes(searchTerm);
       });
