@@ -1,6 +1,6 @@
 export interface BookingInterface {
   _id: {
-    $oid: String;
+    $oid: string;
   };
   name: string;
   surname: string;
@@ -32,7 +32,7 @@ export interface ContactInterface {
 
 export interface RoomInterface {
   _id: {
-    $oid: String;
+    $oid: string | undefined;
   };
   photos: string;
   number: number;
