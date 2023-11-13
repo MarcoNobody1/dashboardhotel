@@ -23,6 +23,7 @@ const CommentsWrapper = styled.div<DarkProp>`
   overflow-x: scroll;
   display: flex;
   gap: 40px;
+  padding-bottom: 15px;
   transition: all 0.25s ease-in-out;
 
    &::-webkit-scrollbar {

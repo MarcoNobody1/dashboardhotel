@@ -184,24 +184,22 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
   const dispatch = useAppDispatch();
   const { dark } = useContext(ThemeContext);
   const [checkedStates, setCheckedStates] = useState<boolean[]>([
-    roomPhotos[0] === select?.room_name.room_photo,
-    roomPhotos[1] === select?.room_name.room_photo,
-    roomPhotos[2] === select?.room_name.room_photo,
-    roomPhotos[3] === select?.room_name.room_photo,
-    roomPhotos[4] === select?.room_name.room_photo,
+    roomPhotos[0] === select?.photos,
+    roomPhotos[1] === select?.photos,
+    roomPhotos[2] === select?.photos,
+    roomPhotos[3] === select?.photos,
+    roomPhotos[4] === select?.photos,
   ]);
 
   const [price, setPrice] = useState(select ? select.price : 150);
   const [discount, setDiscount] = useState(
-    select ? select.offer_price.discount : 15
+    select ? select.discount : 15
   );
   const [roomType, setRoomType] = useState("Single Room");
   const [roomNumber, setRoomNumber] = useState(111);
   const [description, setDescription] = useState("");
   const [amenities, setAmenities] = useState<AmenityOptions>("Standard");
-  const [allowDiscount, setAllowDiscount] = useState(
-    select ? select.offer_price.isOffer : false
-  );
+  const [allowDiscount, setAllowDiscount] = useState(select && select.discount !== undefined && select.discount > 0);
   const hasTrueValue = select
     ? checkedStates.some((isChecked) => isChecked)
     : checkedStates.filter((value) => value).length >= 3;
@@ -269,21 +267,17 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
     });
 
     const newRoom = {
-      room_name: {
-        id: select
-          ? select.room_name.id
-          : (
-              Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345
-            ).toString(),
-        room_photo:
+_id: {
+  $oid: select && select._id.$oid
+},
+        photos:
           finalPhotos[Math.floor(Math.random() * finalPhotos.length)] || "",
-        room_number: roomNumber === null ? 111 : roomNumber,
-        room_description:
+       number: roomNumber === null ? 111 : roomNumber,
+       description:
           description.replace(/\s/g, "") === "" || description === null
             ? "This is a sample description text."
             : description,
-      },
-      room_type: roomType,
+     type: roomType,
       amenities:
         amenities === "Standard"
           ? roomAmenities.Standard
@@ -293,11 +287,8 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
           ? roomAmenities.Premium
           : roomAmenities.FullRoom,
       price: price,
-      offer_price: {
-        isOffer: allowDiscount,
         discount: allowDiscount ? discount : 0,
-      },
-      availability: "available",
+      availability: "Available",
     };
 
     if (hasTrueValue) {
@@ -356,7 +347,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
               opacity:
                 hasTrueValue &&
                 select &&
-                select.room_name.room_description.length > 0
+                select.description.length > 0
                   ? 1
                   : description.length > 0
                   ? 1
@@ -364,7 +355,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
               fontSize:
                 hasTrueValue &&
                 select &&
-                select.room_name.room_description.length > 0
+                select.description.length > 0
                   ? "28px"
                   : description.length > 0
                   ? "28px"
@@ -418,7 +409,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
                 onChange={(event) => {
                   setRoomType(event.target.value);
                 }}
-                defaultValue={select ? select.room_type : roomType}
+                defaultValue={select ? select.type : roomType}
               >
                 <Option dark={dark.dark} value="Single Room">Single Room</Option>
                 <Option dark={dark.dark} value="Double Room">Double Room</Option>
@@ -453,7 +444,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
                 name="roomNumberInput"
                 type="number"
                 defaultValue={
-                  select ? select.room_name.room_number : roomNumber
+                  select ? select.number : roomNumber
                 }
                 min="100"
                 max="9999"
@@ -470,7 +461,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
                 placeholder="Add a brief description for the room..."
                 onChange={(event) => setDescription(event.target.value)}
                 defaultValue={
-                  select ? select.room_name.room_description : undefined
+                  select ? select.description : undefined
                 }
               ></TextArea>
             </Action>
@@ -481,7 +472,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
             opacity:
               hasTrueValue &&
               select &&
-              select.room_name.room_description.length > 0
+              select.description.length > 0
                 ? 1
                 : description.length > 0
                 ? 1
@@ -489,7 +480,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
             pointerEvents:
               hasTrueValue &&
               select &&
-              select.room_name.room_description.length > 0
+              select.description.length > 0
                 ? "all"
                 : description.length > 0
                 ? "all"
@@ -540,7 +531,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
                 min="5"
                 max="30"
                 step="5"
-                defaultValue={select ? select.offer_price.discount : discount}
+                defaultValue={select ? select.discount : discount}
               />
               <InfoParagraph style={{ opacity: allowDiscount ? "100" : "0", color: dark.dark ? "#41ebbd":"#202020" }}>
                 Your current discount is {discount}%.
@@ -567,7 +558,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
           opacity:
             hasTrueValue &&
             select &&
-            select.room_name.room_description.length > 0
+            select.description.length > 0
               ? 1
               : description.length > 0
               ? 1
@@ -575,7 +566,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
           pointerEvents:
             hasTrueValue &&
             select &&
-            select.room_name.room_description.length > 0
+            select.description.length > 0
               ? "all"
               : description.length > 0
               ? "all"
