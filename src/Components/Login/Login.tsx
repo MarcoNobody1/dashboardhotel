@@ -76,7 +76,7 @@ const Advertice = styled.p`
 `;
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
+  const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const nav = useNavigate();
   const { auth, authDispatch } = useContext(AuthContext);
@@ -85,17 +85,16 @@ export const Login = () => {
   useEffect(() => {
     if (auth && auth.authenticated) {
       nav("/");
-
     }
   }, [auth, nav]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    if (email === "marcocamaradiaz@gmail.com" && password === "Marco") {
+    if (user === "admin" && password === "admin") {
       authDispatch({
         type: "login",
-        payload: { username: password, email: email },
+        payload: { username: user, password: password },
       });
 
       nav("/");
@@ -111,13 +110,13 @@ export const Login = () => {
 
       Toast.fire({
         icon: "error",
-        title: "Wrong Email or Password.",
+        title: "Wrong user or Password.",
       });
     }
   };
 
-  const handleEmail = (event: ChangeEvent<HTMLInputElement>): void => {
-    setEmail(event.target.value);
+  const handleuser = (event: ChangeEvent<HTMLInputElement>): void => {
+    setUser(event.target.value);
   };
 
   const handlePassword = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -126,23 +125,49 @@ export const Login = () => {
 
   return (
     <>
-      <LogWrapper style={{ backgroundColor: dark.dark ? "#171717" : "lightcyan" }}>
-        <LogForm style={{ backgroundColor: dark.dark ? "#202020" : "#f8f8f8", border: dark.dark ? "1px solid #3D3D3D" : "1px solid black" }} onSubmit={handleSubmit}>
+      <LogWrapper
+        style={{ backgroundColor: dark.dark ? "#171717" : "lightcyan" }}
+      >
+        <LogForm
+          style={{
+            backgroundColor: dark.dark ? "#202020" : "#f8f8f8",
+            border: dark.dark ? "1px solid #3D3D3D" : "1px solid black",
+          }}
+          onSubmit={handleSubmit}
+        >
           <Logo src={dark.dark ? logoDark : logo} />
-          <Label style={{ color: dark.dark ? "#FFEDEC" : "#393939" }} htmlFor="email">Email:</Label>
+          <Label
+            style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}
+            htmlFor="user"
+          >
+            Username:
+          </Label>
           <Input
-            style={{ color: dark.dark ? "#FFEDEC" : "#393939", border: dark.dark ? "2px solid #FFF" : "2px solid black", backgroundColor: dark.dark ? "#000" : "#FFF" }}
+            style={{
+              color: dark.dark ? "#FFEDEC" : "#393939",
+              border: dark.dark ? "2px solid #FFF" : "2px solid black",
+              backgroundColor: dark.dark ? "#000" : "#FFF",
+            }}
             data-cy="usernameInput"
-            onChange={handleEmail}
-            id="email"
-            type="email"
+            onChange={handleuser}
+            id="user"
+            type="text"
             placeholder="Type your e-mail"
             autoComplete="on"
           />
-          <Label style={{ color: dark.dark ? "#FFEDEC" : "#393939" }} htmlFor="password">Password:</Label>
+          <Label
+            style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}
+            htmlFor="password"
+          >
+            Password:
+          </Label>
 
           <Input
-            style={{ color: dark.dark ? "#FFEDEC" : "#393939", border: dark.dark ? "2px solid #FFF" : "2px solid black", backgroundColor: dark.dark ? "#000" : "#FFF" }}
+            style={{
+              color: dark.dark ? "#FFEDEC" : "#393939",
+              border: dark.dark ? "2px solid #FFF" : "2px solid black",
+              backgroundColor: dark.dark ? "#000" : "#FFF",
+            }}
             data-cy="passwordInput"
             onChange={handlePassword}
             id="password"
@@ -150,14 +175,28 @@ export const Login = () => {
             placeholder="Type your password"
             autoComplete="on"
           />
-          <Button style={{border: dark.dark ? "1px solid #41ebbd" : "1px solid #135846", backgroundColor: dark.dark ? "#41ebbd" : "#135846", color: dark.dark ? "#171717" : "#FFF" }} data-cy="loginButton" type="submit">Log In</Button>
+          <Button
+            style={{
+              border: dark.dark ? "1px solid #41ebbd" : "1px solid #135846",
+              backgroundColor: dark.dark ? "#41ebbd" : "#135846",
+              color: dark.dark ? "#171717" : "#FFF",
+            }}
+            data-cy="loginButton"
+            type="submit"
+          >
+            Log In
+          </Button>
           <Advertice style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}>
             <strong>Hint:</strong>
           </Advertice>
           <br />
-          <Advertice style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}> Email: marcocamaradiaz@gmail.com </Advertice>
+          <Advertice style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}>
+            Username: admin
+          </Advertice>
           <br />
-          <Advertice style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}>Password: Marco</Advertice>
+          <Advertice style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}>
+            Password: admin
+          </Advertice>
         </LogForm>
       </LogWrapper>
     </>

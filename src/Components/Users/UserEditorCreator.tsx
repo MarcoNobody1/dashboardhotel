@@ -260,17 +260,15 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
     select && select.activity === "active" ? true : false
   );
   const [selectedPhoto, setSelectedPhoto] = useState(
-    select ? select.name.photo : ""
+    select ? select.avatar : ""
   );
   const [phone, setPhone] = useState(select ? select.contact : "");
-  const [password, setPassword] = useState(
-    select ? select.name.password_hash : ""
-  );
-  const [username, setUsername] = useState(select ? select.name.username : "");
-  const [email, setEmail] = useState(select ? select.name.email : "");
+  const [password, setPassword] = useState(select ? select.password : "");
+  const [username, setUsername] = useState(select ? select.username : "");
+  const [email, setEmail] = useState(select ? select.email : "");
   const [date, setDate] = useState(select ? select.start_date : "");
   const [position, setPosition] = useState(
-    select ? select.name.employee_position : "Room Service"
+    select ? select.position : "Room Service"
   );
   const [description, setDescription] = useState(
     select ? select.job_description : ""
@@ -319,18 +317,14 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
     }
 
     const dataUser = {
-      name: {
-        photo: selectedPhoto || "",
-        username: username,
-        id: select
-          ? select.name.id
-          : (
-              Math.floor(Math.random() * (12345678 - 12345 + 1)) + 12345
-            ).toString(),
-        employee_position: position,
-        email: email,
-        password_hash: password,
+      _id: {
+        $oid: select?._id.$oid || "",
       },
+      avatar: selectedPhoto || "",
+      username: username,
+      position: position,
+      email: email,
+      password: password,
       start_date: date === "" ? getFormattedDate() : date,
       job_description: description,
       contact: phone,
@@ -413,9 +407,9 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
               style={{ position: "absolute", top: "0px", left: "-40px" }}
             >
               <Photo
-                src={select.name.photo}
+                src={select.avatar}
                 style={
-                  selectedPhoto === select.name.photo
+                  selectedPhoto === select.avatar
                     ? {
                         border: dark.dark
                           ? "5px solid #41ebbd"
@@ -425,14 +419,14 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
                       }
                     : { width: "40px", height: "40px" }
                 }
-                onClick={() => setSelectedPhoto(select.name.photo)}
+                onClick={() => setSelectedPhoto(select.avatar)}
               />
               <Checker
                 name="checker"
-                value={select.name.photo}
+                value={select.avatar}
                 type="radio"
-                checked={selectedPhoto === select.name.photo}
-                onChange={() => setSelectedPhoto(select.name.photo)}
+                checked={selectedPhoto === select.avatar}
+                onChange={() => setSelectedPhoto(select.avatar)}
               />
             </PhotoWrapper>
           ) : null}
@@ -564,7 +558,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
                 }}
                 placeholder={`e.g. :  Mr. Krabs`}
                 minLength={1}
-                defaultValue={select ? select.name.username : undefined}
+                defaultValue={select ? select.username : undefined}
               />
             </Action>
             <Action>
@@ -577,7 +571,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete="new-password"
                 minLength={5}
-                defaultValue={select ? select.name.password_hash : undefined}
+                defaultValue={select ? select.password : undefined}
               />
               <InfoParagraph password={password}>
                 Your Password: {password}
@@ -593,7 +587,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
                 type="email"
                 placeholder={`e.g. :  mrkrabs@iwantmymoney.com`}
                 onChange={(event) => setEmail(event.target.value)}
-                defaultValue={select ? select.name.email : undefined}
+                defaultValue={select ? select.email : undefined}
               />
             </Action>
             <Action>
@@ -645,7 +639,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
                   setPosition(event.target.value);
                 }}
                 defaultValue={
-                  select ? select.name.employee_position : "Room Service"
+                  select ? select.position : "Room Service"
                 }
               >
                 <Option dark={dark.dark} value="Room Service">
@@ -704,8 +698,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
           backgroundColor: dark.dark ? "#41ebbd" : "#135846",
         }}
       >
-        {" "}
-        {select ? "Save Changes" : "Add Room"}
+        {select ? "Save Changes" : "Add User"}
       </ButtonAdNew>
     </Form>
   );
