@@ -92,7 +92,7 @@ const Notification = styled.div`
   height: 18px;
   background-color: red;
   top: -5px;
-  right: 38px;
+  right: 30%;
   border-radius: 50%;
   color: #fff;
   font-size: 12px;
