@@ -1,223 +1,258 @@
 [{
   "_id": {
-    "$oid": "6551dc777eae7a9071d87e5f"
+    "$oid": "6553ab10aaab95763772b904"
   },
-  "photos": "https://tinyurl.com/PhotoNumberOne",
-  "number": 181,
-  "description": "Perspiciatis viscus allatus conspergo defendo tabgo tergum apud convoco aranea constans utrum sed capillus animadverto ab debilito absque inflammatio architecto cur odit ulterius vallum abundans aegre at vespillo ea tempore amita clibanus sodalitas.",
-  "type": "Double Room",
-  "amenities": [
-    "Towels",
-    "Nice Views",
-    "24-Hour Guard",
-    "Jacuzzi"
+  "photos": [
+    "https://tinyurl.com/PhotoNumberFive",
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberTwo"
   ],
-  "price": 197,
+  "number": 148,
+  "description": "Consectetur culpa vester suspendo molestiae xiphias vitium deorsum in vesper aedificium ademptio.",
+  "type": "Suite",
+  "amenities": [
+    "1/2 Bathroom",
+    "Free Wifi",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Mini Bar",
+    "Coffee Set"
+  ],
+  "price": 176,
   "discount": 20,
   "availability": "Booked",
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "6551dc777eae7a9071d87e60"
+    "$oid": "6553ab10aaab95763772b905"
   },
-  "photos": "https://tinyurl.com/PhotoNumberThreee",
-  "number": 127,
-  "description": "Eveniet cunctatio vel tenuis accendo error cernuus capillus claustrum validus solitudo tamquam amplus.",
-  "type": "Double Room",
+  "photos": [
+    "https://tinyurl.com/PhotoNumberOne",
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberFive"
+  ],
+  "number": 282,
+  "description": "Correptius apto pecus vobis communis audio pectus urbanus ager comes deludo auxilium volubilis aestas cedo utpote concedo.",
+  "type": "Double Superior",
   "amenities": [
-    "Coffee Set",
+    "1/3 Bed Space",
+    "Air Conditioner",
     "Television",
     "Towels",
-    "Nice Views",
-    "Jacuzzi",
-    "Bathtub",
-    "Mini Bar",
-    "Air Conditioner",
-    "Free Wifi",
-    "1/3 Bed Space"
+    "Coffee Set"
   ],
-  "price": 133,
-  "discount": 30,
+  "price": 298,
+  "discount": 25,
   "availability": "Available",
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "6551dc777eae7a9071d87e61"
+    "$oid": "6553ab10aaab95763772b906"
   },
-  "photos": "https://tinyurl.com/PhotoNumberTwo",
-  "number": 133,
-  "description": "Dignissimos somniculosus conatus vociferor amiculum damnatio tempore sopor taceo peior accendo tres amissio verus ciminatio tersus degusto crastinus curatio aestus asper ullam quo uredo theatrum viscus alienus.",
-  "type": "Single Room",
-  "amenities": [
-    "Nice Views",
-    "Air Conditioner",
-    "Free Wifi",
-    "Bathtub",
-    "Mini Bar"
+  "photos": [
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberTwo",
+    "https://tinyurl.com/PhotoNumberThreee"
   ],
-  "price": 203,
+  "number": 125,
+  "description": "Arca subseco quidem timor conatus conitor certe vulgivagus summisse usitas terreo termes venustas atrocitas voro amplexus at mollitia virgo vinculum addo adflicto conscendo bos impedit cresco velum terebro solio odit compono textor amor tabula cedo acer.",
+  "type": "Double Superior",
+  "amenities": [
+    "1/3 Bed Space",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Coffee Set"
+  ],
+  "price": 288,
   "discount": 30,
   "availability": "Booked",
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "6551dc777eae7a9071d87e62"
+    "$oid": "6553ab10aaab95763772b907"
   },
-  "photos": "https://tinyurl.com/PhotoNumberThreee",
-  "number": 297,
-  "description": "Considero tres demens unus vinum tepesco crepusculum velut temeritas admoveo toties bibo cupiditate tepidus supellex arx coma aeternus tenus omnis apud spiritus altus sumptus paens ante concedo civis amita tener calculus aggero utroque recusandae vestigium currus.",
-  "type": "Double Superior",
-  "amenities": [
-    "Nice Views",
-    "Air Conditioner",
-    "1/3 Bed Space",
-    "Mini Bar",
-    "Television",
-    "Coffee Set",
-    "24-Hour Guard",
-    "Bathtub",
-    "Towels",
-    "Free Wifi"
+  "photos": [
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberThreee",
+    "https://tinyurl.com/PhotoNumberFive"
   ],
-  "price": 215,
-  "discount": 30,
+  "number": 264,
+  "description": "Celer thesaurus eos votum damno verbera solvo provident calcar sortitus velociter iure credo valeo tabgo angelus nesciunt maiores.",
+  "type": "Suite",
+  "amenities": [
+    "1/3 Bed Space",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Coffee Set"
+  ],
+  "price": 135,
+  "discount": 25,
+  "availability": "Booked",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b908"
+  },
+  "photos": [
+    "https://tinyurl.com/PhotoNumberThreee",
+    "https://tinyurl.com/PhotoNumberFive",
+    "https://tinyurl.com/PhotoNumberFour"
+  ],
+  "number": 293,
+  "description": "Amor candidus aureus tot denuncio sol velociter cura arbor virtus viduo carmen velum pectus excepturi temeritas audacia sublime decipio suggero sum cui tergiversatio adsidue curvo soluta turpis arbitro sophismata omnis vulgivagus taedium adsidue testimonium apostolus tumultus totidem aspicio ullus spiculum.",
+  "type": "Double Room",
+  "amenities": [
+    "1/3 Bed Space",
+    "24-Hour Guard",
+    "Free Wifi",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Mini Bar",
+    "Coffee Set",
+    "Nice Views"
+  ],
+  "price": 113,
+  "discount": 25,
   "availability": "Available",
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "6551dc777eae7a9071d87e63"
+    "$oid": "6553ab10aaab95763772b909"
   },
-  "photos": "https://tinyurl.com/PhotoNumberThreee",
-  "number": 212,
-  "description": "Vulpes tollo velut debitis tripudio fuga tenus vita amita ustulo tendo acerbitas asperiores apud casus decipio civitas correptius.",
-  "type": "Double Superior",
+  "photos": [
+    "https://tinyurl.com/PhotoNumberOne",
+    "https://tinyurl.com/PhotoNumberTwo",
+    "https://tinyurl.com/PhotoNumberFour"
+  ],
+  "number": 143,
+  "description": "Creta coruscus cubo consequuntur tamquam cultellus vulpes depereo alter thema ratione aufero.",
+  "type": "Double Room",
   "amenities": [
-    "Television",
     "1/3 Bed Space",
-    "Air Conditioner"
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Coffee Set"
   ],
   "price": 142,
   "discount": 10,
-  "availability": "Available",
+  "availability": "Booked",
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "6551dc777eae7a9071d87e64"
+    "$oid": "6553ab10aaab95763772b90a"
   },
-  "photos": "https://tinyurl.com/PhotoNumberFive",
-  "number": 294,
-  "description": "Ullus truculenter qui arca adamo cernuus ipsa derideo vulnus talio desino debitis vapulus beneficium uterque uberrime consequuntur et aedificium versus arceo compello perspiciatis optio perspiciatis vilis vado.",
-  "type": "Suite",
-  "amenities": [
-    "Bathtub",
-    "Television",
-    "Coffee Set",
-    "Jacuzzi",
-    "Mini Bar",
-    "1/3 Bed Space",
-    "24-Hour Guard",
-    "Towels"
+  "photos": [
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberTwo",
+    "https://tinyurl.com/PhotoNumberOne"
   ],
-  "price": 105,
+  "number": 115,
+  "description": "Pauper votum quam virtus amita paens urbs tergum celo tam ait.",
+  "type": "Single Room",
+  "amenities": [
+    "1/3 Bed Space",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Coffee Set"
+  ],
+  "price": 278,
   "discount": 10,
   "availability": "Booked",
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "6551dc777eae7a9071d87e65"
+    "$oid": "6553ab10aaab95763772b90b"
   },
-  "photos": "https://tinyurl.com/PhotoNumberFive",
-  "number": 137,
-  "description": "Eius villa magni timor capio deludo caries clarus ipsa verumtamen deludo urbanus sperno usitas adfectus timor acquiro vos peccatus utique cras peior strues damno ascisco accendo acceptus cattus speculum.",
-  "type": "Double Room",
-  "amenities": [
-    "Towels",
-    "1/3 Bed Space",
-    "Mini Bar",
-    "Nice Views",
-    "Television",
-    "Free Wifi",
-    "Jacuzzi",
-    "24-Hour Guard"
+  "photos": [
+    "https://tinyurl.com/PhotoNumberFive",
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberThreee"
   ],
-  "price": 220,
-  "discount": 10,
+  "number": 124,
+  "description": "Urbs arcus demitto torrens tepesco suus adsum cuppedia audeo demergo demonstro aliquid nulla alo.",
+  "type": "Double Superior",
+  "amenities": [
+    "1/3 Bed Space",
+    "24-Hour Guard",
+    "Free Wifi",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Mini Bar",
+    "Coffee Set",
+    "Bathtub",
+    "Jacuzzi",
+    "Nice Views"
+  ],
+  "price": 119,
+  "discount": 20,
   "availability": "Booked",
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "6551dc777eae7a9071d87e66"
+    "$oid": "6553ab10aaab95763772b90c"
   },
-  "photos": "https://tinyurl.com/PhotoNumberTwo",
-  "number": 226,
-  "description": "Caries auctus attollo vesper caritas volubilis atrox saepe supplanto traho.",
-  "type": "Double Room",
-  "amenities": [
-    "Towels",
-    "Television",
-    "Coffee Set",
-    "1/3 Bed Space",
-    "Free Wifi",
-    "Nice Views",
-    "Bathtub",
-    "24-Hour Guard",
-    "Air Conditioner",
-    "Mini Bar"
+  "photos": [
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberOne",
+    "https://tinyurl.com/PhotoNumberFive"
   ],
-  "price": 290,
-  "discount": 15,
-  "availability": "Available",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e67"
-  },
-  "photos": "https://tinyurl.com/PhotoNumberFive",
-  "number": 193,
-  "description": "Summopere ait suasoria tubineus spes compono vereor arx auditor cupressus audax casus supellex confero distinctio sumo audacia cursim.",
-  "type": "Double Superior",
+  "number": 116,
+  "description": "Uter antepono ut commemoro unde acidus clibanus demum tricesimus caput conor sunt comes.",
+  "type": "Single Room",
   "amenities": [
-    "Free Wifi",
-    "Jacuzzi",
-    "Air Conditioner",
-    "1/3 Bed Space"
-  ],
-  "price": 215,
-  "discount": 15,
-  "availability": "Available",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e68"
-  },
-  "photos": "https://tinyurl.com/PhotoNumberTwo",
-  "number": 230,
-  "description": "Crastinus explicabo demergo thymbra ager timidus tolero est dapifer victus cenaculum creptio depereo audentia spoliatio quisquam taedium adnuo explicabo vita consequuntur clibanus odio accedo ipsam nihil caveo rerum magnam deserunt animadverto cervus.",
-  "type": "Double Superior",
-  "amenities": [
-    "Towels",
-    "Television",
-    "Jacuzzi",
-    "Nice Views",
     "1/3 Bed Space",
-    "Bathtub",
-    "Air Conditioner",
     "24-Hour Guard",
+    "Free Wifi",
+    "Air Conditioner",
+    "Television",
+    "Towels",
     "Mini Bar",
     "Coffee Set",
-    "Free Wifi"
+    "Bathtub",
+    "Jacuzzi",
+    "Nice Views"
   ],
-  "price": 101,
-  "discount": 30,
+  "price": 119,
+  "discount": 20,
   "availability": "Booked",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b90d"
+  },
+  "photos": [
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberFive",
+    "https://tinyurl.com/PhotoNumberThreee"
+  ],
+  "number": 293,
+  "description": "Ars ipsam centum civis adiuvo cultellus curiositas decerno audax cupressus cupio sublime dolores volubilis cui barba in ambitus acervus caritas degusto celebrer dolores claudeo cado earum undique triumphus aliqua desino terror annus varius cicuta arceo comes sodalitas tenetur sunt.",
+  "type": "Double Superior",
+  "amenities": [
+    "1/3 Bed Space",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Coffee Set"
+  ],
+  "price": 234,
+  "discount": 20,
+  "availability": "Available",
   "__v": 0
 }]

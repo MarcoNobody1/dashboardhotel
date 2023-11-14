@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { roomsData } from "../../data/roomsjson";
 import { RoomInterface } from "../Interfaces/Interfaces";
 import rooms from "../../data/MirandaDashboard.rooms.json";
 

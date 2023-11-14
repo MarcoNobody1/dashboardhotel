@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ButtonAdNew } from "../GeneralComponents/GeneralComponents";
 import {
@@ -96,7 +96,7 @@ const ActionTitle = styled.p`
   font-weight: 600;
   font-size: 16px;
   text-transform: capitalize;
-  color:inherit;
+  color: inherit;
 `;
 
 const Selector = styled.select<DarkProp>`
@@ -158,7 +158,14 @@ const PhotoGroup: FC<PhotoGroupProps> = ({ src, checked, onChange }) => {
   const { dark } = useContext(ThemeContext);
   return (
     <PhotoWrapper>
-      <Photo src={src} style={checked ? { border: dark.dark ? "5px solid #41ebbd" : "5px solid #135846" } : {}} />
+      <Photo
+        src={src}
+        style={
+          checked
+            ? { border: dark.dark ? "5px solid #41ebbd" : "5px solid #135846" }
+            : {}
+        }
+      />
       <Checker
         name="checker"
         value={src}
@@ -184,23 +191,33 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
   const dispatch = useAppDispatch();
   const { dark } = useContext(ThemeContext);
   const [checkedStates, setCheckedStates] = useState<boolean[]>([
-    roomPhotos[0] === select?.photos,
-    roomPhotos[1] === select?.photos,
-    roomPhotos[2] === select?.photos,
-    roomPhotos[3] === select?.photos,
-    roomPhotos[4] === select?.photos,
+    false,
+    false,
+    false,
+    false,
+    false,
   ]);
 
+  useEffect(() => {
+    if (select && select.photos) {
+      const updatedCheckedStates = checkedStates.map((state, index) => {
+        return select.photos.includes(roomPhotos[index]);
+      });
+
+      setCheckedStates(updatedCheckedStates);
+    }
+  }, [select]);
+
   const [price, setPrice] = useState(select ? select.price : 150);
-  const [discount, setDiscount] = useState(
-    select ? select.discount : 15
-  );
+  const [discount, setDiscount] = useState(select ? select.discount : 15);
   const [roomType, setRoomType] = useState("Single Room");
   const [roomNumber, setRoomNumber] = useState(111);
   const [description, setDescription] = useState("");
   const [amenities, setAmenities] = useState<AmenityOptions>("Standard");
-  const [allowDiscount, setAllowDiscount] = useState(select && select.discount !== undefined && select.discount > 0);
-  const hasTrueValue = select
+  const [allowDiscount, setAllowDiscount] = useState(
+    select && select.discount !== undefined && select.discount > 0
+  );
+  const hasThreePhotos = select
     ? checkedStates.some((isChecked) => isChecked)
     : checkedStates.filter((value) => value).length >= 3;
 
@@ -250,13 +267,14 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
 
   const calcTotalFee = () => {
     const percentage = discount / 100;
-    return price - price * percentage;
+    const totalFee = price - price * percentage;
+    return totalFee.toFixed(2);
   };
 
   const handleUpdateCreateRoom = () => {
     const finalPhotos = checkedStates
       .map((isChecked, index) => (isChecked ? roomPhotos[index] : null))
-      .filter((photo) => photo !== null);
+      .filter((photo) => photo !== null) as string[];
 
     const Toast = Swal.mixin({
       toast: true,
@@ -267,17 +285,16 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
     });
 
     const newRoom = {
-_id: {
-  $oid: select && select._id.$oid
-},
-        photos:
-          finalPhotos[Math.floor(Math.random() * finalPhotos.length)] || "",
-       number: roomNumber === null ? 111 : roomNumber,
-       description:
-          description.replace(/\s/g, "") === "" || description === null
-            ? "This is a sample description text."
-            : description,
-     type: roomType,
+      _id: {
+        $oid: select && select._id.$oid,
+      },
+      photos: finalPhotos || "",
+      number: roomNumber === null ? 111 : roomNumber,
+      description:
+        description.replace(/\s/g, "") === "" || description === null
+          ? "This is a sample description text."
+          : description,
+      type: roomType,
       amenities:
         amenities === "Standard"
           ? roomAmenities.Standard
@@ -287,11 +304,11 @@ _id: {
           ? roomAmenities.Premium
           : roomAmenities.FullRoom,
       price: price,
-        discount: allowDiscount ? discount : 0,
+      discount: allowDiscount ? discount : 0,
       availability: "Available",
     };
 
-    if (hasTrueValue) {
+    if (hasThreePhotos) {
       const action = select ? updateRoomData : addRoomData;
       dispatch(action(newRoom));
       setCheckedStates([false, false, false, false, true]);
@@ -334,8 +351,8 @@ _id: {
         <Instruction>
           <InstructionTitle
             style={{
-              opacity: hasTrueValue ? 1 : 0,
-              fontSize: hasTrueValue ? "28px" : "0px",
+              opacity: hasThreePhotos ? 1 : 0,
+              fontSize: hasThreePhotos ? "28px" : "0px",
             }}
           >
             2. Set Up Room:
@@ -345,17 +362,13 @@ _id: {
           <InstructionTitle
             style={{
               opacity:
-                hasTrueValue &&
-                select &&
-                select.description.length > 0
+                hasThreePhotos && select && select.description.length > 0
                   ? 1
                   : description.length > 0
                   ? 1
                   : 0,
               fontSize:
-                hasTrueValue &&
-                select &&
-                select.description.length > 0
+                hasThreePhotos && select && select.description.length > 0
                   ? "28px"
                   : description.length > 0
                   ? "28px"
@@ -396,31 +409,39 @@ _id: {
         </ActionRow>
         <ActionRow
           style={{
-            opacity: hasTrueValue ? 1 : 0,
-            pointerEvents: hasTrueValue ? "all" : "none",
+            opacity: hasThreePhotos ? 1 : 0,
+            pointerEvents: hasThreePhotos ? "all" : "none",
           }}
         >
           <ActionGroup dark={dark.dark}>
             <Action>
               <ActionTitle>room type:</ActionTitle>
               <Selector
-              dark={dark.dark}
+                dark={dark.dark}
                 name="typeSelector"
                 onChange={(event) => {
                   setRoomType(event.target.value);
                 }}
                 defaultValue={select ? select.type : roomType}
               >
-                <Option dark={dark.dark} value="Single Room">Single Room</Option>
-                <Option dark={dark.dark} value="Double Room">Double Room</Option>
-                <Option dark={dark.dark} value="Double Superior">Double Superior</Option>
-                <Option dark={dark.dark} value="Suite">Suite</Option>
+                <Option dark={dark.dark} value="Single Room">
+                  Single Room
+                </Option>
+                <Option dark={dark.dark} value="Double Room">
+                  Double Room
+                </Option>
+                <Option dark={dark.dark} value="Double Superior">
+                  Double Superior
+                </Option>
+                <Option dark={dark.dark} value="Suite">
+                  Suite
+                </Option>
               </Selector>
             </Action>
             <Action>
               <ActionTitle>amenities:</ActionTitle>
               <Selector
-              dark={dark.dark}
+                dark={dark.dark}
                 name="amenitiesSelector"
                 onChange={(event) => {
                   setAmenities(event.target.value as AmenityOptions);
@@ -429,10 +450,18 @@ _id: {
                   select ? getAmenityType(select, roomAmenities) : "Standard"
                 }
               >
-                <Option dark={dark.dark} value="Standard">Standard Pack</Option>
-                <Option dark={dark.dark} value="Advanced">Advanced Pack</Option>
-                <Option dark={dark.dark} value="Premium">Premium Pack</Option>
-                <Option dark={dark.dark} value="FullRoom">'Full-Room' Pack</Option>
+                <Option dark={dark.dark} value="Standard">
+                  Standard Pack
+                </Option>
+                <Option dark={dark.dark} value="Advanced">
+                  Advanced Pack
+                </Option>
+                <Option dark={dark.dark} value="Premium">
+                  Premium Pack
+                </Option>
+                <Option dark={dark.dark} value="FullRoom">
+                  'Full-Room' Pack
+                </Option>
               </Selector>
             </Action>
           </ActionGroup>
@@ -440,12 +469,10 @@ _id: {
             <Action>
               <ActionTitle>room number:</ActionTitle>
               <NumberInput
-              dark={dark.dark}
+                dark={dark.dark}
                 name="roomNumberInput"
                 type="number"
-                defaultValue={
-                  select ? select.number : roomNumber
-                }
+                defaultValue={select ? select.number : roomNumber}
                 min="100"
                 max="9999"
                 onChange={(event) =>
@@ -456,13 +483,11 @@ _id: {
             <Action>
               <ActionTitle>description:</ActionTitle>
               <TextArea
-              dark={dark.dark}
+                dark={dark.dark}
                 name="descriptionInput"
                 placeholder="Add a brief description for the room..."
                 onChange={(event) => setDescription(event.target.value)}
-                defaultValue={
-                  select ? select.description : undefined
-                }
+                defaultValue={select ? select.description : undefined}
               ></TextArea>
             </Action>
           </ActionGroup>
@@ -470,17 +495,13 @@ _id: {
         <ActionRow
           style={{
             opacity:
-              hasTrueValue &&
-              select &&
-              select.description.length > 0
+              hasThreePhotos && select && select.description.length > 0
                 ? 1
                 : description.length > 0
                 ? 1
                 : 0,
             pointerEvents:
-              hasTrueValue &&
-              select &&
-              select.description.length > 0
+              hasThreePhotos && select && select.description.length > 0
                 ? "all"
                 : description.length > 0
                 ? "all"
@@ -513,7 +534,9 @@ _id: {
                 justifyContent: "flex-start",
               }}
             >
-              <ActionTitle style={{color: dark.dark ? "#41ebbd":"#202020" }}>allow discount?</ActionTitle>
+              <ActionTitle style={{ color: dark.dark ? "#41ebbd" : "#202020" }}>
+                allow discount?
+              </ActionTitle>
               <Checker
                 name="offerInput"
                 onChange={(event) => setAllowDiscount(event.target.checked)}
@@ -522,7 +545,9 @@ _id: {
               />
             </Action>
             <Action style={{ flex: "20" }}>
-              <ActionTitle  style={{color: dark.dark ? "#41ebbd":"#202020" }}>discount:</ActionTitle>
+              <ActionTitle style={{ color: dark.dark ? "#41ebbd" : "#202020" }}>
+                discount:
+              </ActionTitle>
               <RangeInput
                 disabled={allowDiscount ? false : true}
                 name="discountInput"
@@ -533,7 +558,12 @@ _id: {
                 step="5"
                 defaultValue={select ? select.discount : discount}
               />
-              <InfoParagraph style={{ opacity: allowDiscount ? "100" : "0", color: dark.dark ? "#41ebbd":"#202020" }}>
+              <InfoParagraph
+                style={{
+                  opacity: allowDiscount ? "100" : "0",
+                  color: dark.dark ? "#41ebbd" : "#202020",
+                }}
+              >
                 Your current discount is {discount}%.
               </InfoParagraph>
               <InfoParagraph
@@ -544,7 +574,7 @@ _id: {
                   bottom: "-10px",
                   left: "0px",
                   opacity: allowDiscount ? "100" : "0",
-                  color: dark.dark ? "#41ebbd":"#202020" 
+                  color: dark.dark ? "#41ebbd" : "#202020",
                 }}
               >
                 The final price will be ${calcTotalFee()}
@@ -556,23 +586,19 @@ _id: {
       <ButtonAdNew
         style={{
           opacity:
-            hasTrueValue &&
-            select &&
-            select.description.length > 0
+            hasThreePhotos && select && select.description.length > 0
               ? 1
               : description.length > 0
               ? 1
               : 0,
           pointerEvents:
-            hasTrueValue &&
-            select &&
-            select.description.length > 0
+            hasThreePhotos && select && select.description.length > 0
               ? "all"
               : description.length > 0
               ? "all"
               : "none",
-              color: dark.dark ? "#202020" : "#eef9f2",
-              backgroundColor: dark.dark ? "#41ebbd" : "#135846"
+          color: dark.dark ? "#202020" : "#eef9f2",
+          backgroundColor: dark.dark ? "#41ebbd" : "#135846",
         }}
       >
         {select ? "Save Changes" : "Add Room"}

@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { contactMessages } from "../../data/contactjson";
 import { ContactInterface } from "../Interfaces/Interfaces";
 import contacts from "../../data/MirandaDashboard.contacts.json";
 

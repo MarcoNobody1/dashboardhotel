@@ -1,150 +1,150 @@
 [{
   "_id": {
-    "$oid": "6551dc777eae7a9071d87e80"
+    "$oid": "6553ab10aaab95763772b925"
   },
-  "avatar": "https://avatars.githubusercontent.com/u/80723071",
-  "username": "Bailee89",
-  "position": "Receptionist",
-  "email": "Elijah76@mirandahotel.com",
-  "password": "FJS2j3BgCF6gtPQaSQ8g",
-  "start_date": "Tue Nov 21 2023 17:17:13 GMT+0100 (hora estándar de Europa central)",
-  "job_description": "Future Infrastructure Executive",
-  "contact": "517-219-9526 x20366",
-  "activity": "inactive",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e81"
-  },
-  "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/338.jpg",
-  "username": "Ova32",
-  "position": "Receptionist",
-  "email": "Dino98@mirandahotel.com",
-  "password": "6T8GZqmhSzOO4tDASZMM",
-  "start_date": "Thu Nov 02 2023 12:46:27 GMT+0100 (hora estándar de Europa central)",
-  "job_description": "Direct Division Officer",
-  "contact": "(881) 569-1158",
-  "activity": "inactive",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e82"
-  },
-  "avatar": "https://avatars.githubusercontent.com/u/90835732",
-  "username": "Zoila_Mitchell",
-  "position": "Manager",
-  "email": "Marta.Becker@mirandahotel.com",
-  "password": "NxO23pLH1v8dIVkoAkbA",
-  "start_date": "Thu Nov 16 2023 23:26:04 GMT+0100 (hora estándar de Europa central)",
-  "job_description": "Product Security Strategist",
-  "contact": "1-438-560-8852 x5526",
-  "activity": "inactive",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e83"
-  },
-  "avatar": "https://avatars.githubusercontent.com/u/76669381",
-  "username": "Enrique_Runte",
-  "position": "Receptionist",
-  "email": "Gwen.Pollich@mirandahotel.com",
-  "password": "edCon1QrO_reOCXnL_zQ",
-  "start_date": "Sun Nov 12 2023 06:46:06 GMT+0100 (hora estándar de Europa central)",
-  "job_description": "Central Response Analyst",
-  "contact": "(632) 520-7182",
-  "activity": "inactive",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e84"
-  },
-  "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/721.jpg",
-  "username": "Ernie_Murphy25",
-  "position": "Receptionist",
-  "email": "Abigale_Leffler@mirandahotel.com",
-  "password": "zOpEcurL1ywBRr9CfQUr",
-  "start_date": "Tue Nov 14 2023 08:44:06 GMT+0100 (hora estándar de Europa central)",
-  "job_description": "Central Functionality Coordinator",
-  "contact": "498.656.9262 x53667",
-  "activity": "inactive",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e85"
-  },
-  "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/985.jpg",
-  "username": "Rylan_Kling",
+  "avatar": "https://avatars.githubusercontent.com/u/6541591",
+  "username": "Rod58",
   "position": "Room Service",
-  "email": "Alex.Rice@mirandahotel.com",
-  "password": "TL1RGCgA_oYwTupZ1505",
-  "start_date": "Fri Nov 17 2023 06:44:34 GMT+0100 (hora estándar de Europa central)",
-  "job_description": "Human Accountability Strategist",
-  "contact": "1-288-734-1727",
-  "activity": "inactive",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e86"
-  },
-  "avatar": "https://avatars.githubusercontent.com/u/10081627",
-  "username": "Ewell.Reichel",
-  "position": "Receptionist",
-  "email": "Vicky.Fisher@mirandahotel.com",
-  "password": "DB7YruHt2v3LpBIzeeBb",
-  "start_date": "Tue Nov 14 2023 14:47:36 GMT+0100 (hora estándar de Europa central)",
-  "job_description": "International Response Executive",
-  "contact": "791.778.5736 x97512",
-  "activity": "inactive",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e87"
-  },
-  "avatar": "https://avatars.githubusercontent.com/u/3069080",
-  "username": "Edythe56",
-  "position": "Manager",
-  "email": "Rahsaan.OConner7@mirandahotel.com",
-  "password": "KWHFnTAANl1lt9cxrWcD",
-  "start_date": "Tue Nov 07 2023 09:19:39 GMT+0100 (hora estándar de Europa central)",
-  "job_description": "Central Marketing Developer",
-  "contact": "808-350-3817 x69856",
-  "activity": "inactive",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e88"
-  },
-  "avatar": "https://avatars.githubusercontent.com/u/85363037",
-  "username": "Kane84",
-  "position": "Room Service",
-  "email": "Noemi77@mirandahotel.com",
-  "password": "H1HHnegxNJmqorZtR5yl",
-  "start_date": "Thu Nov 02 2023 09:38:41 GMT+0100 (hora estándar de Europa central)",
-  "job_description": "Chief Infrastructure Administrator",
-  "contact": "421-813-3320 x36573",
-  "activity": "inactive",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e89"
-  },
-  "avatar": "https://avatars.githubusercontent.com/u/50577480",
-  "username": "Sherman_Konopelski80",
-  "position": "Manager",
-  "email": "Maryjane.Kemmer28@mirandahotel.com",
-  "password": "a3lhQeawNB1Z3udVFiDK",
-  "start_date": "Fri Nov 24 2023 03:09:22 GMT+0100 (hora estándar de Europa central)",
-  "job_description": "Principal Directives Analyst",
-  "contact": "1-577-540-1747 x290",
+  "email": "Aditya_Lang99@mirandahotel.com",
+  "password": "lnr5F0R6wEGGhQ19gFf_",
+  "start_date": "Tue Dec 05 2023 08:16:05 GMT+0100 (hora estándar de Europa central)",
+  "job_description": "District Response Agent",
+  "contact": "(964) 422-6240 x4683",
   "activity": "active",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b926"
+  },
+  "avatar": "https://avatars.githubusercontent.com/u/71078208",
+  "username": "Dominique.Heathcote10",
+  "position": "Receptionist",
+  "email": "Hadley.King76@mirandahotel.com",
+  "password": "NIGNmQftPg3jsGhENIDD",
+  "start_date": "Mon Nov 06 2023 09:35:08 GMT+0100 (hora estándar de Europa central)",
+  "job_description": "Lead Interactions Assistant",
+  "contact": "350-720-9891 x022",
+  "activity": "inactive",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b927"
+  },
+  "avatar": "https://avatars.githubusercontent.com/u/19171611",
+  "username": "Dahlia_Hand21",
+  "position": "Manager",
+  "email": "Abner_Quitzon10@mirandahotel.com",
+  "password": "lbCl7WM_ZoTBWhHRqlVs",
+  "start_date": "Fri Dec 22 2023 11:52:59 GMT+0100 (hora estándar de Europa central)",
+  "job_description": "Investor Marketing Designer",
+  "contact": "982-887-8836 x75428",
+  "activity": "active",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b928"
+  },
+  "avatar": "https://avatars.githubusercontent.com/u/6216231",
+  "username": "Alexanne.Anderson24",
+  "position": "Manager",
+  "email": "Robyn.Hahn@mirandahotel.com",
+  "password": "y5lGBN_MrEmz8C28xSdS",
+  "start_date": "Thu Nov 30 2023 23:57:26 GMT+0100 (hora estándar de Europa central)",
+  "job_description": "District Security Officer",
+  "contact": "887.720.5419 x667",
+  "activity": "inactive",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b929"
+  },
+  "avatar": "https://avatars.githubusercontent.com/u/98902899",
+  "username": "Eldon52",
+  "position": "Room Service",
+  "email": "Gideon.Boehm62@mirandahotel.com",
+  "password": "LPW8bSOXM30DBsJ3FuRU",
+  "start_date": "Sat Nov 04 2023 04:14:09 GMT+0100 (hora estándar de Europa central)",
+  "job_description": "Customer Interactions Officer",
+  "contact": "690-731-3405 x20063",
+  "activity": "active",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b92a"
+  },
+  "avatar": "https://avatars.githubusercontent.com/u/15108864",
+  "username": "Duane82",
+  "position": "Manager",
+  "email": "Tate_Kuhic@mirandahotel.com",
+  "password": "UdV11pInosZ7U1yLCfjc",
+  "start_date": "Thu Nov 02 2023 02:08:52 GMT+0100 (hora estándar de Europa central)",
+  "job_description": "International Security Agent",
+  "contact": "441-645-1813",
+  "activity": "inactive",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b92b"
+  },
+  "avatar": "https://avatars.githubusercontent.com/u/43232901",
+  "username": "Willy98",
+  "position": "Room Service",
+  "email": "Layne.Kilback28@mirandahotel.com",
+  "password": "uO4nLhFqslsVfsEelBk6",
+  "start_date": "Thu Dec 07 2023 04:43:12 GMT+0100 (hora estándar de Europa central)",
+  "job_description": "Chief Solutions Assistant",
+  "contact": "477-471-6690 x86317",
+  "activity": "active",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b92c"
+  },
+  "avatar": "https://avatars.githubusercontent.com/u/47856738",
+  "username": "Kieran36",
+  "position": "Room Service",
+  "email": "Jayson50@mirandahotel.com",
+  "password": "k1QZdpUd6is8Dg3JcnFd",
+  "start_date": "Thu Dec 28 2023 17:25:04 GMT+0100 (hora estándar de Europa central)",
+  "job_description": "Direct Tactics Manager",
+  "contact": "662.842.0683 x37591",
+  "activity": "inactive",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b92d"
+  },
+  "avatar": "https://avatars.githubusercontent.com/u/22815987",
+  "username": "Jennie_Kuhn3",
+  "position": "Receptionist",
+  "email": "Brycen_Crona23@mirandahotel.com",
+  "password": "BmoMMjbVVQzZcrIrO2Dm",
+  "start_date": "Sat Nov 04 2023 18:26:45 GMT+0100 (hora estándar de Europa central)",
+  "job_description": "Corporate Solutions Facilitator",
+  "contact": "238.942.4076",
+  "activity": "inactive",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b92e"
+  },
+  "avatar": "https://avatars.githubusercontent.com/u/62062715",
+  "username": "Meta23",
+  "position": "Manager",
+  "email": "Clara31@mirandahotel.com",
+  "password": "OcSlkKbILBrCqviiL8i8",
+  "start_date": "Thu Dec 28 2023 02:15:35 GMT+0100 (hora estándar de Europa central)",
+  "job_description": "Lead Functionality Specialist",
+  "contact": "525.786.5076 x5511",
+  "activity": "inactive",
   "__v": 0
 }]

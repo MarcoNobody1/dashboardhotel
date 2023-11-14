@@ -1,11 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import {
-  PageWrapper,
-  formatDate,
-} from "../GeneralComponents/GeneralComponents";
+import { PageWrapper } from "../GeneralComponents/GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
-import room from "../../assets/hotelRoom.jpg";
 import {
   bookingIdStatus,
   detailData,
@@ -15,6 +11,46 @@ import { FC, useContext } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { ThemeContext } from "../../Context/ToggleTheme";
 import { DarkProp } from "../../features/Interfaces/Interfaces";
+import SwiperCore from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Mousewheel, Keyboard, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import { format } from "date-fns";
+
+SwiperCore.use([Autoplay, Navigation]);
+
+const PersonalSwiper = styled(Swiper)`
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  transition: all 250ms ease-in-out;
+
+  div.swiper-button-next {
+    background-image: url("src/assets/arrow-right.png");
+  }
+
+  div.swiper-button-prev {
+    background-image: url("src/assets/arrow-left.png");
+  }
+
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-color: #fff;
+    height: 60px;
+    width: 60px;
+    transition: all 250ms ease-in-out;
+    margin-top: 5px;
+    border-radius: 5px;
+
+    &::after {
+      display: none;
+    }
+  }
+`;
 
 const BookingWrapper = styled.div<DarkProp>`
   background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
@@ -163,10 +199,12 @@ const StatusWrapper = styled.div`
   transform: rotate(45deg);
   text-transform: uppercase;
   font-weight: 800;
+  z-index: 100;
 `;
 
 const ImageRoomInfo = styled.div`
   position: absolute;
+  z-index: 100;
   bottom: 0px;
   padding: 20px;
   background: rgb(152, 152, 152);
@@ -213,21 +251,20 @@ export const BookingDetails: FC = () => {
             <InfoWrap>
               <InfoTitle>Check In</InfoTitle>
               <InfoContentUpperRow dark={dark.dark}>
-                {formatDate(selectedBooking.check_in)}
+                {format(new Date(selectedBooking.check_in), "MMMM do, yyyy")}
               </InfoContentUpperRow>
             </InfoWrap>
             <InfoWrap>
               <InfoTitle>Check Out</InfoTitle>
               <InfoContentUpperRow dark={dark.dark}>
-                {formatDate(selectedBooking.check_out)}
+                {format(new Date(selectedBooking.check_out), "MMMM do, yyyy")}
               </InfoContentUpperRow>
             </InfoWrap>
             <Gap />
             <InfoWrap>
               <InfoTitle>Room Info</InfoTitle>
               <InfoContentBelowRow dark={dark.dark}>
-                {selectedBooking.room_type} -
-                {selectedBooking.room_number}
+                {selectedBooking.room_type} - {selectedBooking.room_number}
               </InfoContentBelowRow>
             </InfoWrap>
             <InfoWrap>
@@ -253,7 +290,20 @@ export const BookingDetails: FC = () => {
           </InfoWrap>
         </DetailsWrapper>
         <ImageWrapper>
-          <Image src={room} />
+          <PersonalSwiper
+            cssMode={true}
+            navigation={true}
+            mousewheel={true}
+            keyboard={true}
+            modules={[Navigation, Mousewheel, Keyboard]}
+            className="my-swiper"
+          >
+            {selectedBooking.room_photos.map((photo, index) => (
+              <SwiperSlide key={index}>
+                <Image src={photo} />
+              </SwiperSlide>
+            ))}
+          </PersonalSwiper>
           <StatusWrapper
             style={{
               backgroundColor:

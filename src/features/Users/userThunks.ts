@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { usersData } from "../../data/usersjson";
 import { UserInterface } from "../Interfaces/Interfaces";
 import users from "../../data/MirandaDashboard.users.json";
 const delay = (data:UserInterface[] | string | UserInterface, time = 400) => {
