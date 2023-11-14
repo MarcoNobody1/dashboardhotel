@@ -18,7 +18,7 @@
     "react-router-dom": "^6.16.0",
     "styled-components": "^5.3.10",
     "sweetalert2": "^11.7.31",
-    "swiper": "^10.3.1",
+    "swiper": "^11.0.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
