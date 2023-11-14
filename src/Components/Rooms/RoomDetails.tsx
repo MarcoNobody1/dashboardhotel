@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { PageWrapper } from "../GeneralComponents/GeneralComponents";
@@ -9,6 +9,50 @@ import { useAppSelector } from "../../app/hooks";
 import { DarkProp } from "../../features/Interfaces/Interfaces";
 import { useContext } from "react";
 import { ThemeContext } from "../../Context/ToggleTheme";
+import SwiperCore from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  Navigation,
+  Mousewheel,
+  Keyboard,
+  Autoplay,
+} from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+
+SwiperCore.use([Autoplay, Navigation]);
+
+const PersonalSwiper = styled(Swiper)`
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  transition: all 250ms ease-in-out;
+
+  div.swiper-button-next {
+    background-image: url("src/assets/arrow-right.png");
+  }
+
+  div.swiper-button-prev {
+    background-image: url("src/assets/arrow-left.png");
+  }
+
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-color: #fff;
+    height: 60px;
+    width: 60px;
+    transition: all 250ms ease-in-out;
+    margin-top: 5px;
+    border-radius: 5px;
+
+    &::after {
+      display: none;
+    }
+  }
+`;
 
 const BookingWrapper = styled.div<DarkProp>`
   background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
@@ -108,7 +152,6 @@ const InfoContentBelowRow = styled(InfoContentUpperRow)<DarkProp>`
   &:nth-child(2) {
     display: inline-block;
   }
-
 `;
 
 const AmenityWrapper = styled.div`
@@ -185,7 +228,20 @@ export const RoomDetails: FC = () => {
           </InfoWrap>
         </DetailsWrapper>
         <ImageWrapper>
-          <Image src={selectedRoom.photos} />
+          <PersonalSwiper
+            cssMode={true}
+            navigation={true}
+            mousewheel={true}
+            keyboard={true}
+            modules={[Navigation, Mousewheel, Keyboard]}
+            className="my-swiper"
+          >
+            {selectedRoom.photos.map((photo, index) => (
+              <SwiperSlide key={index}>
+                <Image src={photo} />
+              </SwiperSlide>
+            ))}
+          </PersonalSwiper>
           <StatusWrapper
             style={{
               backgroundColor:
