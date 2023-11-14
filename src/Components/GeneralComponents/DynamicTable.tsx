@@ -8,7 +8,6 @@ import {
   CrossIcon,
   Floater,
   UpdatingTitle,
-  formatDate,
 } from "./GeneralComponents";
 import { BsPencilSquare, BsTrash3 } from "react-icons/bs";
 import { ColorRing, LineWave } from "react-loader-spinner";
@@ -130,8 +129,8 @@ const Th = styled.th<ThProps>`
         props.header === "subject" ||
         props.header === "start_date"
       ? "200px"
-      : props.header === "customer" || props.header === "job_description"
-      ? "300px"
+      : props.header === "date" || props.header === "job_description"
+      ? "200px"
       : props.header === "comment"
       ? "350px"
       : "130px"};
@@ -272,7 +271,7 @@ const UserDataWrap = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
-  max-width: 400px;
+  max-width: 250px;
 `;
 
 const ImageRoom = styled.img`
@@ -284,6 +283,7 @@ const ImageRoom = styled.img`
 const UserImage = styled.img`
   width: 70px;
   height: 70px;
+  border-radius: 8px;
   background: transparent;
 `;
 
@@ -497,7 +497,7 @@ const FadeDiv = styled.div<FadeProps>`
 const DateDiv = styled(SampleDiv)`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
 `;
 
 const AmenityWrapper = styled.div`
@@ -815,7 +815,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     check_out: string;
     order_date: string;
     room_description: string;
-    photos: string;
+    photos: string[];
     number: number;
     start_date: string;
   };
@@ -995,18 +995,11 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
               modules={[Navigation, Mousewheel, Keyboard]}
               className="my-swiper"
             >
-              <SwiperSlide>
-                <ImageRoom src={rowData.photos} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <ImageRoom src={rowData.photos} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <ImageRoom src={rowData.photos} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <ImageRoom src={rowData.photos} />
-              </SwiperSlide>
+              {rowData.photos.map((photo, index) => (
+                <SwiperSlide key={index}>
+                  <ImageRoom src={photo} />
+                </SwiperSlide>
+              ))}
             </PersonalSwiper>
             <DataSpecs>
               <DataId
@@ -1022,9 +1015,10 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         );
 
       case "date":
+        const date = new Date(rowData.date);
         return (
           <SampleDiv style={{ fontWeight: 600 }} dark={dark.dark}>
-            {formatDate(rowData.date)}
+            {format(date, "yyyy MMMM, do")}
           </SampleDiv>
         );
 
@@ -1257,7 +1251,6 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
             <SampleDiv dark={dark.dark}>
               {format(startDate, "yyyy MMMM do")}
             </SampleDiv>
-            <SampleDiv dark={dark.dark}>{format(startDate, "HH:mm")}</SampleDiv>
           </DateDiv>
         );
 
