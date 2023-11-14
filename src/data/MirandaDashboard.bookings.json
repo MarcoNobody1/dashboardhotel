@@ -1,260 +1,312 @@
 [{
   "_id": {
-    "$oid": "6551dc777eae7a9071d87e6a"
+    "$oid": "6553ab10aaab95763772b90f"
   },
-  "name": "Valentin",
+  "name": "Micah",
+  "surname": "Gerhold",
+  "order_date": "Tue Jan 14 2020 22:25:05 GMT+0100 (hora estándar de Europa central)",
+  "check_in": "Thu Mar 05 2020 00:57:01 GMT+0100 (hora estándar de Europa central)",
+  "check_out": "Thu Apr 16 2020 06:17:49 GMT+0200 (hora de verano de Europa central)",
+  "special_request": "Usque eaque suggero depereo thymbra conservo amita adhaero basium tam aggredior avaritia omnis comitatus fuga velut valeo timidus ut dicta aedificium.",
+  "room_id": "6553ab10aaab95763772b90d",
+  "room_photos": [
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberFive",
+    "https://tinyurl.com/PhotoNumberThreee"
+  ],
+  "room_type": "Double Superior",
+  "room_number": "293",
+  "room_amenities": [
+    "1/3 Bed Space",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Coffee Set"
+  ],
+  "room_description": "Ars ipsam centum civis adiuvo cultellus curiositas decerno audax cupressus cupio sublime dolores volubilis cui barba in ambitus acervus caritas degusto celebrer dolores claudeo cado earum undique triumphus aliqua desino terror annus varius cicuta arceo comes sodalitas tenetur sunt.",
+  "price": 234,
+  "status": "Check Out",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b910"
+  },
+  "name": "Xavier",
+  "surname": "Cummings",
+  "order_date": "Fri Jan 03 2020 11:27:17 GMT+0100 (hora estándar de Europa central)",
+  "check_in": "Sun Mar 08 2020 20:39:17 GMT+0100 (hora estándar de Europa central)",
+  "check_out": "Sat Apr 18 2020 08:57:32 GMT+0200 (hora de verano de Europa central)",
+  "special_request": "Deprimo adimpleo trans viridis allatus canis quidem terreo talio deinde dapifer.",
+  "room_id": "6553ab10aaab95763772b909",
+  "room_photos": [
+    "https://tinyurl.com/PhotoNumberOne",
+    "https://tinyurl.com/PhotoNumberTwo",
+    "https://tinyurl.com/PhotoNumberFour"
+  ],
+  "room_type": "Double Room",
+  "room_number": "143",
+  "room_amenities": [
+    "1/3 Bed Space",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Coffee Set"
+  ],
+  "room_description": "Creta coruscus cubo consequuntur tamquam cultellus vulpes depereo alter thema ratione aufero.",
+  "price": 142,
+  "status": "In Progress",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b911"
+  },
+  "name": "Aliza",
+  "surname": "Blanda",
+  "order_date": "Mon Jan 27 2020 09:52:23 GMT+0100 (hora estándar de Europa central)",
+  "check_in": "Thu Mar 26 2020 17:32:59 GMT+0100 (hora estándar de Europa central)",
+  "check_out": "Tue Apr 28 2020 08:52:18 GMT+0200 (hora de verano de Europa central)",
+  "special_request": "Vinum antepono una caritas adhuc minima nobis angulus crinis subiungo ascisco eaque stips vulgus coma attollo substantia assumenda cupio pauper statua alter totidem.",
+  "room_id": "6553ab10aaab95763772b907",
+  "room_photos": [
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberThreee",
+    "https://tinyurl.com/PhotoNumberFive"
+  ],
+  "room_type": "Suite",
+  "room_number": "264",
+  "room_amenities": [
+    "1/3 Bed Space",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Coffee Set"
+  ],
+  "room_description": "Celer thesaurus eos votum damno verbera solvo provident calcar sortitus velociter iure credo valeo tabgo angelus nesciunt maiores.",
+  "price": 135,
+  "status": "Check In",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b912"
+  },
+  "name": "Claudia",
+  "surname": "Sauer",
+  "order_date": "Sun Jan 26 2020 10:25:42 GMT+0100 (hora estándar de Europa central)",
+  "check_in": "Thu Mar 26 2020 09:53:39 GMT+0100 (hora estándar de Europa central)",
+  "check_out": "Mon Apr 06 2020 15:34:32 GMT+0200 (hora de verano de Europa central)",
+  "special_request": "Volubilis suppono sunt sapiente mollitia maxime nobis aeger praesentium caries victoria.",
+  "room_id": "6553ab10aaab95763772b906",
+  "room_photos": [
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberTwo",
+    "https://tinyurl.com/PhotoNumberThreee"
+  ],
+  "room_type": "Double Superior",
+  "room_number": "125",
+  "room_amenities": [
+    "1/3 Bed Space",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Coffee Set"
+  ],
+  "room_description": "Arca subseco quidem timor conatus conitor certe vulgivagus summisse usitas terreo termes venustas atrocitas voro amplexus at mollitia virgo vinculum addo adflicto conscendo bos impedit cresco velum terebro solio odit compono textor amor tabula cedo acer.",
+  "price": 288,
+  "status": "Check Out",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b913"
+  },
+  "name": "Rahsaan",
+  "surname": "Goldner",
+  "order_date": "Mon Jan 20 2020 05:39:48 GMT+0100 (hora estándar de Europa central)",
+  "check_in": "Sun Mar 22 2020 15:49:48 GMT+0100 (hora estándar de Europa central)",
+  "check_out": "Mon Apr 20 2020 21:05:32 GMT+0200 (hora de verano de Europa central)",
+  "special_request": "Terra antiquus contego cernuus spargo vita animi sperno suppellex comparo thesis benigne aspicio curiositas derideo.",
+  "room_id": "6553ab10aaab95763772b908",
+  "room_photos": [
+    "https://tinyurl.com/PhotoNumberThreee",
+    "https://tinyurl.com/PhotoNumberFive",
+    "https://tinyurl.com/PhotoNumberFour"
+  ],
+  "room_type": "Double Room",
+  "room_number": "293",
+  "room_amenities": [
+    "1/3 Bed Space",
+    "24-Hour Guard",
+    "Free Wifi",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Mini Bar",
+    "Coffee Set",
+    "Nice Views"
+  ],
+  "room_description": "Amor candidus aureus tot denuncio sol velociter cura arbor virtus viduo carmen velum pectus excepturi temeritas audacia sublime decipio suggero sum cui tergiversatio adsidue curvo soluta turpis arbitro sophismata omnis vulgivagus taedium adsidue testimonium apostolus tumultus totidem aspicio ullus spiculum.",
+  "price": 113,
+  "status": "Check Out",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b914"
+  },
+  "name": "Beau",
+  "surname": "Nicolas",
+  "order_date": "Fri Jan 10 2020 03:36:02 GMT+0100 (hora estándar de Europa central)",
+  "check_in": "Wed Mar 25 2020 03:32:40 GMT+0100 (hora estándar de Europa central)",
+  "check_out": "Thu Apr 02 2020 17:43:39 GMT+0200 (hora de verano de Europa central)",
+  "special_request": "Asporto vapulus una articulus tolero cogo carpo caelestis commodi beneficium decipio tracto tactus est aduro uberrime eos suspendo suadeo debilito ipsa.",
+  "room_id": "6553ab10aaab95763772b909",
+  "room_photos": [
+    "https://tinyurl.com/PhotoNumberOne",
+    "https://tinyurl.com/PhotoNumberTwo",
+    "https://tinyurl.com/PhotoNumberFour"
+  ],
+  "room_type": "Double Room",
+  "room_number": "143",
+  "room_amenities": [
+    "1/3 Bed Space",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Coffee Set"
+  ],
+  "room_description": "Creta coruscus cubo consequuntur tamquam cultellus vulpes depereo alter thema ratione aufero.",
+  "price": 142,
+  "status": "Check Out",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b915"
+  },
+  "name": "Joanne",
+  "surname": "Brown",
+  "order_date": "Mon Jan 27 2020 03:47:30 GMT+0100 (hora estándar de Europa central)",
+  "check_in": "Sun Mar 01 2020 16:38:00 GMT+0100 (hora estándar de Europa central)",
+  "check_out": "Fri Apr 10 2020 06:44:15 GMT+0200 (hora de verano de Europa central)",
+  "special_request": "Tamquam articulus audacia concedo crepusculum demulceo supellex taedium cum rem talio celebrer exercitationem adopto casus bis considero.",
+  "room_id": "6553ab10aaab95763772b90a",
+  "room_photos": [
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberTwo",
+    "https://tinyurl.com/PhotoNumberOne"
+  ],
+  "room_type": "Single Room",
+  "room_number": "115",
+  "room_amenities": [
+    "1/3 Bed Space",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Coffee Set"
+  ],
+  "room_description": "Pauper votum quam virtus amita paens urbs tergum celo tam ait.",
+  "price": 278,
+  "status": "Check In",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b916"
+  },
+  "name": "Boyd",
+  "surname": "Howe",
+  "order_date": "Sun Jan 26 2020 01:38:51 GMT+0100 (hora estándar de Europa central)",
+  "check_in": "Tue Mar 24 2020 04:18:45 GMT+0100 (hora estándar de Europa central)",
+  "check_out": "Thu Apr 02 2020 23:21:56 GMT+0200 (hora de verano de Europa central)",
+  "special_request": "Architecto modi subnecto ater alius administratio vomica antepono claustrum tamquam verto vallum eum.",
+  "room_id": "6553ab10aaab95763772b90b",
+  "room_photos": [
+    "https://tinyurl.com/PhotoNumberFive",
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberThreee"
+  ],
+  "room_type": "Double Superior",
+  "room_number": "124",
+  "room_amenities": [
+    "1/3 Bed Space",
+    "24-Hour Guard",
+    "Free Wifi",
+    "Air Conditioner",
+    "Television",
+    "Towels",
+    "Mini Bar",
+    "Coffee Set",
+    "Bathtub",
+    "Jacuzzi",
+    "Nice Views"
+  ],
+  "room_description": "Urbs arcus demitto torrens tepesco suus adsum cuppedia audeo demergo demonstro aliquid nulla alo.",
+  "price": 119,
+  "status": "Check Out",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6553ab10aaab95763772b917"
+  },
+  "name": "Raquel",
   "surname": "Yost",
-  "order_date": "Fri Jan 17 2020 23:55:15 GMT+0100 (hora estándar de Europa central)",
-  "check_in": "Wed Mar 04 2020 17:37:27 GMT+0100 (hora estándar de Europa central)",
-  "check_out": "Wed Apr 01 2020 19:47:31 GMT+0200 (hora de verano de Europa central)",
-  "special_request": "Adfectus abutor velum similique arcus tersus vivo absens tondeo astrum vigilo dolores confugo ceno crapula ocer tempora vester cupio territo contigo vilitas appono vomito blandior.",
-  "room_id": "6551dc777eae7a9071d87e65",
-  "room_type": "Double Room",
-  "room_number": "137",
+  "order_date": "Mon Jan 06 2020 17:44:47 GMT+0100 (hora estándar de Europa central)",
+  "check_in": "Tue Mar 24 2020 18:55:59 GMT+0100 (hora estándar de Europa central)",
+  "check_out": "Thu Apr 02 2020 04:55:34 GMT+0200 (hora de verano de Europa central)",
+  "special_request": "Bardus nesciunt culpa varietas vito acquiro verecundia abutor copiose incidunt benigne impedit acies tabella demo subseco damno corrupti cunctatio.",
+  "room_id": "6553ab10aaab95763772b907",
+  "room_photos": [
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberThreee",
+    "https://tinyurl.com/PhotoNumberFive"
+  ],
+  "room_type": "Suite",
+  "room_number": "264",
   "room_amenities": [
-    "Towels",
     "1/3 Bed Space",
-    "Mini Bar",
-    "Nice Views",
-    "Television",
-    "Free Wifi",
-    "Jacuzzi",
-    "24-Hour Guard"
-  ],
-  "room_description": "Eius villa magni timor capio deludo caries clarus ipsa verumtamen deludo urbanus sperno usitas adfectus timor acquiro vos peccatus utique cras peior strues damno ascisco accendo acceptus cattus speculum.",
-  "price": 220,
-  "status": "In Progress",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e6b"
-  },
-  "name": "Chris",
-  "surname": "Strosin",
-  "order_date": "Thu Jan 30 2020 08:41:01 GMT+0100 (hora estándar de Europa central)",
-  "check_in": "Sun Mar 08 2020 06:27:43 GMT+0100 (hora estándar de Europa central)",
-  "check_out": "Sun Apr 05 2020 00:25:42 GMT+0200 (hora de verano de Europa central)",
-  "special_request": "Vero sequi attonbitus thesaurus vorago vulticulus conspergo benigne bonus apostolus adulescens delicate sollicito cohors theca templum celer conicio arguo nostrum recusandae vilis curatio admitto.",
-  "room_id": "6551dc777eae7a9071d87e5f",
-  "room_type": "Double Room",
-  "room_number": "181",
-  "room_amenities": [
-    "Towels",
-    "Nice Views",
-    "24-Hour Guard",
-    "Jacuzzi"
-  ],
-  "room_description": "Perspiciatis viscus allatus conspergo defendo tabgo tergum apud convoco aranea constans utrum sed capillus animadverto ab debilito absque inflammatio architecto cur odit ulterius vallum abundans aegre at vespillo ea tempore amita clibanus sodalitas.",
-  "price": 197,
-  "status": "Check Out",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e6c"
-  },
-  "name": "Dante",
-  "surname": "Prosacco-Howe",
-  "order_date": "Fri Jan 10 2020 18:40:29 GMT+0100 (hora estándar de Europa central)",
-  "check_in": "Sat Mar 28 2020 14:40:45 GMT+0100 (hora estándar de Europa central)",
-  "check_out": "Sat Apr 25 2020 01:04:49 GMT+0200 (hora de verano de Europa central)",
-  "special_request": "Delinquo perferendis defetiscor synagoga atavus curtus vos terror sortitus audentia creo stella explicabo curriculum aeger vesco taedium adhaero advoco adfero.",
-  "room_id": "6551dc777eae7a9071d87e65",
-  "room_type": "Double Room",
-  "room_number": "137",
-  "room_amenities": [
-    "Towels",
-    "1/3 Bed Space",
-    "Mini Bar",
-    "Nice Views",
-    "Television",
-    "Free Wifi",
-    "Jacuzzi",
-    "24-Hour Guard"
-  ],
-  "room_description": "Eius villa magni timor capio deludo caries clarus ipsa verumtamen deludo urbanus sperno usitas adfectus timor acquiro vos peccatus utique cras peior strues damno ascisco accendo acceptus cattus speculum.",
-  "price": 220,
-  "status": "In Progress",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e6d"
-  },
-  "name": "Christopher",
-  "surname": "Koch",
-  "order_date": "Mon Jan 13 2020 09:33:49 GMT+0100 (hora estándar de Europa central)",
-  "check_in": "Tue Mar 17 2020 18:50:40 GMT+0100 (hora estándar de Europa central)",
-  "check_out": "Sun Apr 05 2020 23:20:55 GMT+0200 (hora de verano de Europa central)",
-  "special_request": "Antepono constans carpo antepono alioqui angulus laborum aranea claro attollo adulescens neque allatus aperiam utor curo valetudo suscipio creo earum ter vulnus distinctio tunc terminatio.",
-  "room_id": "6551dc777eae7a9071d87e67",
-  "room_type": "Double Superior",
-  "room_number": "193",
-  "room_amenities": [
-    "Free Wifi",
-    "Jacuzzi",
     "Air Conditioner",
-    "1/3 Bed Space"
+    "Television",
+    "Towels",
+    "Coffee Set"
   ],
-  "room_description": "Summopere ait suasoria tubineus spes compono vereor arx auditor cupressus audax casus supellex confero distinctio sumo audacia cursim.",
-  "price": 215,
+  "room_description": "Celer thesaurus eos votum damno verbera solvo provident calcar sortitus velociter iure credo valeo tabgo angelus nesciunt maiores.",
+  "price": 135,
   "status": "Check In",
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "6551dc777eae7a9071d87e6e"
+    "$oid": "6553ab10aaab95763772b918"
   },
-  "name": "Arvid",
-  "surname": "Bahringer",
-  "order_date": "Mon Jan 20 2020 08:11:25 GMT+0100 (hora estándar de Europa central)",
-  "check_in": "Sat Mar 28 2020 17:01:42 GMT+0100 (hora estándar de Europa central)",
-  "check_out": "Thu Apr 02 2020 14:43:05 GMT+0200 (hora de verano de Europa central)",
-  "special_request": "Thesis cotidie ustilo pecco suscipit venustas theatrum verus quis itaque vester velum cur comitatus copia vulpes vesica dolores coma degusto abeo credo uxor armarium comprehendo.",
-  "room_id": "6551dc777eae7a9071d87e5f",
-  "room_type": "Double Room",
-  "room_number": "181",
-  "room_amenities": [
-    "Towels",
-    "Nice Views",
-    "24-Hour Guard",
-    "Jacuzzi"
+  "name": "Annalise",
+  "surname": "Macejkovic",
+  "order_date": "Fri Jan 10 2020 23:07:10 GMT+0100 (hora estándar de Europa central)",
+  "check_in": "Tue Mar 10 2020 22:15:54 GMT+0100 (hora estándar de Europa central)",
+  "check_out": "Wed Apr 29 2020 04:40:16 GMT+0200 (hora de verano de Europa central)",
+  "special_request": "Catena cibo denuo architecto vir tepidus credo decimus adsuesco appello cohors ancilla porro accusamus averto demo conculco porro somniculosus absum.",
+  "room_id": "6553ab10aaab95763772b904",
+  "room_photos": [
+    "https://tinyurl.com/PhotoNumberFive",
+    "https://tinyurl.com/PhotoNumberFour",
+    "https://tinyurl.com/PhotoNumberTwo"
   ],
-  "room_description": "Perspiciatis viscus allatus conspergo defendo tabgo tergum apud convoco aranea constans utrum sed capillus animadverto ab debilito absque inflammatio architecto cur odit ulterius vallum abundans aegre at vespillo ea tempore amita clibanus sodalitas.",
-  "price": 197,
-  "status": "Check In",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e6f"
-  },
-  "name": "Amara",
-  "surname": "Lowe",
-  "order_date": "Sat Jan 18 2020 00:38:35 GMT+0100 (hora estándar de Europa central)",
-  "check_in": "Thu Mar 19 2020 20:44:57 GMT+0100 (hora estándar de Europa central)",
-  "check_out": "Tue Apr 28 2020 04:18:45 GMT+0200 (hora de verano de Europa central)",
-  "special_request": "Pel civitas bestia curis adicio clementia alienus ex ara adduco natus acervus coadunatio victoria sperno sto decipio peccatus nihil.",
-  "room_id": "6551dc777eae7a9071d87e63",
-  "room_type": "Double Superior",
-  "room_number": "212",
+  "room_type": "Suite",
+  "room_number": "148",
   "room_amenities": [
-    "Television",
-    "1/3 Bed Space",
-    "Air Conditioner"
-  ],
-  "room_description": "Vulpes tollo velut debitis tripudio fuga tenus vita amita ustulo tendo acerbitas asperiores apud casus decipio civitas correptius.",
-  "price": 142,
-  "status": "In Progress",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e70"
-  },
-  "name": "Ethan",
-  "surname": "Steuber",
-  "order_date": "Sat Jan 04 2020 15:54:59 GMT+0100 (hora estándar de Europa central)",
-  "check_in": "Sun Mar 15 2020 10:00:40 GMT+0100 (hora estándar de Europa central)",
-  "check_out": "Tue Apr 21 2020 08:06:39 GMT+0200 (hora de verano de Europa central)",
-  "special_request": "Decipio dolores temptatio condico aranea auxilium viduo vito utilis commodo tepesco adfectus balbus eum deserunt nam varietas una terra.",
-  "room_id": "6551dc777eae7a9071d87e68",
-  "room_type": "Double Superior",
-  "room_number": "230",
-  "room_amenities": [
-    "Towels",
-    "Television",
-    "Jacuzzi",
-    "Nice Views",
-    "1/3 Bed Space",
-    "Bathtub",
+    "1/2 Bathroom",
+    "Free Wifi",
     "Air Conditioner",
-    "24-Hour Guard",
-    "Mini Bar",
-    "Coffee Set",
-    "Free Wifi"
-  ],
-  "room_description": "Crastinus explicabo demergo thymbra ager timidus tolero est dapifer victus cenaculum creptio depereo audentia spoliatio quisquam taedium adnuo explicabo vita consequuntur clibanus odio accedo ipsam nihil caveo rerum magnam deserunt animadverto cervus.",
-  "price": 101,
-  "status": "Check Out",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e71"
-  },
-  "name": "Rhiannon",
-  "surname": "Schimmel",
-  "order_date": "Mon Jan 13 2020 11:20:15 GMT+0100 (hora estándar de Europa central)",
-  "check_in": "Thu Mar 12 2020 21:40:45 GMT+0100 (hora estándar de Europa central)",
-  "check_out": "Wed Apr 29 2020 19:02:40 GMT+0200 (hora de verano de Europa central)",
-  "special_request": "Cras conturbo adeo vetus conturbo utilis cruciamentum sulum sperno demoror abduco teneo accusator quisquam urbs subnecto candidus calamitas arca tracto aggero.",
-  "room_id": "6551dc777eae7a9071d87e63",
-  "room_type": "Double Superior",
-  "room_number": "212",
-  "room_amenities": [
     "Television",
-    "1/3 Bed Space",
-    "Air Conditioner"
-  ],
-  "room_description": "Vulpes tollo velut debitis tripudio fuga tenus vita amita ustulo tendo acerbitas asperiores apud casus decipio civitas correptius.",
-  "price": 142,
-  "status": "Check Out",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e72"
-  },
-  "name": "Martine",
-  "surname": "Brekke",
-  "order_date": "Thu Jan 09 2020 11:20:22 GMT+0100 (hora estándar de Europa central)",
-  "check_in": "Mon Mar 30 2020 13:50:17 GMT+0200 (hora de verano de Europa central)",
-  "check_out": "Mon Apr 27 2020 13:47:04 GMT+0200 (hora de verano de Europa central)",
-  "special_request": "Vitium praesentium nihil stillicidium culpo strues succedo statim rem valetudo studio a vivo fugit viridis.",
-  "room_id": "6551dc777eae7a9071d87e5f",
-  "room_type": "Double Room",
-  "room_number": "181",
-  "room_amenities": [
     "Towels",
-    "Nice Views",
-    "24-Hour Guard",
-    "Jacuzzi"
-  ],
-  "room_description": "Perspiciatis viscus allatus conspergo defendo tabgo tergum apud convoco aranea constans utrum sed capillus animadverto ab debilito absque inflammatio architecto cur odit ulterius vallum abundans aegre at vespillo ea tempore amita clibanus sodalitas.",
-  "price": 197,
-  "status": "Check Out",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6551dc777eae7a9071d87e73"
-  },
-  "name": "Ariane",
-  "surname": "Schultz",
-  "order_date": "Sun Jan 12 2020 11:59:28 GMT+0100 (hora estándar de Europa central)",
-  "check_in": "Wed Mar 11 2020 15:08:02 GMT+0100 (hora estándar de Europa central)",
-  "check_out": "Mon Apr 27 2020 05:57:40 GMT+0200 (hora de verano de Europa central)",
-  "special_request": "Adimpleo peccatus decipio taceo blanditiis subiungo arcus sum voco vesper anser utilis quidem auditor.",
-  "room_id": "6551dc777eae7a9071d87e68",
-  "room_type": "Double Superior",
-  "room_number": "230",
-  "room_amenities": [
-    "Towels",
-    "Television",
-    "Jacuzzi",
-    "Nice Views",
-    "1/3 Bed Space",
-    "Bathtub",
-    "Air Conditioner",
-    "24-Hour Guard",
     "Mini Bar",
-    "Coffee Set",
-    "Free Wifi"
+    "Coffee Set"
   ],
-  "room_description": "Crastinus explicabo demergo thymbra ager timidus tolero est dapifer victus cenaculum creptio depereo audentia spoliatio quisquam taedium adnuo explicabo vita consequuntur clibanus odio accedo ipsam nihil caveo rerum magnam deserunt animadverto cervus.",
-  "price": 101,
+  "room_description": "Consectetur culpa vester suspendo molestiae xiphias vitium deorsum in vesper aedificium ademptio.",
+  "price": 176,
   "status": "Check Out",
   "__v": 0
 }]
