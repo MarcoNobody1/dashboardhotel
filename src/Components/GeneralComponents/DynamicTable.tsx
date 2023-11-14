@@ -50,6 +50,20 @@ import { RoomeEditorCreator } from "../Rooms/RoomEditorCreator";
 import { ThemeContext } from "../../Context/ToggleTheme";
 import { useContext } from "react";
 import { format } from "date-fns";
+import SwiperCore from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  Navigation,
+  Pagination,
+  Mousewheel,
+  Keyboard,
+  Autoplay,
+} from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import { ToggleContext } from "../../Context/ToggleSidebar";
+
+SwiperCore.use([Autoplay, Navigation]);
 
 const bookingTitles = [
   "guest",
@@ -77,7 +91,7 @@ const userTitles = [
   "start_date",
   "job_description",
   "contact",
-  "status",
+  "activity",
 ];
 
 const Table = styled.table`
@@ -424,9 +438,14 @@ const SampleDiv = styled.div<DarkProp>`
   color: ${(props) => (props.dark ? "#41ebbd" : "#202020")};
 `;
 
-const AmenitiesDiv = styled(SampleDiv)<DarkProp>`
+interface AmenityDivProps {
+  dark?: boolean | string;
+  toggle?: boolean;
+}
+
+const AmenitiesDiv = styled(SampleDiv)<AmenityDivProps>`
   overflow-x: scroll;
-  max-width: 300px;
+  max-width: ${(props) => (props.toggle ? "420px" : "300px")};
   display: flex;
   padding: 10px;
 
@@ -499,6 +518,37 @@ const AmenityContent = styled.p`
   width: max-content;
 `;
 
+const PersonalSwiper = styled(Swiper)`
+  width: 150px;
+  height: 70px;
+  margin: 0;
+  transition: all 250ms ease-in-out;
+
+  div.swiper-button-next {
+    background-image: url("src/assets/arrow-right.png");
+  }
+
+  div.swiper-button-prev {
+    background-image: url("src/assets/arrow-left.png");
+  }
+
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-color: #fff;
+    height: 20px;
+    transition: all 250ms ease-in-out;
+    margin-top: 5px;
+    border-radius: 5px;
+
+    &::after {
+      display: none;
+    }
+  }
+`;
+
 interface DynamicTableProps {
   data:
     | Object[]
@@ -546,6 +596,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     dataType === "users" ? userUpdateStatus : roomUpdateStatus
   );
   const { dark } = useContext(ThemeContext);
+  const { toggle } = useContext(ToggleContext);
 
   const headers =
     dataType === "bookings"
@@ -921,7 +972,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "amenities":
         return (
           <>
-            <AmenitiesDiv dark={dark.dark}>
+            <AmenitiesDiv dark={dark.dark} toggle={toggle.toggle}>
               {rowData.amenities.map((amenity, index) => (
                 <AmenityWrapper key={index}>
                   <AmenityContent>{amenity}</AmenityContent>
@@ -936,7 +987,27 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "room_name":
         return (
           <RoomPhotoWrap>
-            <ImageRoom src={rowData.photos} />
+            <PersonalSwiper
+              cssMode={true}
+              navigation={true}
+              mousewheel={true}
+              keyboard={true}
+              modules={[Navigation, Mousewheel, Keyboard]}
+              className="my-swiper"
+            >
+              <SwiperSlide>
+                <ImageRoom src={rowData.photos} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <ImageRoom src={rowData.photos} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <ImageRoom src={rowData.photos} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <ImageRoom src={rowData.photos} />
+              </SwiperSlide>
+            </PersonalSwiper>
             <DataSpecs>
               <DataId
                 dark={dark.dark.toString()}
