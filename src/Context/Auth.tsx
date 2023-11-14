@@ -72,6 +72,7 @@ const reducer = (state: InitialStateInterface, action: Actions) => {
         photo: "https://robohash.org/smartass",
       };
     case "logout":
+      localStorage.removeItem("token");
       return { authenticated: false, username: null, password: null, photo: null };
 
     case "update":
