@@ -153,7 +153,7 @@ export const UserCard: FC = () => {
       event.preventDefault();
       authDispatch({
         type: "update",
-        payload: { username: newUser, email: newEmail, photo: imageUrl },
+        payload: { username: newUser, password: newEmail, photo: imageUrl },
       });
       setIsModalOpen(false);
     };
@@ -197,7 +197,7 @@ export const UserCard: FC = () => {
                 Last Username: <strong>{auth.username}</strong>
               </ModalContent>
               <ModalContent style={{color: dark.dark ? "#FFF" : "#262626"}}>
-                Last Email: <strong>{auth.email}</strong>
+                Last Email: <strong>{auth.password}</strong>
               </ModalContent>
               <br />
               <EditButton style={{backgroundColor: dark.dark ? "#135846" : "#ebf1ef", color: dark.dark ? "#FFFFFF" : "#135846"}} type="submit">Change it!</EditButton>
@@ -216,7 +216,7 @@ export const UserCard: FC = () => {
         </ImageWrap>
         <ContentWrap style={{backgroundColor: dark.dark ? "#292828" : "#FFF"}}>
           <FullName style={{color: dark.dark ? "#FFF" : "#262626"}}>{auth.username}</FullName>
-          <EmailText>{auth.email}</EmailText>
+          <EmailText>{auth.password}</EmailText>
           <EditButton style={{backgroundColor: dark.dark ? "#135846" : "#ebf1ef", color: dark.dark ? "#FFFFFF" : "#135846"}} onClick={() => setIsModalOpen(true)}>Edit</EditButton>
         </ContentWrap>
       </OuterWrap>

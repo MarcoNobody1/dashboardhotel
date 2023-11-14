@@ -5,7 +5,7 @@ const auth_key: string = "auth_info";
 interface InitialStateInterface {
   authenticated: boolean,
   username: string | null,
-  email: string | null,
+  password: string | null,
   photo: string | null,
 }
 
@@ -13,7 +13,7 @@ interface LoginInterface {
   type: "login";
   payload: {
     username: string;
-    email: string;
+    password: string;
   };
 }
 
@@ -25,7 +25,7 @@ interface UpdateInterface {
   type: "update";
   payload: {
     username: string;
-    email: string;
+    password: string;
     photo: string;
   };
 }
@@ -41,8 +41,8 @@ interface AuthContextInterface {
 export const AuthContext = createContext<AuthContextInterface>({
   auth: {
     authenticated: false,
-    username: 'Marco',
-    email: 'marcocamaradiaz@gmail.com',
+    username: 'admin',
+    password: 'admin',
     photo: '',
   },
   authDispatch: () => { },
@@ -52,7 +52,7 @@ export const AuthContext = createContext<AuthContextInterface>({
 
 const initialState = (): InitialStateInterface => {
 
- const initial = { authenticated: false, username: null, email: null, photo: "https://robohash.org/smartass" };
+ const initial = { authenticated: false, username: null, password: null, photo: "https://robohash.org/smartass" };
   const localKey = localStorage.getItem(auth_key) || "";
 
   if (localKey) {
@@ -68,17 +68,17 @@ const reducer = (state: InitialStateInterface, action: Actions) => {
       return {
         authenticated: true,
         username: action.payload.username,
-        email: action.payload.email,
+        password: action.payload.password,
         photo: "https://robohash.org/smartass",
       };
     case "logout":
-      return { authenticated: false, username: null, email: null, photo: null };
+      return { authenticated: false, username: null, password: null, photo: null };
 
     case "update":
       return {
         authenticated: true,
         username: action.payload.username,
-        email: action.payload.email,
+        password: action.payload.password,
         photo: action.payload.photo,
       };
     default:
