@@ -6,6 +6,9 @@ import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/Auth";
 import { ThemeContext } from "../../Context/ToggleTheme";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { loginStatus, loginUsername, resetState } from "../../features/Login/loginSlice";
+import { logIn } from "../../features/Login/loginThunks";
 
 const LogWrapper = styled.div`
   height: 930px;
@@ -81,24 +84,23 @@ export const Login = () => {
   const nav = useNavigate();
   const { auth, authDispatch } = useContext(AuthContext);
   const { dark } = useContext(ThemeContext);
-
+  const dispatch = useAppDispatch();
+  const updatedUsername = useAppSelector(loginUsername);
+  const loginState = useAppSelector(loginStatus);
   useEffect(() => {
     if (auth && auth.authenticated) {
       nav("/");
     }
-  }, [auth, nav]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-
-    if (user === "admin" && password === "admin") {
+    if(loginState === "fulfilled"){
       authDispatch({
         type: "login",
         payload: { username: user, password: password },
       });
 
       nav("/");
-    } else {
+      dispatch(resetState())
+    } else if (loginState === "rejected") {
       const Toast = Swal.mixin({
         toast: true,
         position: "top",
@@ -113,6 +115,12 @@ export const Login = () => {
         title: "Wrong user or Password.",
       });
     }
+
+  }, [auth, nav, loginState]);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+    event.preventDefault();
+    await dispatch(logIn({ username: user }));
   };
 
   const handleuser = (event: ChangeEvent<HTMLInputElement>): void => {
