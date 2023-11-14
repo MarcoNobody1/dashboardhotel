@@ -9,6 +9,7 @@ export interface BookingInterface {
   check_out: string;
   special_request: string;
   room_id: any;
+  room_photos: string[];
   room_type: string;
   room_number: string;
   room_amenities: string[];
@@ -34,7 +35,7 @@ export interface RoomInterface {
   _id: {
     $oid: string | undefined;
   };
-  photos: string;
+  photos: string[];
   number: number;
   description: string;
   type: string;
