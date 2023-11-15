@@ -246,7 +246,7 @@ export const BookingDetails: FC = () => {
           <GuestName dark={dark.dark}>
             {selectedBooking.name} {selectedBooking.surname}
           </GuestName>
-          <BookingId>ID {selectedBooking._id.$oid}</BookingId>
+          <BookingId>ID {selectedBooking._id}</BookingId>
           <InfoContainer>
             <InfoWrap>
               <InfoTitle>Check In</InfoTitle>

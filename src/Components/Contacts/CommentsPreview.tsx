@@ -123,7 +123,7 @@ export const Comments: FC = () => {
     return (
       <>
         {infoContacts.map((contact) => (
-          <CommentContainer dark={dark.dark} style={{backgroundColor: dark.dark ? "#202020" : "#FFF", border: dark.dark ?  "1px solid #3D3D3D" : "1px solid #ebebeb"}} archived={contact.archived}  key={contact._id.$oid}>
+          <CommentContainer dark={dark.dark} style={{backgroundColor: dark.dark ? "#202020" : "#FFF", border: dark.dark ?  "1px solid #3D3D3D" : "1px solid #ebebeb"}} archived={contact.archived}  key={contact._id}>
             <>
               <FullName style={{color: dark.dark ? "#FFF" : "#262626"}}>{contact.name}</FullName>
               <IconWrapper>
@@ -131,7 +131,7 @@ export const Comments: FC = () => {
                 <FullscreenIcon
                 style={{ color: dark.dark? "#41ebbd" : "#135846"}}
                   onClick={() =>
-                    handleOpenModal(contact._id.$oid, contact.archived)
+                    handleOpenModal(contact._id, contact.archived)
                   }
                 />
               </IconWrapper>

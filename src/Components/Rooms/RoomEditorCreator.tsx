@@ -285,9 +285,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
     });
 
     const newRoom = {
-      _id: {
-        $oid: select && select._id.$oid,
-      },
+      _id: select ? select._id : "",
       photos: finalPhotos || "",
       number: roomNumber === null ? 111 : roomNumber,
       description:

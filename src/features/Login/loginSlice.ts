@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { logIn } from "./loginThunks";
-import { LogInterface } from "./loginThunks";
 import { RootState } from "../../app/store";
 
 interface LoginInitialState {
@@ -8,6 +7,7 @@ interface LoginInitialState {
   status: "idle" | "fulfilled" | "pending" | "rejected";
   username: string;
   email: string;
+  photo: string;
 }
 
 const initialState: LoginInitialState = {
@@ -15,6 +15,7 @@ const initialState: LoginInitialState = {
   status: "idle",
   username: "",
   email: "",
+  photo: "",
 };
 
 export const loginSlice = createSlice({
@@ -31,6 +32,7 @@ export const loginSlice = createSlice({
         state.status = "fulfilled";
         state.username = action.payload.payload.username;
         state.email = action.payload.payload.email;
+        state.photo = action.payload.payload.avatar;
       })
       .addCase(logIn.pending, (state) => {
         state.status = "pending";

@@ -200,7 +200,7 @@ export const RoomDetails: FC = () => {
       <>
         <DetailsWrapper dark={dark.dark}>
           <GuestName></GuestName>
-          <BookingId>ID {selectedRoom._id.$oid}</BookingId>
+          <BookingId>ID {selectedRoom._id}</BookingId>
           <InfoContainer>
             <InfoWrap>
               <InfoTitle>Room Type</InfoTitle>

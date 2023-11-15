@@ -317,9 +317,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
     }
 
     const dataUser = {
-      _id: {
-        $oid: select?._id.$oid || "",
-      },
+      _id: select?._id || "",
       avatar: selectedPhoto || "",
       username: username,
       position: position,

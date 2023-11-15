@@ -10,9 +10,24 @@ const delay = (data:RoomInterface[] | string | RoomInterface, time:number = 400)
   });
 };
 
+const localUrl = import.meta.env.VITE_FETCH_URL;
+const token = localStorage.getItem("token") || "";
+
 export const getRoomsData = createAsyncThunk<RoomInterface[]>("rooms/getRoomsData", async () => {
 
-  return (await delay(rooms)) as RoomInterface[];
+ 
+  const response = await fetch(`${localUrl}rooms`, {
+    mode: "cors",
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      token: token,
+    }
+  });
+  if (!response.ok) throw new Error(`Status: ${response.status}`);
+  const data = await response.json();
+
+  return data as RoomInterface[];
 });
 
 export const deleteRoomsData = createAsyncThunk("rooms/deleteRoomsData", async (id:string) => {

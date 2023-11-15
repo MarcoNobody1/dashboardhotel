@@ -1,15 +1,21 @@
 import { FC, ReactNode, useContext } from "react";
-import { Navigate } from "react-router";
+import { Navigate, useLocation } from "react-router";
 import { AuthContext } from "../../Context/Auth";
 
 interface PrivateRouteInterface {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export const PrivateRoute: FC<PrivateRouteInterface> = ({ children }) => {
-const authContext = useContext(AuthContext);
+  const location = useLocation();
+  const authContext = useContext(AuthContext);
 
-  if (!authContext || !authContext.auth.authenticated) {
+
+  const routes: string[] = ["/bookings", "/users", "/contacts", "/rooms", "/login"];
+
+
+
+  if (!authContext || !authContext.auth.authenticated || routes.includes(location.pathname)) {
     return (
       <>
         <Navigate to="/login" />
@@ -17,5 +23,5 @@ const authContext = useContext(AuthContext);
     );
   }
 
-  return children
+  return children;
 };
