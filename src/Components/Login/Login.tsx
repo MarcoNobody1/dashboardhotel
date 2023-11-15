@@ -7,8 +7,13 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/Auth";
 import { ThemeContext } from "../../Context/ToggleTheme";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { loginStatus, loginUsername, resetState } from "../../features/Login/loginSlice";
+import {
+  loginStatus,
+  loginUsername,
+  resetState,
+} from "../../features/Login/loginSlice";
 import { logIn } from "../../features/Login/loginThunks";
+import { Oval } from "react-loader-spinner";
 
 const LogWrapper = styled.div`
   height: 930px;
@@ -78,6 +83,11 @@ const Advertice = styled.p`
   transition: all 0.25s ease-in-out;
 `;
 
+const SpinnerFloater = styled.div`
+position: absolute;
+top: 50px;
+`;
+
 export const Login = () => {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
@@ -85,21 +95,20 @@ export const Login = () => {
   const { auth, authDispatch } = useContext(AuthContext);
   const { dark } = useContext(ThemeContext);
   const dispatch = useAppDispatch();
-  const updatedUsername = useAppSelector(loginUsername);
   const loginState = useAppSelector(loginStatus);
   useEffect(() => {
     if (auth && auth.authenticated) {
       nav("/");
     }
 
-    if(loginState === "fulfilled"){
+    if (loginState === "fulfilled") {
       authDispatch({
         type: "login",
         payload: { username: user, password: password },
       });
 
       nav("/");
-      dispatch(resetState())
+      dispatch(resetState());
     } else if (loginState === "rejected") {
       const Toast = Swal.mixin({
         toast: true,
@@ -115,12 +124,14 @@ export const Login = () => {
         title: "Wrong user or Password.",
       });
     }
-
   }, [auth, nav, loginState]);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
-    await dispatch(logIn({ username: user }));
+
+    await dispatch(logIn({ username: user, password: password }));
   };
 
   const handleuser = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -136,6 +147,22 @@ export const Login = () => {
       <LogWrapper
         style={{ backgroundColor: dark.dark ? "#171717" : "lightcyan" }}
       >
+        {loginState === "pending" && (
+          <SpinnerFloater>
+            <Oval
+              height={100}
+              width={100}
+              color="#41ebbd"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+              ariaLabel="oval-loading"
+              secondaryColor="#121212"
+              strokeWidth={1}
+              strokeWidthSecondary={3}
+            />
+          </SpinnerFloater>
+        )}
         <LogForm
           style={{
             backgroundColor: dark.dark ? "#202020" : "#f8f8f8",
