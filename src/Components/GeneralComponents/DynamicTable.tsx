@@ -676,7 +676,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
   const Modal: FC<ModalProps> = ({ commentId, onCloseNote }) => {
     const selectedNote = (data as DataArray).find((booking: TableRow) => {
       if (dataType === "bookings" && (booking as BookingInterface)) {
-        return (booking as BookingInterface)._id.$oid === commentId;
+        return (booking as BookingInterface)._id === commentId;
       } else {
         return false;
       }
@@ -702,7 +702,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
   const UserEditor: FC<UserEditorProps> = ({ userId, onCloseUserEditor }) => {
     const selectedUser = (data as DataArray).find((user: TableRow) => {
       if (dataType === "users" && (user as UserInterface)) {
-        return (user as UserInterface)._id.$oid === userId;
+        return (user as UserInterface)._id === userId;
       } else {
         return false;
       }
@@ -714,7 +714,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           {selectedUser && dataType === "users" ? (
             <>
               <UpdatingTitle dark={dark.dark}>
-                Updating #{(selectedUser as UserInterface)._id.$oid} User:
+                Updating #{(selectedUser as UserInterface)._id} User:
               </UpdatingTitle>
               <UserEditorCreator
                 select={selectedUser as UserInterface}
@@ -732,7 +732,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
   const RoomEditor: FC<RoomEditorProps> = ({ roomId, onCloseRoomEditor }) => {
     const selectedRoom = (data as DataArray).find((room: TableRow) => {
       if (dataType === "rooms" && (room as RoomInterface)) {
-        return (room as RoomInterface)._id.$oid === roomId;
+        return (room as RoomInterface)._id === roomId;
       } else {
         return false;
       }
@@ -744,7 +744,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           {selectedRoom && dataType === "rooms" ? (
             <>
               <UpdatingTitle dark={dark.dark}>
-                Updating #{(selectedRoom as RoomInterface)._id.$oid} Room:
+                Updating #{(selectedRoom as RoomInterface)._id} Room:
               </UpdatingTitle>
               <RoomeEditorCreator
                 select={selectedRoom as RoomInterface}
@@ -785,9 +785,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     | "start_date";
 
   type RowData = {
-    _id: {
-      $oid: string;
-    };
+    _id: string;
     surname: string;
     room_type: string;
     type: string;
@@ -830,10 +828,10 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
             </SimpleDiv>
             <StyledLink
               dark={dark.dark.toString()}
-              onClick={() => handleGetDetails(rowData._id.$oid)}
-              to={`/bookings/${rowData._id.$oid}`}
+              onClick={() => handleGetDetails(rowData._id)}
+              to={`/bookings/${rowData._id}`}
             >
-              {rowData._id.$oid}
+              {rowData._id}
             </StyledLink>
           </>
         );
@@ -842,7 +840,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         return (
           <SpecialRequestButton
             dark={dark.dark}
-            onClick={() => handleOpenNote(rowData._id.$oid)}
+            onClick={() => handleOpenNote(rowData._id)}
           >
             Special Request
           </SpecialRequestButton>
@@ -862,7 +860,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           statusInfo === "fulfilled" ? (
             <TrashIcon
               datatype="bookings"
-              onClick={() => handleDelete(rowData._id.$oid)}
+              onClick={() => handleDelete(rowData._id)}
             />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
@@ -891,7 +889,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "availability":
         const availabilityTrashIcon =
           statusInfo === "fulfilled" ? (
-            <TrashIcon onClick={() => handleDelete(rowData._id.$oid)} />
+            <TrashIcon onClick={() => handleDelete(rowData._id)} />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
@@ -913,7 +911,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           editStatus === "fulfilled" ? (
             <EditIcon
               dark={dark.dark.toString()}
-              onClick={() => handleOpenModal(rowData._id.$oid, dataType)}
+              onClick={() => handleOpenModal(rowData._id, dataType)}
             />
           ) : editStatus === "rejected" ? (
             <EditIcon style={{ color: "#e9d7d7" }} />
@@ -1004,10 +1002,10 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
             <DataSpecs>
               <DataId
                 dark={dark.dark.toString()}
-                to={`/rooms/${rowData._id.$oid}`}
-                onClick={() => handleGetDetails(rowData._id.$oid)}
+                to={`/rooms/${rowData._id}`}
+                onClick={() => handleGetDetails(rowData._id)}
               >
-                {rowData._id.$oid}
+                {rowData._id}
               </DataId>
               <PhotoRoomSpec dark={dark.dark}>{rowData.number}</PhotoRoomSpec>
             </DataSpecs>
@@ -1041,7 +1039,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           statusInfo === "fulfilled" ? (
             <TrashIcon
               datatype="contact"
-              onClick={() => handleDelete(rowData._id.$oid)}
+              onClick={() => handleDelete(rowData._id)}
             />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
@@ -1104,7 +1102,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <>
             <StatusButton
               onClick={() =>
-                handleArchiveComment(rowData._id.$oid, rowData.archived)
+                handleArchiveComment(rowData._id, rowData.archived)
               }
               style={
                 dark.dark
@@ -1132,7 +1130,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
             <UserImage src={rowData.avatar} />
             <DataSpecs>
               <UserName dark={dark.dark}>{rowData.username}</UserName>
-              <UserId dark={dark.dark}>{rowData._id.$oid}</UserId>
+              <UserId dark={dark.dark}>{rowData._id}</UserId>
               <UserLink dark={dark.dark} href={`mailto:${rowData.email}`}>
                 {rowData.email}
               </UserLink>
@@ -1144,7 +1142,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "activity":
         const trashUserIcon =
           statusInfo === "fulfilled" ? (
-            <TrashIcon onClick={() => handleDelete(rowData._id.$oid)} />
+            <TrashIcon onClick={() => handleDelete(rowData._id)} />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
@@ -1167,7 +1165,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           editStatus === "fulfilled" ? (
             <EditIcon
               dark={dark.dark.toString()}
-              onClick={() => handleOpenModal(rowData._id.$oid, dataType)}
+              onClick={() => handleOpenModal(rowData._id, dataType)}
             />
           ) : editStatus === "rejected" ? (
             <EditIcon style={{ color: "#e9d7d7" }} />
