@@ -1,7 +1,5 @@
 export interface BookingInterface {
-  _id: {
-    $oid: string;
-  };
+  _id: string;
   name: string;
   surname: string;
   order_date: string;
@@ -19,9 +17,7 @@ export interface BookingInterface {
 }
 
 export interface ContactInterface {
-  _id: {
-    $oid: string;
-  };
+  _id: string;
   date: string;
   name: string;
   email: string;
@@ -32,9 +28,7 @@ export interface ContactInterface {
 }
 
 export interface RoomInterface {
-  _id: {
-    $oid: string | undefined;
-  };
+  _id: string;
   photos: string[];
   number: number;
   description: string;
@@ -46,9 +40,7 @@ export interface RoomInterface {
 }
 
 export interface UserInterface {
-  _id: {
-    $oid: string;
-  };
+  _id: string;
   avatar: string;
   username: string;
   position: string;
