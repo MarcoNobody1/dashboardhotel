@@ -9,10 +9,28 @@ const delay = (data:UserInterface[] | string | UserInterface, time = 400) => {
   });
 };
 
-export const getUsersData = createAsyncThunk<UserInterface[]>("users/getUsersData", async () => {
+const localUrl = import.meta.env.VITE_FETCH_URL;
+const token = localStorage.getItem("token") || "";
 
-  return (await delay(users))as UserInterface[];
-});
+export const getUsersData = createAsyncThunk<UserInterface[]>(
+  "users/getUsersData",
+  async () => {
+   
+
+    const response = await fetch(`${localUrl}users`, {
+      mode: "cors",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
+      }
+    });
+    if (!response.ok) throw new Error(`Status: ${response.status}`);
+    const data = await response.json();
+
+    return data as UserInterface[];
+  }
+);
 
 export const deleteUsersData = createAsyncThunk("users/deleteUsersData", async (id:string) => {
   return (await delay(id)) as string;
