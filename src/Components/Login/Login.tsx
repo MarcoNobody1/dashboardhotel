@@ -8,6 +8,8 @@ import { AuthContext } from "../../Context/Auth";
 import { ThemeContext } from "../../Context/ToggleTheme";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
+  loginAvatar,
+  loginEmail,
   loginStatus,
   loginUsername,
   resetState,
@@ -84,8 +86,8 @@ const Advertice = styled.p`
 `;
 
 const SpinnerFloater = styled.div`
-position: absolute;
-top: 50px;
+  position: absolute;
+  top: 50px;
 `;
 
 export const Login = () => {
@@ -96,6 +98,8 @@ export const Login = () => {
   const { dark } = useContext(ThemeContext);
   const dispatch = useAppDispatch();
   const loginState = useAppSelector(loginStatus);
+  const loginMail = useAppSelector(loginEmail);
+  const loginPhoto = useAppSelector(loginAvatar);
   useEffect(() => {
     if (auth && auth.authenticated) {
       nav("/");
@@ -104,7 +108,7 @@ export const Login = () => {
     if (loginState === "fulfilled") {
       authDispatch({
         type: "login",
-        payload: { username: user, password: password },
+        payload: { username: user, email: loginMail, photo: loginPhoto },
       });
 
       nav("/");
@@ -226,7 +230,7 @@ export const Login = () => {
           </Advertice>
           <br />
           <Advertice style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}>
-            Username: admin
+            Username: MarcoNobody
           </Advertice>
           <br />
           <Advertice style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}>
