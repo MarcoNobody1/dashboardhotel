@@ -13,12 +13,12 @@ import { ThemeContext } from "../../Context/ToggleTheme";
 import { DarkProp } from "../../features/Interfaces/Interfaces";
 import SwiperCore from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Mousewheel, Keyboard, Autoplay } from "swiper/modules";
+import { Mousewheel, Keyboard, Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { format } from "date-fns";
 
-SwiperCore.use([Autoplay, Navigation]);
+SwiperCore.use([Autoplay, Pagination]);
 
 const PersonalSwiper = styled(Swiper)`
   width: 100%;
@@ -26,29 +26,11 @@ const PersonalSwiper = styled(Swiper)`
   margin: 0;
   transition: all 250ms ease-in-out;
 
-  div.swiper-button-next {
-    background-image: url("src/assets/arrow-right.png");
+  .swiper-pagination-bullet {
+    background: black;
   }
-
-  div.swiper-button-prev {
-    background-image: url("src/assets/arrow-left.png");
-  }
-
-  div.swiper-button-prev,
-  div.swiper-button-next {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 50%;
-    background-color: #fff;
-    height: 60px;
-    width: 60px;
-    transition: all 250ms ease-in-out;
-    margin-top: 5px;
-    border-radius: 5px;
-
-    &::after {
-      display: none;
-    }
+  .swiper-pagination-bullet-active {
+    background: white;
   }
 `;
 
@@ -206,6 +188,7 @@ const ImageRoomInfo = styled.div`
   position: absolute;
   z-index: 100;
   bottom: 0px;
+  width: 100%;
   padding: 20px;
   background: rgb(152, 152, 152);
   background: linear-gradient(
@@ -292,10 +275,11 @@ export const BookingDetails: FC = () => {
         <ImageWrapper>
           <PersonalSwiper
             cssMode={true}
-            navigation={true}
+            pagination={true}
             mousewheel={true}
             keyboard={true}
-            modules={[Navigation, Mousewheel, Keyboard]}
+            autoplay={{ delay: 2000, pauseOnMouseEnter: true }}
+            modules={[Pagination, Mousewheel, Keyboard]}
             className="my-swiper"
           >
             {selectedBooking.room_photos.map((photo, index) => (
