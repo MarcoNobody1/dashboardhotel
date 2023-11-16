@@ -1,26 +1,21 @@
 import { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { PageWrapper } from "../GeneralComponents/GeneralComponents";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { roomIdStatus, roomdetailData } from "../../features/Rooms/roomSlice";
 import { renderStatus } from "../GeneralComponents/RenderStatus";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { DarkProp } from "../../features/Interfaces/Interfaces";
 import { useContext } from "react";
 import { ThemeContext } from "../../Context/ToggleTheme";
 import SwiperCore from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Navigation,
-  Mousewheel,
-  Keyboard,
-  Autoplay,
-} from "swiper/modules";
+import { Mousewheel, Keyboard, Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-SwiperCore.use([Autoplay, Navigation]);
+SwiperCore.use([Autoplay, Pagination]);
 
 const PersonalSwiper = styled(Swiper)`
   width: 100%;
@@ -28,29 +23,11 @@ const PersonalSwiper = styled(Swiper)`
   margin: 0;
   transition: all 250ms ease-in-out;
 
-  div.swiper-button-next {
-    background-image: url("src/assets/arrow-right.png");
+  .swiper-pagination-bullet {
+    background: black;
   }
-
-  div.swiper-button-prev {
-    background-image: url("src/assets/arrow-left.png");
-  }
-
-  div.swiper-button-prev,
-  div.swiper-button-next {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 50%;
-    background-color: #fff;
-    height: 60px;
-    width: 60px;
-    transition: all 250ms ease-in-out;
-    margin-top: 5px;
-    border-radius: 5px;
-
-    &::after {
-      display: none;
-    }
+  .swiper-pagination-bullet-active {
+    background: white;
   }
 `;
 
@@ -91,12 +68,13 @@ const ImageWrapper = styled.div`
   overflow: hidden;
 `;
 
-const GuestName = styled.p`
+const GuestName = styled.p<DarkProp>`
   font: normal normal 600 30px/46px Poppins;
   letter-spacing: 0px;
-  color: #212121;
+  color: ${(props) => (props.dark ? "#FFF" : "#212121")};
   margin-top: 20px;
   margin-bottom: 16px;
+  transition: all 250ms ease-in-out;
 `;
 
 const BookingId = styled.span`
@@ -183,6 +161,7 @@ const StatusWrapper = styled.div`
   transform: rotate(45deg);
   text-transform: uppercase;
   font-weight: 800;
+  z-index: 100;
 `;
 
 const Image = styled.img`
@@ -199,7 +178,7 @@ export const RoomDetails: FC = () => {
     return (
       <>
         <DetailsWrapper dark={dark.dark}>
-          <GuestName></GuestName>
+          <GuestName dark={dark.dark}>Room Nº: {selectedRoom.number}</GuestName>
           <BookingId>ID {selectedRoom._id}</BookingId>
           <InfoContainer>
             <InfoWrap>
@@ -230,10 +209,11 @@ export const RoomDetails: FC = () => {
         <ImageWrapper>
           <PersonalSwiper
             cssMode={true}
-            navigation={true}
+            pagination={true}
             mousewheel={true}
             keyboard={true}
-            modules={[Navigation, Mousewheel, Keyboard]}
+            autoplay={{delay: 2000, pauseOnMouseEnter:true}}
+            modules={[Pagination, Mousewheel, Keyboard]}
             className="my-swiper"
           >
             {selectedRoom.photos.map((photo, index) => (

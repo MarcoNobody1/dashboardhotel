@@ -5,7 +5,7 @@ const auth_key: string = "auth_info";
 interface InitialStateInterface {
   authenticated: boolean,
   username: string | null,
-  password: string | null,
+  email: string | null,
   photo: string | null,
 }
 
@@ -13,7 +13,8 @@ interface LoginInterface {
   type: "login";
   payload: {
     username: string;
-    password: string;
+    email: string;
+    photo: string;
   };
 }
 
@@ -25,7 +26,7 @@ interface UpdateInterface {
   type: "update";
   payload: {
     username: string;
-    password: string;
+    email: string;
     photo: string;
   };
 }
@@ -42,7 +43,7 @@ export const AuthContext = createContext<AuthContextInterface>({
   auth: {
     authenticated: false,
     username: 'admin',
-    password: 'admin',
+    email: 'admin',
     photo: '',
   },
   authDispatch: () => { },
@@ -52,7 +53,7 @@ export const AuthContext = createContext<AuthContextInterface>({
 
 const initialState = (): InitialStateInterface => {
 
- const initial = { authenticated: false, username: null, password: null, photo: "https://robohash.org/smartass" };
+ const initial = { authenticated: false, username: null, email: null, photo: "https://robohash.org/smartass" };
   const localKey = localStorage.getItem(auth_key) || "";
 
   if (localKey) {
@@ -68,18 +69,18 @@ const reducer = (state: InitialStateInterface, action: Actions) => {
       return {
         authenticated: true,
         username: action.payload.username,
-        password: action.payload.password,
-        photo: "https://robohash.org/smartass",
+        email: action.payload.email,
+        photo: action.payload.photo,
       };
     case "logout":
       localStorage.removeItem("token");
-      return { authenticated: false, username: null, password: null, photo: null };
+      return { authenticated: false, username: null, email: null, photo: null };
 
     case "update":
       return {
         authenticated: true,
         username: action.payload.username,
-        password: action.payload.password,
+        email: action.payload.email,
         photo: action.payload.photo,
       };
     default:

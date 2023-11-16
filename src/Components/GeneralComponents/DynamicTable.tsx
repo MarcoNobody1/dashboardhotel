@@ -31,10 +31,7 @@ import {
   userDeleteStatus,
   userUpdateStatus,
 } from "../../features/Users/userSlice";
-import {
-  deleteUsersData,
-  updateUserData,
-} from "../../features/Users/userThunks";
+import { deleteUsersData } from "../../features/Users/userThunks";
 import { BsTelephoneInbound } from "react-icons/bs";
 import {
   BookingInterface,
@@ -51,16 +48,12 @@ import { useContext } from "react";
 import { format } from "date-fns";
 import SwiperCore from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Navigation,
-  Pagination,
-  Mousewheel,
-  Keyboard,
-  Autoplay,
-} from "swiper/modules";
+import { Navigation, Mousewheel, Keyboard, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { ToggleContext } from "../../Context/ToggleSidebar";
+import arrowRightImage from "../../assets/arrow-right.png";
+import arrowLeftImage from "../../assets/arrow-left.png";
 
 SwiperCore.use([Autoplay, Navigation]);
 
@@ -158,13 +151,6 @@ const Td = styled.td`
   transition: all 250ms ease-in-out;
 `;
 
-const StyledLink = styled(Link)<DarkProp>`
-  font: normal normal normal 14px/21px Poppins;
-  letter-spacing: 0px;
-  color: ${(props) => (props.dark === "true" ? "#FFF" : "#799283")};
-  transition: all 250ms ease-in-out;
-`;
-
 const SpecialRequestButton = styled.button<DarkProp>`
   background: ${(props) => (props.dark ? "#144638" : "#eef9f2")};
   border-radius: 12px;
@@ -180,6 +166,32 @@ const SpecialRequestButton = styled.button<DarkProp>`
     transform: scale(1.01);
     background: ${(props) => (props.dark ? "#41ebbd" : "#5ad07a")};
     color: ${(props) => (props.dark ? "#202020" : "#eef9f2")};
+  }
+`;
+
+const StyledLink = styled(Link)<DarkProp>`
+  font: normal normal 600 14px/21px Poppins;
+  letter-spacing: 0px;
+  color: ${(props) => (props.dark === "true" ? "#202020" : "#fff")};
+  text-decoration: none;
+  background-color: ${(props) =>
+    props.dark === "true" ? "#41ebbd" : "#135846"};
+  border-radius: 5px;
+  display: block;
+  max-width: 65px;
+  padding: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all 500ms ease-in-out;
+
+  &:hover {
+    max-width: 150px;
+  }
+
+  &::before {
+    font-size: 12px;
+    content: "⤷ Go to #";
   }
 `;
 
@@ -430,6 +442,7 @@ const CenterDiv = styled.div`
 const SimpleDiv = styled.div<DarkProp>`
   transition: all 250ms ease-in-out;
   font-weight: 600;
+  width: 150px;
   color: ${(props) => (props.dark ? "#41ebbd" : "#202020")};
 `;
 
@@ -525,11 +538,11 @@ const PersonalSwiper = styled(Swiper)`
   transition: all 250ms ease-in-out;
 
   div.swiper-button-next {
-    background-image: url("src/assets/arrow-right.png");
+    background-image: url(${arrowRightImage});
   }
 
   div.swiper-button-prev {
-    background-image: url("src/assets/arrow-left.png");
+    background-image: url(${arrowLeftImage});
   }
 
   div.swiper-button-prev,
@@ -642,20 +655,20 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     }
   };
 
-  const handleArchiveComment = (id: string, archived: boolean) => {
+  const handleArchiveComment = (contact : ContactInterface) => {
     const Toast = Swal.mixin({
       toast: true,
       position: "center-end",
       showConfirmButton: false,
-      timer: archived ? 1500 : 1000,
+      timer: contact.archived ? 1500 : 1000,
       timerProgressBar: true,
     });
 
-    dispatch(archiveData(id));
+    dispatch(archiveData(contact));
     if (archiveContactStatus === "fulfilled") {
       Toast.fire({
         icon: "success",
-        title: archived ? "Comment Dearchived" : "Comment Archived",
+        title: contact.archived ? "Comment Dearchived" : "Comment Archived",
         timerProgressBar: false,
       });
     }
@@ -1102,7 +1115,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           <>
             <StatusButton
               onClick={() =>
-                handleArchiveComment(rowData._id, rowData.archived)
+                handleArchiveComment(rowData)
               }
               style={
                 dark.dark

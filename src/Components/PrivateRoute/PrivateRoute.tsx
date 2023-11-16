@@ -15,7 +15,7 @@ export const PrivateRoute: FC<PrivateRouteInterface> = ({ children }) => {
 
 
 
-  if (!authContext || !authContext.auth.authenticated || routes.includes(location.pathname)) {
+  if (!authContext || !authContext.auth.authenticated) {
     return (
       <>
         <Navigate to="/login" />

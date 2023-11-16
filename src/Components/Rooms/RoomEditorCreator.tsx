@@ -207,13 +207,27 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
       setCheckedStates(updatedCheckedStates);
     }
   }, [select]);
-
+  const amenityType = select
+    ? select.amenities.length === 11
+      ? "FullRoom"
+      : select.amenities.length === 9
+      ? "Premium"
+      : select.amenities.length === 7
+      ? "Advanced"
+      : "Standard"
+    : "Standard";
   const [price, setPrice] = useState(select ? select.price : 150);
   const [discount, setDiscount] = useState(select ? select.discount : 15);
-  const [roomType, setRoomType] = useState("Single Room");
-  const [roomNumber, setRoomNumber] = useState(111);
-  const [description, setDescription] = useState("");
-  const [amenities, setAmenities] = useState<AmenityOptions>("Standard");
+  const [roomType, setRoomType] = useState(
+    select ? select.type : "Single Room"
+  );
+  const [roomNumber, setRoomNumber] = useState(select ? select.number : 111);
+  const [description, setDescription] = useState(
+    select ? select.description : ""
+  );
+  const [amenities, setAmenities] = useState<AmenityOptions>(
+    select ? amenityType : "Standard"
+  );
   const [allowDiscount, setAllowDiscount] = useState(
     select && select.discount !== undefined && select.discount > 0
   );
@@ -284,27 +298,48 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
       timerProgressBar: true,
     });
 
-    const newRoom = {
-      _id: select ? select._id : "",
-      photos: finalPhotos || "",
-      number: roomNumber === null ? 111 : roomNumber,
-      description:
-        description.replace(/\s/g, "") === "" || description === null
-          ? "This is a sample description text."
-          : description,
-      type: roomType,
-      amenities:
-        amenities === "Standard"
-          ? roomAmenities.Standard
-          : amenities === "Advanced"
-          ? roomAmenities.Advanced
-          : amenities === "Premium"
-          ? roomAmenities.Premium
-          : roomAmenities.FullRoom,
-      price: price,
-      discount: allowDiscount ? discount : 0,
-      availability: "Available",
-    };
+    const newRoom = select
+      ? {
+          _id: select._id,
+          photos: finalPhotos || "",
+          number: roomNumber === null ? 111 : roomNumber,
+          description:
+            description.replace(/\s/g, "") === "" || description === null
+              ? "This is a sample description text."
+              : description,
+          type: roomType,
+          amenities:
+            amenities === "Standard"
+              ? roomAmenities.Standard
+              : amenities === "Advanced"
+              ? roomAmenities.Advanced
+              : amenities === "Premium"
+              ? roomAmenities.Premium
+              : roomAmenities.FullRoom,
+          price: price,
+          discount: allowDiscount ? discount : 0,
+          availability: "Available",
+        }
+      : {
+          photos: finalPhotos || "",
+          number: roomNumber === null ? 111 : roomNumber,
+          description:
+            description.replace(/\s/g, "") === "" || description === null
+              ? "This is a sample description text."
+              : description,
+          type: roomType,
+          amenities:
+            amenities === "Standard"
+              ? roomAmenities.Standard
+              : amenities === "Advanced"
+              ? roomAmenities.Advanced
+              : amenities === "Premium"
+              ? roomAmenities.Premium
+              : roomAmenities.FullRoom,
+          price: price,
+          discount: allowDiscount ? discount : 0,
+          availability: "Available",
+        };
 
     if (hasThreePhotos) {
       const action = select ? updateRoomData : addRoomData;
