@@ -4,10 +4,12 @@ import { ButtonAdNew } from "../GeneralComponents/GeneralComponents";
 import { userPhotos } from "../../data/createNewPhotos";
 import { addUserData, updateUserData } from "../../features/Users/userThunks";
 import Swal from "sweetalert2";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { DarkProp, UserInterface } from "../../features/Interfaces/Interfaces";
 import { useContext } from "react";
 import { ThemeContext } from "../../Context/ToggleTheme";
+import { format } from "date-fns";
+import { usersInfo } from "../../features/Users/userSlice";
 
 const Form = styled.form`
   display: flex;
@@ -60,6 +62,19 @@ const PhotoWrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
 `;
+
+const AbsoluteWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  position: absolute;
+  top: -5px;
+  right: 60px;
+`;
+
+const SamePassCheck = styled.input``;
 
 const Photo = styled.img`
   width: 100px;
@@ -144,6 +159,7 @@ const TextInput = styled.input<DarkProp>`
 `;
 
 interface InfoParagraphProps {
+  dark: boolean;
   password: string;
 }
 
@@ -152,7 +168,7 @@ const InfoParagraph = styled.p<InfoParagraphProps>`
   font-size: 12px;
   width: 80%;
   text-align: left;
-  color: #0d3128;
+  color: ${(props) => (props.dark ? "#FFF" : "#0d3128")};
   position: absolute;
   bottom: -20px;
   display: ${(props) => (props.password.length >= 1 ? "initial" : "none")};
@@ -237,6 +253,62 @@ const ActiveStatus = styled.p<StatusProps>`
   transition: all 250ms ease-out;
 `;
 
+const CheckMark = styled.div`
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 0;
+  left: 0;
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+  box-shadow: 4px 4px var(--main-color);
+  background-color: var(--input-out-of-focus);
+  transition: all 0.3s;
+
+  &:after {
+    content: "";
+    width: 7px;
+    height: 15px;
+    position: absolute;
+    top: -5px;
+    left: 7px;
+    display: none;
+    border: solid var(--bg-color);
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+  }
+`;
+
+const CheckContainer = styled.label<DarkProp>`
+  --input-focus: #41ebbd;
+  --input-out-of-focus: #ccc;
+  --bg-color: ${(props) => (props.dark ? "#FFF" : "#121212")};
+  --bg-color-alt: #666;
+  --main-color: ${(props) => (props.dark ? "#323232" : "#1a362f")};
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 3px;
+
+  & ${SamePassCheck} {
+    position: absolute;
+    opacity: 0;
+  }
+
+  & ${SamePassCheck}:checked ~ ${CheckMark} {
+    background-color: var(--input-focus);
+  }
+
+  & ${SamePassCheck}:checked ~ ${CheckMark}:after {
+    display: block;
+  }
+`;
+
+const SameText = styled.p`
+  font-weight: 600;
+  font-size: 12px;
+  color: inherit;
+`;
+
 const getFormattedDate = () => {
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
@@ -246,7 +318,7 @@ const getFormattedDate = () => {
 };
 
 interface UserEditorCreatorProps {
-  select?: UserInterface;
+  select?: any;
   closeModal: () => void;
 }
 
@@ -262,11 +334,13 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
   const [selectedPhoto, setSelectedPhoto] = useState(
     select ? select.avatar : ""
   );
+  const fecha = new Date(select ? select.start_date : 15 - 11 - 1998);
+  const fechaFormateada = format(fecha, "yyyy-MM-dd");
   const [phone, setPhone] = useState(select ? select.contact : "");
-  const [password, setPassword] = useState(select ? select.password : "");
+  const [password, setPassword] = useState("12345");
   const [username, setUsername] = useState(select ? select.username : "");
   const [email, setEmail] = useState(select ? select.email : "");
-  const [date, setDate] = useState(select ? select.start_date : "");
+  const [date, setDate] = useState(select ? fechaFormateada : "");
   const [position, setPosition] = useState(
     select ? select.position : "Room Service"
   );
@@ -274,6 +348,8 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
     select ? select.job_description : ""
   );
   const [minDate, setMinDate] = useState(getFormattedDate());
+  const [samePass, setSamePass] = useState(true);
+  const allUsers: UserInterface[] = useAppSelector(usersInfo);
 
   const handleUpdateCreateUser = () => {
     const Toast = Swal.mixin({
@@ -315,23 +391,83 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
       });
       return;
     }
+    let dataWithoutPassword = {};
 
-    const dataUser = {
-      _id: select?._id || "",
-      avatar: selectedPhoto || "",
-      username: username,
-      position: position,
-      email: email,
-      password: password,
-      start_date: date === "" ? getFormattedDate() : date,
-      job_description: description,
-      contact: phone,
-      activity: active ? "active" : "inactive",
+    const checkEmailOnUpdate = () => {
+      if (select) {
+        dataWithoutPassword = {
+          _id: select._id || "",
+          avatar: selectedPhoto || "",
+          username: username,
+          position: position,
+          email: email,
+          start_date: date === "" ? getFormattedDate() : date,
+          job_description: description,
+          contact: phone,
+          activity: active ? "active" : "inactive",
+        };
+        const isEmailRegistered = allUsers.map((user) => {
+          if (user.email === email) return true;
+          return false;
+        });
+
+        const allMinusThisUsers = allUsers.filter((user) => {
+          return user._id !== select._id;
+        });
+
+        const isRegisteredEmailUserDuplicated = allMinusThisUsers.some(
+          (user) => user.email === email
+        );
+
+        if ((isEmailRegistered && !select) || isRegisteredEmailUserDuplicated) {
+          Toast.fire({
+            icon: "error",
+            title: "This email is already registered!",
+          });
+          return;
+        }
+      } else {
+        true;
+      }
     };
 
+    checkEmailOnUpdate();
+
+    const dataUser = select
+      ? {
+          _id: select._id || "",
+          avatar: selectedPhoto || "",
+          username: username,
+          position: position,
+          email: email,
+          password: password,
+          start_date: date === "" ? getFormattedDate() : date,
+          job_description: description,
+          contact: phone,
+          activity: active ? "active" : "inactive",
+        }
+      : {
+          avatar: selectedPhoto || "",
+          username: username,
+          position: position,
+          email: email,
+          password: password,
+          start_date: date === "" ? getFormattedDate() : date,
+          job_description: description,
+          contact: phone,
+          activity: active ? "active" : "inactive",
+        };
+
     if (selectedPhoto) {
-      const action = select ? updateUserData : addUserData;
-      dispatch(action(dataUser));
+      const finalData = samePass ? dataWithoutPassword : dataUser;
+      const finalDispatch = () => {
+        if (!select) {
+          dispatch(addUserData(dataUser));
+        } else {
+          dispatch(updateUserData(finalData));
+        }
+      };
+      finalDispatch();
       setActive(false);
       setSelectedPhoto("");
       setPhone("");
@@ -561,19 +697,39 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
             </Action>
             <Action>
               <ActionTitle>Password:</ActionTitle>
+              {select ? (
+                <AbsoluteWrapper>
+                  <CheckContainer dark={dark.dark}>
+                    <SamePassCheck
+                      name="samePasswordCheckbox"
+                      type="checkbox"
+                      onChange={(event) => setSamePass(event.target.checked)}
+                      defaultChecked={samePass}
+                    />
+                    <CheckMark />
+                  </CheckContainer>
+                  <SameText>Same Password?</SameText>
+                </AbsoluteWrapper>
+              ) : null}
               <TextInput
                 dark={dark.dark}
                 name="userPasswordInput"
                 type="password"
-                placeholder={`e.g. : ILoveMyBankAccount@99`}
+                placeholder={
+                  select && samePass
+                    ? "You keep your old password!"
+                    : `e.g. : ILoveMyBankAccount@99`
+                }
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete="new-password"
                 minLength={5}
-                defaultValue={select ? select.password : undefined}
+                disabled={select ? samePass : false}
               />
-              <InfoParagraph password={password}>
-                Your Password: {password}
-              </InfoParagraph>
+              {!samePass || !select ? (
+                <InfoParagraph dark={dark.dark} password={password}>
+                  Your Password: {password}
+                </InfoParagraph>
+              ) : null}
             </Action>
           </ActionGroup>
           <ActionGroup dark={dark.dark}>
@@ -621,11 +777,11 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
                 dark={dark.dark}
                 name="typeSelector"
                 type="date"
-                min={select ? select.start_date : minDate}
+                min={select ? undefined : minDate}
                 onChange={(event) => {
                   setDate(event.target.value);
                 }}
-                defaultValue={select ? select.start_date : undefined}
+                defaultValue={select ? fechaFormateada : undefined}
               />
             </Action>
             <Action>
@@ -636,9 +792,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
                 onChange={(event) => {
                   setPosition(event.target.value);
                 }}
-                defaultValue={
-                  select ? select.position : "Room Service"
-                }
+                defaultValue={select ? select.position : "Room Service"}
               >
                 <Option dark={dark.dark} value="Room Service">
                   Room Service
