@@ -12,7 +12,7 @@ import { RootState } from "../../app/store";
 interface RoomInitialState {
   error: string | undefined;
   rooms: RoomInterface[];
-  roomDetail: RoomInterface[];
+  roomDetail: RoomInterface;
   status: "idle" | "fulfilled" | "pending" | "rejected";
   roomIdStatus: "idle" | "fulfilled" | "pending" | "rejected";
   deleteStatus: "idle" | "fulfilled" | "pending" | "rejected";
@@ -23,7 +23,17 @@ interface RoomInitialState {
 const initialState: RoomInitialState = {
   error: "null",
   rooms: [],
-  roomDetail: [],
+  roomDetail: {
+    _id:"",
+    photos: [],
+    number: 0,
+    description: "",
+    type: "",
+    amenities: [],
+    price: 0,
+    discount: 0,
+    availability: "",
+  },
   status: "idle",
   roomIdStatus: "idle",
   deleteStatus: "fulfilled",
@@ -63,9 +73,7 @@ export const roomSlice = createSlice({
       })
       .addCase(get1RoomData.fulfilled, (state, action) => {
         state.roomIdStatus = "fulfilled";
-        state.roomDetail = state.rooms.filter((room) => {
-          return room._id === action.payload;
-        });
+        state.roomDetail = action.payload;
       })
       .addCase(get1RoomData.pending, (state) => {
         state.roomIdStatus = "pending";
@@ -105,7 +113,7 @@ export const roomSlice = createSlice({
 
 export const roomsInfo = (state: RootState) => state.rooms.rooms;
 export const roomstatusinfo = (state: RootState) => state.rooms.status;
-export const roomdetailData = (state: RootState) => state.rooms.roomDetail[0];
+export const roomdetailData = (state: RootState) => state.rooms.roomDetail;
 export const roomdeleteStatus = (state: RootState) => state.rooms.deleteStatus;
 export const roomIdStatus = (state: RootState) => state.rooms.roomIdStatus;
 export const addRoomStatus = (state: RootState) => state.rooms.addRoomStatus;
