@@ -14,7 +14,7 @@ import { CommentModal } from "./CommentsModal";
 import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ThemeContext } from "../../Context/ToggleTheme";
-import { DarkProp } from "../../features/Interfaces/Interfaces";
+import { ContactInterface, DarkProp } from "../../features/Interfaces/Interfaces";
 
 const CommentsWrapper = styled.div<DarkProp>`
   min-width: 360px;
@@ -110,20 +110,20 @@ export const Comments: FC = () => {
     dispatch(getContactsData());
   }, [dispatch]);
 
-  const handleOpenModal = (id: string, archived: boolean) => {
+  const handleOpenModal = (contact : ContactInterface) => {
     setIsModalOpen(true);
-    setCurrentId(id);
-
-    if (!archived) {
-      dispatch(archiveData(id));
+    setCurrentId(contact._id);
+  
+    if (!contact.archived) {
+      dispatch(archiveData(contact));
     }
   };
 
   const data = () => {
     return (
       <>
-        {infoContacts.map((contact) => (
-          <CommentContainer dark={dark.dark} style={{backgroundColor: dark.dark ? "#202020" : "#FFF", border: dark.dark ?  "1px solid #3D3D3D" : "1px solid #ebebeb"}} archived={contact.archived}  key={contact._id}>
+        {infoContacts.map((contact, index) => (
+          <CommentContainer key={index} dark={dark.dark} style={{backgroundColor: dark.dark ? "#202020" : "#FFF", border: dark.dark ?  "1px solid #3D3D3D" : "1px solid #ebebeb"}} archived={contact.archived} >
             <>
               <FullName style={{color: dark.dark ? "#FFF" : "#262626"}}>{contact.name}</FullName>
               <IconWrapper>
@@ -131,7 +131,7 @@ export const Comments: FC = () => {
                 <FullscreenIcon
                 style={{ color: dark.dark? "#41ebbd" : "#135846"}}
                   onClick={() =>
-                    handleOpenModal(contact._id, contact.archived)
+                    handleOpenModal(contact)
                   }
                 />
               </IconWrapper>
