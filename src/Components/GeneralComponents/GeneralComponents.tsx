@@ -460,7 +460,7 @@ export const UpdatingTitle = styled(NewDataTitle)<DarkProp>`
   font-weight: 400;
   font-size: 30px;
   font-style: italic;
-  color: ${(props) => (props.dark ? "#41ebbd" : "#202020")};
+  color: ${(props) => (props.dark ? "#FFF" : "#202020")};
 `;
 
 export const CommentWrapper = styled.div<DarkProp>`
