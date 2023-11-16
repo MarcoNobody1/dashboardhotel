@@ -46,5 +46,6 @@ export const loginSlice = createSlice({
 
 export const loginUsername = (state: RootState) => state.login.username;
 export const loginEmail = (state: RootState) => state.login.email;
+export const loginAvatar = (state: RootState) => state.login.photo;
 export const loginStatus = (state: RootState) => state.login.status;
 export const { resetState } = loginSlice.actions;
