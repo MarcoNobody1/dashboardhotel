@@ -1251,7 +1251,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           </SampleDiv>
         );
       case "check_out":
-        const checkOut = new Date(rowData.check_in);
+        const checkOut = new Date(rowData.check_out);
         return (
           <DateDiv>
             <SampleDiv dark={dark.dark}>
