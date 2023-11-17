@@ -62,6 +62,7 @@ const DetailsWrapper = styled.div<DarkProp>`
 const ImageWrapper = styled.div`
   flex: 1;
   width: 100%;
+  max-height: 700px;
   background-color: #c5c5c5;
   border-radius: 0 20px 20px 0;
   position: relative;
