@@ -36,7 +36,7 @@ const PersonalSwiper = styled(Swiper)`
 
 const BookingWrapper = styled.div<DarkProp>`
   background-color: ${(props) => (props.dark ? "#202020" : "#FFF")};
-  max-width: 1475px;
+  max-width: 1465px;
   min-height: 700px;
   border: 1px solid black;
   box-shadow: 0px 4px 4px #00000005;
@@ -65,6 +65,7 @@ const DetailsWrapper = styled.div<DarkProp>`
 const ImageWrapper = styled.div`
   flex: 1;
   width: 100%;
+  max-height: 700px;
   background-color: #c5c5c5;
   border-radius: 0 20px 20px 0;
   position: relative;
