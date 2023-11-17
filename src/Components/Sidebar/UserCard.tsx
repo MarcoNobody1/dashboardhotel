@@ -126,9 +126,9 @@ export const UserCard: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {dark} = useContext(ThemeContext);
   const Modal: FC<ModalInterface> = ({ onClose }) => {
-    const [newUser, setNewUser] = useState("");
-    const [newEmail, setNewEmail] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
+    const [newUser, setNewUser] = useState(auth.username);
+    const [newEmail, setNewEmail] = useState(auth.email);
+    const [imageUrl, setImageUrl] = useState(auth.photo);
 
     const handleUserChange = (event: ChangeEvent<HTMLInputElement>) => {
       setNewUser(event.target.value);
@@ -153,7 +153,7 @@ export const UserCard: FC = () => {
       event.preventDefault();
       authDispatch({
         type: "update",
-        payload: { username: newUser, email: newEmail, photo: imageUrl },
+        payload: { username: newUser!, email: newEmail!, photo: imageUrl! },
       });
       setIsModalOpen(false);
     };
@@ -181,6 +181,7 @@ export const UserCard: FC = () => {
                 name="username"
                 onChange={handleUserChange}
                 placeholder="Type your username"
+                defaultValue={auth.username || ""}
               />
               <br />
               {imageUrl && <NewProfilePhoto src={imageUrl} alt="Preview" />}
@@ -192,6 +193,7 @@ export const UserCard: FC = () => {
                 autoComplete="off"
                 onChange={handleEmailChange}
                 placeholder="Type your personal e-mail"
+                defaultValue={auth.email || ""}
               />
               <ModalContent style={{color: dark.dark ? "#FFF" : "#262626"}}>
                 Last Username: <strong>{auth.username}</strong>
