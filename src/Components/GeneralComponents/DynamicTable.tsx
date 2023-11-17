@@ -458,10 +458,10 @@ interface AmenityDivProps {
 
 const AmenitiesDiv = styled(SampleDiv)<AmenityDivProps>`
   overflow-x: scroll;
+  overflow-y: hidden;
   max-width: ${(props) => (props.toggle ? "420px" : "300px")};
   display: flex;
   padding: 10px;
-
   &::-webkit-scrollbar {
     height: 6px;
     transition: all 0.25s ease-in-out;
@@ -483,6 +483,11 @@ const AmenitiesDiv = styled(SampleDiv)<AmenityDivProps>`
   }
 `;
 
+const AmenitiesOuterWrap = styled.div<AmenityDivProps>`
+  max-width: ${(props) => (props.toggle ? "420px" : "300px")};
+  position: relative;
+`;
+
 interface FadeProps {
   dark?: boolean | string;
   right?: boolean;
@@ -491,11 +496,11 @@ interface FadeProps {
 const FadeDiv = styled.div<FadeProps>`
   position: absolute;
   border-radius: 15px;
-  right: ${(props) => (props.right ? "130px" : undefined)};
-  left: ${(props) => (props.right ? undefined : "0px")};
-  top: 10px;
+  right: ${(props) => (props.right ? "-10px" : undefined)};
+  left: ${(props) => (props.right ? undefined : "-10px")};
+  top: 4px;
   width: 40px;
-  height: 55px;
+  height: 50px;
   transition: all 250ms ease-in-out;
   background: ${(props) =>
     props.dark
@@ -655,7 +660,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     }
   };
 
-  const handleArchiveComment = (contact : ContactInterface) => {
+  const handleArchiveComment = (contact: ContactInterface) => {
     const Toast = Swal.mixin({
       toast: true,
       position: "center-end",
@@ -983,15 +988,17 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "amenities":
         return (
           <>
-            <AmenitiesDiv dark={dark.dark} toggle={toggle.toggle}>
-              {rowData.amenities.map((amenity, index) => (
-                <AmenityWrapper key={index}>
-                  <AmenityContent>{amenity}</AmenityContent>
-                </AmenityWrapper>
-              ))}
-            </AmenitiesDiv>
-            <FadeDiv right={true} dark={dark.dark} />
-            <FadeDiv dark={dark.dark} />
+            <AmenitiesOuterWrap>
+              <AmenitiesDiv dark={dark.dark} toggle={toggle.toggle}>
+                {rowData.amenities.map((amenity, index) => (
+                  <AmenityWrapper key={index}>
+                    <AmenityContent>{amenity}</AmenityContent>
+                  </AmenityWrapper>
+                ))}
+              </AmenitiesDiv>
+              <FadeDiv right={true} dark={dark.dark} />
+                <FadeDiv dark={dark.dark} />
+            </AmenitiesOuterWrap>
           </>
         );
 
@@ -1114,9 +1121,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         return (
           <>
             <StatusButton
-              onClick={() =>
-                handleArchiveComment(rowData)
-              }
+              onClick={() => handleArchiveComment(rowData)}
               style={
                 dark.dark
                   ? {
