@@ -6,12 +6,18 @@ import {
   roomAmenitiesInterface,
 } from "../../data/roomAmenities";
 import { roomPhotos } from "../../data/createNewPhotos";
-import { addRoomData, updateRoomData } from "../../features/Rooms/roomThunks";
+import {
+  addRoomData,
+  getRoomsData,
+  updateRoomData,
+} from "../../features/Rooms/roomThunks";
 import Swal from "sweetalert2";
 import { useAppDispatch } from "../../app/hooks";
 import { DarkProp, RoomInterface } from "../../features/Interfaces/Interfaces";
 import { ThemeContext } from "../../Context/ToggleTheme";
 import { useContext } from "react";
+import { useNavigate } from "react-router";
+import { set } from "cypress/types/lodash";
 
 const Form = styled.form`
   display: flex;
@@ -188,6 +194,7 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
   select,
   closeModal,
 }) => {
+  const nav = useNavigate();
   const dispatch = useAppDispatch();
   const { dark } = useContext(ThemeContext);
   const [checkedStates, setCheckedStates] = useState<boolean[]>([
@@ -343,7 +350,9 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
 
     if (hasThreePhotos) {
       const action = select ? updateRoomData : addRoomData;
-      dispatch(action(newRoom));
+      dispatch(action(newRoom)).then(() => {
+        dispatch(getRoomsData());
+      });
       setCheckedStates([false, false, false, false, true]);
       setPrice(150);
       setDiscount(15);
