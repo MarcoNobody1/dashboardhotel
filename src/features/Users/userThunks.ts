@@ -1,16 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { UserInterface } from "../Interfaces/Interfaces";
-
-const delay = (data: UserInterface[] | string | UserInterface, time = 400) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(data);
-    }, time);
-  });
-};
+import { getToken } from "../generalFetch";
 
 const localUrl = import.meta.env.VITE_FETCH_URL;
-const token = localStorage.getItem("token") || "";
 
 export const getUsersData = createAsyncThunk<UserInterface[]>(
   "users/getUsersData",
@@ -20,7 +12,7 @@ export const getUsersData = createAsyncThunk<UserInterface[]>(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
     });
     if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -38,7 +30,7 @@ export const deleteUsersData = createAsyncThunk(
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
     });
     if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -55,7 +47,7 @@ export const get1UserData = createAsyncThunk(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
     });
     if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -73,7 +65,7 @@ export const addUserData = createAsyncThunk(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
       body: JSON.stringify(user),
     });
@@ -91,7 +83,7 @@ export const updateUserData = createAsyncThunk(
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
       body: JSON.stringify(user),
     });

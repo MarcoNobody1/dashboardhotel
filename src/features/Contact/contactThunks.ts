@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ContactInterface } from "../Interfaces/Interfaces";
+import { getToken } from "../generalFetch";
 
 const localUrl = import.meta.env.VITE_FETCH_URL;
-const token = localStorage.getItem("token") || "";
 
 export const getContactsData = createAsyncThunk<ContactInterface[]>(
   "contacts/getContactData",
@@ -12,7 +12,7 @@ export const getContactsData = createAsyncThunk<ContactInterface[]>(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
     });
     if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -30,7 +30,7 @@ export const deleteContactsData = createAsyncThunk(
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
     });
     if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -47,7 +47,7 @@ export const get1ContactData = createAsyncThunk(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
     });
     if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -64,7 +64,7 @@ export const archiveData = createAsyncThunk(
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
       body: JSON.stringify({
         archived: !update.archived
