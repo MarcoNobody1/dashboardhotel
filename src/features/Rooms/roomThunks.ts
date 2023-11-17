@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RoomInterface } from "../Interfaces/Interfaces";
+import { getToken } from "../generalFetch";
 
 const localUrl = import.meta.env.VITE_FETCH_URL;
-const token = localStorage.getItem("token") || "";
 
 export const getRoomsData = createAsyncThunk<RoomInterface[]>("rooms/getRoomsData", async () => {
 
@@ -12,7 +12,7 @@ export const getRoomsData = createAsyncThunk<RoomInterface[]>("rooms/getRoomsDat
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      token: token,
+      token: getToken(),
     }
   });
   if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -27,7 +27,7 @@ export const deleteRoomsData = createAsyncThunk("rooms/deleteRoomsData", async (
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      token: token,
+      token: getToken(),
     },
   });
   if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -41,7 +41,7 @@ export const get1RoomData = createAsyncThunk("rooms/get1RoomData", async (id:str
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      token: token,
+      token: getToken(),
     }
   });
   if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -56,7 +56,7 @@ export const addRoomData = createAsyncThunk("rooms/addRoomData", async (room:Par
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      token: token,
+      token: getToken(),
     },
     body: JSON.stringify(room)
   });
@@ -71,7 +71,7 @@ export const updateRoomData = createAsyncThunk("rooms/updateRoomData", async (ro
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      token: token,
+      token: getToken(),
     },
     body: JSON.stringify(room)
   });

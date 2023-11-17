@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BookingInterface } from "../Interfaces/Interfaces";
+import { getToken } from "../generalFetch";
 
 const localUrl = import.meta.env.VITE_FETCH_URL;
-const token = localStorage.getItem("token") || "";
 
 export const getData = createAsyncThunk<BookingInterface[]>(
   "bookings/getData",
@@ -12,7 +12,7 @@ export const getData = createAsyncThunk<BookingInterface[]>(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
     });
     if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -30,7 +30,7 @@ export const deleteData = createAsyncThunk(
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
     });
     if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -47,7 +47,7 @@ export const get1Data = createAsyncThunk(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: getToken(),
       },
     });
     if (!response.ok) throw new Error(`Status: ${response.status}`);
