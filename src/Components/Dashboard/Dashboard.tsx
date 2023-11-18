@@ -1,5 +1,5 @@
-import React, { FC, useContext } from "react";
-import { PageWrapper } from "../GeneralComponents/GeneralComponents";
+import { FC, useContext, useEffect } from "react";
+import { PageWrapper, RenderGlassLoading } from "../GeneralComponents/GeneralComponents";
 import { LiaBedSolid } from "react-icons/lia";
 import { LuCalendarCheck2 } from "react-icons/lu";
 import { BsBoxArrowInRight, BsBoxArrowRight } from "react-icons/bs";
@@ -7,6 +7,9 @@ import styled from "styled-components";
 import { Notification } from "./NotificationPreview";
 import { Comments } from "../Contacts/CommentsPreview";
 import { ThemeContext } from "../../Context/ToggleTheme";
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { statusinfo } from "../../features/Bookings/bookingSlice";
+import { getData } from "../../features/Bookings/bookingThunks";
 
 const NotifContainer = styled.div`
   display: flex;
@@ -32,6 +35,19 @@ export const CommentsTitle = styled.p`
 
 export const Dashboard: FC = () => {
   const { dark } = useContext(ThemeContext);
+  const statusInfo = useAppSelector(statusinfo);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(getData());
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
 
   return (
     <>

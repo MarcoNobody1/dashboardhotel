@@ -1,7 +1,10 @@
 import { FC, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsArrowsFullscreen, BsFillBookmarkCheckFill } from "react-icons/bs";
-import { CommentContainer, MessageContent } from "../GeneralComponents/GeneralComponents";
+import {
+  CommentContainer,
+  MessageContent,
+} from "../GeneralComponents/GeneralComponents";
 import {
   contactsInfo,
   contactstatusinfo,
@@ -14,7 +17,10 @@ import { CommentModal } from "./CommentsModal";
 import { renderStatus } from "../GeneralComponents/RenderStatus";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ThemeContext } from "../../Context/ToggleTheme";
-import { ContactInterface, DarkProp } from "../../features/Interfaces/Interfaces";
+import {
+  ContactInterface,
+  DarkProp,
+} from "../../features/Interfaces/Interfaces";
 
 const CommentsWrapper = styled.div<DarkProp>`
   min-width: 360px;
@@ -26,7 +32,7 @@ const CommentsWrapper = styled.div<DarkProp>`
   padding-bottom: 15px;
   transition: all 0.25s ease-in-out;
 
-   &::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     height: 10px;
     transition: all 0.25s ease-in-out;
     background-color: ${(props) => (props.dark ? "#202020" : "#f1f1f1")};
@@ -110,12 +116,16 @@ export const Comments: FC = () => {
     dispatch(getContactsData());
   }, [dispatch]);
 
-  const handleOpenModal = (contact : ContactInterface) => {
+  const handleOpenModal = (contact: ContactInterface) => {
     setIsModalOpen(true);
     setCurrentId(contact._id);
-  
+
     if (!contact.archived) {
-      dispatch(archiveData(contact));
+      const updatedContact = {
+        ...contact,
+        archived: !contact.archived,
+      };
+      dispatch(archiveData(updatedContact));
     }
   };
 
@@ -123,22 +133,40 @@ export const Comments: FC = () => {
     return (
       <>
         {infoContacts.map((contact, index) => (
-          <CommentContainer key={index} dark={dark.dark} style={{backgroundColor: dark.dark ? "#202020" : "#FFF", border: dark.dark ?  "1px solid #3D3D3D" : "1px solid #ebebeb"}} archived={contact.archived} >
+          <CommentContainer
+            key={index}
+            dark={dark.dark}
+            style={{
+              backgroundColor: dark.dark ? "#202020" : "#FFF",
+              border: dark.dark ? "1px solid #3D3D3D" : "1px solid #ebebeb",
+            }}
+            archived={contact.archived}
+          >
             <>
-              <FullName style={{color: dark.dark ? "#FFF" : "#262626"}}>{contact.name}</FullName>
+              <FullName style={{ color: dark.dark ? "#FFF" : "#262626" }}>
+                {contact.name}
+              </FullName>
               <IconWrapper>
-                <ReadIcon archived={contact.archived.toString()} /> 
+                <ReadIcon archived={contact.archived.toString()} />
                 <FullscreenIcon
-                style={{ color: dark.dark? "#41ebbd" : "#135846"}}
-                  onClick={() =>
-                    handleOpenModal(contact)
-                  }
+                  style={{ color: dark.dark ? "#41ebbd" : "#135846" }}
+                  onClick={() => handleOpenModal(contact)}
                 />
               </IconWrapper>
-              <EmailAddress  style={{ color: dark.dark? "#41ebbd" : "#799283"}}>{contact.email}</EmailAddress>
-              <PhoneNumber  style={{ color: dark.dark? "#41ebbd" : "#799283"}}>{contact.phone}</PhoneNumber>
-              <Subject style={{color: dark.dark ? "#FFF" : "#262626"}}>{contact.subject}</Subject>
-              <MessageContent style={{color: dark.dark ? "#FFF" : "#6e6e6e"}}>{contact.comment}</MessageContent>
+              <EmailAddress
+                style={{ color: dark.dark ? "#41ebbd" : "#799283" }}
+              >
+                {contact.email}
+              </EmailAddress>
+              <PhoneNumber style={{ color: dark.dark ? "#41ebbd" : "#799283" }}>
+                {contact.phone}
+              </PhoneNumber>
+              <Subject style={{ color: dark.dark ? "#FFF" : "#262626" }}>
+                {contact.subject}
+              </Subject>
+              <MessageContent style={{ color: dark.dark ? "#FFF" : "#6e6e6e" }}>
+                {contact.comment}
+              </MessageContent>
             </>
           </CommentContainer>
         ))}
@@ -148,7 +176,12 @@ export const Comments: FC = () => {
 
   return (
     <>
-      <CommentsWrapper dark={dark.dark} style={{  backgroundColor: dark.dark ? "#202020" : "#fff"}}>{renderStatus(statusInfo, data)}</CommentsWrapper>
+      <CommentsWrapper
+        dark={dark.dark}
+        style={{ backgroundColor: dark.dark ? "#202020" : "#fff" }}
+      >
+        {renderStatus(statusInfo, data)}
+      </CommentsWrapper>
       {isModalOpen && (
         <CommentModal
           idContact={currentId}
