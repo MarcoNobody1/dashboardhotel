@@ -16,9 +16,7 @@ export const renderStatus = (
   if (status === "fulfilled") {
     return data();
   } else if (status === "rejected") {
-    setTimeout(() => {
-      return <RenderError />;
-    }, 500);
+    return <RenderError />;
   } else if (status === "pending") {
     return <RenderGlassLoading />;
   } else if (status === "idle") {
