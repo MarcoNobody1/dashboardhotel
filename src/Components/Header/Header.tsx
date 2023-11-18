@@ -115,12 +115,12 @@ export const Header: FC = () => {
   const messageNotification = pendingMessages.length;
   const bookingNotification = bookings.length;
   useEffect(() => {
-    dispatch(getContactsData());
-  }, [getContactsData]);
 
-  useEffect(() => {
-    dispatch(getData());
-  }, [getData]);
+    if (auth.authenticated) {
+      dispatch(getContactsData());
+      dispatch(getData());
+    }
+  }, [getContactsData, getData]);
 
   useEffect(() => {
     switch (location.pathname) {
@@ -168,15 +168,25 @@ export const Header: FC = () => {
         </IconWrap>
         <Title dark={dark.dark}>{title}</Title>
         <SwitchSunMoon absolute={false} />
-        <IconWrap onClick={() => {navigate("/contact")}}>
+        <IconWrap
+          onClick={() => {
+            navigate("/contact");
+          }}
+        >
           <MessageIcon />
           {messageNotification !== 0 && (
             <Notification>{messageNotification}</Notification>
           )}
         </IconWrap>
-        <IconWrap onClick={() => {navigate("/bookings")}}>
+        <IconWrap
+          onClick={() => {
+            navigate("/bookings");
+          }}
+        >
           <BellIcon />
-        {bookingNotification !== 0 && <Notification>{bookingNotification}</Notification>}
+          {bookingNotification !== 0 && (
+            <Notification>{bookingNotification}</Notification>
+          )}
         </IconWrap>
         <IconWrap onClick={handleLogOut}>
           <LogOutIcon />
