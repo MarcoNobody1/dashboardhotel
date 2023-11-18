@@ -90,8 +90,8 @@ const SpinnerFloater = styled.div`
 `;
 
 export const Login = () => {
-  const [user, setUser] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState("MarcoNobody");
+  const [password, setPassword] = useState("admin");
   const nav = useNavigate();
   const { auth, authDispatch } = useContext(AuthContext);
   const { dark } = useContext(ThemeContext);
@@ -100,9 +100,6 @@ export const Login = () => {
   const loginMail = useAppSelector(loginEmail);
   const loginPhoto = useAppSelector(loginAvatar);
   useEffect(() => {
-    if (auth && auth.authenticated) {
-      nav("/");
-    }
 
     if (loginState === "fulfilled") {
       authDispatch({
@@ -192,6 +189,7 @@ export const Login = () => {
             type="text"
             placeholder="Type your e-mail"
             autoComplete="on"
+            defaultValue={user}
           />
           <Label
             style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}
@@ -212,6 +210,7 @@ export const Login = () => {
             type="password"
             placeholder="Type your password"
             autoComplete="on"
+            defaultValue={password}
           />
           <Button
             style={{
