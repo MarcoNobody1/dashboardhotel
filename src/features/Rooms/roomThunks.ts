@@ -1,81 +1,49 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RoomInterface } from "../Interfaces/Interfaces";
-import { getToken } from "../generalFetch";
+import { generalFetch } from "../generalFetch";
 
-const localUrl = import.meta.env.VITE_FETCH_URL;
 
 export const getRoomsData = createAsyncThunk<RoomInterface[]>("rooms/getRoomsData", async () => {
-
- 
-  const response = await fetch(`${localUrl}rooms`, {
-    mode: "cors",
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      token: getToken(),
-    }
-  });
-  if (!response.ok) throw new Error(`Status: ${response.status}`);
-  const data = await response.json();
-
-  return data as RoomInterface[];
+  try {
+    const response = await generalFetch({ url: "rooms" });
+    return response as RoomInterface[];
+  } catch (error) {
+    throw error;
+  }
 });
 
 export const deleteRoomsData = createAsyncThunk("rooms/deleteRoomsData", async (id:string) => {
-  const response = await fetch(`${localUrl}rooms/${id}`, {
-    mode: "cors",
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      token: getToken(),
-    },
-  });
-  if (!response.ok) throw new Error(`Status: ${response.status}`);
-
-  return id as string;
+  try {
+    await generalFetch({ url: `rooms/${id}`, method: "delete" });
+    return id;
+  } catch (error) {
+    throw error;
+  }
 });
 
 export const get1RoomData = createAsyncThunk("rooms/get1RoomData", async (id:string) => {
-  const response = await fetch(`${localUrl}rooms/${id}`, {
-    mode: "cors",
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      token: getToken(),
-    }
-  });
-  if (!response.ok) throw new Error(`Status: ${response.status}`);
-  const data = await response.json();
-  return data;
+  try {
+    const response = await generalFetch({ url: `rooms/${id}` });
+    return response as RoomInterface;
+  } catch (error) {
+    throw error;
+  }
 });
 
 export const addRoomData = createAsyncThunk("rooms/addRoomData", async (room:Partial<RoomInterface>) => {
-  
-  const response = await fetch(`${localUrl}rooms`, {
-    mode: "cors",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      token: getToken(),
-    },
-    body: JSON.stringify(room)
-  });
-  if (!response.ok) throw new Error(`Status: ${response.status}`);
-
-  return room as RoomInterface;
+  try {
+    await generalFetch({ url: `rooms/`, method: "POST", data: room });
+    return room as RoomInterface;
+  } catch (error) {
+    throw error;
+  }
 })
 
 export const updateRoomData = createAsyncThunk("rooms/updateRoomData", async (room:Partial<RoomInterface>) => {
-  const response = await fetch(`${localUrl}rooms/${room._id}`, {
-    mode: "cors",
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      token: getToken(),
-    },
-    body: JSON.stringify(room)
-  });
-  if (!response.ok) throw new Error(`Status: ${response.status}`);
-
-  return room as RoomInterface;
+  try {
+    await generalFetch({ url: `rooms/${room._id}`, method: "PUT", data: room });
+    return room;
+  } catch (error) {
+    throw error;
+  }
 })
