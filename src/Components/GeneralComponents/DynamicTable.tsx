@@ -660,24 +660,33 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
     }
   };
 
-  const handleArchiveComment = (contact: ContactInterface) => {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "center-end",
-      showConfirmButton: false,
-      timer: contact.archived ? 1500 : 1000,
-      timerProgressBar: true,
-    });
-
-    dispatch(archiveData(contact));
-    if (archiveContactStatus === "fulfilled") {
+  const handleArchiveComment = async (contact: ContactInterface) => {
+    try {
+      const updatedContact = {
+        ...contact,
+        archived: !contact.archived,
+      };
+  
+      await dispatch(archiveData(updatedContact));
+  
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "center-end",
+        showConfirmButton: false,
+        timer: contact.archived ? 1500 : 1000,
+        timerProgressBar: true,
+      });
+  
       Toast.fire({
         icon: "success",
         title: contact.archived ? "Comment Dearchived" : "Comment Archived",
         timerProgressBar: false,
       });
+    } catch (error) {
+      console.error("Error archiving comment:", error);
     }
   };
+  
 
   type TableRow =
     | BookingInterface
