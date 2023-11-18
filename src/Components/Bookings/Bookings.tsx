@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ButtonFilter, ButtonsContainer, FilterContainer, OptionSelect, OuterContainer, PageWrapper, SearchInput, SelectorFilter, TableContainer } from "../GeneralComponents/GeneralComponents";
 import { info, statusinfo } from "../../features/Bookings/bookingSlice";
 import { getData } from "../../features/Bookings/bookingThunks";
