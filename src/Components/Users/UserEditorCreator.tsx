@@ -471,7 +471,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
           `User with ID ${dataUser._id} has been modified`,
         ];
         const body = `
-This is the user's data now:
+
         
         Username: ${dataUser.username},
         Position: ${dataUser.position},
@@ -484,6 +484,31 @@ This is the user's data now:
         Contact: ${dataUser.contact}
         
 HURRAY! Well done!
+
+<h2 style="background-color: black;color: white; width: 100%; text-align: center" id="welcome">This is the user's data now:</h1>
+  <div style="width: 100%; border: 2px solid black; border-radius: 20px; background-color: lightcyan">
+  <ul>
+    <li> <strong  style="text-decoration: underline">Username</strong>: ${dataUser.username}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Position</strong>: ${dataUser.position}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Email</strong>: ${dataUser.email}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Password</strong>: ${dataUser.password}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Start Date</strong>: ${dataUser.start_date}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Job Description</strong>: ${dataUser.job_description}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Contact</strong>: ${dataUser.contact}</li>
+  </ul>
+  </div>
+  <div style="width: 100%; text-align: center;">
+    <h3>
+  Well done! The user is available NOW in:
+</h3>
+  <a href="http://dashboardmiranda.s3-website-eu-west-1.amazonaws.com/users" style="font-size: 25px; text-decoration: none; cursor: pointer;" target="_blank">Dashboard Hotel Miranda</a>
+  </div>
         `;
 
         if (!select) {
