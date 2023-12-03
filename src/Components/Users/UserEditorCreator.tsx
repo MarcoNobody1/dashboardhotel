@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../../Context/ToggleTheme";
 import { format } from "date-fns";
 import { usersInfo } from "../../features/Users/userSlice";
+import { sendEmail } from "../../features/Emails/emailHandler";
 
 const Form = styled.form`
   display: flex;
@@ -352,7 +353,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
     select ? select.job_description : ""
   );
   const [minDate, setMinDate] = useState(getFormattedDate());
-  const [samePass, setSamePass] = useState(true);
+  const [samePass, setSamePass] = useState(false);
   const allUsers: UserInterface[] = useAppSelector(usersInfo);
 
   const handleUpdateCreateUser = () => {
@@ -465,12 +466,34 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
     if (selectedPhoto) {
       const finalData = samePass ? dataWithoutPassword : dataUser;
       const finalDispatch = () => {
+        const subject = [
+          "A new user has been created!",
+          `User with ID ${dataUser._id} has been modified`,
+        ];
+        const body = `
+This is the user's data now:
+        
+        Username: ${dataUser.username},
+        Position: ${dataUser.position},
+        Email: ${dataUser.email},
+        Password: ${
+          samePass ? "(Not modified)" : dataUser.password
+        },
+        Start Date: ${dataUser.start_date},
+        Job Description: ${dataUser.job_description},
+        Contact: ${dataUser.contact}
+        
+HURRAY! Well done!
+        `;
+
         if (!select) {
           dispatch(addUserData(dataUser)).then(() => {
             dispatch(getUsersData());
+            sendEmail(subject[0], body);
           });
         } else {
           dispatch(updateUserData(finalData));
+          sendEmail(subject[1], body);
         }
       };
       finalDispatch();
