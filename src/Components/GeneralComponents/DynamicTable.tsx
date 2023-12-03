@@ -901,7 +901,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
                 handleDelete(rowData._id);
                 sendEmail(
                   "Booking Deletion",
-                  `Booking with ID: ${rowData._id} has been deleted.`
+                  `<h2 style="text-decoration:underline">Booking Deleted</h2><p>Booking with ID <em>${rowData._id}</em> has been deleted.</p>`
                 );
               }}
             />
@@ -937,7 +937,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
                 handleDelete(rowData._id);
                 sendEmail(
                   "Room Deletion",
-                  `Room with ID: ${rowData._id} has been deleted.`
+                  `<h2 style="text-decoration:underline">Room Deleted</h2><p>Room with ID <em>${rowData._id}</em> has been deleted.</p>`
                 );
               }}
             />
@@ -1096,7 +1096,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
                 handleDelete(rowData._id);
                 sendEmail(
                   "Message Deletion",
-                  `Message with ID: ${rowData._id} has been deleted.`
+                  `<h2 style="text-decoration:underline">Message Deleted</h2><p>Message with ID <em>${rowData._id}</em> has been deleted.</p>`
                 );
               }}
             />
@@ -1204,7 +1204,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
                 handleDelete(rowData._id);
                 sendEmail(
                   "User Deletion",
-                  `User with ID: ${rowData._id} has been deleted.`
+                  `<h2 style="text-decoration:underline">User Deleted</h2><p>User with ID <em>${rowData._id}</em> has been deleted.</p>`
                 );
               }}
             />
