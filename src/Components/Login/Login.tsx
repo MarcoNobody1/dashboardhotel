@@ -28,7 +28,8 @@ const LogWrapper = styled.div`
 const LogForm = styled.form`
   padding: 20px;
   text-align: center;
-  border-radius: 15px;
+  border-radius: 25px;
+  min-width: 350px;
   transition: all 250ms ease-in-out;
 `;
 
@@ -37,7 +38,7 @@ export const Input = styled.input.attrs((props) => ({
 }))`
   display: block;
   margin: 0 auto;
-  width: 100%;
+  width: 80%;
   text-align: left;
   padding: 10px;
   margin-bottom: 20px;
@@ -57,13 +58,14 @@ const Label = styled.label`
 
 const Button = styled.button`
   text-align: center;
-  padding: 5px 20px;
-  width: 100%;
+  display: block;
+  padding: 10px;
+  width: 50%;
   font-weight: 600;
   border-radius: 15px;
   text-transform: uppercase;
   color: #ffffff;
-  margin-bottom: 15px;
+  margin: 45px auto 15px;
   transition: all 0.3s ease-out;
 
   &:hover {
@@ -72,9 +74,13 @@ const Button = styled.button`
   }
 `;
 
-const Logo = styled.img`
+const Logo = styled.div`
   width: 220px;
+  height: 60px;
   margin-bottom: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
   transition: all 0.25s ease-in-out;
 `;
 
@@ -86,7 +92,7 @@ const Advertice = styled.p`
 
 const SpinnerFloater = styled.div`
   position: absolute;
-  top: 50px;
+  bottom: 150px;
 `;
 
 export const Login = () => {
@@ -144,7 +150,11 @@ export const Login = () => {
   return (
     <>
       <LogWrapper
-        style={{ backgroundColor: dark.dark ? "#171717" : "lightcyan" }}
+        style={{
+          background: dark.dark
+            ? "#171717 url(src/assets/BG2.png) no-repeat center/cover"
+            : "lightcyan url(src/assets/BG1.png) no-repeat center/cover",
+        }}
       >
         {loginState === "pending" && (
           <SpinnerFloater>
@@ -169,7 +179,6 @@ export const Login = () => {
           }}
           onSubmit={handleSubmit}
         >
-          <Logo src={dark.dark ? logoDark : logo} />
           <Label
             style={{ color: dark.dark ? "#FFEDEC" : "#393939" }}
             htmlFor="user"
