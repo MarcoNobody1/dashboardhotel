@@ -23,6 +23,9 @@ const LogWrapper = styled.div`
   justify-content: center;
   align-items: center;
   transition: all 250ms ease-in-out;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 const LogForm = styled.form`
@@ -151,9 +154,9 @@ export const Login = () => {
     <>
       <LogWrapper
         style={{
-          background: dark.dark
-            ? "#171717 url(src/assets/BG2.png) no-repeat center/cover"
-            : "lightcyan url(src/assets/BG1.png) no-repeat center/cover",
+          backgroundImage: dark.dark
+            ? "url(https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/BG2.png)"
+            : "url(https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/BG1.png)",
         }}
       >
         {loginState === "pending" && (
