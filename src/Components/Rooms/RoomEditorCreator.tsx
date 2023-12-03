@@ -356,9 +356,9 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
         `Room with ID ${newRoom._id} has been modified`,
       ];
       const body = `
-      <h2 style="background-color: black; color: white; width: 100%; text-align: center" id="welcome">This is the room's data now:</h2>
-      <div style="box-shadow: 0px 14px 24px 0px rgba(190, 173, 142, 0.27); width: 100%; border: 2px solid black; border-radius: 20px; background-color: lightcyan">
-      <ul style="text-align: left">
+      <h2 style="background-color: black;color: white; width: 100%; text-align: center" id="welcome">This is the room's data now:</h2>
+      <div style="box-shadow: 0px 14px 24px 0px rgba(190, 173, 142, 0.27); width: 100%; border: 2px solid black; margin-bottom: 40px; border-radius: 20px; background-color: lightcyan">
+      <ul>
         <li> <strong  style="text-decoration: underline">Photos (length)</strong>: ${newRoom.photos.length}</li>
         <br>
         <li><strong  style="text-decoration: underline">Number</strong>: ${newRoom.number}</li>
@@ -375,11 +375,11 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
       </ul>
       </div>
       <div style="width: 100%; text-align: center;">
-        <h3>
+        <h3 style="display: inline-block; margin-right: 15px">
       Well done! The room is available NOW in:
     </h3>
-      <a href="http://dashboardmiranda.s3-website-eu-west-1.amazonaws.com/rooms" style="font-size: 25px; text-decoration: none; cursor: pointer;" target="_blank">Dashboard Hotel Miranda</a>
-      </div>
+    <a href="http://dashboardmiranda.s3-website-eu-west-1.amazonaws.com/rooms" style="font-size: 20px;" target="_blank">DASHBOARD HOTEL MIRANDA</a>
+</div>
       `;
       dispatch(action(newRoom)).then(() => {
         dispatch(getRoomsData());
