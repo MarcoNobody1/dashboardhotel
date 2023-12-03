@@ -18,6 +18,7 @@ import { ThemeContext } from "../../Context/ToggleTheme";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { set } from "cypress/types/lodash";
+import { sendEmail } from "../../features/Emails/emailHandler";
 
 const Form = styled.form`
   display: flex;
@@ -350,8 +351,26 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
 
     if (hasThreePhotos) {
       const action = select ? updateRoomData : addRoomData;
+      const subject = [
+        "A new room has been created!",
+        `Room with ID ${newRoom._id} has been modified`,
+      ];
+      const body = `
+This is the room's data now:
+      
+      Photos: ${newRoom.photos.length},
+      Number: ${newRoom.number},
+      Description: ${newRoom.description},
+      Type: ${newRoom.type},
+      Amenities: ${newRoom.amenities},
+      Price: ${newRoom.price},
+      Discount: ${newRoom.discount}
+      
+HURRAY! Well done!
+      `;
       dispatch(action(newRoom)).then(() => {
         dispatch(getRoomsData());
+        select ? sendEmail(subject[1], body) : sendEmail(subject[0], body);
       });
       setCheckedStates([false, false, false, false, true]);
       setPrice(150);
