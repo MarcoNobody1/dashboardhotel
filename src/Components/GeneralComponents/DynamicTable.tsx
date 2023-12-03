@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { deleteData, get1Data } from "../../features/Bookings/bookingThunks";
@@ -54,6 +54,8 @@ import "swiper/css/navigation";
 import { ToggleContext } from "../../Context/ToggleSidebar";
 import arrowRightImage from "../../assets/arrow-right.png";
 import arrowLeftImage from "../../assets/arrow-left.png";
+import { AuthContext } from "../../Context/Auth";
+import { sendEmail } from "../../features/Emails/emailHandler";
 
 SwiperCore.use([Autoplay, Navigation]);
 
@@ -615,6 +617,15 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
   );
   const { dark } = useContext(ThemeContext);
   const { toggle } = useContext(ToggleContext);
+  const { auth } = useContext(AuthContext);
+  const testName = "test";
+  const [currentUser, setCurrentUser] = useState("");
+
+  useEffect(() => {
+    if (auth.username === testName) {
+      setCurrentUser(testName);
+    }
+  }, [testName]);
 
   const headers =
     dataType === "bookings"
@@ -666,9 +677,9 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         ...contact,
         archived: !contact.archived,
       };
-  
+
       await dispatch(archiveData(updatedContact));
-  
+
       const Toast = Swal.mixin({
         toast: true,
         position: "center-end",
@@ -676,7 +687,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         timer: contact.archived ? 1500 : 1000,
         timerProgressBar: true,
       });
-  
+
       Toast.fire({
         icon: "success",
         title: contact.archived ? "Comment Dearchived" : "Comment Archived",
@@ -686,7 +697,6 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       console.error("Error archiving comment:", error);
     }
   };
-  
 
   type TableRow =
     | BookingInterface
@@ -887,7 +897,13 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           statusInfo === "fulfilled" ? (
             <TrashIcon
               datatype="bookings"
-              onClick={() => handleDelete(rowData._id)}
+              onClick={() => {
+                handleDelete(rowData._id);
+                sendEmail(
+                  "Booking Deletion",
+                  `<h2 style="text-decoration:underline">Booking Deleted</h2><p>Booking with ID <em>${rowData._id}</em> has been deleted.</p>`
+                );
+              }}
             />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
@@ -909,14 +925,22 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         return (
           <>
             <StatusDiv data={rowData} />
-            {trashIcon}
+            {currentUser !== "test" && trashIcon}
           </>
         );
 
       case "availability":
         const availabilityTrashIcon =
           statusInfo === "fulfilled" ? (
-            <TrashIcon onClick={() => handleDelete(rowData._id)} />
+            <TrashIcon
+              onClick={() => {
+                handleDelete(rowData._id);
+                sendEmail(
+                  "Room Deletion",
+                  `<h2 style="text-decoration:underline">Room Deleted</h2><p>Room with ID <em>${rowData._id}</em> has been deleted.</p>`
+                );
+              }}
+            />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
@@ -960,7 +984,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         return (
           <>
             <StatusDiv data={rowData} />
-            {availabilityTrashIcon}
+            {currentUser !== "test" && availabilityTrashIcon}
             {EditRoomIcon}
           </>
         );
@@ -1006,7 +1030,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
                 ))}
               </AmenitiesDiv>
               <FadeDiv right={true} dark={dark.dark} />
-                <FadeDiv dark={dark.dark} />
+              <FadeDiv dark={dark.dark} />
             </AmenitiesOuterWrap>
           </>
         );
@@ -1068,7 +1092,13 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           statusInfo === "fulfilled" ? (
             <TrashIcon
               datatype="contact"
-              onClick={() => handleDelete(rowData._id)}
+              onClick={() => {
+                handleDelete(rowData._id);
+                sendEmail(
+                  "Message Deletion",
+                  `<h2 style="text-decoration:underline">Message Deleted</h2><p>Message with ID <em>${rowData._id}</em> has been deleted.</p>`
+                );
+              }}
             />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
@@ -1147,7 +1177,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
             >
               {statusContact()}
             </StatusButton>
-            {trashContactIcon}
+            {currentUser !== "test" && trashContactIcon}
           </>
         );
 
@@ -1169,7 +1199,15 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "activity":
         const trashUserIcon =
           statusInfo === "fulfilled" ? (
-            <TrashIcon onClick={() => handleDelete(rowData._id)} />
+            <TrashIcon
+              onClick={() => {
+                handleDelete(rowData._id);
+                sendEmail(
+                  "User Deletion",
+                  `<h2 style="text-decoration:underline">User Deleted</h2><p>User with ID <em>${rowData._id}</em> has been deleted.</p>`
+                );
+              }}
+            />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
@@ -1215,8 +1253,8 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         return (
           <>
             <StatusDiv data={rowData} />
-            {trashUserIcon}
-            {EditUserIcon}
+            {currentUser !== "test" && trashUserIcon}
+            {currentUser !== "test" && EditUserIcon}
           </>
         );
 

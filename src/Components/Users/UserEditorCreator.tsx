@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../../Context/ToggleTheme";
 import { format } from "date-fns";
 import { usersInfo } from "../../features/Users/userSlice";
+import { sendEmail } from "../../features/Emails/emailHandler";
 
 const Form = styled.form`
   display: flex;
@@ -352,7 +353,7 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
     select ? select.job_description : ""
   );
   const [minDate, setMinDate] = useState(getFormattedDate());
-  const [samePass, setSamePass] = useState(true);
+  const [samePass, setSamePass] = useState(false);
   const allUsers: UserInterface[] = useAppSelector(usersInfo);
 
   const handleUpdateCreateUser = () => {
@@ -465,12 +466,59 @@ export const UserEditorCreator: FC<UserEditorCreatorProps> = ({
     if (selectedPhoto) {
       const finalData = samePass ? dataWithoutPassword : dataUser;
       const finalDispatch = () => {
+        const subject = [
+          "A new user has been created!",
+          `User with ID ${dataUser._id} has been modified`,
+        ];
+        const body = `
+
+        
+        Username: ${dataUser.username},
+        Position: ${dataUser.position},
+        Email: ${dataUser.email},
+        Password: ${
+          samePass ? "(Not modified)" : dataUser.password
+        },
+        Start Date: ${dataUser.start_date},
+        Job Description: ${dataUser.job_description},
+        Contact: ${dataUser.contact}
+        
+HURRAY! Well done!
+
+<h2 style="background-color: black;color: white; width: 100%; text-align: center" id="welcome">This is the user's data now:</h1>
+  <div style="box-shadow: 0px 14px 24px 0px rgba(190, 173, 142, 0.27); width: 100%; border: 2px solid black; border-radius: 20px; background-color: lightcyan">
+  <ul>
+    <li> <strong  style="text-decoration: underline">Username</strong>: ${dataUser.username}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Position</strong>: ${dataUser.position}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Email</strong>: ${dataUser.email}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Password</strong>: ${dataUser.password}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Start Date</strong>: ${dataUser.start_date}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Job Description</strong>: ${dataUser.job_description}</li>
+    <br>
+    <li><strong  style="text-decoration: underline">Contact</strong>: ${dataUser.contact}</li>
+  </ul>
+  </div>
+  <div style="width: 100%; text-align: center;">
+    <h3>
+  Well done! The user is available NOW in:
+</h3>
+  <a href="http://dashboardmiranda.s3-website-eu-west-1.amazonaws.com/users" style="font-size: 25px; text-decoration: none; cursor: pointer;" target="_blank">Dashboard Hotel Miranda</a>
+  </div>
+        `;
+
         if (!select) {
           dispatch(addUserData(dataUser)).then(() => {
             dispatch(getUsersData());
+            sendEmail(subject[0], body);
           });
         } else {
           dispatch(updateUserData(finalData));
+          sendEmail(subject[1], body);
         }
       };
       finalDispatch();
