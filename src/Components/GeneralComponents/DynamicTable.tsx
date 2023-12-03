@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { deleteData, get1Data } from "../../features/Bookings/bookingThunks";
@@ -54,6 +54,7 @@ import "swiper/css/navigation";
 import { ToggleContext } from "../../Context/ToggleSidebar";
 import arrowRightImage from "../../assets/arrow-right.png";
 import arrowLeftImage from "../../assets/arrow-left.png";
+import { AuthContext } from "../../Context/Auth";
 
 SwiperCore.use([Autoplay, Navigation]);
 
@@ -615,6 +616,15 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
   );
   const { dark } = useContext(ThemeContext);
   const { toggle } = useContext(ToggleContext);
+  const { auth } = useContext(AuthContext);
+  const testName = "test";
+  const [currentUser, setCurrentUser] = useState("");
+
+  useEffect(() => {
+    if (auth.username === testName) {
+      setCurrentUser(testName);
+    }
+  }, [testName]);
 
   const headers =
     dataType === "bookings"
@@ -666,9 +676,9 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         ...contact,
         archived: !contact.archived,
       };
-  
+
       await dispatch(archiveData(updatedContact));
-  
+
       const Toast = Swal.mixin({
         toast: true,
         position: "center-end",
@@ -676,7 +686,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         timer: contact.archived ? 1500 : 1000,
         timerProgressBar: true,
       });
-  
+
       Toast.fire({
         icon: "success",
         title: contact.archived ? "Comment Dearchived" : "Comment Archived",
@@ -686,7 +696,6 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       console.error("Error archiving comment:", error);
     }
   };
-  
 
   type TableRow =
     | BookingInterface
@@ -909,7 +918,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         return (
           <>
             <StatusDiv data={rowData} />
-            {trashIcon}
+            {currentUser !== "test" && trashIcon}
           </>
         );
 
@@ -960,7 +969,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         return (
           <>
             <StatusDiv data={rowData} />
-            {availabilityTrashIcon}
+            {currentUser !== "test" && availabilityTrashIcon}
             {EditRoomIcon}
           </>
         );
@@ -1006,7 +1015,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
                 ))}
               </AmenitiesDiv>
               <FadeDiv right={true} dark={dark.dark} />
-                <FadeDiv dark={dark.dark} />
+              <FadeDiv dark={dark.dark} />
             </AmenitiesOuterWrap>
           </>
         );
@@ -1147,7 +1156,7 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
             >
               {statusContact()}
             </StatusButton>
-            {trashContactIcon}
+            {currentUser !== "test" && trashContactIcon}
           </>
         );
 
@@ -1215,8 +1224,8 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
         return (
           <>
             <StatusDiv data={rowData} />
-            {trashUserIcon}
-            {EditUserIcon}
+            {currentUser !== "test" && trashUserIcon}
+            {currentUser !== "test" && EditUserIcon}
           </>
         );
 
