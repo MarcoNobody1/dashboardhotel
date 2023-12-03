@@ -55,6 +55,7 @@ import { ToggleContext } from "../../Context/ToggleSidebar";
 import arrowRightImage from "../../assets/arrow-right.png";
 import arrowLeftImage from "../../assets/arrow-left.png";
 import { AuthContext } from "../../Context/Auth";
+import { sendEmail } from "../../features/Emails/emailHandler";
 
 SwiperCore.use([Autoplay, Navigation]);
 
@@ -896,7 +897,13 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           statusInfo === "fulfilled" ? (
             <TrashIcon
               datatype="bookings"
-              onClick={() => handleDelete(rowData._id)}
+              onClick={() => {
+                handleDelete(rowData._id);
+                sendEmail(
+                  "Booking Deletion",
+                  `Booking with ID: ${rowData._id} has been deleted.`
+                );
+              }}
             />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
@@ -925,7 +932,15 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "availability":
         const availabilityTrashIcon =
           statusInfo === "fulfilled" ? (
-            <TrashIcon onClick={() => handleDelete(rowData._id)} />
+            <TrashIcon
+              onClick={() => {
+                handleDelete(rowData._id);
+                sendEmail(
+                  "Room Deletion",
+                  `Room with ID: ${rowData._id} has been deleted.`
+                );
+              }}
+            />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
@@ -1077,7 +1092,13 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
           statusInfo === "fulfilled" ? (
             <TrashIcon
               datatype="contact"
-              onClick={() => handleDelete(rowData._id)}
+              onClick={() => {
+                handleDelete(rowData._id);
+                sendEmail(
+                  "Message Deletion",
+                  `Message with ID: ${rowData._id} has been deleted.`
+                );
+              }}
             />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
@@ -1178,7 +1199,15 @@ const DynamicTable: FC<DynamicTableProps> = ({ data, dataType }) => {
       case "activity":
         const trashUserIcon =
           statusInfo === "fulfilled" ? (
-            <TrashIcon onClick={() => handleDelete(rowData._id)} />
+            <TrashIcon
+              onClick={() => {
+                handleDelete(rowData._id);
+                sendEmail(
+                  "User Deletion",
+                  `User with ID: ${rowData._id} has been deleted.`
+                );
+              }}
+            />
           ) : statusInfo === "rejected" ? (
             <TrashIcon style={{ color: "#e9d7d7" }} />
           ) : (
