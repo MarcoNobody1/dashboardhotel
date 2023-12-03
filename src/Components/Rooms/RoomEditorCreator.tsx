@@ -356,17 +356,30 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
         `Room with ID ${newRoom._id} has been modified`,
       ];
       const body = `
-This is the room's data now:
-      
-      Photos: ${newRoom.photos.length},
-      Number: ${newRoom.number},
-      Description: ${newRoom.description},
-      Type: ${newRoom.type},
-      Amenities: ${newRoom.amenities},
-      Price: ${newRoom.price},
-      Discount: ${newRoom.discount}
-      
-HURRAY! Well done!
+      <h2 style="background-color: black;color: white; width: 100%; text-align: center" id="welcome">This is the room's data now:</h1>
+      <div style="width: 100%; border: 2px solid black; border-radius: 20px; background-color: lightcyan">
+      <ul>
+        <li> <strong  style="text-decoration: underline">Photos (length)</strong>: ${newRoom.photos.length}</li>
+        <br>
+        <li><strong  style="text-decoration: underline">Number</strong>: ${newRoom.number}</li>
+        <br>
+        <li><strong  style="text-decoration: underline">Description</strong>: ${newRoom.description}</li>
+        <br>
+        <li><strong  style="text-decoration: underline">Type</strong>: ${newRoom.type}</li>
+        <br>
+        <li><strong  style="text-decoration: underline">Amenities</strong>: ${newRoom.amenities}</li>
+        <br>
+        <li><strong  style="text-decoration: underline">Price</strong>: ${newRoom.price}</li>
+        <br>
+        <li><strong  style="text-decoration: underline">Discount</strong>: ${newRoom.discount}</li>
+      </ul>
+      </div>
+      <div style="width: 100%; text-align: center;">
+        <h3>
+      Well done! The room is available NOW in:
+    </h3>
+      <a href="http://dashboardmiranda.s3-website-eu-west-1.amazonaws.com/rooms" style="font-size: 25px; text-decoration: none; cursor: pointer;" target="_blank">Dashboard Hotel Miranda</a>
+      </div>
       `;
       dispatch(action(newRoom)).then(() => {
         dispatch(getRoomsData());
