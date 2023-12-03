@@ -1,7 +1,5 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import logo from "../../assets/LogoHotelHub.png";
-import logoDark from "../../assets/LogoDarkHotelHub.png";
 import { DefaultIcon } from "../GeneralComponents/GeneralComponents";
 import {
   LuLayoutDashboard,
@@ -11,7 +9,7 @@ import {
 } from "react-icons/lu";
 import { TbMessage2 } from "react-icons/tb";
 import { UserCard } from "./UserCard";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/Auth";
 import { ToggleContext } from "../../Context/ToggleSidebar";
 import { ThemeContext } from "../../Context/ToggleTheme";
@@ -22,13 +20,17 @@ const NavWrap = styled.aside`
   transition: all 0.25s ease-in-out;
 `;
 
-const Logo = styled.img`
-  padding-left: 10px;
-  padding-top: 42px;
-  width: 300px;
-  height: auto;
+const Logo = styled.div`
+  width: 100%;
+  height: 120px;
   margin-bottom: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
   transition: all 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const OptionWrapper = styled(NavLink)`
@@ -113,6 +115,7 @@ export const Sidebar = () => {
   const { auth } = useContext(AuthContext);
   const { toggle } = useContext(ToggleContext);
   const { dark } = useContext(ThemeContext);
+  const nav = useNavigate();
 
   if (!auth.authenticated) {
     return null;
@@ -126,7 +129,16 @@ export const Sidebar = () => {
           backgroundColor: dark.dark ? "#202020" : "#FFF",
         }}
       >
-        <Logo src= {dark.dark ? logoDark : logo} />
+        <Logo
+          onClick={() => {
+            nav("/");
+          }}
+          style={{
+            backgroundImage: dark.dark
+              ? "url(https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/LogoDark.png)"
+              : "url(https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/Logo.png)",
+          }}
+        />
         <OptionWrapper to="/" title="dashboard">
           <DashboardIcon />
           <OptionTitle>Dashboard</OptionTitle>
@@ -149,7 +161,9 @@ export const Sidebar = () => {
         </OptionWrapper>
         <UserCard />
         <Footer>
-          <FooterName style={{color: dark.dark ? "#FFF" : "#212121"}}>hotelHub admin dashboard</FooterName>
+          <FooterName style={{ color: dark.dark ? "#FFF" : "#212121" }}>
+            hotelHub admin dashboard
+          </FooterName>
           <FooterRights>© 2023 All Rights Reserved</FooterRights>
         </Footer>
         <FooterFinal>Made with ♥ by MarcoNobody</FooterFinal>
