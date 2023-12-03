@@ -356,9 +356,9 @@ export const RoomeEditorCreator: FC<RoomeEditorCreatorProps> = ({
         `Room with ID ${newRoom._id} has been modified`,
       ];
       const body = `
-      <h2 style="background-color: black;color: white; width: 100%; text-align: center" id="welcome">This is the room's data now:</h1>
+      <h2 style="background-color: black; color: white; width: 100%; text-align: center" id="welcome">This is the room's data now:</h2>
       <div style="box-shadow: 0px 14px 24px 0px rgba(190, 173, 142, 0.27); width: 100%; border: 2px solid black; border-radius: 20px; background-color: lightcyan">
-      <ul>
+      <ul style="text-align: left">
         <li> <strong  style="text-decoration: underline">Photos (length)</strong>: ${newRoom.photos.length}</li>
         <br>
         <li><strong  style="text-decoration: underline">Number</strong>: ${newRoom.number}</li>
