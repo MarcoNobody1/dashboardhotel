@@ -28,7 +28,3 @@ A parte de los requisitos que pedía el proyecto, se han añadido otras funciona
 
 
 ## Cómo Usarlo
-
-
-
-### Cambios generales.
