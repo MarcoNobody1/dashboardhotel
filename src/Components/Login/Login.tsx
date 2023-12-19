@@ -18,7 +18,7 @@ import { logIn } from "../../features/Login/loginThunks";
 import { Oval } from "react-loader-spinner";
 
 const LogWrapper = styled.div`
-  height: 930px;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

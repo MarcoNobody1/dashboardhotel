@@ -21,11 +21,17 @@ import {
   ContactInterface,
   DarkProp,
 } from "../../features/Interfaces/Interfaces";
+import { ToggleContext } from "../../Context/ToggleSidebar";
 
-const CommentsWrapper = styled.div<DarkProp>`
+interface WrapperProps {
+  dark?: boolean | string;
+  toggle?: boolean | string;
+}
+
+const CommentsWrapper = styled.div<WrapperProps>`
   min-width: 360px;
   min-height: 190px;
-  max-width: 1400px;
+  max-width: ${(props) => (props.toggle ? "1805px" : "1400px")};
   overflow-x: scroll;
   display: flex;
   gap: 40px;
@@ -111,6 +117,7 @@ export const Comments: FC = () => {
   const [currentId, setCurrentId] = useState("");
   const dispatch = useAppDispatch();
   const { dark } = useContext(ThemeContext);
+  const { toggle } = useContext(ToggleContext);
 
   useEffect(() => {
     dispatch(getContactsData());
@@ -178,6 +185,7 @@ export const Comments: FC = () => {
     <>
       <CommentsWrapper
         dark={dark.dark}
+        toggle={toggle.toggle}
         style={{ backgroundColor: dark.dark ? "#202020" : "#fff" }}
       >
         {renderStatus(statusInfo, data)}
