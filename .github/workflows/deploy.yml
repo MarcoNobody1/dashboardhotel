@@ -11,6 +11,11 @@ jobs:
         run: npm i
       - name: Run Build
         run: npm run build
+        env:
+            REACT_APP_API_KEY: ${{ secrets.VITE_FETCH_URL }}
+      - name: Creating .env
+        run: |
+            echo "REACT_APP_API_KEY=${{ secrets.VITE_FETCH_URL }}" > .env.local
       - name: Upload to AWS
         uses: jakejarvis/s3-sync-action@master
         with:
