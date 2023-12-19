@@ -16,6 +16,7 @@ import { ThemeContext } from "../../Context/ToggleTheme";
 
 const NavWrap = styled.aside`
   min-width: 345px;
+  height: 100vh;
   text-align: center;
   transition: all 0.25s ease-in-out;
 `;
@@ -55,7 +56,7 @@ const OptionWrapper = styled(NavLink)`
   }
 
   &:nth-child(6) {
-    margin-bottom: 41px;
+    margin-bottom: 10px;
   }
 `;
 

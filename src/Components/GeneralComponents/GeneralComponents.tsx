@@ -37,7 +37,7 @@ export const DefaultIcon = styled.div<DefaultIconProps>`
 const PageWrap = styled.main<DarkProp>`
   padding: 50px;
   min-width: 1474px;
-  height: 810px;
+  height: calc(100vh - 120px);
   overflow-y: scroll;
   overscroll-behavior: contain;
   transition: all 0.25s ease-in-out;
