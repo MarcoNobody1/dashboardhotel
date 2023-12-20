@@ -13,9 +13,6 @@ jobs:
         run: npm run build
         env:
             VITE_FETCH_URL: ${{ secrets.VITE_FETCH_URL }}
-      - name: Creating .env
-        run: |
-            echo "VITE_FETCH_URL=${{ secrets.VITE_FETCH_URL }}" > .env.local
       - name: Upload to AWS
         uses: jakejarvis/s3-sync-action@master
         with:
